@@ -74,6 +74,16 @@ button{padding:10px 14px;border:0;border-radius:6px;background:#596442;color:#ff
 </div>
 
 <div>
+<label>Size</label>
+<input id="sizes" placeholder="M, L, XL">
+</div>
+
+<div>
+<label>Fabric</label>
+<input id="fabric" placeholder="Cotton Lycra">
+</div>
+
+<div>
 <label>Photo URL</label>
 <input id="img" placeholder="https://...">
 </div>
@@ -130,10 +140,8 @@ body:JSON.stringify({password})
 const d=await r.json();
 
 if(!r.ok){
-
 document.getElementById('msg').textContent=
 d.error||'Login failed';
-
 return;
 }
 
@@ -142,7 +150,6 @@ token=password;
 localStorage.setItem('adminToken',token);
 
 document.getElementById('login').classList.add('hide');
-
 document.getElementById('app').classList.remove('hide');
 
 loadProducts();
@@ -171,6 +178,10 @@ document.getElementById('products').innerHTML=
 <b>${p.name}</b>
 
 <div>₹${p.price}</div>
+
+<div><b>Size:</b> ${p.sizes||'Not specified'}</div>
+
+<div><b>Fabric:</b> ${p.fabric||'Not specified'}</div>
 
 <div class="muted">
 ${p.description||''}
@@ -202,6 +213,10 @@ document.getElementById('name').value=p.name;
 
 document.getElementById('price').value=p.price;
 
+document.getElementById('sizes').value=p.sizes||'';
+
+document.getElementById('fabric').value=p.fabric||'';
+
 document.getElementById('img').value=p.img||'';
 
 document.getElementById('desc').value=p.description||'';
@@ -212,7 +227,7 @@ scrollTo(0,document.body.scrollHeight);
 
 function clearForm(){
 
-['pid','name','price','img'].forEach(
+['pid','name','price','sizes','fabric','img'].forEach(
 x=>document.getElementById(x).value=''
 );
 
@@ -229,6 +244,10 @@ id:Number(document.getElementById('pid').value)||undefined,
 name:document.getElementById('name').value,
 
 price:Number(document.getElementById('price').value),
+
+sizes:document.getElementById('sizes').value,
+
+fabric:document.getElementById('fabric').value,
 
 img:document.getElementById('img').value,
 
@@ -248,13 +267,11 @@ const d=await r.json();
 if(!r.ok){
 
 alert(d.error||'Save failed');
-
 return;
 
 }
 
 clearForm();
-
 loadProducts();
 
 }
@@ -270,9 +287,7 @@ method:'DELETE'
 if(!r.ok){
 
 const d=await r.json();
-
 alert(d.error||'Delete failed');
-
 return;
 
 }
@@ -289,7 +304,6 @@ if(!r.ok){
 
 document.getElementById('orders').textContent=
 'Unable to load orders';
-
 return;
 
 }
