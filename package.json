@@ -1,6 +1,8 @@
 {
-  "name":"sniper-premium-wear-store",
-  "private":true,
-  "version":"1.0.0",
-  "dependencies":{"@netlify/blobs":"^9.0.0"}
+  "name": "sniper-premium-wear-store",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "@vercel/blob": "^2.0.0"
+  }
 }
