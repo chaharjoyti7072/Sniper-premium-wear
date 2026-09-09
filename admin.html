@@ -1,17 +1,461 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin | JOYTI - SNIPER PREMIUM WEAR</title><style>body{font-family:Arial;margin:0;background:#f4f3ea;color:#171a14}.wrap{max-width:1100px;margin:auto;padding:22px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px}.panel{background:#fff;padding:18px;border-radius:12px;margin:18px 0;border:1px solid #ddd}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}input,select{width:100%;padding:11px;box-sizing:border-box;margin:5px 0 10px;border:1px solid #bbb;border-radius:6px}button{padding:10px 14px;border:0;border-radius:6px;background:#596442;color:#fff;font-weight:700;cursor:pointer}.danger{background:#8b3d35}.muted{color:#666;font-size:13px}.item{border:1px solid #ddd;padding:12px;border-radius:8px}.item img{width:100%;height:150px;object-fit:cover}.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1}.order{border:1px solid #ddd;padding:12px;border-radius:8px;margin:10px 0}.status{font-weight:800}.hide{display:none}@media(max-width:600px){.top{flex-direction:column;align-items:flex-start}}</style></head><body><div class="wrap"><div class="top"><div><h1>JOYTI Admin Panel</h1><div class="muted">Products • Orders • Shiprocket</div></div><button onclick="location.href='/'">Open Website</button></div>
-<div id="login" class="panel"><h2>Admin Login</h2><p class="muted">Set ADMIN_PASSWORD in Netlify environment variables first.</p><input id="pw" type="password" placeholder="Admin password"><button onclick="login()">LOGIN</button><p id="msg"></p></div>
-<div id="app" class="hide"><div class="panel"><h2>Products</h2><div class="grid" id="products"></div><hr><h3>Add / Edit Product</h3><input type="hidden" id="pid"><div class="grid"><div><label>Name</label><input id="name"></div><div><label>Price (₹)</label><input id="price" type="number"></div><div><label>Photo URL</label><input id="img" placeholder="https://..."></div><div><label>Description</label><input id="desc" value="Premium quality"></div></div><div class="row"><button onclick="saveProduct()">SAVE PRODUCT</button><button onclick="clearForm()">CLEAR</button></div></div>
-<div class="panel"><h2>Orders</h2><button onclick="loadOrders()">REFRESH ORDERS</button><div id="orders"></div></div></div></div>
-<script>let token='';const api=(u,o={})=>fetch(u,{...o,headers:{'Content-Type':'application/json',...(o.headers||{}),Authorization:'Bearer '+token}});
-async function login(){const password=document.getElementById('pw').value;const r=await fetch('/.netlify/functions/admin-login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password})});const d=await r.json();if(!r.ok){document.getElementById('msg').textContent=d.error||'Login failed';return}token=password;localStorage.setItem('adminToken',token);document.getElementById('login').classList.add('hide');document.getElementById('app').classList.remove('hide');loadProducts();loadOrders()}
-async function loadProducts(){const r=await api('/.netlify/functions/products');if(r.status===401){logout();return}const d=await r.json();document.getElementById('products').innerHTML=(d.products||[]).map(p=>`<div class="item"><img src="${p.img||''}"><b>${p.name}</b><div>₹${p.price}</div><div class="muted">${p.description||''}</div><div class="row"><button onclick='editProduct(${JSON.stringify(p).replace(/'/g,"&#39;")})'>EDIT</button><button class="danger" onclick="deleteProduct(${p.id})">DELETE</button></div></div>`).join('')}
-function editProduct(p){document.getElementById('pid').value=p.id;document.getElementById('name').value=p.name;document.getElementById('price').value=p.price;document.getElementById('img').value=p.img||'';document.getElementById('desc').value=p.description||'';scrollTo(0,document.body.scrollHeight)}
-function clearForm(){['pid','name','price','img'].forEach(x=>document.getElementById(x).value='');document.getElementById('desc').value='Premium quality'}
-async function saveProduct(){const body={id:Number(document.getElementById('pid').value)||undefined,name:document.getElementById('name').value,price:Number(document.getElementById('price').value),img:document.getElementById('img').value,description:document.getElementById('desc').value};const method=body.id?'PUT':'POST';const r=await api('/.netlify/functions/products',{method,body:JSON.stringify(body)});const d=await r.json();if(!r.ok){alert(d.error||'Save failed');return}clearForm();loadProducts()}
-async function deleteProduct(id){if(!confirm('Delete this product?'))return;const r=await api('/.netlify/functions/products?id='+id,{method:'DELETE'});if(!r.ok){const d=await r.json();alert(d.error||'Delete failed');return}loadProducts()}
-async function loadOrders(){const r=await api('/.netlify/functions/orders');if(!r.ok){document.getElementById('orders').textContent='Unable to load orders';return}const d=await r.json();document.getElementById('orders').innerHTML=(d.orders||[]).map(o=>`<div class="order"><b>${o.customer?.name||'Customer'}</b> — ₹${o.amount} — <span class="status">${o.status}</span><div>${o.customer?.mobile||''}</div><div>${o.address||''}, ${o.pin||''}</div><div class="muted">${o.items?.map(i=>`${i.name} × ${i.qty}`).join(', ')||''}</div><div class="muted">Razorpay: ${o.paymentId||'Pending'} | Shiprocket: ${o.shiprocketOrderId||'Not created'}</div><div class="row"><select id="s-${o.id}"><option>Payment Pending</option><option>Paid</option><option>Ready to Ship</option><option>Shipped</option><option>Delivered</option><option>Cancelled</option></select><button onclick="statusUpdate('${o.id}')">UPDATE STATUS</button><button onclick="ship('${o.id}')">SEND TO SHIPROCKET</button></div></div>`).join('');(d.orders||[]).forEach(o=>{const s=document.getElementById('s-'+o.id);if(s)s.value=o.status})}
-async function statusUpdate(id){const status=document.getElementById('s-'+id).value;const r=await api('/.netlify/functions/orders',{method:'PATCH',body:JSON.stringify({id,status})});if(!r.ok)alert('Update failed');else loadOrders()}
-async function ship(id){if(!confirm('Create this order in Shiprocket?'))return;const r=await api('/.netlify/functions/shiprocket',{method:'POST',body:JSON.stringify({orderId:id})});const d=await r.json();if(!r.ok)alert(d.error||'Shiprocket error');else{alert('Shiprocket order created successfully');loadOrders()}}
-function logout(){token='';localStorage.removeItem('adminToken');location.reload()}
-const saved=localStorage.getItem('adminToken');if(saved){token=saved;loginWithSaved()}async function loginWithSaved(){const r=await api('/.netlify/functions/orders');if(r.ok){document.getElementById('login').classList.add('hide');document.getElementById('app').classList.remove('hide');loadProducts();loadOrders()}else logout()}
-</script></body></html><!-- Vercel sync -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin | JOYTI - SNIPER PREMIUM WEAR</title>
+
+<style>
+body{font-family:Arial;margin:0;background:#f4f3ea;color:#171a14}
+.wrap{max-width:1100px;margin:auto;padding:22px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.panel{background:#fff;padding:18px;border-radius:12px;margin:18px 0;border:1px solid #ddd}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+input,select{width:100%;padding:11px;box-sizing:border-box;margin:5px 0 10px;border:1px solid #bbb;border-radius:6px}
+button{padding:10px 14px;border:0;border-radius:6px;background:#596442;color:#fff;font-weight:700;cursor:pointer}
+.danger{background:#8b3d35}
+.muted{color:#666;font-size:13px}
+.item{border:1px solid #ddd;padding:12px;border-radius:8px}
+.item img{width:100%;height:150px;object-fit:cover}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row>*{flex:1}
+.order{border:1px solid #ddd;padding:12px;border-radius:8px;margin:10px 0}
+.status{font-weight:800}
+.hide{display:none}
+@media(max-width:600px){
+.top{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="top">
+<div>
+<h1>JOYTI Admin Panel</h1>
+<div class="muted">Products • Orders • Shiprocket</div>
+</div>
+<button onclick="location.href='/'">Open Website</button>
+</div>
+
+<div id="login" class="panel">
+<h2>Admin Login</h2>
+<p class="muted">Enter your admin password.</p>
+<input id="pw" type="password" placeholder="Admin password">
+<button onclick="login()">LOGIN</button>
+<p id="msg"></p>
+</div>
+
+<div id="app" class="hide">
+
+<div class="panel">
+<h2>Products</h2>
+
+<div class="grid" id="products"></div>
+
+<hr>
+
+<h3>Add / Edit Product</h3>
+
+<input type="hidden" id="pid">
+
+<div class="grid">
+
+<div>
+<label>Name</label>
+<input id="name">
+</div>
+
+<div>
+<label>Price (₹)</label>
+<input id="price" type="number">
+</div>
+
+<div>
+<label>Photo URL</label>
+<input id="img" placeholder="https://...">
+</div>
+
+<div>
+<label>Description</label>
+<input id="desc" value="Premium quality">
+</div>
+
+</div>
+
+<div class="row">
+<button onclick="saveProduct()">SAVE PRODUCT</button>
+<button onclick="clearForm()">CLEAR</button>
+</div>
+
+</div>
+
+<div class="panel">
+<h2>Orders</h2>
+<button onclick="loadOrders()">REFRESH ORDERS</button>
+<div id="orders"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+
+let token='';
+
+const api=(u,o={})=>
+fetch(u,{
+...o,
+headers:{
+'Content-Type':'application/json',
+...(o.headers||{}),
+Authorization:'Bearer '+token
+}
+});
+
+async function login(){
+
+const password=document.getElementById('pw').value;
+
+const r=await fetch('/api/admin-login',{
+method:'POST',
+headers:{
+'Content-Type':'application/json'
+},
+body:JSON.stringify({password})
+});
+
+const d=await r.json();
+
+if(!r.ok){
+
+document.getElementById('msg').textContent=
+d.error||'Login failed';
+
+return;
+}
+
+token=password;
+
+localStorage.setItem('adminToken',token);
+
+document.getElementById('login').classList.add('hide');
+
+document.getElementById('app').classList.remove('hide');
+
+loadProducts();
+loadOrders();
+
+}
+
+async function loadProducts(){
+
+const r=await api('/api/products');
+
+if(r.status===401){
+logout();
+return;
+}
+
+const d=await r.json();
+
+document.getElementById('products').innerHTML=
+(d.products||[]).map(p=>`
+
+<div class="item">
+
+<img src="${p.img||''}">
+
+<b>${p.name}</b>
+
+<div>₹${p.price}</div>
+
+<div class="muted">
+${p.description||''}
+</div>
+
+<div class="row">
+
+<button onclick='editProduct(${JSON.stringify(p).replace(/'/g,"&#39;")})'>
+EDIT
+</button>
+
+<button class="danger" onclick="deleteProduct(${p.id})">
+DELETE
+</button>
+
+</div>
+
+</div>
+
+`).join('');
+
+}
+
+function editProduct(p){
+
+document.getElementById('pid').value=p.id;
+
+document.getElementById('name').value=p.name;
+
+document.getElementById('price').value=p.price;
+
+document.getElementById('img').value=p.img||'';
+
+document.getElementById('desc').value=p.description||'';
+
+scrollTo(0,document.body.scrollHeight);
+
+}
+
+function clearForm(){
+
+['pid','name','price','img'].forEach(
+x=>document.getElementById(x).value=''
+);
+
+document.getElementById('desc').value='Premium quality';
+
+}
+
+async function saveProduct(){
+
+const body={
+
+id:Number(document.getElementById('pid').value)||undefined,
+
+name:document.getElementById('name').value,
+
+price:Number(document.getElementById('price').value),
+
+img:document.getElementById('img').value,
+
+description:document.getElementById('desc').value
+
+};
+
+const method=body.id?'PUT':'POST';
+
+const r=await api('/api/products',{
+method,
+body:JSON.stringify(body)
+});
+
+const d=await r.json();
+
+if(!r.ok){
+
+alert(d.error||'Save failed');
+
+return;
+
+}
+
+clearForm();
+
+loadProducts();
+
+}
+
+async function deleteProduct(id){
+
+if(!confirm('Delete this product?'))return;
+
+const r=await api('/api/products?id='+id,{
+method:'DELETE'
+});
+
+if(!r.ok){
+
+const d=await r.json();
+
+alert(d.error||'Delete failed');
+
+return;
+
+}
+
+loadProducts();
+
+}
+
+async function loadOrders(){
+
+const r=await api('/api/orders');
+
+if(!r.ok){
+
+document.getElementById('orders').textContent=
+'Unable to load orders';
+
+return;
+
+}
+
+const d=await r.json();
+
+document.getElementById('orders').innerHTML=
+(d.orders||[]).map(o=>`
+
+<div class="order">
+
+<b>${o.customer?.name||'Customer'}</b>
+— ₹${o.amount}
+— <span class="status">${o.status}</span>
+
+<div>
+${o.customer?.mobile||''}
+</div>
+
+<div>
+${o.address||''}, ${o.pin||''}
+</div>
+
+<div class="muted">
+${o.items?.map(i=>`${i.name} × ${i.qty}`).join(', ')||''}
+</div>
+
+<div class="muted">
+Razorpay: ${o.paymentId||'Pending'}
+|
+Shiprocket: ${o.shiprocketOrderId||'Not created'}
+</div>
+
+<div class="row">
+
+<select id="s-${o.id}">
+
+<option>Payment Pending</option>
+<option>Paid</option>
+<option>Ready to Ship</option>
+<option>Shipped</option>
+<option>Delivered</option>
+<option>Cancelled</option>
+
+</select>
+
+<button onclick="statusUpdate('${o.id}')">
+UPDATE STATUS
+</button>
+
+<button onclick="ship('${o.id}')">
+SEND TO SHIPROCKET
+</button>
+
+</div>
+
+</div>
+
+`).join('');
+
+(d.orders||[]).forEach(o=>{
+
+const s=document.getElementById('s-'+o.id);
+
+if(s)s.value=o.status;
+
+});
+
+}
+
+async function statusUpdate(id){
+
+const status=
+document.getElementById('s-'+id).value;
+
+const r=await api('/api/orders',{
+method:'PATCH',
+body:JSON.stringify({
+id,
+status
+})
+});
+
+if(!r.ok)
+alert('Update failed');
+else
+loadOrders();
+
+}
+
+async function ship(id){
+
+if(!confirm(
+'Create this order in Shiprocket?'
+))return;
+
+const r=await api('/api/shiprocket',{
+method:'POST',
+body:JSON.stringify({
+orderId:id
+})
+});
+
+const d=await r.json();
+
+if(!r.ok){
+
+alert(d.error||'Shiprocket error');
+
+}else{
+
+alert(
+'Shiprocket order created successfully'
+);
+
+loadOrders();
+
+}
+
+}
+
+function logout(){
+
+token='';
+
+localStorage.removeItem('adminToken');
+
+location.reload();
+
+}
+
+const saved=
+localStorage.getItem('adminToken');
+
+if(saved){
+
+token=saved;
+
+loginWithSaved();
+
+}
+
+async function loginWithSaved(){
+
+const r=await api('/api/orders');
+
+if(r.ok){
+
+document.getElementById('login')
+.classList.add('hide');
+
+document.getElementById('app')
+.classList.remove('hide');
+
+loadProducts();
+loadOrders();
+
+}else{
+
+logout();
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
