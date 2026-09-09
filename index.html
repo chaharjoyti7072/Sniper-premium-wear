@@ -7,94 +7,867 @@
 <meta name="application-name" content="JOYTI - SNIPER PREMIUM WEAR">
 <meta name="description" content="JOYTI - SNIPER PREMIUM WEAR online store. Premium fashion and army-inspired wear.">
 <meta property="og:site_name" content="JOYTI - SNIPER PREMIUM WEAR">
+
 <style>
 :root{--olive:#596442;--dark:#11140f;--khaki:#d7d0b2;--light:#f5f3e9;--accent:#9aa66d}
-*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--light);color:#171a14}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--light);color:#171a14}
 header{position:sticky;top:0;z-index:10;background:rgba(17,20,15,.97);color:#fff;padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.logo{font-weight:900;letter-spacing:2px}.logo small{display:block;color:#aeb98a;font-size:10px;letter-spacing:1px;margin-top:3px}
+.logo{font-weight:900;letter-spacing:2px}
+.logo small{display:block;color:#aeb98a;font-size:10px;letter-spacing:1px;margin-top:3px}
 nav a{color:#fff;text-decoration:none;margin-left:18px;font-weight:700;font-size:14px}
 .hero{min-height:430px;padding:70px 7%;display:flex;align-items:center;background:linear-gradient(90deg,rgba(17,20,15,.96),rgba(17,20,15,.58)),url('https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1800&q=80') center/cover;color:#fff}
-.hero h1{font-size:clamp(38px,7vw,76px);margin:0 0 15px;max-width:850px;line-height:.95}.hero p{font-size:17px;color:#e4e1cf;max-width:650px}
+.hero h1{font-size:clamp(38px,7vw,76px);margin:0 0 15px;max-width:850px;line-height:.95}
+.hero p{font-size:17px;color:#e4e1cf;max-width:650px}
 .btn{display:inline-block;border:0;background:var(--accent);color:#111;padding:13px 20px;font-weight:900;border-radius:6px;text-decoration:none;cursor:pointer}
-section{padding:45px 6%;max-width:1250px;margin:auto}.title{text-align:center;margin-bottom:28px}.title h2{margin:0;font-size:30px}.title p{color:#666}
+section{padding:45px 6%;max-width:1250px;margin:auto}
+.title{text-align:center;margin-bottom:28px}
+.title h2{margin:0;font-size:30px}
+.title p{color:#666}
 .categories,.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
 .card{background:#fff;border:1px solid #dedccc;border-radius:10px;overflow:hidden;box-shadow:0 5px 18px #0000000c}
-.cat{padding:28px;background:linear-gradient(135deg,#24291e,#596442);color:#fff;min-height:150px;display:flex;flex-direction:column;justify-content:end}.cat b{font-size:23px}.cat span{opacity:.8}
-.product img{width:100%;height:245px;object-fit:cover;background:#ddd}.product .info{padding:16px}.product h3{margin:0 0 7px}.price{font-size:20px;font-weight:900;margin:10px 0}.muted{color:#6b6d63;font-size:13px}
+.cat{padding:28px;background:linear-gradient(135deg,#24291e,#596442);color:#fff;min-height:150px;display:flex;flex-direction:column;justify-content:end}
+.cat b{font-size:23px}
+.cat span{opacity:.8}
+.product img{width:100%;height:245px;object-fit:cover;background:#ddd}
+.product .info{padding:16px}
+.product h3{margin:0 0 7px}
+.price{font-size:20px;font-weight:900;margin:10px 0}
+.muted{color:#6b6d63;font-size:13px}
 .product button{width:100%;margin-top:8px}
-#checkout{display:none}.checkout{max-width:650px;background:#fff;padding:25px;border-radius:12px;border:1px solid #ddd;margin:auto}
-label{display:block;font-weight:700;margin:13px 0 6px}input,textarea,select{width:100%;padding:12px;border:1px solid #bbb;border-radius:6px;font-size:15px}textarea{min-height:90px}
-.pay{display:flex;gap:15px;margin:10px 0}.pay label{font-weight:500;margin:0}
-.cart{background:#171a14;color:#fff;padding:18px;border-radius:10px;margin-bottom:20px}.cart-row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid #3d4236}.qty button{padding:4px 9px;margin:0 3px}
+.product .details{margin:6px 0}
+#checkout{display:none}
+.checkout{max-width:650px;background:#fff;padding:25px;border-radius:12px;border:1px solid #ddd;margin:auto}
+label{display:block;font-weight:700;margin:13px 0 6px}
+input,textarea,select{width:100%;padding:12px;border:1px solid #bbb;border-radius:6px;font-size:15px}
+textarea{min-height:90px}
+.pay{display:flex;gap:15px;margin:10px 0}
+.pay label{font-weight:500;margin:0}
+.cart{background:#171a14;color:#fff;padding:18px;border-radius:10px;margin-bottom:20px}
+.cart-row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid #3d4236}
+.qty button{padding:4px 9px;margin:0 3px}
 footer{background:#11140f;color:#d9dccb;padding:30px 6%;text-align:center;margin-top:30px}
-@media(max-width:650px){header{flex-direction:column;align-items:flex-start}nav a{margin:0 12px 0 0}.hero{padding:55px 6%}}
+.empty{background:#fff;padding:25px;border-radius:10px;text-align:center}
+@media(max-width:650px){
+header{flex-direction:column;align-items:flex-start}
+nav a{margin:0 12px 0 0}
+.hero{padding:55px 6%}
+}
 </style>
 </head>
+
 <body>
+
 <header>
-  <div class="logo">JOYTI • SNIPER PREMIUM WEAR<small>PREMIUM WEAR • BUILT FOR YOUR STYLE</small></div>
-  <nav><a href="#home">HOME</a><a href="#shop">SHOP</a><a href="#checkout">CHECKOUT</a></nav>
+
+<div class="logo">
+JOYTI • SNIPER PREMIUM WEAR
+<small>PREMIUM WEAR • BUILT FOR YOUR STYLE</small>
+</div>
+
+<nav>
+<a href="#home">HOME</a>
+<a href="#shop">SHOP</a>
+<a href="#checkout">CHECKOUT</a>
+</nav>
+
 </header>
 
 <main>
+
 <section class="hero" id="home">
-  <div>
-    <h1>ARMY INSPIRED.<br>PREMIUM STYLE.</h1>
-    <p>T-shirts, trousers, shorts and footwear — a clean army-inspired fashion collection for everyday style.</p>
-    <a class="btn" href="#shop">SHOP NOW</a>
-  </div>
+
+<div>
+
+<h1>ARMY INSPIRED.<br>PREMIUM STYLE.</h1>
+
+<p>
+T-shirts, trousers, shorts and footwear — a clean army-inspired fashion collection for everyday style.
+</p>
+
+<a class="btn" href="#shop">SHOP NOW</a>
+
+</div>
+
 </section>
 
 <section>
-  <div class="title"><h2>SHOP BY CATEGORY</h2><p>Choose your style</p></div>
-  <div class="categories">
-    <div class="card cat"><b>T-Shirts</b><span>Premium everyday wear</span></div>
-    <div class="card cat"><b>Trousers</b><span>Comfort & utility style</span></div>
-    <div class="card cat"><b>Shorts</b><span>Easy casual fit</span></div>
-    <div class="card cat"><b>Footwear</b><span>Complete the look</span></div>
-  </div>
+
+<div class="title">
+<h2>SHOP BY CATEGORY</h2>
+<p>Choose your style</p>
+</div>
+
+<div class="categories">
+
+<div class="card cat">
+<b>T-Shirts</b>
+<span>Premium everyday wear</span>
+</div>
+
+<div class="card cat">
+<b>Trousers</b>
+<span>Comfort & utility style</span>
+</div>
+
+<div class="card cat">
+<b>Shorts</b>
+<span>Easy casual fit</span>
+</div>
+
+<div class="card cat">
+<b>Footwear</b>
+<span>Complete the look</span>
+</div>
+
+</div>
+
 </section>
 
 <section id="shop">
-  <div class="title"><h2>FEATURED PRODUCTS</h2><p>Select a product and buy online</p></div>
-  <div class="products" id="products"></div>
+
+<div class="title">
+<h2>FEATURED PRODUCTS</h2>
+<p>Select a product and buy online</p>
+</div>
+
+<div class="products" id="products"></div>
+
 </section>
 
 <section id="checkout">
-  <div class="title"><h2>CHECKOUT</h2><p>Enter delivery details and place your order</p></div>
-  <div class="checkout">
-    <div class="cart"><h3>Your Cart</h3><div id="cartItems"></div><strong id="total"></strong></div>
-    <form id="orderForm">
-      <label>Full Name</label><input required name="name" autocomplete="name">
-      <label>Mobile Number</label><input required name="mobile" inputmode="tel" pattern="[0-9]{10}" placeholder="10-digit mobile number">
-      <label>Full Address</label><textarea required name="address"></textarea>
-      <label>PIN Code</label><input required name="pin" inputmode="numeric" pattern="[0-9]{6}">
-      <label>Payment Method</label>
-      <div class="pay">
-        <label><input type="radio" name="payment" value="ONLINE" checked> Online Payment</label>
-        <label><input type="radio" name="payment" value="COD"> Cash on Delivery</label>
-      </div>
-      <button class="btn" type="submit">BUY NOW & PAY</button>
-    </form>
-    <p class="muted" style="margin-top:16px">Online payment is ready to connect to your payment gateway. For live card/UPI/net-banking payments, add your Razorpay/Cashfree merchant credentials and webhook/backend before launch.</p>
-  </div>
+
+<div class="title">
+<h2>CHECKOUT</h2>
+<p>Enter delivery details and place your order</p>
+</div>
+
+<div class="checkout">
+
+<div class="cart">
+
+<h3>Your Cart</h3>
+
+<div id="cartItems"></div>
+
+<strong id="total"></strong>
+
+</div>
+
+<form id="orderForm">
+
+<label>Full Name</label>
+<input required name="name" autocomplete="name">
+
+<label>Mobile Number</label>
+<input required name="mobile" inputmode="tel" pattern="[0-9]{10}" placeholder="10-digit mobile number">
+
+<label>Full Address</label>
+<textarea required name="address"></textarea>
+
+<label>PIN Code</label>
+<input required name="pin" inputmode="numeric" pattern="[0-9]{6}">
+
+<label>Payment Method</label>
+
+<div class="pay">
+
+<label>
+<input type="radio" name="payment" value="ONLINE" checked>
+Online Payment
+</label>
+
+<label>
+<input type="radio" name="payment" value="COD">
+Cash on Delivery
+</label>
+
+</div>
+
+<button class="btn" type="submit">
+BUY NOW & PAY
+</button>
+
+</form>
+
+<p class="muted" style="margin-top:16px">
+Secure online payment powered by Razorpay.
+</p>
+
+</div>
+
 </section>
+
 </main>
 
-<footer>© 2026 JOYTI • SNIPER PREMIUM WEAR • PREMIUM FASHION STORE</footer>
+<footer>
+© 2026 JOYTI • SNIPER PREMIUM WEAR • PREMIUM FASHION STORE
+</footer>
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <script>
-let products=[]; let cart=JSON.parse(localStorage.getItem("sniperCart")||"[]");
-async function loadProducts(){const r=await fetch('/.netlify/functions/products');const d=await r.json();products=d.products||[];renderProducts();renderCart()}
-function save(){localStorage.setItem("sniperCart",JSON.stringify(cart))}
-function renderProducts(){document.getElementById("products").innerHTML=products.map(p=>`<div class="card product"><img src="${p.img||''}" alt="${p.name}"><div class="info"><h3>${p.name}</h3><div class="muted">${p.description||'Premium quality'}</div><div class="price">₹${Number(p.price).toLocaleString('en-IN')}</div><button class="btn" onclick="buyNow(${p.id})">BUY NOW</button></div></div>`).join('')}
-function buyNow(id){cart=[{id,qty:1}];save();renderCart();location.hash='checkout'}
-function add(id){let x=cart.find(i=>i.id===id);x?x.qty++:cart.push({id,qty:1});save();renderCart();location.hash='checkout'}
-function change(id,d){let x=cart.find(i=>i.id===id);if(!x)return;x.qty+=d;if(x.qty<=0)cart=cart.filter(i=>i.id!==id);save();renderCart()}
-function renderCart(){const el=document.getElementById('cartItems');if(!cart.length){el.innerHTML='<p>Your cart is empty.</p>';document.getElementById('total').textContent='';return}let total=0;el.innerHTML=cart.map(i=>{let p=products.find(x=>x.id===i.id);if(!p)return '';let s=p.price*i.qty;total+=s;return `<div class="cart-row"><span>${p.name}<br>₹${p.price} × ${i.qty}</span><span class="qty"><button type="button" onclick="change(${i.id},-1)">−</button>${i.qty}<button type="button" onclick="change(${i.id},1)">+</button></span></div>`}).join('');document.getElementById('total').textContent='Total: ₹'+total.toLocaleString('en-IN')}
-function showCheckout(){document.getElementById('checkout').style.display='block'} window.addEventListener('hashchange',()=>{if(location.hash==='#checkout')showCheckout()}); if(location.hash==='#checkout')showCheckout(); loadProducts();
-document.getElementById('orderForm').addEventListener('submit',async e=>{e.preventDefault();if(!cart.length){alert('Please select a product first.');return}const data=new FormData(e.target);const itemData=cart.map(i=>{const p=products.find(x=>x.id===i.id);return {id:p.id,name:p.name,price:p.price,qty:i.qty}});const total=itemData.reduce((s,i)=>s+i.price*i.qty,0);const btn=e.target.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Please wait…';
-if(data.get('payment')==='COD'){alert('COD order option selected. To keep order records, contact admin to confirm COD workflow.');btn.disabled=false;btn.textContent='BUY NOW & PAY';return}
-try{const orderRes=await fetch('/.netlify/functions/create-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:Math.round(total*100),receipt:'SPW-'+Date.now(),customer:{name:data.get('name'),mobile:data.get('mobile')},items:itemData,address:data.get('address'),pin:data.get('pin')})});const order=await orderRes.json();if(!orderRes.ok)throw new Error(order.error||'Could not create payment order');const rzp=new Razorpay({key:order.key_id,amount:order.amount,currency:'INR',name:'JOYTI - SNIPER PREMIUM WEAR',description:itemData.map(i=>`${i.name} x ${i.qty}`).join(', '),order_id:order.id,prefill:{name:data.get('name'),contact:data.get('mobile')},notes:{address:data.get('address'),pin:data.get('pin')},theme:{color:'#596442'},handler:async response=>{try{const v=await fetch('/.netlify/functions/verify-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(response)});const result=await v.json();if(!v.ok||!result.verified)throw new Error(result.error||'Payment verification failed');alert('Payment successful!\nOrder ID: '+order.id);cart=[];save();renderCart();e.target.reset();location.hash='shop'}catch(err){alert(err.message||'Payment verification failed.')}finally{btn.disabled=false;btn.textContent='BUY NOW & PAY'}},modal:{ondismiss:()=>{btn.disabled=false;btn.textContent='BUY NOW & PAY'}}});rzp.on('payment.failed',resp=>{alert('Payment failed: '+(resp.error?.description||'Please try again.'));btn.disabled=false;btn.textContent='BUY NOW & PAY'});rzp.open()}catch(err){alert(err.message||'Unable to start payment');btn.disabled=false;btn.textContent='BUY NOW & PAY'}});
+
+let products=[];
+
+let cart=
+JSON.parse(
+localStorage.getItem("sniperCart")||"[]"
+);
+
+
+/* LOAD PRODUCTS FROM VERCEL */
+
+async function loadProducts(){
+
+try{
+
+const r=
+await fetch('/api/products');
+
+if(!r.ok){
+
+throw new Error(
+'Could not load products'
+);
+
+}
+
+const d=
+await r.json();
+
+products=
+Array.isArray(d.products)
+?d.products
+:[];
+
+renderProducts();
+
+renderCart();
+
+}catch(error){
+
+console.error(error);
+
+document.getElementById("products").innerHTML=
+'<div class="empty">Products are temporarily unavailable.</div>';
+
+}
+
+}
+
+
+/* SAVE CART */
+
+function save(){
+
+localStorage.setItem(
+"sniperCart",
+JSON.stringify(cart)
+);
+
+}
+
+
+/* RENDER PRODUCTS */
+
+function renderProducts(){
+
+const el=
+document.getElementById("products");
+
+if(!products.length){
+
+el.innerHTML=
+'<div class="empty">No products available yet.</div>';
+
+return;
+
+}
+
+el.innerHTML=
+products.map(p=>`
+
+<div class="card product">
+
+${p.img ? `
+<img
+src="${p.img}"
+alt="${p.name||'Product'}"
+onerror="this.style.display='none'"
+>
+` : ''}
+
+<div class="info">
+
+<h3>
+${p.name||''}
+</h3>
+
+<div class="muted">
+${p.description||''}
+</div>
+
+${p.sizes ? `
+<div class="details">
+<b>Size:</b> ${p.sizes}
+</div>
+` : ''}
+
+${p.fabric ? `
+<div class="details">
+<b>Fabric:</b> ${p.fabric}
+</div>
+` : ''}
+
+<div class="price">
+₹${Number(p.price||0).toLocaleString('en-IN')}
+</div>
+
+<button
+class="btn"
+onclick="buyNow(${Number(p.id)})"
+>
+BUY NOW
+</button>
+
+</div>
+
+</div>
+
+`).join('');
+
+}
+
+
+/* BUY NOW */
+
+function buyNow(id){
+
+cart=[
+{
+id:Number(id),
+qty:1
+}
+];
+
+save();
+
+renderCart();
+
+location.hash='checkout';
+
+}
+
+
+/* ADD */
+
+function add(id){
+
+let x=
+cart.find(
+i=>i.id===Number(id)
+);
+
+if(x){
+
+x.qty++;
+
+}else{
+
+cart.push({
+id:Number(id),
+qty:1
+});
+
+}
+
+save();
+
+renderCart();
+
+location.hash='checkout';
+
+}
+
+
+/* CHANGE QTY */
+
+function change(id,d){
+
+let x=
+cart.find(
+i=>i.id===Number(id)
+);
+
+if(!x)return;
+
+x.qty+=d;
+
+if(x.qty<=0){
+
+cart=
+cart.filter(
+i=>i.id!==Number(id)
+);
+
+}
+
+save();
+
+renderCart();
+
+}
+
+
+/* CART */
+
+function renderCart(){
+
+const el=
+document.getElementById("cartItems");
+
+if(!cart.length){
+
+el.innerHTML=
+'<p>Your cart is empty.</p>';
+
+document.getElementById("total")
+.textContent='';
+
+return;
+
+}
+
+let total=0;
+
+el.innerHTML=
+cart.map(i=>{
+
+let p=
+products.find(
+x=>x.id===i.id
+);
+
+if(!p)return '';
+
+let s=
+Number(p.price)*i.qty;
+
+total+=s;
+
+return `
+
+<div class="cart-row">
+
+<span>
+
+${p.name}
+
+<br>
+
+₹${Number(p.price).toLocaleString('en-IN')}
+× ${i.qty}
+
+</span>
+
+<span class="qty">
+
+<button
+type="button"
+onclick="change(${i.id},-1)"
+>
+−
+</button>
+
+${i.qty}
+
+<button
+type="button"
+onclick="change(${i.id},1)"
+>
++
+</button>
+
+</span>
+
+</div>
+
+`;
+
+}).join('');
+
+document.getElementById("total")
+.textContent=
+'Total: ₹'+
+total.toLocaleString('en-IN');
+
+}
+
+
+/* CHECKOUT */
+
+function showCheckout(){
+
+document.getElementById(
+"checkout"
+).style.display='block';
+
+}
+
+window.addEventListener(
+'hashchange',
+()=>{
+
+if(location.hash==='#checkout')
+showCheckout();
+
+}
+);
+
+if(location.hash==='#checkout')
+showCheckout();
+
+
+/* START */
+
+loadProducts();
+
+
+/* ORDER */
+
+document.getElementById(
+"orderForm"
+).addEventListener(
+"submit",
+async e=>{
+
+e.preventDefault();
+
+if(!cart.length){
+
+alert(
+'Please select a product first.'
+);
+
+return;
+
+}
+
+const data=
+new FormData(e.target);
+
+const itemData=
+cart.map(i=>{
+
+const p=
+products.find(
+x=>x.id===i.id
+);
+
+return {
+
+id:p.id,
+
+name:p.name,
+
+price:Number(p.price),
+
+qty:i.qty
+
+};
+
+});
+
+const total=
+itemData.reduce(
+(s,i)=>
+s+i.price*i.qty,
+0
+);
+
+const btn=
+e.target.querySelector(
+'button[type=submit]'
+);
+
+btn.disabled=true;
+
+btn.textContent=
+'Please wait…';
+
+
+/* COD */
+
+if(
+data.get('payment')==='COD'
+){
+
+alert(
+'COD order option selected. Please contact admin to confirm COD order.'
+);
+
+btn.disabled=false;
+
+btn.textContent=
+'BUY NOW & PAY';
+
+return;
+
+}
+
+
+try{
+
+
+/* CREATE RAZORPAY ORDER */
+
+const orderRes=
+await fetch(
+'/api/create-order',
+{
+
+method:'POST',
+
+headers:{
+'Content-Type':
+'application/json'
+},
+
+body:
+JSON.stringify({
+
+amount:
+Math.round(total*100),
+
+receipt:
+'SPW-'+Date.now(),
+
+customer:{
+
+name:
+data.get('name'),
+
+mobile:
+data.get('mobile')
+
+},
+
+items:
+itemData,
+
+address:
+data.get('address'),
+
+pin:
+data.get('pin')
+
+})
+
+}
+);
+
+
+const order=
+await orderRes.json();
+
+
+if(!orderRes.ok){
+
+throw new Error(
+order.error||
+'Could not create payment order'
+);
+
+}
+
+
+/* RAZORPAY */
+
+const rzp=
+new Razorpay({
+
+key:
+order.key_id,
+
+amount:
+order.amount,
+
+currency:'INR',
+
+name:
+'JOYTI - SNIPER PREMIUM WEAR',
+
+description:
+itemData
+.map(
+i=>`${i.name} x ${i.qty}`
+)
+.join(', '),
+
+order_id:
+order.id,
+
+prefill:{
+
+name:
+data.get('name'),
+
+contact:
+data.get('mobile')
+
+},
+
+notes:{
+
+address:
+data.get('address'),
+
+pin:
+data.get('pin')
+
+},
+
+theme:{
+
+color:'#596442'
+
+},
+
+
+handler:
+async response=>{
+
+try{
+
+const v=
+await fetch(
+'/api/verify-payment',
+{
+
+method:'POST',
+
+headers:{
+'Content-Type':
+'application/json'
+},
+
+body:
+JSON.stringify(response)
+
+}
+);
+
+const result=
+await v.json();
+
+
+if(
+!v.ok||
+!result.verified
+){
+
+throw new Error(
+result.error||
+'Payment verification failed'
+);
+
+}
+
+
+alert(
+'Payment successful!\nOrder ID: '+
+order.id
+);
+
+cart=[];
+
+save();
+
+renderCart();
+
+e.target.reset();
+
+location.hash='shop';
+
+
+}catch(err){
+
+alert(
+err.message||
+'Payment verification failed.'
+);
+
+}finally{
+
+btn.disabled=false;
+
+btn.textContent=
+'BUY NOW & PAY';
+
+}
+
+},
+
+
+modal:{
+
+ondismiss:()=>{
+
+btn.disabled=false;
+
+btn.textContent=
+'BUY NOW & PAY';
+
+}
+
+}
+
+});
+
+
+rzp.on(
+'payment.failed',
+resp=>{
+
+alert(
+'Payment failed: '+
+(
+resp.error?.description||
+'Please try again.'
+)
+);
+
+btn.disabled=false;
+
+btn.textContent=
+'BUY NOW & PAY';
+
+}
+);
+
+
+rzp.open();
+
+
+}catch(err){
+
+alert(
+err.message||
+'Unable to start payment'
+);
+
+btn.disabled=false;
+
+btn.textContent=
+'BUY NOW & PAY';
+
+}
+
+}
+);
+
 </script>
+
+</body>
+</html>
