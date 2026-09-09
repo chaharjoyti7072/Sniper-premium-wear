@@ -14,4 +14,4 @@ async function statusUpdate(id){const status=document.getElementById('s-'+id).va
 async function ship(id){if(!confirm('Create this order in Shiprocket?'))return;const r=await api('/.netlify/functions/shiprocket',{method:'POST',body:JSON.stringify({orderId:id})});const d=await r.json();if(!r.ok)alert(d.error||'Shiprocket error');else{alert('Shiprocket order created successfully');loadOrders()}}
 function logout(){token='';localStorage.removeItem('adminToken');location.reload()}
 const saved=localStorage.getItem('adminToken');if(saved){token=saved;loginWithSaved()}async function loginWithSaved(){const r=await api('/.netlify/functions/orders');if(r.ok){document.getElementById('login').classList.add('hide');document.getElementById('app').classList.remove('hide');loadProducts();loadOrders()}else logout()}
-</script></body></html>
+</script></body></html><!-- Vercel sync -->
