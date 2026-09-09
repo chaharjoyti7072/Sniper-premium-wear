@@ -19,20 +19,31 @@ module.exports = async (req, res) => {
       });
     }
 
-    const file = req.body;
+    const body = req.body || {};
 
-    if (!file || !file.length) {
+    if (!body.data) {
       return res.status(400).json({
         error: "Image file is missing"
       });
     }
 
     const contentType =
-      req.headers["content-type"] || "image/jpeg";
+      body.contentType || "image/jpeg";
 
     if (!contentType.startsWith("image/")) {
       return res.status(400).json({
         error: "Only image files are allowed"
+      });
+    }
+
+    const base64 = String(body.data)
+      .replace(/^data:image\/[a-zA-Z0-9.+-]+;base64,/, "");
+
+    const buffer = Buffer.from(base64, "base64");
+
+    if (!buffer.length) {
+      return res.status(400).json({
+        error: "Image data is empty"
       });
     }
 
@@ -46,7 +57,7 @@ module.exports = async (req, res) => {
 
     const blob = await put(
       pathname,
-      file,
+      buffer,
       {
         access: "private",
         addRandomSuffix: false,
