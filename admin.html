@@ -23,6 +23,7 @@ button{padding:10px 14px;border:0;border-radius:6px;background:#596442;color:#ff
 .status{font-weight:800}
 .hide{display:none}
 .preview{max-width:180px;max-height:180px;margin:8px 0;border-radius:8px;display:none}
+#uploadMsg{margin-top:8px}
 @media(max-width:600px){
 .top{flex-direction:column;align-items:flex-start}
 }
@@ -52,6 +53,7 @@ button{padding:10px 14px;border:0;border-radius:6px;background:#596442;color:#ff
 <div id="app" class="hide">
 
 <div class="panel">
+
 <h2>Products</h2>
 
 <div class="grid" id="products"></div>
@@ -66,12 +68,12 @@ button{padding:10px 14px;border:0;border-radius:6px;background:#596442;color:#ff
 
 <div>
 <label>Name</label>
-<input id="name">
+<input id="name" placeholder="Product name">
 </div>
 
 <div>
 <label>Price (₹)</label>
-<input id="price" type="number">
+<input id="price" type="number" placeholder="299">
 </div>
 
 <div>
@@ -112,9 +114,13 @@ button{padding:10px 14px;border:0;border-radius:6px;background:#596442;color:#ff
 </div>
 
 <div class="panel">
+
 <h2>Orders</h2>
+
 <button onclick="loadOrders()">REFRESH ORDERS</button>
+
 <div id="orders"></div>
+
 </div>
 
 </div>
@@ -123,6 +129,8 @@ button{padding:10px 14px;border:0;border-radius:6px;background:#596442;color:#ff
 <script>
 
 let token='';
+
+/* API helper */
 
 const api=(u,o={})=>
 fetch(u,{
@@ -133,6 +141,8 @@ headers:{
 Authorization:'Bearer '+token
 }
 });
+
+/* LOGIN */
 
 async function login(){
 
@@ -149,30 +159,41 @@ body:JSON.stringify({password})
 const d=await r.json();
 
 if(!r.ok){
+
 document.getElementById('msg').textContent=
 d.error||'Login failed';
+
 return;
+
 }
 
 token=password;
 
 localStorage.setItem('adminToken',token);
 
-document.getElementById('login').classList.add('hide');
-document.getElementById('app').classList.remove('hide');
+document.getElementById('login')
+.classList.add('hide');
+
+document.getElementById('app')
+.classList.remove('hide');
 
 loadProducts();
 loadOrders();
 
 }
 
+/* LOAD PRODUCTS */
+
 async function loadProducts(){
 
 const r=await api('/api/products');
 
 if(r.status===401){
+
 logout();
+
 return;
+
 }
 
 const d=await r.json();
@@ -182,15 +203,19 @@ document.getElementById('products').innerHTML=
 
 <div class="item">
 
-<img src="${p.img||''}">
+${p.img ? `<img src="${p.img}" onerror="this.style.display='none'">` : ''}
 
 <b>${p.name}</b>
 
 <div>₹${p.price}</div>
 
-<div><b>Size:</b> ${p.sizes||'Not specified'}</div>
+<div>
+<b>Size:</b> ${p.sizes||'Not specified'}
+</div>
 
-<div><b>Fabric:</b> ${p.fabric||'Not specified'}</div>
+<div>
+<b>Fabric:</b> ${p.fabric||'Not specified'}
+</div>
 
 <div class="muted">
 ${p.description||''}
@@ -202,7 +227,8 @@ ${p.description||''}
 EDIT
 </button>
 
-<button class="danger" onclick="deleteProduct(${p.id})">
+<button class="danger"
+onclick="deleteProduct(${p.id})">
 DELETE
 </button>
 
@@ -214,120 +240,221 @@ DELETE
 
 }
 
+/* EDIT PRODUCT */
+
 function editProduct(p){
 
 document.getElementById('pid').value=p.id;
-document.getElementById('name').value=p.name;
-document.getElementById('price').value=p.price;
+
+document.getElementById('name').value=p.name||'';
+
+document.getElementById('price').value=p.price||'';
+
 document.getElementById('sizes').value=p.sizes||'';
+
 document.getElementById('fabric').value=p.fabric||'';
+
 document.getElementById('img').value=p.img||'';
-document.getElementById('desc').value=p.description||'';
+
+document.getElementById('desc').value=
+p.description||'Premium quality';
 
 document.getElementById('photoFile').value='';
+
 document.getElementById('preview').style.display='none';
+
+document.getElementById('uploadMsg').textContent='';
 
 scrollTo(0,document.body.scrollHeight);
 
 }
 
+/* CLEAR */
+
 function clearForm(){
 
-['pid','name','price','sizes','fabric','img'].forEach(
+[
+'pid',
+'name',
+'price',
+'sizes',
+'fabric',
+'img'
+].forEach(
 x=>document.getElementById(x).value=''
 );
 
 document.getElementById('photoFile').value='';
+
 document.getElementById('preview').style.display='none';
+
 document.getElementById('uploadMsg').textContent='';
 
-document.getElementById('desc').value='Premium quality';
+document.getElementById('desc').value=
+'Premium quality';
 
 }
 
+/* PHOTO PREVIEW */
+
+document.getElementById('photoFile')
+.addEventListener('change',function(){
+
+const file=this.files[0];
+
+if(!file)return;
+
+const preview=
+document.getElementById('preview');
+
+preview.src=
+URL.createObjectURL(file);
+
+preview.style.display='block';
+
+});
+
+/* UPLOAD PHOTO */
+
 async function uploadPhoto(){
 
-const file=document.getElementById('photoFile').files[0];
+const file=
+document.getElementById('photoFile').files[0];
 
 if(!file)return null;
 
-const msg=document.getElementById('uploadMsg');
+const msg=
+document.getElementById('uploadMsg');
 
 msg.textContent='Uploading photo...';
 
+const dataUrl=
+await new Promise((resolve,reject)=>{
+
+const reader=new FileReader();
+
+reader.onload=()=>{
+resolve(reader.result);
+};
+
+reader.onerror=()=>{
+reject(
+new Error('Photo read failed')
+);
+};
+
+reader.readAsDataURL(file);
+
+});
+
 const r=await fetch('/api/upload',{
 method:'POST',
+
 headers:{
-'Content-Type':file.type,
-Authorization:'Bearer '+token
+'Content-Type':'application/json',
+'Authorization':'Bearer '+token
 },
-body:file
+
+body:JSON.stringify({
+
+data:dataUrl,
+
+contentType:file.type
+
+})
+
 });
 
 const d=await r.json();
 
 if(!r.ok){
 
-throw new Error(d.error||'Photo upload failed');
+throw new Error(
+d.error||'Photo upload failed'
+);
 
 }
 
-msg.textContent='Photo uploaded successfully';
+msg.textContent=
+'Photo uploaded successfully';
 
-return '/api/product-image?key='+encodeURIComponent(d.pathname);
+return '/api/product-image?key='+
+encodeURIComponent(d.pathname);
 
 }
 
-document.getElementById('photoFile').addEventListener('change',function(){
-
-const file=this.files[0];
-
-if(!file)return;
-
-const preview=document.getElementById('preview');
-
-preview.src=URL.createObjectURL(file);
-preview.style.display='block';
-
-});
+/* SAVE PRODUCT */
 
 async function saveProduct(){
 
 try{
 
-let imageUrl=document.getElementById('img').value;
+let imageUrl=
+document.getElementById('img').value;
 
-const file=document.getElementById('photoFile').files[0];
+const file=
+document.getElementById('photoFile').files[0];
 
 if(file){
 
-imageUrl=await uploadPhoto();
+imageUrl=
+await uploadPhoto();
 
 }
 
 const body={
 
-id:Number(document.getElementById('pid').value)||undefined,
+id:
+Number(
+document.getElementById('pid').value
+)||undefined,
 
-name:document.getElementById('name').value,
+name:
+document.getElementById('name').value,
 
-price:Number(document.getElementById('price').value),
+price:
+Number(
+document.getElementById('price').value
+),
 
-sizes:document.getElementById('sizes').value,
+sizes:
+document.getElementById('sizes').value,
 
-fabric:document.getElementById('fabric').value,
+fabric:
+document.getElementById('fabric').value,
 
 img:imageUrl,
 
-description:document.getElementById('desc').value
+description:
+document.getElementById('desc').value
 
 };
 
-const method=body.id?'PUT':'POST';
+if(!body.name){
+
+alert('Product name is required');
+
+return;
+
+}
+
+if(!Number.isFinite(body.price)){
+
+alert('Valid price is required');
+
+return;
+
+}
+
+const method=
+body.id?'PUT':'POST';
 
 const r=await api('/api/products',{
+
 method,
+
 body:JSON.stringify(body)
+
 });
 
 const d=await r.json();
@@ -335,6 +462,7 @@ const d=await r.json();
 if(!r.ok){
 
 alert(d.error||'Save failed');
+
 return;
 
 }
@@ -342,28 +470,41 @@ return;
 alert('Product saved successfully');
 
 clearForm();
+
 loadProducts();
 
 }catch(error){
 
-alert(error.message||'Something went wrong');
+alert(
+error.message||
+'Something went wrong'
+);
 
 }
 
 }
+
+/* DELETE PRODUCT */
 
 async function deleteProduct(id){
 
-if(!confirm('Delete this product?'))return;
+if(!confirm(
+'Delete this product?'
+))return;
 
-const r=await api('/api/products?id='+id,{
+const r=
+await api('/api/products?id='+id,{
 method:'DELETE'
 });
 
 if(!r.ok){
 
 const d=await r.json();
-alert(d.error||'Delete failed');
+
+alert(
+d.error||'Delete failed'
+);
+
 return;
 
 }
@@ -372,14 +513,19 @@ loadProducts();
 
 }
 
+/* LOAD ORDERS */
+
 async function loadOrders(){
 
-const r=await api('/api/orders');
+const r=
+await api('/api/orders');
 
 if(!r.ok){
 
-document.getElementById('orders').textContent=
+document.getElementById('orders')
+.textContent=
 'Unable to load orders';
+
 return;
 
 }
@@ -391,9 +537,15 @@ document.getElementById('orders').innerHTML=
 
 <div class="order">
 
-<b>${o.customer?.name||'Customer'}</b>
+<b>
+${o.customer?.name||'Customer'}
+</b>
+
 — ₹${o.amount}
-— <span class="status">${o.status}</span>
+
+— <span class="status">
+${o.status}
+</span>
 
 <div>
 ${o.customer?.mobile||''}
@@ -404,13 +556,21 @@ ${o.address||''}, ${o.pin||''}
 </div>
 
 <div class="muted">
-${o.items?.map(i=>`${i.name} × ${i.qty}`).join(', ')||''}
+${o.items?.map(
+i=>`${i.name} × ${i.qty}`
+).join(', ')||''}
 </div>
 
 <div class="muted">
-Razorpay: ${o.paymentId||'Pending'}
+
+Razorpay:
+${o.paymentId||'Pending'}
+
 |
-Shiprocket: ${o.shiprocketOrderId||'Not created'}
+
+Shiprocket:
+${o.shiprocketOrderId||'Not created'}
+
 </div>
 
 <div class="row">
@@ -426,11 +586,13 @@ Shiprocket: ${o.shiprocketOrderId||'Not created'}
 
 </select>
 
-<button onclick="statusUpdate('${o.id}')">
+<button
+onclick="statusUpdate('${o.id}')">
 UPDATE STATUS
 </button>
 
-<button onclick="ship('${o.id}')">
+<button
+onclick="ship('${o.id}')">
 SEND TO SHIPROCKET
 </button>
 
@@ -442,7 +604,8 @@ SEND TO SHIPROCKET
 
 (d.orders||[]).forEach(o=>{
 
-const s=document.getElementById('s-'+o.id);
+const s=
+document.getElementById('s-'+o.id);
 
 if(s)s.value=o.status;
 
@@ -450,25 +613,41 @@ if(s)s.value=o.status;
 
 }
 
+/* UPDATE STATUS */
+
 async function statusUpdate(id){
 
 const status=
 document.getElementById('s-'+id).value;
 
-const r=await api('/api/orders',{
+const r=
+await api('/api/orders',{
+
 method:'PATCH',
+
 body:JSON.stringify({
+
 id,
+
 status
+
 })
+
 });
 
-if(!r.ok)
+if(!r.ok){
+
 alert('Update failed');
-else
+
+}else{
+
 loadOrders();
 
 }
+
+}
+
+/* SHIPROCKET */
 
 async function ship(id){
 
@@ -476,18 +655,28 @@ if(!confirm(
 'Create this order in Shiprocket?'
 ))return;
 
-const r=await api('/api/shiprocket',{
+const r=
+await api('/api/shiprocket',{
+
 method:'POST',
+
 body:JSON.stringify({
+
 orderId:id
+
 })
+
 });
 
 const d=await r.json();
 
 if(!r.ok){
 
-alert(d.error||'Shiprocket error');
+alert(
+d.error||
+d.message||
+'Shiprocket error'
+);
 
 }else{
 
@@ -501,18 +690,26 @@ loadOrders();
 
 }
 
+/* LOGOUT */
+
 function logout(){
 
 token='';
 
-localStorage.removeItem('adminToken');
+localStorage.removeItem(
+'adminToken'
+);
 
 location.reload();
 
 }
 
+/* SAVED LOGIN */
+
 const saved=
-localStorage.getItem('adminToken');
+localStorage.getItem(
+'adminToken'
+);
 
 if(saved){
 
@@ -522,9 +719,12 @@ loginWithSaved();
 
 }
 
+/* AUTO LOGIN */
+
 async function loginWithSaved(){
 
-const r=await api('/api/orders');
+const r=
+await api('/api/orders');
 
 if(r.ok){
 
@@ -535,6 +735,7 @@ document.getElementById('app')
 .classList.remove('hide');
 
 loadProducts();
+
 loadOrders();
 
 }else{
