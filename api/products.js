@@ -9,21 +9,18 @@ function auth(req) {
 
 module.exports = async (req, res) => {
   try {
-    // Products read
     if (req.method === "GET") {
       return res.status(200).json({
         products: await getJSON("products", [])
       });
     }
 
-    // Admin authentication
     if (!auth(req)) {
       return res.status(401).json({
         error: "Unauthorized"
       });
     }
 
-    // Add / Update product
     if (req.method === "POST" || req.method === "PUT") {
       const body = req.body || {};
 
@@ -42,6 +39,8 @@ module.exports = async (req, res) => {
         id: Number(body.id) || Date.now(),
         name: String(body.name).trim(),
         price: Math.round(Number(body.price)),
+        sizes: String(body.sizes || "").trim(),
+        fabric: String(body.fabric || "").trim(),
         img: String(body.img || "").trim(),
         description: String(
           body.description || "Premium quality"
@@ -62,11 +61,11 @@ module.exports = async (req, res) => {
       });
     }
 
-    // Delete product
     if (req.method === "DELETE") {
       const id = Number(req.query.id);
 
       const list = await getJSON("products", []);
+
       const updatedList = list.filter(
         (item) => item.id !== id
       );
@@ -81,6 +80,7 @@ module.exports = async (req, res) => {
     return res.status(405).json({
       error: "Method not allowed"
     });
+
   } catch (error) {
     console.error("Products API error:", error);
 
