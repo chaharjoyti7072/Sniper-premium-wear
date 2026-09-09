@@ -22,6 +22,7 @@ button{padding:10px 14px;border:0;border-radius:6px;background:#596442;color:#ff
 .order{border:1px solid #ddd;padding:12px;border-radius:8px;margin:10px 0}
 .status{font-weight:800}
 .hide{display:none}
+.preview{max-width:180px;max-height:180px;margin:8px 0;border-radius:8px;display:none}
 @media(max-width:600px){
 .top{flex-direction:column;align-items:flex-start}
 }
@@ -89,6 +90,12 @@ button{padding:10px 14px;border:0;border-radius:6px;background:#596442;color:#ff
 </div>
 
 <div>
+<label>Product Photo</label>
+<input id="photoFile" type="file" accept="image/*">
+<img id="preview" class="preview">
+</div>
+
+<div>
 <label>Description</label>
 <input id="desc" value="Premium quality">
 </div>
@@ -99,6 +106,8 @@ button{padding:10px 14px;border:0;border-radius:6px;background:#596442;color:#ff
 <button onclick="saveProduct()">SAVE PRODUCT</button>
 <button onclick="clearForm()">CLEAR</button>
 </div>
+
+<p id="uploadMsg" class="muted"></p>
 
 </div>
 
@@ -208,18 +217,15 @@ DELETE
 function editProduct(p){
 
 document.getElementById('pid').value=p.id;
-
 document.getElementById('name').value=p.name;
-
 document.getElementById('price').value=p.price;
-
 document.getElementById('sizes').value=p.sizes||'';
-
 document.getElementById('fabric').value=p.fabric||'';
-
 document.getElementById('img').value=p.img||'';
-
 document.getElementById('desc').value=p.description||'';
+
+document.getElementById('photoFile').value='';
+document.getElementById('preview').style.display='none';
 
 scrollTo(0,document.body.scrollHeight);
 
@@ -231,11 +237,73 @@ function clearForm(){
 x=>document.getElementById(x).value=''
 );
 
+document.getElementById('photoFile').value='';
+document.getElementById('preview').style.display='none';
+document.getElementById('uploadMsg').textContent='';
+
 document.getElementById('desc').value='Premium quality';
 
 }
 
+async function uploadPhoto(){
+
+const file=document.getElementById('photoFile').files[0];
+
+if(!file)return null;
+
+const msg=document.getElementById('uploadMsg');
+
+msg.textContent='Uploading photo...';
+
+const r=await fetch('/api/upload',{
+method:'POST',
+headers:{
+'Content-Type':file.type,
+Authorization:'Bearer '+token
+},
+body:file
+});
+
+const d=await r.json();
+
+if(!r.ok){
+
+throw new Error(d.error||'Photo upload failed');
+
+}
+
+msg.textContent='Photo uploaded successfully';
+
+return '/api/product-image?key='+encodeURIComponent(d.pathname);
+
+}
+
+document.getElementById('photoFile').addEventListener('change',function(){
+
+const file=this.files[0];
+
+if(!file)return;
+
+const preview=document.getElementById('preview');
+
+preview.src=URL.createObjectURL(file);
+preview.style.display='block';
+
+});
+
 async function saveProduct(){
+
+try{
+
+let imageUrl=document.getElementById('img').value;
+
+const file=document.getElementById('photoFile').files[0];
+
+if(file){
+
+imageUrl=await uploadPhoto();
+
+}
 
 const body={
 
@@ -249,7 +317,7 @@ sizes:document.getElementById('sizes').value,
 
 fabric:document.getElementById('fabric').value,
 
-img:document.getElementById('img').value,
+img:imageUrl,
 
 description:document.getElementById('desc').value
 
@@ -271,8 +339,16 @@ return;
 
 }
 
+alert('Product saved successfully');
+
 clearForm();
 loadProducts();
+
+}catch(error){
+
+alert(error.message||'Something went wrong');
+
+}
 
 }
 
@@ -473,7 +549,3 @@ logout();
 
 </body>
 </html>
-<div>
-<label>Product Photo</label>
-<input id="photoFile" type="file" accept="image/*">
-</div>
