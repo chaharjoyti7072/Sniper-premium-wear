@@ -51,16 +51,30 @@ module.exports = async (req, res) => {
         req.body || {};
 
 
+      /* PRODUCT NAME */
+
+      if (!body.name) {
+
+        return res.status(400).json({
+          error:
+            "Product name is required"
+        });
+
+      }
+
+
+      /* PRICE */
+
       if (
-        !body.name ||
         !Number.isFinite(
           Number(body.price)
-        )
+        ) ||
+        Number(body.price) <= 0
       ) {
 
         return res.status(400).json({
           error:
-            "Name and valid price are required"
+            "Valid price is required"
         });
 
       }
@@ -73,41 +87,159 @@ module.exports = async (req, res) => {
         );
 
 
+      /* =========================
+         IMAGES
+      ========================= */
+
+      let images = [];
+
+
+      /*
+        New 5-photo system
+      */
+
+      if (
+        Array.isArray(body.images)
+      ) {
+
+        images =
+          body.images
+            .filter(Boolean)
+            .map(function(image) {
+              return String(image).trim();
+            })
+            .filter(Boolean);
+
+      }
+
+
+      /*
+        Support old photos field
+      */
+
+      if (
+        Array.isArray(body.photos)
+      ) {
+
+        images = [
+          ...images,
+          ...body.photos
+            .filter(Boolean)
+            .map(function(image) {
+              return String(image).trim();
+            })
+            .filter(Boolean)
+        ];
+
+      }
+
+
+      /*
+        Support old main image
+      */
+
+      const oldImg =
+        String(
+          body.img || ""
+        ).trim();
+
+
+      if (
+        oldImg &&
+        !images.includes(oldImg)
+      ) {
+
+        images.unshift(oldImg);
+
+      }
+
+
+      /*
+        Remove duplicate images
+        and keep maximum 5
+      */
+
+      images = [
+        ...new Set(images)
+      ].slice(0, 5);
+
+
+      /*
+        Main image is always
+        first image
+      */
+
+      const mainImage =
+        images.length
+        ? images[0]
+        : "";
+
+
+      /* =========================
+         PRODUCT OBJECT
+      ========================= */
+
       const product = {
 
         id:
           Number(body.id) ||
           Date.now(),
 
+
         name:
           String(
             body.name
           ).trim(),
+
 
         category:
           String(
             body.category || ""
           ).trim(),
 
+
+        /*
+          Featured ON / OFF
+        */
+
+        featured:
+          body.featured === true ||
+          body.featured === "true",
+
+
         price:
           Math.round(
             Number(body.price)
           ),
+
 
         sizes:
           String(
             body.sizes || ""
           ).trim(),
 
+
         fabric:
           String(
             body.fabric || ""
           ).trim(),
 
+
+        /*
+          Main image
+        */
+
         img:
-          String(
-            body.img || ""
-          ).trim(),
+          mainImage,
+
+
+        /*
+          Maximum 5 product photos
+        */
+
+        images:
+          images,
+
 
         description:
           String(
@@ -118,21 +250,74 @@ module.exports = async (req, res) => {
       };
 
 
-      const updatedList =
+      /* =========================
+         UPDATE / ADD
+      ========================= */
+
+      let updatedList;
+
+
+      if (
         req.method === "PUT"
+      ) {
 
-        ? list.map(
-            item =>
+        updatedList =
+          list.map(function(item) {
+
+            /*
+              Keep old images if
+              editing product without
+              selecting new photos.
+            */
+
+            if (
+              item.id === product.id &&
+              images.length === 0
+            ) {
+
+              return {
+                ...item,
+
+                ...product,
+
+                img:
+                  item.img || "",
+
+                images:
+                  Array.isArray(item.images)
+                  ? item.images
+                  : (
+                      item.img
+                      ? [item.img]
+                      : []
+                    )
+              };
+
+            }
+
+
+            return (
               item.id === product.id
-                ? product
-                : item
-          )
+              ? product
+              : item
+            );
 
-        : [
-            ...list,
-            product
-          ];
+          });
 
+
+      } else {
+
+        updatedList = [
+          ...list,
+          product
+        ];
+
+      }
+
+
+      /* =========================
+         SAVE
+      ========================= */
 
       await putJSON(
         "products",
@@ -152,7 +337,9 @@ module.exports = async (req, res) => {
        DELETE PRODUCT
     ========================= */
 
-    if (req.method === "DELETE") {
+    if (
+      req.method === "DELETE"
+    ) {
 
       const id =
         Number(
@@ -168,10 +355,11 @@ module.exports = async (req, res) => {
 
 
       const updatedList =
-        list.filter(
-          item =>
-            item.id !== id
-        );
+        list.filter(function(item) {
+
+          return item.id !== id;
+
+        });
 
 
       await putJSON(
@@ -187,6 +375,10 @@ module.exports = async (req, res) => {
 
     }
 
+
+    /* =========================
+       METHOD NOT ALLOWED
+    ========================= */
 
     return res.status(405).json({
       error:
