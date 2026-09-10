@@ -108,8 +108,10 @@ button:disabled{
 }
 
 .preview{
+  width:100%;
   max-width:180px;
-  max-height:180px;
+  height:150px;
+  object-fit:cover;
   display:none;
   margin:8px 0;
   border-radius:8px;
@@ -120,7 +122,7 @@ button:disabled{
   margin-top:12px;
   padding:10px;
   border-radius:7px;
-  background:#eeeeE4;
+  background:#eeeee4;
 }
 
 .hide{
@@ -138,7 +140,87 @@ button:disabled{
   margin:7px 0;
 }
 
+.featured-badge{
+  display:inline-block;
+  background:#171a14;
+  color:#fff;
+  padding:5px 9px;
+  border-radius:5px;
+  font-size:12px;
+  font-weight:bold;
+  margin:7px 0;
+}
+
+.photo-box{
+  border:1px solid #ddd;
+  border-radius:8px;
+  padding:10px;
+  margin-bottom:10px;
+}
+
+.photo-preview{
+  display:none;
+  width:100%;
+  max-width:180px;
+  height:150px;
+  object-fit:cover;
+  margin-top:8px;
+  border-radius:7px;
+}
+
+.photo-list{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:7px;
+  margin-top:10px;
+}
+
+.photo-list img{
+  width:100%;
+  height:100px;
+  object-fit:cover;
+  border-radius:6px;
+  border:1px solid #ddd;
+}
+
+.existing-photos{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(100px,1fr));
+  gap:8px;
+  margin:10px 0;
+}
+
+.existing-photo{
+  position:relative;
+}
+
+.existing-photo img{
+  width:100%;
+  height:110px;
+  object-fit:cover;
+  border-radius:7px;
+  border:1px solid #ddd;
+}
+
+.photo-number{
+  position:absolute;
+  left:5px;
+  top:5px;
+  background:#111;
+  color:#fff;
+  font-size:11px;
+  padding:3px 6px;
+  border-radius:4px;
+}
+
+.small-note{
+  font-size:12px;
+  color:#666;
+  margin:5px 0 12px;
+}
+
 @media(max-width:600px){
+
   .top{
     flex-direction:column;
     align-items:flex-start;
@@ -147,6 +229,11 @@ button:disabled{
   .row button{
     width:100%;
   }
+
+  .photo-list{
+    grid-template-columns:repeat(2,1fr);
+  }
+
 }
 </style>
 </head>
@@ -260,6 +347,25 @@ Footwear
 
 <div>
 
+<label>Featured Product</label>
+
+<select id="featured">
+
+<option value="false">
+No - Featured se hatao
+</option>
+
+<option value="true">
+Yes - Featured mein dikhao
+</option>
+
+</select>
+
+</div>
+
+
+<div>
+
 <label>Price ₹</label>
 
 <input
@@ -297,30 +403,126 @@ Footwear
 
 <div>
 
-<label>Photo URL</label>
+<label>Photo URL 1</label>
 
 <input
   id="img"
-  placeholder="Photo URL"
+  placeholder="Main Photo URL"
+>
+
+</div>
+
+</div>
+
+
+<!-- MULTI PHOTO UPLOAD -->
+
+<h3>Product Photos</h3>
+
+<div class="small-note">
+Maximum 5 photos. Front, Back, Side, Close-up etc.
+</div>
+
+
+<div id="existingPhotos"></div>
+
+
+<div class="grid">
+
+
+<div class="photo-box">
+
+<label>Photo 1</label>
+
+<input
+  id="photoFile1"
+  type="file"
+  accept="image/*"
+  onchange="previewPhoto(1)"
+>
+
+<img
+  id="preview1"
+  class="photo-preview"
 >
 
 </div>
 
 
-<div>
+<div class="photo-box">
 
-<label>Product Photo</label>
+<label>Photo 2</label>
 
 <input
-  id="photoFile"
+  id="photoFile2"
   type="file"
   accept="image/*"
+  onchange="previewPhoto(2)"
 >
 
 <img
-  id="preview"
-  class="preview"
+  id="preview2"
+  class="photo-preview"
 >
+
+</div>
+
+
+<div class="photo-box">
+
+<label>Photo 3</label>
+
+<input
+  id="photoFile3"
+  type="file"
+  accept="image/*"
+  onchange="previewPhoto(3)"
+>
+
+<img
+  id="preview3"
+  class="photo-preview"
+>
+
+</div>
+
+
+<div class="photo-box">
+
+<label>Photo 4</label>
+
+<input
+  id="photoFile4"
+  type="file"
+  accept="image/*"
+  onchange="previewPhoto(4)"
+>
+
+<img
+  id="preview4"
+  class="photo-preview"
+>
+
+</div>
+
+
+<div class="photo-box">
+
+<label>Photo 5</label>
+
+<input
+  id="photoFile5"
+  type="file"
+  accept="image/*"
+  onchange="previewPhoto(5)"
+>
+
+<img
+  id="preview5"
+  class="photo-preview"
+>
+
+</div>
 
 </div>
 
@@ -333,8 +535,6 @@ Footwear
   id="desc"
   value="Premium quality"
 >
-
-</div>
 
 </div>
 
@@ -390,6 +590,8 @@ REFRESH ORDERS
 <script>
 
 let token = "";
+
+window.productList = [];
 
 
 /* =========================
@@ -515,24 +717,54 @@ async function loadProducts(){
 
     box.innerHTML = list.map(function(p){
 
+      const images =
+        getProductImages(p);
+
+      const imageHtml =
+        images.length
+        ? `
+          <div class="photo-list">
+            ${
+              images.map(function(src){
+                return `
+                  <img
+                    src="${safe(src)}"
+                    alt="${safe(p.name)}"
+                  >
+                `;
+              }).join("")
+            }
+          </div>
+        `
+        : (
+          p.img
+          ? `
+            <img
+              src="${safe(p.img)}"
+              alt="${safe(p.name)}"
+            >
+          `
+          : ""
+        );
+
+
       return `
         <div class="item">
 
-          ${
-            p.img
-            ? `
-              <img
-                src="${safe(p.img)}"
-                alt="${safe(p.name)}"
-              >
-            `
-            : ""
-          }
+          ${imageHtml}
 
           <h3>${safe(p.name)}</h3>
 
           <div class="category-badge">
             ${safe(p.category || "Category not set")}
+          </div>
+
+          <div class="featured-badge">
+            ${
+              p.featured === true
+              ? "⭐ FEATURED ON"
+              : "FEATURED OFF"
+            }
           </div>
 
           <div>
@@ -590,6 +822,54 @@ async function loadProducts(){
 
 
 /* =========================
+   GET PRODUCT IMAGES
+========================= */
+
+function getProductImages(p){
+
+  let images = [];
+
+  if(Array.isArray(p.images)){
+
+    images =
+      p.images
+        .filter(Boolean)
+        .map(function(x){
+          return String(x).trim();
+        })
+        .filter(Boolean);
+
+  }
+
+  if(p.img){
+
+    images.unshift(
+      String(p.img).trim()
+    );
+
+  }
+
+  if(Array.isArray(p.photos)){
+
+    images = [
+      ...images,
+      ...p.photos
+        .filter(Boolean)
+        .map(function(x){
+          return String(x).trim();
+        })
+    ];
+
+  }
+
+  return [
+    ...new Set(images)
+  ].slice(0,5);
+
+}
+
+
+/* =========================
    EDIT PRODUCT
 ========================= */
 
@@ -618,6 +898,11 @@ function editProductById(id){
   document.getElementById("category").value =
     p.category || "";
 
+  document.getElementById("featured").value =
+    p.featured === true
+    ? "true"
+    : "false";
+
   document.getElementById("price").value =
     p.price || "";
 
@@ -633,11 +918,80 @@ function editProductById(id){
   document.getElementById("desc").value =
     p.description || "Premium quality";
 
-  document.getElementById("photoFile").value =
-    "";
 
-  document.getElementById("preview").style.display =
-    "none";
+  /* SHOW EXISTING PHOTOS */
+
+  const images =
+    getProductImages(p);
+
+  const existing =
+    document.getElementById(
+      "existingPhotos"
+    );
+
+  if(images.length){
+
+    existing.innerHTML = `
+
+      <div class="small-note">
+        Existing product photos:
+      </div>
+
+      <div class="existing-photos">
+
+        ${
+          images.map(function(src,index){
+
+            return `
+
+              <div class="existing-photo">
+
+                <span class="photo-number">
+                  ${index + 1}
+                </span>
+
+                <img
+                  src="${safe(src)}"
+                  alt="Product photo"
+                >
+
+              </div>
+
+            `;
+
+          }).join("")
+        }
+
+      </div>
+
+    `;
+
+  }else{
+
+    existing.innerHTML = "";
+
+  }
+
+
+  /* CLEAR NEW FILE INPUTS */
+
+  for(let i=1;i<=5;i++){
+
+    document.getElementById(
+      "photoFile"+i
+    ).value = "";
+
+    document.getElementById(
+      "preview"+i
+    ).style.display = "none";
+
+  }
+
+
+  document.getElementById("uploadMsg")
+    .textContent =
+      "Existing photos shown above. Select new photos only if you want to replace them.";
+
 
   window.scrollTo({
     top:document.body.scrollHeight,
@@ -659,6 +1013,9 @@ function clearForm(){
 
   document.getElementById("category").value = "";
 
+  document.getElementById("featured").value =
+    "false";
+
   document.getElementById("price").value = "";
 
   document.getElementById("sizes").value = "";
@@ -670,13 +1027,28 @@ function clearForm(){
   document.getElementById("desc").value =
     "Premium quality";
 
-  document.getElementById("photoFile").value = "";
 
-  document.getElementById("preview").style.display =
-    "none";
+  for(let i=1;i<=5;i++){
 
-  document.getElementById("uploadMsg").textContent =
-    "";
+    document.getElementById(
+      "photoFile"+i
+    ).value = "";
+
+    document.getElementById(
+      "preview"+i
+    ).style.display = "none";
+
+  }
+
+
+  document.getElementById(
+    "existingPhotos"
+  ).innerHTML = "";
+
+
+  document.getElementById(
+    "uploadMsg"
+  ).textContent = "";
 
 }
 
@@ -685,41 +1057,44 @@ function clearForm(){
    PHOTO PREVIEW
 ========================= */
 
-document
-  .getElementById("photoFile")
-  .addEventListener("change",function(){
+function previewPhoto(number){
 
-    const file = this.files[0];
+  const file =
+    document.getElementById(
+      "photoFile"+number
+    ).files[0];
 
-    if(!file) return;
+  const preview =
+    document.getElementById(
+      "preview"+number
+    );
 
-    const preview =
-      document.getElementById("preview");
-
-    preview.src =
-      URL.createObjectURL(file);
+  if(!file){
 
     preview.style.display =
-      "block";
+      "none";
 
-  });
+    return;
+
+  }
+
+  preview.src =
+    URL.createObjectURL(file);
+
+  preview.style.display =
+    "block";
+
+}
 
 
 /* =========================
-   UPLOAD PHOTO
+   UPLOAD ONE PHOTO
 ========================= */
 
-async function uploadPhoto(){
-
-  const file =
-    document.getElementById("photoFile")
-    .files[0];
+async function uploadPhotoFile(file){
 
   if(!file) return null;
 
-  document.getElementById("uploadMsg")
-    .textContent =
-      "Uploading photo...";
 
   const dataUrl =
     await new Promise(function(resolve,reject){
@@ -748,11 +1123,15 @@ async function uploadPhoto(){
     "/api/upload",
     {
       method:"POST",
+
       headers:{
-        "Content-Type":"application/json",
+        "Content-Type":
+          "application/json",
+
         "Authorization":
           "Bearer " + token
       },
+
       body:JSON.stringify({
         data:dataUrl,
         contentType:file.type
@@ -782,19 +1161,18 @@ async function uploadPhoto(){
   if(!r.ok){
 
     throw new Error(
-      d.error || "Photo upload failed"
+      d.error ||
+      "Photo upload failed"
     );
 
   }
 
 
-  document.getElementById("uploadMsg")
-    .textContent =
-      "Photo uploaded successfully.";
-
   return (
     "/api/product-image?key=" +
-    encodeURIComponent(d.pathname)
+    encodeURIComponent(
+      d.pathname
+    )
   );
 
 }
@@ -807,22 +1185,6 @@ async function uploadPhoto(){
 async function saveProduct(){
 
   try{
-
-    let imageUrl =
-      document.getElementById("img")
-      .value.trim();
-
-    const file =
-      document.getElementById("photoFile")
-      .files[0];
-
-    if(file){
-
-      imageUrl =
-        await uploadPhoto();
-
-    }
-
 
     const name =
       document.getElementById("name")
@@ -872,11 +1234,104 @@ async function saveProduct(){
     }
 
 
+    const selectedFiles = [];
+
+    for(let i=1;i<=5;i++){
+
+      const file =
+        document.getElementById(
+          "photoFile"+i
+        ).files[0];
+
+      if(file){
+
+        selectedFiles.push(file);
+
+      }
+
+    }
+
+
+    if(selectedFiles.length){
+
+      document.getElementById(
+        "uploadMsg"
+      ).textContent =
+        "Uploading " +
+        selectedFiles.length +
+        " photo(s)...";
+
+    }
+
+
+    let uploadedImages = [];
+
+    for(
+      let i=0;
+      i<selectedFiles.length;
+      i++
+    ){
+
+      const uploaded =
+        await uploadPhotoFile(
+          selectedFiles[i]
+        );
+
+      if(uploaded){
+
+        uploadedImages.push(
+          uploaded
+        );
+
+      }
+
+      document.getElementById(
+        "uploadMsg"
+      ).textContent =
+        "Uploaded " +
+        (i+1) +
+        " of " +
+        selectedFiles.length +
+        " photo(s)...";
+
+    }
+
+
+    const oldImg =
+      document.getElementById("img")
+      .value.trim();
+
+
+    /*
+      If new photos are selected,
+      first photo becomes main photo.
+
+      If no new photos are selected,
+      keep existing photo URL.
+    */
+
+    let imageUrl =
+      oldImg;
+
+
+    if(uploadedImages.length){
+
+      imageUrl =
+        uploadedImages[0];
+
+    }
+
+
     const body = {
 
       name:name,
 
       category:category,
+
+      featured:
+        document.getElementById(
+          "featured"
+        ).value === "true",
 
       price:price,
 
@@ -889,6 +1344,11 @@ async function saveProduct(){
         .value.trim(),
 
       img:imageUrl,
+
+      images:
+        uploadedImages.length
+        ? uploadedImages
+        : undefined,
 
       description:
         document.getElementById("desc")
@@ -947,6 +1407,8 @@ async function saveProduct(){
     await loadProducts();
 
   }catch(error){
+
+    console.error(error);
 
     alert(
       "❌ Error:\n\n" +
@@ -1348,6 +1810,7 @@ async function verifyPayment(id){
         "/api/payment-status",
         {
           method:"POST",
+
           headers:{
             "Content-Type":
               "application/json",
@@ -1355,6 +1818,7 @@ async function verifyPayment(id){
             "Authorization":
               "Bearer " + token
           },
+
           body:JSON.stringify({
             orderId:id
           })
@@ -1468,10 +1932,12 @@ async function statusUpdate(id){
         "/api/orders",
         {
           method:"PATCH",
+
           body:JSON.stringify({
             id:id,
             status:status
           })
+
         }
       );
 
@@ -1528,9 +1994,11 @@ async function ship(id){
         "/api/shiprocket-order",
         {
           method:"POST",
+
           body:JSON.stringify({
             order_id:id
           })
+
         }
       );
 
