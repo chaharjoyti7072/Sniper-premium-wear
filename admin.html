@@ -3,32 +3,139 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Admin | JOYTI - SNIPER PREMIUM WEAR</title>
+<title>Admin | SNIPER PREMIUM WEAR</title>
 
 <style>
-body{font-family:Arial;margin:0;background:#f4f3ea;color:#171a14}
-.wrap{max-width:1100px;margin:auto;padding:22px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.panel{background:#fff;padding:18px;border-radius:12px;margin:18px 0;border:1px solid #ddd}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-input,select{width:100%;padding:11px;box-sizing:border-box;margin:5px 0 10px;border:1px solid #bbb;border-radius:6px}
-button{padding:10px 14px;border:0;border-radius:6px;background:#596442;color:#fff;font-weight:700;cursor:pointer}
-button:disabled{opacity:.6}
-.danger{background:#8b3d35}
-.verify{background:#596442}
-.muted{color:#666;font-size:13px}
-.item{border:1px solid #ddd;padding:12px;border-radius:8px}
-.item img{width:100%;height:150px;object-fit:cover}
-.row{display:flex;gap:8px;flex-wrap:wrap}
-.row>*{flex:1}
-.order{border:1px solid #ddd;padding:12px;border-radius:8px;margin:10px 0}
-.status{font-weight:800}
-.hide{display:none}
-.preview{max-width:180px;max-height:180px;margin:8px 0;border-radius:8px;display:none}
-#uploadMsg{margin-top:8px}
-#orders:empty:after{content:"No orders yet.";color:#777}
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f3f3ea;
+  color:#171a14;
+}
+
+.wrap{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+
+.panel{
+  background:#fff;
+  padding:18px;
+  margin:18px 0;
+  border-radius:12px;
+  border:1px solid #ddd;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
+}
+
+input,select{
+  width:100%;
+  padding:11px;
+  margin:5px 0 10px;
+  border:1px solid #bbb;
+  border-radius:7px;
+}
+
+button{
+  padding:11px 15px;
+  border:0;
+  border-radius:7px;
+  background:#596442;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+.danger{
+  background:#8b3d35;
+}
+
+.row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.item{
+  border:1px solid #ddd;
+  border-radius:9px;
+  padding:12px;
+}
+
+.item img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:7px;
+}
+
+.order{
+  border:1px solid #ddd;
+  border-radius:9px;
+  padding:14px;
+  margin:12px 0;
+  background:#fff;
+}
+
+.status{
+  font-weight:bold;
+}
+
+.muted{
+  color:#666;
+  font-size:13px;
+  margin-top:5px;
+}
+
+.preview{
+  max-width:180px;
+  max-height:180px;
+  display:none;
+  margin:8px 0;
+  border-radius:8px;
+}
+
+.message{
+  display:none;
+  margin-top:12px;
+  padding:10px;
+  border-radius:7px;
+  background:#eeeeE4;
+}
+
+.hide{
+  display:none;
+}
+
 @media(max-width:600px){
-.top{flex-direction:column;align-items:flex-start}
+  .top{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .row button{
+    width:100%;
+  }
 }
 </style>
 </head>
@@ -38,39 +145,39 @@ button:disabled{opacity:.6}
 <div class="wrap">
 
 <div class="top">
-<div>
-<h1>JOYTI Admin Panel</h1>
-<div class="muted">Products • Orders • Shiprocket</div>
+  <div>
+    <h1>SNIPER PREMIUM WEAR</h1>
+    <div class="muted">Admin Panel</div>
+  </div>
+
+  <button onclick="location.href='/'">
+    OPEN WEBSITE
+  </button>
 </div>
 
-<button onclick="location.href='/'">
-Open Website
-</button>
-</div>
 
+<!-- LOGIN -->
 
 <div id="login" class="panel">
 
 <h2>Admin Login</h2>
 
-<p class="muted">
-Enter your admin password.
-</p>
-
 <input
-id="pw"
-type="password"
-placeholder="Admin password"
+  id="pw"
+  type="password"
+  placeholder="Admin password"
 >
 
 <button onclick="login()">
 LOGIN
 </button>
 
-<p id="msg"></p>
+<p id="loginMsg"></p>
 
 </div>
 
+
+<!-- APP -->
 
 <div id="app" class="hide">
 
@@ -81,87 +188,85 @@ LOGIN
 
 <h2>Products</h2>
 
-<div class="grid" id="products"></div>
+<div id="products" class="grid"></div>
 
 <hr>
 
 <h3>Add / Edit Product</h3>
 
-<input type="hidden" id="pid">
+<input
+  type="hidden"
+  id="pid"
+>
 
 <div class="grid">
 
 <div>
-<label>Name</label>
+<label>Product Name</label>
 <input
-id="name"
-placeholder="Product name"
+  id="name"
+  placeholder="Product name"
 >
 </div>
 
 <div>
-<label>Price (₹)</label>
+<label>Price ₹</label>
 <input
-id="price"
-type="number"
-placeholder="299"
+  id="price"
+  type="number"
+  placeholder="Price"
 >
 </div>
 
 <div>
-<label>Size</label>
+<label>Sizes</label>
 <input
-id="sizes"
-placeholder="M, L, XL"
+  id="sizes"
+  placeholder="M L XL"
 >
 </div>
 
 <div>
 <label>Fabric</label>
 <input
-id="fabric"
-placeholder="Cotton Lycra"
+  id="fabric"
+  placeholder="Cotton Lycra"
 >
 </div>
 
 <div>
 <label>Photo URL</label>
 <input
-id="img"
-placeholder="https://..."
+  id="img"
+  placeholder="Photo URL"
 >
 </div>
 
 <div>
-
 <label>Product Photo</label>
 
 <input
-id="photoFile"
-type="file"
-accept="image/*"
+  id="photoFile"
+  type="file"
+  accept="image/*"
 >
 
 <img
-id="preview"
-class="preview"
+  id="preview"
+  class="preview"
 >
 
 </div>
 
 <div>
-
 <label>Description</label>
-
 <input
-id="desc"
-value="Premium quality"
+  id="desc"
+  value="Premium quality"
 >
-
 </div>
 
 </div>
-
 
 <div class="row">
 
@@ -175,7 +280,10 @@ CLEAR
 
 </div>
 
-<p id="uploadMsg" class="muted"></p>
+<p
+  id="uploadMsg"
+  class="muted"
+></p>
 
 </div>
 
@@ -186,9 +294,17 @@ CLEAR
 
 <h2>Orders</h2>
 
-<button onclick="loadOrders()">
+<button
+  id="refreshBtn"
+  onclick="loadOrders(true)"
+>
 REFRESH ORDERS
 </button>
+
+<div
+  id="orderMessage"
+  class="message"
+></div>
 
 <div id="orders"></div>
 
@@ -201,28 +317,25 @@ REFRESH ORDERS
 
 <script>
 
-let token='';
+let token = "";
 
 
 /* =========================
-   API HELPER
+   API
 ========================= */
 
-const api=(url,options={})=>{
+function api(url, options = {}){
 
-return fetch(
-url,
-{
-...options,
-headers:{
-...(options.headers||{}),
-'Content-Type':'application/json',
-'Authorization':'Bearer '+token
-}
-}
-);
+  return fetch(url, {
+    ...options,
+    headers:{
+      "Content-Type":"application/json",
+      ...(options.headers || {}),
+      "Authorization":"Bearer " + token
+    }
+  });
 
-};
+}
 
 
 /* =========================
@@ -231,82 +344,63 @@ headers:{
 
 async function login(){
 
-try{
+  try{
 
-const password=
-document.getElementById('pw').value.trim();
+    const password =
+      document.getElementById("pw").value.trim();
 
-if(!password){
+    if(!password){
 
-document.getElementById('msg')
-.textContent=
-'Please enter password';
+      document.getElementById("loginMsg").textContent =
+        "Please enter password.";
 
-return;
+      return;
+    }
 
-}
+    const r = await fetch("/api/admin-login",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        password:password
+      })
+    });
 
+    const d = await r.json();
 
-const r=
-await fetch(
-'/api/admin-login',
-{
-method:'POST',
-headers:{
-'Content-Type':'application/json'
-},
-body:
-JSON.stringify({
-password:password
-})
-}
-);
+    if(!r.ok){
 
+      document.getElementById("loginMsg").textContent =
+        d.error || "Login failed.";
 
-const d=
-await r.json();
+      return;
+    }
 
+    token = password;
 
-if(!r.ok){
+    localStorage.setItem(
+      "adminToken",
+      token
+    );
 
-document.getElementById('msg')
-.textContent=
-d.error||
-'Login failed';
+    document.getElementById("login")
+      .classList.add("hide");
 
-return;
+    document.getElementById("app")
+      .classList.remove("hide");
 
-}
+    await loadProducts();
+    await loadOrders();
 
+  }catch(error){
 
-token=password;
+    alert(
+      "Login error:\n\n" +
+      (error.message || "Unknown error")
+    );
 
-localStorage.setItem(
-'adminToken',
-token
-);
-
-
-document.getElementById('login')
-.classList.add('hide');
-
-document.getElementById('app')
-.classList.remove('hide');
-
-
-await loadProducts();
-
-await loadOrders();
-
-
-}catch(error){
-
-alert(
-error.message||
-'Login error'
-);
-
-}
+  }
 
 }
 
@@ -317,124 +411,102 @@ error.message||
 
 async function loadProducts(){
 
-try{
+  try{
 
-const r=
-await api('/api/products');
+    const r = await api("/api/products");
 
+    if(r.status === 401){
 
-if(r.status===401){
+      logout();
+      return;
+    }
 
-logout();
+    const d = await r.json();
 
-return;
+    const list =
+      Array.isArray(d.products)
+      ? d.products
+      : [];
 
-}
+    const box =
+      document.getElementById("products");
 
+    if(!list.length){
 
-const d=
-await r.json();
+      box.innerHTML =
+        '<div class="muted">No products added yet.</div>';
 
+      return;
+    }
 
-const list=
-Array.isArray(d.products)
-?d.products
-:[];
+    box.innerHTML = list.map(function(p){
 
+      return `
+        <div class="item">
 
-const el=
-document.getElementById('products');
+          ${
+            p.img
+            ? `
+              <img
+                src="${safe(p.img)}"
+                alt="${safe(p.name)}"
+              >
+            `
+            : ""
+          }
 
+          <h3>${safe(p.name)}</h3>
 
-if(!list.length){
+          <div>
+            ₹${Number(p.price || 0).toLocaleString("en-IN")}
+          </div>
 
-el.innerHTML=
-'<div class="muted">No products added yet.</div>';
+          <div>
+            <b>Size:</b>
+            ${safe(p.sizes || "Not specified")}
+          </div>
 
-return;
+          <div>
+            <b>Fabric:</b>
+            ${safe(p.fabric || "Not specified")}
+          </div>
 
-}
+          <div class="muted">
+            ${safe(p.description || "")}
+          </div>
 
+          <div class="row">
 
-el.innerHTML=
-list.map(p=>`
+            <button
+              onclick="editProductById('${jsSafe(String(p.id))}')"
+            >
+              EDIT
+            </button>
 
-<div class="item">
+            <button
+              class="danger"
+              onclick="deleteProduct('${jsSafe(String(p.id))}')"
+            >
+              DELETE
+            </button>
 
-${
-p.img
-?
-`
-<img
-src="${p.img}"
-alt="${escapeHtml(p.name||'Product')}"
-onerror="this.style.display='none'"
->
-`
-:
-''
-}
+          </div>
 
+        </div>
+      `;
 
-<b>
-${escapeHtml(p.name||'')}
-</b>
+    }).join("");
 
+    window.productList = list;
 
-<div>
-₹${Number(p.price||0).toLocaleString('en-IN')}
-</div>
+  }catch(error){
 
+    console.error(error);
 
-<div>
-<b>Size:</b>
-${escapeHtml(p.sizes||'Not specified')}
-</div>
+    document.getElementById("products").innerHTML =
+      '<div class="muted">Unable to load products.</div>';
 
-
-<div>
-<b>Fabric:</b>
-${escapeHtml(p.fabric||'Not specified')}
-</div>
-
-
-<div class="muted">
-${escapeHtml(p.description||'')}
-</div>
-
-
-<div class="row">
-
-<button
-onclick='editProduct(${JSON.stringify(p).replace(/'/g,"&#39;")})'
->
-EDIT
-</button>
-
-
-<button
-class="danger"
-onclick="deleteProduct(${Number(p.id)})"
->
-DELETE
-</button>
-
-</div>
-
-</div>
-
-`).join('');
-
-
-}catch(error){
-
-console.error(error);
-
-document.getElementById('products')
-.innerHTML=
-'<div class="muted">Unable to load products.</div>';
-
-}
+  }
 
 }
 
@@ -443,243 +515,198 @@ document.getElementById('products')
    EDIT PRODUCT
 ========================= */
 
-function editProduct(p){
+function editProductById(id){
 
-document.getElementById('pid').value=
-p.id||'';
+  const list =
+    window.productList || [];
 
-document.getElementById('name').value=
-p.name||'';
+  const p =
+    list.find(function(item){
+      return String(item.id) === String(id);
+    });
 
-document.getElementById('price').value=
-p.price||'';
+  if(!p){
 
-document.getElementById('sizes').value=
-p.sizes||'';
+    alert("Product not found.");
+    return;
+  }
 
-document.getElementById('fabric').value=
-p.fabric||'';
+  document.getElementById("pid").value =
+    p.id || "";
 
-document.getElementById('img').value=
-p.img||'';
+  document.getElementById("name").value =
+    p.name || "";
 
-document.getElementById('desc').value=
-p.description||
-'Premium quality';
+  document.getElementById("price").value =
+    p.price || "";
 
-document.getElementById('photoFile')
-.value='';
+  document.getElementById("sizes").value =
+    p.sizes || "";
 
-document.getElementById('preview')
-.style.display='none';
+  document.getElementById("fabric").value =
+    p.fabric || "";
 
-document.getElementById('uploadMsg')
-.textContent='';
+  document.getElementById("img").value =
+    p.img || "";
 
+  document.getElementById("desc").value =
+    p.description || "Premium quality";
 
-window.scrollTo(
-{
-top:document.body.scrollHeight,
-behavior:'smooth'
-}
-);
+  document.getElementById("photoFile").value =
+    "";
+
+  document.getElementById("preview").style.display =
+    "none";
+
+  window.scrollTo({
+    top:document.body.scrollHeight,
+    behavior:"smooth"
+  });
 
 }
 
 
 /* =========================
-   CLEAR FORM
+   CLEAR
 ========================= */
 
 function clearForm(){
 
-[
-'pid',
-'name',
-'price',
-'sizes',
-'fabric',
-'img'
-].forEach(
-id=>{
-document.getElementById(id).value='';
-}
-);
+  document.getElementById("pid").value = "";
+  document.getElementById("name").value = "";
+  document.getElementById("price").value = "";
+  document.getElementById("sizes").value = "";
+  document.getElementById("fabric").value = "";
+  document.getElementById("img").value = "";
+  document.getElementById("desc").value =
+    "Premium quality";
 
+  document.getElementById("photoFile").value = "";
 
-document.getElementById('photoFile')
-.value='';
+  document.getElementById("preview").style.display =
+    "none";
 
-document.getElementById('preview')
-.style.display='none';
-
-document.getElementById('uploadMsg')
-.textContent='';
-
-document.getElementById('desc')
-.value=
-'Premium quality';
+  document.getElementById("uploadMsg").textContent =
+    "";
 
 }
 
 
 /* =========================
-   IMAGE PREVIEW
+   PHOTO PREVIEW
 ========================= */
 
-document.getElementById('photoFile')
-.addEventListener(
-'change',
-function(){
+document
+  .getElementById("photoFile")
+  .addEventListener("change",function(){
 
-const file=
-this.files[0];
+    const file = this.files[0];
 
-if(!file){
+    if(!file) return;
 
-return;
+    const preview =
+      document.getElementById("preview");
 
-}
+    preview.src =
+      URL.createObjectURL(file);
 
+    preview.style.display =
+      "block";
 
-const preview=
-document.getElementById('preview');
-
-
-preview.src=
-URL.createObjectURL(file);
-
-preview.style.display=
-'block';
-
-}
-);
+  });
 
 
 /* =========================
-   IMAGE UPLOAD
+   UPLOAD PHOTO
 ========================= */
 
 async function uploadPhoto(){
 
-const file=
-document.getElementById('photoFile')
-.files[0];
+  const file =
+    document.getElementById("photoFile")
+    .files[0];
+
+  if(!file) return null;
+
+  document.getElementById("uploadMsg")
+    .textContent =
+      "Uploading photo...";
+
+  const dataUrl =
+    await new Promise(function(resolve,reject){
+
+      const reader =
+        new FileReader();
+
+      reader.onload =
+        function(){
+          resolve(reader.result);
+        };
+
+      reader.onerror =
+        function(){
+          reject(
+            new Error("Photo read failed")
+          );
+        };
+
+      reader.readAsDataURL(file);
+
+    });
 
 
-if(!file){
-
-return null;
-
-}
-
-
-const msg=
-document.getElementById('uploadMsg');
-
-
-msg.textContent=
-'Uploading photo...';
-
-
-const dataUrl=
-await new Promise(
-(resolve,reject)=>{
-
-const reader=
-new FileReader();
+  const r = await fetch(
+    "/api/upload",
+    {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization":
+          "Bearer " + token
+      },
+      body:JSON.stringify({
+        data:dataUrl,
+        contentType:file.type
+      })
+    }
+  );
 
 
-reader.onload=
-()=>{
-resolve(
-reader.result
-);
-};
+  const text =
+    await r.text();
+
+  let d;
+
+  try{
+
+    d = JSON.parse(text);
+
+  }catch(error){
+
+    throw new Error(
+      "Upload server response invalid"
+    );
+
+  }
 
 
-reader.onerror=
-()=>{
-reject(
-new Error(
-'Photo read failed'
-)
-);
-};
+  if(!r.ok){
+
+    throw new Error(
+      d.error || "Photo upload failed"
+    );
+
+  }
 
 
-reader.readAsDataURL(file);
+  document.getElementById("uploadMsg")
+    .textContent =
+      "Photo uploaded successfully.";
 
-}
-);
-
-
-const r=
-await fetch(
-'/api/upload',
-{
-
-method:'POST',
-
-headers:{
-'Content-Type':
-'application/json',
-
-'Authorization':
-'Bearer '+token
-},
-
-body:
-JSON.stringify({
-
-data:dataUrl,
-
-contentType:file.type
-
-})
-
-}
-);
-
-
-const text=
-await r.text();
-
-
-let d={};
-
-try{
-
-d=
-JSON.parse(text);
-
-}catch(e){
-
-throw new Error(
-'Upload server response invalid'
-);
-
-}
-
-
-if(!r.ok){
-
-throw new Error(
-d.error||
-'Photo upload failed'
-);
-
-}
-
-
-msg.textContent=
-'Photo uploaded successfully';
-
-
-return '/api/product-image?key='+
-encodeURIComponent(
-d.pathname
-);
+  return (
+    "/api/product-image?key=" +
+    encodeURIComponent(d.pathname)
+  );
 
 }
 
@@ -690,192 +717,192 @@ d.pathname
 
 async function saveProduct(){
 
-try{
+  try{
 
-let imageUrl=
-document.getElementById('img')
-.value.trim();
+    let imageUrl =
+      document.getElementById("img")
+      .value.trim();
 
+    const file =
+      document.getElementById("photoFile")
+      .files[0];
 
-const file=
-document.getElementById('photoFile')
-.files[0];
+    if(file){
 
+      imageUrl =
+        await uploadPhoto();
 
-if(file){
-
-imageUrl=
-await uploadPhoto();
-
-}
+    }
 
 
-const name=
-document.getElementById('name')
-.value.trim();
+    const name =
+      document.getElementById("name")
+      .value.trim();
+
+    const price =
+      Number(
+        document.getElementById("price")
+        .value
+      );
 
 
-const price=
-Number(
-document.getElementById('price')
-.value
-);
+    if(!name){
+
+      alert(
+        "Product name is required."
+      );
+
+      return;
+    }
 
 
-if(!name){
+    if(
+      !Number.isFinite(price) ||
+      price <= 0
+    ){
 
-alert(
-'Product name is required'
-);
+      alert(
+        "Valid price is required."
+      );
 
-return;
-
-}
-
-
-if(
-!Number.isFinite(price) ||
-price<=0
-){
-
-alert(
-'Valid price is required'
-);
-
-return;
-
-}
+      return;
+    }
 
 
-const body={
+    const body = {
 
-id:
-Number(
-document.getElementById('pid')
-.value
-)||undefined,
+      name:name,
 
-name:name,
+      price:price,
 
-price:price,
+      sizes:
+        document.getElementById("sizes")
+        .value.trim(),
 
-sizes:
-document.getElementById('sizes')
-.value.trim(),
+      fabric:
+        document.getElementById("fabric")
+        .value.trim(),
 
-fabric:
-document.getElementById('fabric')
-.value.trim(),
+      img:imageUrl,
 
-img:imageUrl,
+      description:
+        document.getElementById("desc")
+        .value.trim()
 
-description:
-document.getElementById('desc')
-.value.trim()
-
-};
+    };
 
 
-const method=
-body.id
-?'PUT'
-:'POST';
+    const id =
+      document.getElementById("pid")
+      .value;
+
+    let method = "POST";
 
 
-const r=
-await api(
-'/api/products',
-{
+    if(id){
 
-method:method,
+      body.id = Number(id);
+      method = "PUT";
 
-body:
-JSON.stringify(body)
-
-}
-);
+    }
 
 
-const d=
-await r.json();
+    const r =
+      await api(
+        "/api/products",
+        {
+          method:method,
+          body:JSON.stringify(body)
+        }
+      );
 
 
-if(!r.ok){
-
-alert(
-d.error||
-'Save failed'
-);
-
-return;
-
-}
+    const d =
+      await r.json();
 
 
-alert(
-'Product saved successfully'
-);
+    if(!r.ok){
+
+      alert(
+        d.error || "Save failed."
+      );
+
+      return;
+    }
 
 
-clearForm();
+    alert(
+      "✅ Product saved successfully."
+    );
 
-await loadProducts();
 
+    clearForm();
 
-}catch(error){
+    await loadProducts();
 
-console.error(error);
+  }catch(error){
 
-alert(
-error.message||
-'Something went wrong'
-);
+    alert(
+      "❌ Error:\n\n" +
+      (error.message || "Unknown error")
+    );
 
-}
+  }
 
 }
 
 
 /* =========================
-   DELETE PRODUCT
+   DELETE
 ========================= */
 
 async function deleteProduct(id){
 
-if(!confirm(
-'Delete this product?'
-)){
-
-return;
-
-}
+  if(!confirm(
+    "Delete this product?"
+  )) return;
 
 
-const r=
-await api(
-'/api/products?id='+encodeURIComponent(id),
-{
-method:'DELETE'
-}
-);
+  try{
+
+    const r =
+      await api(
+        "/api/products?id=" +
+        encodeURIComponent(id),
+        {
+          method:"DELETE"
+        }
+      );
 
 
-if(!r.ok){
-
-const d=
-await r.json();
-
-alert(
-d.error||
-'Delete failed'
-);
-
-return;
-
-}
+    const d =
+      await r.json();
 
 
-await loadProducts();
+    if(!r.ok){
+
+      alert(
+        d.error || "Delete failed."
+      );
+
+      return;
+    }
+
+
+    alert(
+      "Product deleted."
+    );
+
+    await loadProducts();
+
+  }catch(error){
+
+    alert(
+      error.message ||
+      "Delete failed."
+    );
+
+  }
 
 }
 
@@ -884,284 +911,312 @@ await loadProducts();
    LOAD ORDERS
 ========================= */
 
-async function loadOrders(){
+async function loadOrders(showMessage){
 
-try{
+  const btn =
+    document.getElementById(
+      "refreshBtn"
+    );
 
-const r=
-await api('/api/orders');
+  const message =
+    document.getElementById(
+      "orderMessage"
+    );
 
 
-if(!r.ok){
+  try{
 
-document.getElementById('orders')
-.textContent=
-'Unable to load orders';
+    if(showMessage){
 
-return;
+      btn.disabled = true;
 
-}
+      btn.textContent =
+        "REFRESHING...";
 
+      message.style.display =
+        "block";
 
-const d=
-await r.json();
+      message.textContent =
+        "Loading orders...";
 
+    }
 
-const list=
-Array.isArray(d.orders)
-?d.orders
-:[];
 
+    const r =
+      await api("/api/orders");
 
-if(!list.length){
 
-document.getElementById('orders')
-.innerHTML=
-'<div class="muted" style="margin-top:15px">No orders yet.</div>';
+    const text =
+      await r.text();
 
-return;
+    let d = {};
 
-}
+    try{
 
+      d = JSON.parse(text);
 
-document.getElementById('orders')
-.innerHTML=
-list.map(o=>`
+    }catch(error){
 
-<div class="order">
+      throw new Error(
+        "Server response is not valid JSON."
+      );
 
+    }
 
-<b>
-${escapeHtml(
-o.customer?.name||
-'Customer'
-)}
-</b>
 
+    if(!r.ok){
 
-— ₹${Number(o.amount||0).toLocaleString('en-IN')}
+      throw new Error(
+        d.error ||
+        "Unable to load orders."
+      );
 
+    }
 
-— <span class="status">
-${escapeHtml(
-o.status||
-'Payment Pending'
-)}
-</span>
 
+    const list =
+      Array.isArray(d.orders)
+      ? d.orders
+      : [];
 
-<div>
-${escapeHtml(
-o.customer?.mobile||
-''
-)}
-</div>
 
+    const box =
+      document.getElementById(
+        "orders"
+      );
 
-<div>
-${escapeHtml(
-o.address||
-''
-)},
-${escapeHtml(
-o.pin||
-''
-)}
-</div>
 
+    if(!list.length){
 
-<div class="muted">
+      box.innerHTML =
+        '<div class="muted">No orders yet.</div>';
 
-${
-o.items?.map(
-i=>
-`${escapeHtml(i.name||'')} × ${Number(i.qty||0)}`
-).join(', ')
-||''
-}
+    }else{
 
-</div>
+      box.innerHTML =
+        list.map(function(o){
 
+          const id =
+            String(o.id || "");
 
-<div class="muted">
+          const customer =
+            o.customer || {};
 
-Razorpay:
-${escapeHtml(
-o.paymentId||
-'Pending'
-)}
+          const items =
+            Array.isArray(o.items)
+            ? o.items
+            : [];
 
-|
 
-Shiprocket:
-${escapeHtml(
-o.shiprocketOrderId||
-'Not created'
-)}
+          return `
 
-</div>
+          <div class="order">
 
+            <b>
+              ${safe(
+                customer.name ||
+                o.name ||
+                "Customer"
+              )}
+            </b>
 
-<div class="row">
+            —
+            ₹${Number(
+              o.amount ||
+              o.total ||
+              0
+            ).toLocaleString("en-IN")}
 
+            —
+            <span class="status">
+              ${safe(
+                o.status ||
+                "Payment Pending"
+              )}
+            </span>
 
-<select id="s-${escapeHtml(String(o.id))}">
 
-<option value="Payment Pending">
-Payment Pending
-</option>
+            <div>
+              ${safe(
+                customer.mobile ||
+                o.mobile ||
+                ""
+              )}
+            </div>
 
-<option value="Paid">
-Paid
-</option>
 
-<option value="Ready to Ship">
-Ready to Ship
-</option>
+            <div>
+              ${safe(
+                o.address ||
+                ""
+              )}
+              ${o.pin ? ", " + safe(o.pin) : ""}
+            </div>
 
-<option value="Shipped">
-Shipped
-</option>
 
-<option value="Delivered">
-Delivered
-</option>
+            <div class="muted">
 
-<option value="Cancelled">
-Cancelled
-</option>
+              ${
+                items.map(function(i){
 
-</select>
+                  return (
+                    safe(i.name || "") +
+                    " × " +
+                    Number(i.qty || 0)
+                  );
 
+                }).join(", ")
+              }
 
-<button
-onclick="statusUpdate('${escapeHtml(String(o.id))}')"
->
-UPDATE STATUS
-</button>
+            </div>
 
 
-<button
-class="verify"
-onclick="verifyPayment('${escapeHtml(String(o.id))}')"
->
-VERIFY PAYMENT
-</button>
+            <div class="muted">
 
+              Razorpay:
+              ${safe(
+                o.paymentId ||
+                "Pending"
+              )}
 
-<button
-onclick="ship('${escapeHtml(String(o.id))}')"
->
-SEND TO SHIPROCKET
-</button>
+              |
 
+              Shiprocket:
+              ${safe(
+                o.shiprocketOrderId ||
+                "Not created"
+              )}
 
-</div>
+            </div>
 
-</div>
 
-`).join('');
+            <div class="row">
 
+              <select
+                id="status-${safe(id)}"
+              >
 
-list.forEach(o=>{
+                <option value="Payment Pending">
+                  Payment Pending
+                </option>
 
-const s=
-document.getElementById(
-'s-'+String(o.id)
-);
+                <option value="Paid">
+                  Paid
+                </option>
 
+                <option value="Ready to Ship">
+                  Ready to Ship
+                </option>
 
-if(s){
+                <option value="Shipped">
+                  Shipped
+                </option>
 
-s.value=
-o.status||
-'Payment Pending';
+                <option value="Delivered">
+                  Delivered
+                </option>
 
-}
+                <option value="Cancelled">
+                  Cancelled
+                </option>
 
-});
+              </select>
 
 
-}catch(error){
+              <button
+                onclick="statusUpdate('${jsSafe(id)}')"
+              >
+                UPDATE STATUS
+              </button>
 
-console.error(error);
 
-document.getElementById('orders')
-.textContent=
-'Unable to load orders';
+              <button
+                onclick="verifyPayment('${jsSafe(id)}')"
+              >
+                VERIFY PAYMENT
+              </button>
 
-}
 
-}
+              <button
+                onclick="ship('${jsSafe(id)}')"
+              >
+                SEND TO SHIPROCKET
+              </button>
 
+            </div>
 
-/* =========================
-   UPDATE STATUS
-========================= */
+          </div>
 
-async function statusUpdate(id){
+          `;
 
-const select=
-document.getElementById(
-'s-'+id
-);
+        }).join("");
 
 
-if(!select){
+      list.forEach(function(o){
 
-alert(
-'Status selector not found'
-);
+        const select =
+          document.getElementById(
+            "status-" +
+            String(o.id)
+          );
 
-return;
+        if(select){
 
-}
+          select.value =
+            o.status ||
+            "Payment Pending";
 
+        }
 
-const status=
-select.value;
+      });
 
+    }
 
-const r=
-await api(
-'/api/orders',
-{
 
-method:'PATCH',
+    if(showMessage){
 
-body:
-JSON.stringify({
+      message.style.display =
+        "block";
 
-id:id,
+      message.textContent =
+        "✅ Orders refreshed successfully.";
 
-status:status
+      setTimeout(function(){
 
-})
+        message.style.display =
+          "none";
 
-}
-);
+      },2500);
 
+    }
 
-if(!r.ok){
 
-const d=
-await r.json();
+  }catch(error){
 
-alert(
-d.error||
-'Update failed'
-);
+    console.error(
+      "Orders error:",
+      error
+    );
 
-return;
 
-}
+    message.style.display =
+      "block";
 
+    message.textContent =
+      "❌ " +
+      (
+        error.message ||
+        "Unable to load orders."
+      );
 
-alert(
-'Order status updated'
-);
+  }finally{
 
-await loadOrders();
+    btn.disabled = false;
+
+    btn.textContent =
+      "REFRESH ORDERS";
+
+  }
 
 }
 
@@ -1172,116 +1227,176 @@ await loadOrders();
 
 async function verifyPayment(id){
 
-try{
+  try{
 
-if(!confirm(
-'Check this order payment in Razorpay?'
-)){
-
-return;
-
-}
+    alert(
+      "🔍 Payment checking..."
+    );
 
 
-/* IMPORTANT RESPONSE TEST */
+    const r =
+      await fetch(
+        "/api/payment-status",
+        {
+          method:"POST",
+          headers:{
+            "Content-Type":
+              "application/json",
 
-alert(
-'Payment checking...'
-);
-
-
-const r=
-await fetch(
-'/api/payment-status',
-{
-
-method:'POST',
-
-headers:{
-'Content-Type':
-'application/json',
-
-'Authorization':
-'Bearer '+token
-},
-
-body:
-JSON.stringify({
-
-orderId:id
-
-})
-
-}
-);
+            "Authorization":
+              "Bearer " + token
+          },
+          body:JSON.stringify({
+            orderId:id
+          })
+        }
+      );
 
 
-const text=
-await r.text();
+    const text =
+      await r.text();
 
 
-let d={};
+    let d;
 
-try{
+    try{
 
-d=
-JSON.parse(text);
+      d = JSON.parse(text);
 
-}catch(error){
+    }catch(error){
 
-alert(
-'Server response error:\n\n'+
-text.substring(0,500)
-);
+      alert(
+        "❌ Server response error:\n\n" +
+        text.substring(0,500)
+      );
 
-return;
-
-}
+      return;
+    }
 
 
-if(!r.ok){
+    if(!r.ok){
 
-alert(
-d.error||
-'Payment check failed'
-);
+      alert(
+        "❌ Payment check failed:\n\n" +
+        (
+          d.error ||
+          "Unknown error"
+        )
+      );
 
-return;
-
-}
-
-
-if(d.paid){
-
-alert(
-'✅ PAYMENT VERIFIED\n\n'+
-'Payment ID: '+
-(d.paymentId||'')+
-'\n\nOrder status is now PAID.'
-);
-
-}else{
-
-alert(
-'❌ NO CAPTURED PAYMENT FOUND\n\n'+
-'Order is still Payment Pending.'
-);
-
-}
+      return;
+    }
 
 
-await loadOrders();
+    if(d.paid){
+
+      alert(
+        "✅ PAYMENT VERIFIED\n\n" +
+        "Payment ID: " +
+        (d.paymentId || "") +
+        "\n\n" +
+        "Order status is now PAID."
+      );
+
+    }else{
+
+      alert(
+        "❌ NO CAPTURED PAYMENT FOUND\n\n" +
+        "This order is still Payment Pending."
+      );
+
+    }
 
 
-}catch(error){
+    await loadOrders(false);
 
-alert(
-'❌ Connection / Error:\n\n'+
-(error.message||
-'Unknown error')
-);
+
+  }catch(error){
+
+    alert(
+      "❌ Connection / Error:\n\n" +
+      (
+        error.message ||
+        "Payment check failed."
+      )
+    );
+
+  }
 
 }
+
+
+/* =========================
+   STATUS UPDATE
+========================= */
+
+async function statusUpdate(id){
+
+  const select =
+    document.getElementById(
+      "status-" + id
+    );
+
+
+  if(!select){
+
+    alert(
+      "Status selector not found."
+    );
+
+    return;
+  }
+
+
+  const status =
+    select.value;
+
+
+  try{
+
+    const r =
+      await api(
+        "/api/orders",
+        {
+          method:"PATCH",
+          body:JSON.stringify({
+            id:id,
+            status:status
+          })
+        }
+      );
+
+
+    const d =
+      await r.json();
+
+
+    if(!r.ok){
+
+      alert(
+        d.error ||
+        "Status update failed."
+      );
+
+      return;
+    }
+
+
+    alert(
+      "✅ Order status updated."
+    );
+
+
+    await loadOrders(false);
+
+  }catch(error){
+
+    alert(
+      error.message ||
+      "Status update failed."
+    );
+
+  }
 
 }
 
@@ -1292,74 +1407,77 @@ alert(
 
 async function ship(id){
 
-if(!confirm(
-'Create this order in Shiprocket?'
-)){
-
-return;
-
-}
+  if(!confirm(
+    "Create this order in Shiprocket?"
+  )) return;
 
 
-const r=
-await api(
-'/api/shiprocket',
-{
+  try{
 
-method:'POST',
+    /*
+      IMPORTANT:
+      Actual HTTP endpoint is
+      /api/shiprocket-order
+    */
 
-body:
-JSON.stringify({
-
-orderId:id
-
-})
-
-}
-);
-
-
-const text=
-await r.text();
+    const r =
+      await api(
+        "/api/shiprocket-order",
+        {
+          method:"POST",
+          body:JSON.stringify({
+            order_id:id
+          })
+        }
+      );
 
 
-let d={};
-
-try{
-
-d=
-JSON.parse(text);
-
-}catch(error){
-
-alert(
-'Shiprocket server response invalid'
-);
-
-return;
-
-}
+    const text =
+      await r.text();
 
 
-if(!r.ok){
+    let d = {};
 
-alert(
-d.error||
-d.message||
-'Shiprocket error'
-);
+    try{
 
-return;
+      d = JSON.parse(text);
 
-}
+    }catch(error){}
 
 
-alert(
-'Shiprocket order created successfully'
-);
+    if(!r.ok){
+
+      alert(
+        "❌ Shiprocket error:\n\n" +
+        (
+          d.message ||
+          d.error ||
+          text.substring(0,500)
+        )
+      );
+
+      return;
+    }
 
 
-await loadOrders();
+    alert(
+      "✅ Order sent to Shiprocket."
+    );
+
+
+    await loadOrders(false);
+
+  }catch(error){
+
+    alert(
+      "❌ Shiprocket error:\n\n" +
+      (
+        error.message ||
+        "Shiprocket order failed."
+      )
+    );
+
+  }
 
 }
 
@@ -1370,29 +1488,38 @@ await loadOrders();
 
 function logout(){
 
-token='';
+  token = "";
 
-localStorage.removeItem(
-'adminToken'
-);
+  localStorage.removeItem(
+    "adminToken"
+  );
 
-location.reload();
+  location.reload();
 
 }
 
 
 /* =========================
-   ESCAPE HTML
+   SAFE HTML
 ========================= */
 
-function escapeHtml(value){
+function safe(value){
 
-return String(value||'')
-.replace(/&/g,'&amp;')
-.replace(/</g,'&lt;')
-.replace(/>/g,'&gt;')
-.replace(/"/g,'&quot;')
-.replace(/'/g,'&#039;');
+  return String(value || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function jsSafe(value){
+
+  return String(value || "")
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'");
 
 }
 
@@ -1401,52 +1528,53 @@ return String(value||'')
    AUTO LOGIN
 ========================= */
 
-const saved=
-localStorage.getItem(
-'adminToken'
-);
+const savedToken =
+  localStorage.getItem(
+    "adminToken"
+  );
 
 
-if(saved){
+if(savedToken){
 
-token=saved;
+  token = savedToken;
 
-loginWithSaved();
-
-}
-
-
-async function loginWithSaved(){
-
-try{
-
-const r=
-await api('/api/orders');
-
-
-if(r.ok){
-
-document.getElementById('login')
-.classList.add('hide');
-
-document.getElementById('app')
-.classList.remove('hide');
-
-await loadProducts();
-
-await loadOrders();
-
-}else{
-
-logout();
+  autoLogin();
 
 }
 
-}catch(error){
 
-logout();
+async function autoLogin(){
 
-}
+  try{
+
+    const r =
+      await api("/api/orders");
+
+
+    if(!r.ok){
+
+      logout();
+      return;
+    }
+
+
+    document.getElementById("login")
+      .classList.add("hide");
+
+    document.getElementById("app")
+      .classList.remove("hide");
+
+
+    await loadProducts();
+
+    await loadOrders(false);
+
+
+  }catch(error){
+
+    logout();
+
+  }
 
 }
 
