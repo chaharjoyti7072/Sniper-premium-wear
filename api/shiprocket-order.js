@@ -2,13 +2,26 @@ const { getJSON, putJSON } = require("../_store");
 const { createShiprocketOrder } = require("./shiprocket");
 
 module.exports = async (req, res) => {
-
   try {
 
+    // Only POST allowed
     if (req.method !== "POST") {
       return res.status(405).json({
         success: false,
         message: "Method not allowed"
+      });
+    }
+
+    // Admin authentication
+    const auth = req.headers.authorization;
+
+    if (
+      !process.env.ADMIN_PASSWORD ||
+      auth !== `Bearer ${process.env.ADMIN_PASSWORD}`
+    ) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized"
       });
     }
 
@@ -22,7 +35,7 @@ module.exports = async (req, res) => {
     }
 
 
-    // Get all local orders
+    // Get local orders
     const orders = await getJSON("orders", []);
 
 
@@ -42,11 +55,39 @@ module.exports = async (req, res) => {
 
     const localOrder = orders[index];
 
+
+    // ------------------------------------------------
+    // IMPORTANT:
+    // If already created in Shiprocket,
+    // do NOT create duplicate order.
+    // ------------------------------------------------
+
+    if (localOrder.shiprocketOrderId) {
+
+      return res.status(200).json({
+        success: true,
+        alreadyCreated: true,
+        message: "Order is already created in Shiprocket",
+
+        shiprocket: {
+          order_id:
+            localOrder.shiprocketOrderId,
+
+          shipment_id:
+            localOrder.shiprocketShipmentId || "",
+
+          status:
+            localOrder.shiprocketStatus || "Created"
+        }
+      });
+
+    }
+
+
+    // Customer information
     const customer =
       localOrder.customer || {};
 
-
-    // Delivery details
     const name =
       customer.name ||
       localOrder.name ||
@@ -73,12 +114,18 @@ module.exports = async (req, res) => {
       "";
 
 
-    if (!name || !mobile || !address || !pin) {
+    // Validate delivery information
+    if (
+      !name ||
+      !mobile ||
+      !address ||
+      !pin
+    ) {
 
       return res.status(400).json({
         success: false,
-        message:
-          "Customer delivery details are missing",
+        message: "Customer delivery details are missing",
+
         details: {
           name: !!name,
           mobile: !!mobile,
@@ -90,6 +137,7 @@ module.exports = async (req, res) => {
     }
 
 
+    // Validate products
     if (
       !Array.isArray(localOrder.items) ||
       localOrder.items.length === 0
@@ -103,12 +151,11 @@ module.exports = async (req, res) => {
     }
 
 
-    // Prepare order for Shiprocket
+    // Prepare Shiprocket order
     const shiprocketOrder = {
 
       order_id:
-        "SPW-" +
-        String(localOrder.id),
+        "SPW-" + String(localOrder.id),
 
       name: name,
 
@@ -129,51 +176,68 @@ module.exports = async (req, res) => {
 
       payment:
         localOrder.status === "Paid"
-        ? "Prepaid"
-        : "COD",
+          ? "Prepaid"
+          : "COD",
 
       items:
         localOrder.items.map(item => ({
-
           id:
             item.id ||
             Date.now(),
 
           name:
-            item.name || "Product",
+            item.name ||
+            "Product",
 
           qty:
             Number(item.qty || 1),
 
           price:
             Number(item.price || 0)
-
         }))
-
     };
 
 
-    // Create order in Shiprocket
+    // Create in Shiprocket
     const result =
       await createShiprocketOrder(
         shiprocketOrder
       );
 
 
-    // Save Shiprocket details
+    // ------------------------------------------------
+    // Get IDs from Shiprocket response
+    // ------------------------------------------------
+
+    const shiprocketOrderId =
+      result?.order_id ||
+      result?.data?.order_id ||
+      result?.orderId ||
+      result?.data?.orderId ||
+      result?.id ||
+      "";
+
+    const shipmentId =
+      result?.shipment_id ||
+      result?.data?.shipment_id ||
+      result?.shipmentId ||
+      result?.data?.shipmentId ||
+      "";
+
+
+    // ------------------------------------------------
+    // Save Shiprocket information
+    // ------------------------------------------------
+
     orders[index] = {
 
       ...localOrder,
 
       shiprocketOrderId:
-        result.order_id ||
-        result.order_id ||
-        result.id ||
-        "",
+        String(shiprocketOrderId || ""),
 
       shiprocketShipmentId:
-        result.shipment_id ||
-        "",
+        String(shipmentId || ""),
 
       shiprocketStatus:
         "Created",
@@ -183,7 +247,6 @@ module.exports = async (req, res) => {
 
       updatedAt:
         new Date().toISOString()
-
     };
 
 
@@ -193,15 +256,30 @@ module.exports = async (req, res) => {
     );
 
 
+    // ------------------------------------------------
+    // Success response
+    // ------------------------------------------------
+
     return res.status(200).json({
 
       success: true,
 
-      message:
-        "Order created in Shiprocket",
+      alreadyCreated: false,
 
-      shiprocket:
-        result
+      message:
+        "Order sent to Shiprocket successfully",
+
+      shiprocket: {
+
+        order_id:
+          shiprocketOrderId,
+
+        shipment_id:
+          shipmentId,
+
+        status:
+          "Created"
+      }
 
     });
 
@@ -224,5 +302,4 @@ module.exports = async (req, res) => {
     });
 
   }
-
 };
