@@ -184,7 +184,7 @@ async function createShiprocketOrder(
 
 
     pickup_location:
-      "Jyoti",
+      "Joyti",
 
 
     billing_customer_name:
