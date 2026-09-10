@@ -15,6 +15,7 @@ input,select{width:100%;padding:11px;box-sizing:border-box;margin:5px 0 10px;bor
 button{padding:10px 14px;border:0;border-radius:6px;background:#596442;color:#fff;font-weight:700;cursor:pointer}
 button:disabled{opacity:.6}
 .danger{background:#8b3d35}
+.verify{background:#596442}
 .muted{color:#666;font-size:13px}
 .item{border:1px solid #ddd;padding:12px;border-radius:8px}
 .item img{width:100%;height:150px;object-fit:cover}
@@ -25,6 +26,7 @@ button:disabled{opacity:.6}
 .hide{display:none}
 .preview{max-width:180px;max-height:180px;margin:8px 0;border-radius:8px;display:none}
 #uploadMsg{margin-top:8px}
+#orders:empty:after{content:"No orders yet.";color:#777}
 @media(max-width:600px){
 .top{flex-direction:column;align-items:flex-start}
 }
@@ -44,8 +46,8 @@ button:disabled{opacity:.6}
 <button onclick="location.href='/'">
 Open Website
 </button>
-
 </div>
+
 
 <div id="login" class="panel">
 
@@ -69,7 +71,11 @@ LOGIN
 
 </div>
 
+
 <div id="app" class="hide">
+
+
+<!-- PRODUCTS -->
 
 <div class="panel">
 
@@ -156,6 +162,7 @@ value="Premium quality"
 
 </div>
 
+
 <div class="row">
 
 <button onclick="saveProduct()">
@@ -172,6 +179,8 @@ CLEAR
 
 </div>
 
+
+<!-- ORDERS -->
 
 <div class="panel">
 
@@ -195,50 +204,80 @@ REFRESH ORDERS
 let token='';
 
 
-/* API */
+/* =========================
+   API HELPER
+========================= */
 
-const api=(u,o={})=>
-fetch(u,{
-...o,
+const api=(url,options={})=>{
+
+return fetch(
+url,
+{
+...options,
 headers:{
+...(options.headers||{}),
 'Content-Type':'application/json',
-...(o.headers||{}),
-Authorization:'Bearer '+token
+'Authorization':'Bearer '+token
 }
-});
+}
+);
+
+};
 
 
-/* LOGIN */
+/* =========================
+   LOGIN
+========================= */
 
 async function login(){
 
+try{
+
 const password=
-document.getElementById('pw').value;
+document.getElementById('pw').value.trim();
+
+if(!password){
+
+document.getElementById('msg')
+.textContent=
+'Please enter password';
+
+return;
+
+}
+
 
 const r=
-await fetch('/api/admin-login',{
+await fetch(
+'/api/admin-login',
+{
 method:'POST',
 headers:{
 'Content-Type':'application/json'
 },
 body:
 JSON.stringify({
-password
+password:password
 })
-});
+}
+);
+
 
 const d=
 await r.json();
+
 
 if(!r.ok){
 
 document.getElementById('msg')
 .textContent=
-d.error||'Login failed';
+d.error||
+'Login failed';
 
 return;
 
 }
+
 
 token=password;
 
@@ -247,19 +286,34 @@ localStorage.setItem(
 token
 );
 
+
 document.getElementById('login')
 .classList.add('hide');
 
 document.getElementById('app')
 .classList.remove('hide');
 
-loadProducts();
-loadOrders();
+
+await loadProducts();
+
+await loadOrders();
+
+
+}catch(error){
+
+alert(
+error.message||
+'Login error'
+);
+
+}
 
 }
 
 
-/* LOAD PRODUCTS */
+/* =========================
+   PRODUCTS
+========================= */
 
 async function loadProducts(){
 
@@ -268,51 +322,86 @@ try{
 const r=
 await api('/api/products');
 
+
 if(r.status===401){
 
 logout();
+
 return;
 
 }
 
+
 const d=
 await r.json();
 
-document.getElementById('products')
-.innerHTML=
-(d.products||[]).map(p=>`
+
+const list=
+Array.isArray(d.products)
+?d.products
+:[];
+
+
+const el=
+document.getElementById('products');
+
+
+if(!list.length){
+
+el.innerHTML=
+'<div class="muted">No products added yet.</div>';
+
+return;
+
+}
+
+
+el.innerHTML=
+list.map(p=>`
 
 <div class="item">
 
-${p.img ? `
+${
+p.img
+?
+`
 <img
 src="${p.img}"
-alt="${p.name||'Product'}"
+alt="${escapeHtml(p.name||'Product')}"
 onerror="this.style.display='none'"
 >
-` : ''}
+`
+:
+''
+}
+
 
 <b>
-${p.name||''}
+${escapeHtml(p.name||'')}
 </b>
 
+
 <div>
-₹${Number(p.price||0)}
+₹${Number(p.price||0).toLocaleString('en-IN')}
 </div>
+
 
 <div>
 <b>Size:</b>
-${p.sizes||'Not specified'}
+${escapeHtml(p.sizes||'Not specified')}
 </div>
+
 
 <div>
 <b>Fabric:</b>
-${p.fabric||'Not specified'}
+${escapeHtml(p.fabric||'Not specified')}
 </div>
 
+
 <div class="muted">
-${p.description||''}
+${escapeHtml(p.description||'')}
 </div>
+
 
 <div class="row">
 
@@ -322,9 +411,10 @@ onclick='editProduct(${JSON.stringify(p).replace(/'/g,"&#39;")})'
 EDIT
 </button>
 
+
 <button
 class="danger"
-onclick="deleteProduct(${p.id})"
+onclick="deleteProduct(${Number(p.id)})"
 >
 DELETE
 </button>
@@ -335,21 +425,28 @@ DELETE
 
 `).join('');
 
+
 }catch(error){
 
 console.error(error);
 
-}
+document.getElementById('products')
+.innerHTML=
+'<div class="muted">Unable to load products.</div>';
 
 }
 
+}
 
-/* EDIT PRODUCT */
+
+/* =========================
+   EDIT PRODUCT
+========================= */
 
 function editProduct(p){
 
 document.getElementById('pid').value=
-p.id;
+p.id||'';
 
 document.getElementById('name').value=
 p.name||'';
@@ -367,9 +464,11 @@ document.getElementById('img').value=
 p.img||'';
 
 document.getElementById('desc').value=
-p.description||'Premium quality';
+p.description||
+'Premium quality';
 
-document.getElementById('photoFile').value='';
+document.getElementById('photoFile')
+.value='';
 
 document.getElementById('preview')
 .style.display='none';
@@ -377,15 +476,20 @@ document.getElementById('preview')
 document.getElementById('uploadMsg')
 .textContent='';
 
-scrollTo(
-0,
-document.body.scrollHeight
+
+window.scrollTo(
+{
+top:document.body.scrollHeight,
+behavior:'smooth'
+}
 );
 
 }
 
 
-/* CLEAR */
+/* =========================
+   CLEAR FORM
+========================= */
 
 function clearForm(){
 
@@ -397,9 +501,11 @@ function clearForm(){
 'fabric',
 'img'
 ].forEach(
-x=>
-document.getElementById(x).value=''
+id=>{
+document.getElementById(id).value='';
+}
 );
+
 
 document.getElementById('photoFile')
 .value='';
@@ -411,35 +517,48 @@ document.getElementById('uploadMsg')
 .textContent='';
 
 document.getElementById('desc')
-.value='Premium quality';
+.value=
+'Premium quality';
 
 }
 
 
-/* PHOTO PREVIEW */
+/* =========================
+   IMAGE PREVIEW
+========================= */
 
 document.getElementById('photoFile')
 .addEventListener(
 'change',
 function(){
 
-const file=this.files[0];
+const file=
+this.files[0];
 
-if(!file)return;
+if(!file){
+
+return;
+
+}
+
 
 const preview=
 document.getElementById('preview');
 
+
 preview.src=
 URL.createObjectURL(file);
 
-preview.style.display='block';
+preview.style.display=
+'block';
 
 }
 );
 
 
-/* UPLOAD PHOTO */
+/* =========================
+   IMAGE UPLOAD
+========================= */
 
 async function uploadPhoto(){
 
@@ -447,10 +566,17 @@ const file=
 document.getElementById('photoFile')
 .files[0];
 
-if(!file)return null;
+
+if(!file){
+
+return null;
+
+}
+
 
 const msg=
 document.getElementById('uploadMsg');
+
 
 msg.textContent=
 'Uploading photo...';
@@ -463,19 +589,24 @@ await new Promise(
 const reader=
 new FileReader();
 
-reader.onload=()=>{
+
+reader.onload=
+()=>{
 resolve(
 reader.result
 );
 };
 
-reader.onerror=()=>{
+
+reader.onerror=
+()=>{
 reject(
 new Error(
 'Photo read failed'
 )
 );
 };
+
 
 reader.readAsDataURL(file);
 
@@ -511,8 +642,24 @@ contentType:file.type
 );
 
 
-const d=
-await r.json();
+const text=
+await r.text();
+
+
+let d={};
+
+try{
+
+d=
+JSON.parse(text);
+
+}catch(e){
+
+throw new Error(
+'Upload server response invalid'
+);
+
+}
 
 
 if(!r.ok){
@@ -537,7 +684,9 @@ d.pathname
 }
 
 
-/* SAVE PRODUCT */
+/* =========================
+   SAVE PRODUCT
+========================= */
 
 async function saveProduct(){
 
@@ -545,16 +694,55 @@ try{
 
 let imageUrl=
 document.getElementById('img')
-.value;
+.value.trim();
+
 
 const file=
 document.getElementById('photoFile')
 .files[0];
 
+
 if(file){
 
 imageUrl=
 await uploadPhoto();
+
+}
+
+
+const name=
+document.getElementById('name')
+.value.trim();
+
+
+const price=
+Number(
+document.getElementById('price')
+.value
+);
+
+
+if(!name){
+
+alert(
+'Product name is required'
+);
+
+return;
+
+}
+
+
+if(
+!Number.isFinite(price) ||
+price<=0
+){
+
+alert(
+'Valid price is required'
+);
+
+return;
 
 }
 
@@ -567,60 +755,31 @@ document.getElementById('pid')
 .value
 )||undefined,
 
-name:
-document.getElementById('name')
-.value,
+name:name,
 
-price:
-Number(
-document.getElementById('price')
-.value
-),
+price:price,
 
 sizes:
 document.getElementById('sizes')
-.value,
+.value.trim(),
 
 fabric:
 document.getElementById('fabric')
-.value,
+.value.trim(),
 
 img:imageUrl,
 
 description:
 document.getElementById('desc')
-.value
+.value.trim()
 
 };
 
 
-if(!body.name.trim()){
-
-alert(
-'Product name is required'
-);
-
-return;
-
-}
-
-
-if(
-!Number.isFinite(body.price) ||
-body.price<=0
-){
-
-alert(
-'Valid price is required'
-);
-
-return;
-
-}
-
-
 const method=
-body.id?'PUT':'POST';
+body.id
+?'PUT'
+:'POST';
 
 
 const r=
@@ -628,7 +787,7 @@ await api(
 '/api/products',
 {
 
-method,
+method:method,
 
 body:
 JSON.stringify(body)
@@ -657,12 +816,15 @@ alert(
 'Product saved successfully'
 );
 
+
 clearForm();
 
-loadProducts();
+await loadProducts();
 
 
 }catch(error){
+
+console.error(error);
 
 alert(
 error.message||
@@ -674,18 +836,24 @@ error.message||
 }
 
 
-/* DELETE */
+/* =========================
+   DELETE PRODUCT
+========================= */
 
 async function deleteProduct(id){
 
 if(!confirm(
 'Delete this product?'
-))return;
+)){
+
+return;
+
+}
 
 
 const r=
 await api(
-'/api/products?id='+id,
+'/api/products?id='+encodeURIComponent(id),
 {
 method:'DELETE'
 }
@@ -707,14 +875,18 @@ return;
 }
 
 
-loadProducts();
+await loadProducts();
 
 }
 
 
-/* LOAD ORDERS */
+/* =========================
+   LOAD ORDERS
+========================= */
 
 async function loadOrders(){
+
+try{
 
 const r=
 await api('/api/orders');
@@ -735,39 +907,78 @@ const d=
 await r.json();
 
 
+const list=
+Array.isArray(d.orders)
+?d.orders
+:[];
+
+
+if(!list.length){
+
 document.getElementById('orders')
 .innerHTML=
-(d.orders||[]).map(o=>`
+'<div class="muted" style="margin-top:15px">No orders yet.</div>';
+
+return;
+
+}
+
+
+document.getElementById('orders')
+.innerHTML=
+list.map(o=>`
 
 <div class="order">
 
+
 <b>
-${o.customer?.name||'Customer'}
+${escapeHtml(
+o.customer?.name||
+'Customer'
+)}
 </b>
 
-— ₹${o.amount}
+
+— ₹${Number(o.amount||0).toLocaleString('en-IN')}
+
 
 — <span class="status">
-${o.status||'Payment Pending'}
+${escapeHtml(
+o.status||
+'Payment Pending'
+)}
 </span>
 
 
 <div>
-${o.customer?.mobile||''}
+${escapeHtml(
+o.customer?.mobile||
+''
+)}
 </div>
 
 
 <div>
-${o.address||''},
-${o.pin||''}
+${escapeHtml(
+o.address||
+''
+)},
+${escapeHtml(
+o.pin||
+''
+)}
 </div>
 
 
 <div class="muted">
 
-${o.items?.map(
-i=>`${i.name} × ${i.qty}`
-).join(', ')||''}
+${
+o.items?.map(
+i=>
+`${escapeHtml(i.name||'')} × ${Number(i.qty||0)}`
+).join(', ')
+||''
+}
 
 </div>
 
@@ -775,12 +986,18 @@ i=>`${i.name} × ${i.qty}`
 <div class="muted">
 
 Razorpay:
-${o.paymentId||'Pending'}
+${escapeHtml(
+o.paymentId||
+'Pending'
+)}
 
 |
 
 Shiprocket:
-${o.shiprocketOrderId||'Not created'}
+${escapeHtml(
+o.shiprocketOrderId||
+'Not created'
+)}
 
 </div>
 
@@ -788,29 +1005,29 @@ ${o.shiprocketOrderId||'Not created'}
 <div class="row">
 
 
-<select id="s-${o.id}">
+<select id="s-${escapeHtml(String(o.id))}">
 
-<option>
+<option value="Payment Pending">
 Payment Pending
 </option>
 
-<option>
+<option value="Paid">
 Paid
 </option>
 
-<option>
+<option value="Ready to Ship">
 Ready to Ship
 </option>
 
-<option>
+<option value="Shipped">
 Shipped
 </option>
 
-<option>
+<option value="Delivered">
 Delivered
 </option>
 
-<option>
+<option value="Cancelled">
 Cancelled
 </option>
 
@@ -818,21 +1035,22 @@ Cancelled
 
 
 <button
-onclick="statusUpdate('${o.id}')"
+onclick="statusUpdate('${escapeHtml(String(o.id))}')"
 >
 UPDATE STATUS
 </button>
 
 
 <button
-onclick="verifyPayment('${o.id}')"
+class="verify"
+onclick="verifyPayment('${escapeHtml(String(o.id))}')"
 >
 VERIFY PAYMENT
 </button>
 
 
 <button
-onclick="ship('${o.id}')"
+onclick="ship('${escapeHtml(String(o.id))}')"
 >
 SEND TO SHIPROCKET
 </button>
@@ -845,13 +1063,13 @@ SEND TO SHIPROCKET
 `).join('');
 
 
-(d.orders||[]).forEach(
-o=>{
+list.forEach(o=>{
 
 const s=
 document.getElementById(
-'s-'+o.id
+'s-'+String(o.id)
 );
+
 
 if(s){
 
@@ -861,13 +1079,25 @@ o.status||
 
 }
 
-}
-);
+});
+
+
+}catch(error){
+
+console.error(error);
+
+document.getElementById('orders')
+.textContent=
+'Unable to load orders';
 
 }
 
+}
 
-/* UPDATE STATUS */
+
+/* =========================
+   UPDATE STATUS
+========================= */
 
 async function statusUpdate(id){
 
@@ -876,7 +1106,16 @@ document.getElementById(
 's-'+id
 );
 
-if(!select)return;
+
+if(!select){
+
+alert(
+'Status selector not found'
+);
+
+return;
+
+}
 
 
 const status=
@@ -893,8 +1132,9 @@ method:'PATCH',
 body:
 JSON.stringify({
 
-id,
-status
+id:id,
+
+status:status
 
 })
 
@@ -917,14 +1157,22 @@ return;
 }
 
 
-loadOrders();
+alert(
+'Order status updated'
+);
+
+await loadOrders();
 
 }
 
 
-/* VERIFY PAYMENT */
+/* =========================
+   VERIFY PAYMENT
+========================= */
 
 async function verifyPayment(id){
+
+try{
 
 if(!confirm(
 'Check this order payment in Razorpay?'
@@ -935,12 +1183,27 @@ return;
 }
 
 
+/* IMPORTANT RESPONSE TEST */
+
+alert(
+'Payment checking...'
+);
+
+
 const r=
-await api(
+await fetch(
 '/api/payment-status',
 {
 
 method:'POST',
+
+headers:{
+'Content-Type':
+'application/json',
+
+'Authorization':
+'Bearer '+token
+},
 
 body:
 JSON.stringify({
@@ -953,8 +1216,27 @@ orderId:id
 );
 
 
-const d=
-await r.json();
+const text=
+await r.text();
+
+
+let d={};
+
+try{
+
+d=
+JSON.parse(text);
+
+}catch(error){
+
+alert(
+'Server response error:\n\n'+
+text.substring(0,500)
+);
+
+return;
+
+}
 
 
 if(!r.ok){
@@ -972,24 +1254,41 @@ return;
 if(d.paid){
 
 alert(
-'Payment verified successfully. Order is now PAID.'
+'✅ PAYMENT VERIFIED\n\n'+
+'Payment ID: '+
+(d.paymentId||'')+
+'\n\nOrder status is now PAID.'
 );
 
 }else{
 
 alert(
-'No captured payment found. Order is still Payment Pending.'
+'❌ NO CAPTURED PAYMENT FOUND\n\n'+
+'Order is still Payment Pending.'
 );
 
 }
 
 
-loadOrders();
+await loadOrders();
+
+
+}catch(error){
+
+alert(
+'❌ Connection / Error:\n\n'+
+(error.message||
+'Unknown error')
+);
+
+}
 
 }
 
 
-/* SHIPROCKET */
+/* =========================
+   SHIPROCKET
+========================= */
 
 async function ship(id){
 
@@ -1020,8 +1319,26 @@ orderId:id
 );
 
 
-const d=
-await r.json();
+const text=
+await r.text();
+
+
+let d={};
+
+try{
+
+d=
+JSON.parse(text);
+
+}catch(error){
+
+alert(
+'Shiprocket server response invalid'
+);
+
+return;
+
+}
 
 
 if(!r.ok){
@@ -1041,12 +1358,15 @@ alert(
 'Shiprocket order created successfully'
 );
 
-loadOrders();
+
+await loadOrders();
 
 }
 
 
-/* LOGOUT */
+/* =========================
+   LOGOUT
+========================= */
 
 function logout(){
 
@@ -1061,7 +1381,25 @@ location.reload();
 }
 
 
-/* SAVED LOGIN */
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(value){
+
+return String(value||'')
+.replace(/&/g,'&amp;')
+.replace(/</g,'&lt;')
+.replace(/>/g,'&gt;')
+.replace(/"/g,'&quot;')
+.replace(/'/g,'&#039;');
+
+}
+
+
+/* =========================
+   AUTO LOGIN
+========================= */
 
 const saved=
 localStorage.getItem(
@@ -1078,9 +1416,9 @@ loginWithSaved();
 }
 
 
-/* AUTO LOGIN */
-
 async function loginWithSaved(){
+
+try{
 
 const r=
 await api('/api/orders');
@@ -1094,11 +1432,17 @@ document.getElementById('login')
 document.getElementById('app')
 .classList.remove('hide');
 
-loadProducts();
+await loadProducts();
 
-loadOrders();
+await loadOrders();
 
 }else{
+
+logout();
+
+}
+
+}catch(error){
 
 logout();
 
