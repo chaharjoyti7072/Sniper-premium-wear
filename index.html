@@ -21,6 +21,10 @@
 
 *{box-sizing:border-box}
 
+html{
+scroll-behavior:auto
+}
+
 body{
 margin:0;
 font-family:Arial,Helvetica,sans-serif;
@@ -119,7 +123,8 @@ font-size:30px
 color:#666
 }
 
-.categories,.products{
+.categories,
+.products{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:18px
@@ -142,11 +147,11 @@ display:flex;
 flex-direction:column;
 justify-content:end;
 cursor:pointer;
-transition:.2s
+transition:none
 }
 
 .cat:hover{
-transform:translateY(-3px)
+transform:none
 }
 
 .cat.active{
@@ -192,9 +197,10 @@ object-fit:contain;
 display:block;
 cursor:zoom-in;
 transform-origin:center center;
-transition:transform .15s ease;
+transition:none;
 user-select:none;
--webkit-user-drag:none
+-webkit-user-drag:none;
+will-change:transform
 }
 
 .zoom-controls{
@@ -228,7 +234,8 @@ gap:6px;
 padding:7px;
 overflow-x:auto;
 background:#fff;
-border-top:1px solid #ddd
+border-top:1px solid #ddd;
+-webkit-overflow-scrolling:touch
 }
 
 .thumbnail{
@@ -336,7 +343,9 @@ font-weight:700;
 margin:13px 0 6px
 }
 
-input,textarea,select{
+input,
+textarea,
+select{
 width:100%;
 padding:12px;
 border:1px solid #bbb;
@@ -357,6 +366,10 @@ margin:10px 0
 .pay label{
 font-weight:500;
 margin:0
+}
+
+.pay input{
+width:auto
 }
 
 .cart{
@@ -411,28 +424,6 @@ background:#fff;
 padding:25px;
 border-radius:10px;
 text-align:center
-}
-
-@media(max-width:650px){
-
-header{
-flex-direction:column;
-align-items:flex-start
-}
-
-nav a{
-margin:0 12px 0 0
-}
-
-.hero{
-padding:55px 6%
-}
-
-.category-heading{
-align-items:flex-start;
-flex-direction:column
-}
-
 }
 
 /* IMAGE ZOOM MODAL */
@@ -497,6 +488,56 @@ font-size:22px;
 font-weight:900;
 cursor:pointer
 }
+
+@media(max-width:650px){
+
+header{
+flex-direction:column;
+align-items:flex-start
+}
+
+nav a{
+margin:0 12px 0 0
+}
+
+.hero{
+padding:55px 6%
+}
+
+.category-heading{
+align-items:flex-start;
+flex-direction:column
+}
+
+.main-image-wrap,
+.main-product-image{
+height:230px
+}
+
+.categories,
+.products{
+gap:10px
+}
+
+}
+
+@media(max-width:400px){
+
+.categories,
+.products{
+grid-template-columns:1fr 1fr
+}
+
+.main-image-wrap,
+.main-product-image{
+height:205px
+}
+
+.product .info{
+padding:10px
+}
+
+}
 </style>
 </head>
 
@@ -547,24 +588,40 @@ T-shirts, trousers, shorts and footwear — a clean army-inspired fashion collec
 
 <div class="categories">
 
-<div class="card cat" data-category="T-Shirts" onclick="openCategory('T-Shirts')">
+<div class="card cat"
+data-category="T-Shirts"
+onclick="openCategory('T-Shirts')">
+
 <b>T-Shirts</b>
 <span>Premium everyday wear</span>
+
 </div>
 
-<div class="card cat" data-category="Trousers" onclick="openCategory('Trousers')">
+<div class="card cat"
+data-category="Trousers"
+onclick="openCategory('Trousers')">
+
 <b>Trousers</b>
 <span>Comfort & utility style</span>
+
 </div>
 
-<div class="card cat" data-category="Shorts" onclick="openCategory('Shorts')">
+<div class="card cat"
+data-category="Shorts"
+onclick="openCategory('Shorts')">
+
 <b>Shorts</b>
 <span>Easy casual fit</span>
+
 </div>
 
-<div class="card cat" data-category="Footwear" onclick="openCategory('Footwear')">
+<div class="card cat"
+data-category="Footwear"
+onclick="openCategory('Footwear')">
+
 <b>Footwear</b>
 <span>Complete the look</span>
+
 </div>
 
 </div>
@@ -585,17 +642,27 @@ Select a product, choose your size and buy online
 
 </div>
 
-<div class="category-heading" id="categoryHeading" style="display:none">
+<div
+class="category-heading"
+id="categoryHeading"
+style="display:none">
 
 <h3 id="selectedCategory"></h3>
 
-<button class="back-shop" onclick="showAllProducts()">
+<button
+class="back-shop"
+onclick="showAllProducts()">
+
 ← All Products
+
 </button>
 
 </div>
 
-<div class="products" id="products"></div>
+<div
+class="products"
+id="products">
+</div>
 
 </section>
 
@@ -644,44 +711,71 @@ Enter delivery details and place your order
 
 <label>Full Name</label>
 
-<input required name="name" autocomplete="name">
+<input
+required
+name="name"
+autocomplete="name">
 
 <label>Mobile Number</label>
 
-<input required name="mobile" inputmode="tel" pattern="[0-9]{10}" placeholder="10-digit mobile number">
+<input
+required
+name="mobile"
+inputmode="tel"
+pattern="[0-9]{10}"
+maxlength="10"
+placeholder="10-digit mobile number">
 
 <label>Full Address</label>
 
-<textarea required name="address"></textarea>
+<textarea
+required
+name="address"></textarea>
 
 <label>PIN Code</label>
 
-<input required name="pin" inputmode="numeric" pattern="[0-9]{6}">
+<input
+required
+name="pin"
+inputmode="numeric"
+pattern="[0-9]{6}"
+maxlength="6">
 
 <label>Payment Method</label>
 
 <div class="pay">
 
 <label>
-<input type="radio" name="payment" value="ONLINE" checked>
+<input
+type="radio"
+name="payment"
+value="ONLINE"
+checked>
 Online Payment
 </label>
 
 <label>
-<input type="radio" name="payment" value="COD">
+<input
+type="radio"
+name="payment"
+value="COD">
 Cash on Delivery
 </label>
 
 </div>
 
-<button class="btn" type="submit">
+<button
+class="btn"
+type="submit">
+
 BUY NOW & PAY
+
 </button>
 
 </form>
 
 <p class="muted" style="margin-top:16px">
-Secure online payment powered by Razorpay.
+Online payment powered by Razorpay • COD available
 </p>
 
 </div>
@@ -696,29 +790,44 @@ Secure online payment powered by Razorpay.
 
 </footer>
 
+
 <!-- FULL SCREEN IMAGE ZOOM -->
 
-<div class="zoom-modal" id="zoomModal">
+<div
+class="zoom-modal"
+id="zoomModal">
 
-<button class="modal-close" onclick="closeZoom()">
+<button
+class="modal-close"
+onclick="closeZoom()">
+
 ×
+
 </button>
 
 <img
 id="zoomModalImage"
 class="zoom-modal-image"
-alt="Product image"
->
+alt="Product image">
 
 <div class="modal-controls">
 
-<button onclick="changeModalZoom(-0.2)">−</button>
-<button onclick="resetModalZoom()">100%</button>
-<button onclick="changeModalZoom(0.2)">+</button>
+<button onclick="changeModalZoom(-0.2)">
+−
+</button>
+
+<button onclick="resetModalZoom()">
+100%
+</button>
+
+<button onclick="changeModalZoom(0.2)">
++
+</button>
 
 </div>
 
 </div>
+
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
@@ -737,14 +846,12 @@ localStorage.getItem("sniperCart")||"[]"
 
 
 /* =========================
-   IMAGE HELPERS
+IMAGE HELPERS
 ========================= */
 
 function getProductImages(p){
 
 let images=[];
-
-/* New multi-image field */
 
 if(Array.isArray(p.images)){
 
@@ -755,15 +862,13 @@ images=p.images
 
 }
 
-/* Support old image field */
-
 if(!images.length && p.img){
 
-images=[String(p.img).trim()];
+images=[
+String(p.img).trim()
+];
 
 }
-
-/* Some future/admin formats */
 
 if(Array.isArray(p.photos)){
 
@@ -772,19 +877,20 @@ images=[
 ...p.photos
 .filter(Boolean)
 .map(x=>String(x).trim())
+.filter(Boolean)
 ];
 
 }
 
-/* Remove duplicates */
-
-return [...new Set(images)].slice(0,5);
+return [
+...new Set(images)
+].slice(0,5);
 
 }
 
 
 /* =========================
-   LOAD PRODUCTS
+LOAD PRODUCTS
 ========================= */
 
 async function loadProducts(){
@@ -819,7 +925,9 @@ catch(error){
 
 console.error(error);
 
-document.getElementById("products").innerHTML=
+document.getElementById(
+"products"
+).innerHTML=
 '<div class="empty">Products are temporarily unavailable.</div>';
 
 }
@@ -828,7 +936,7 @@ document.getElementById("products").innerHTML=
 
 
 /* =========================
-   SAVE CART
+SAVE CART
 ========================= */
 
 function save(){
@@ -842,7 +950,7 @@ JSON.stringify(cart)
 
 
 /* =========================
-   GET SIZES
+GET SIZES
 ========================= */
 
 function getSizes(p){
@@ -858,7 +966,7 @@ p.sizes||""
 
 
 /* =========================
-   GET CATEGORY
+GET CATEGORY
 ========================= */
 
 function getCategory(p){
@@ -957,7 +1065,7 @@ return "Other";
 
 
 /* =========================
-   OPEN CATEGORY
+OPEN CATEGORY
 ========================= */
 
 function openCategory(category){
@@ -999,14 +1107,15 @@ renderProducts();
 document.getElementById(
 "shop"
 ).scrollIntoView({
-behavior:"smooth"
+behavior:"auto",
+block:"start"
 });
 
 }
 
 
 /* =========================
-   SHOW ALL / FEATURED
+SHOW ALL / FEATURED
 ========================= */
 
 function showAllProducts(){
@@ -1039,7 +1148,7 @@ renderProducts();
 
 
 /* =========================
-   IMAGE GALLERY
+IMAGE GALLERY
 ========================= */
 
 function galleryHtml(p){
@@ -1053,9 +1162,11 @@ return `
 <div class="gallery">
 
 <div class="main-image-wrap">
+
 <div class="muted">
 No image available
 </div>
+
 </div>
 
 </div>
@@ -1075,11 +1186,12 @@ images.map(
 
 <img
 class="thumbnail ${index===0?'active':''}"
-src="${src}"
-alt="${p.name||'Product'}"
+src="${escapeHtml(src)}"
+alt="${escapeHtml(p.name||'Product')}"
+loading="lazy"
+decoding="async"
 onclick="changeProductImage(${id},${index})"
-onerror="this.style.display='none'"
->
+onerror="this.style.display='none'">
 
 `
 ).join('');
@@ -1093,34 +1205,41 @@ return `
 <img
 id="main-img-${id}"
 class="main-product-image"
-src="${first}"
-alt="${p.name||'Product'}"
+src="${escapeHtml(first)}"
+alt="${escapeHtml(p.name||'Product')}"
+loading="lazy"
+decoding="async"
 onclick="openZoom('${escapeJs(first)}')"
-onerror="this.style.display='none'"
->
+onerror="this.style.display='none'">
 
 <div class="zoom-controls">
 
 <button
 type="button"
-onclick="zoomProduct(${id},-0.15)"
->
+onclick="zoomProduct(${id},-0.15)">
+
 −
+
 </button>
 
 <button
 type="button"
-onclick="zoomProduct(${id},0.15)"
->
+onclick="zoomProduct(${id},0.15)">
+
 +
+
 </button>
 
 </div>
 
 </div>
 
-<div class="thumbnails" id="thumbs-${id}">
+<div
+class="thumbnails"
+id="thumbs-${id}">
+
 ${thumbs}
+
 </div>
 
 </div>
@@ -1131,14 +1250,14 @@ ${thumbs}
 
 
 /* =========================
-   CHANGE PRODUCT IMAGE
+CHANGE PRODUCT IMAGE
 ========================= */
 
 function changeProductImage(id,index){
 
 const p=
 products.find(
-x=>x.id===Number(id)
+x=>Number(x.id)===Number(id)
 );
 
 if(!p)return;
@@ -1160,13 +1279,18 @@ if(!img)return;
 
 img.src=src;
 
-img.dataset.index=String(index);
+img.dataset.index=
+String(index);
 
-img.style.transform="scale(1)";
+img.dataset.zoom="1";
+
+img.style.transform=
+"scale(1)";
 
 const thumbs=
 document.querySelectorAll(
-"#thumbs-"+Number(id)+" .thumbnail"
+"#thumbs-"+Number(id)+
+" .thumbnail"
 );
 
 thumbs.forEach(
@@ -1184,7 +1308,7 @@ img.onclick=
 
 
 /* =========================
-   PRODUCT ZOOM
+PRODUCT ZOOM
 ========================= */
 
 function zoomProduct(id,amount){
@@ -1222,7 +1346,23 @@ img.style.transform=
 
 
 /* =========================
-   ESCAPE JS STRING
+ESCAPE HTML
+========================= */
+
+function escapeHtml(value){
+
+return String(value??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+ESCAPE JS
 ========================= */
 
 function escapeJs(value){
@@ -1237,26 +1377,25 @@ return String(value)
 
 
 /* =========================
-   RENDER PRODUCTS
+RENDER PRODUCTS
 ========================= */
 
 function renderProducts(){
 
 const el=
-document.getElementById("products");
+document.getElementById(
+"products"
+);
 
 let list=products;
-
-/*
-Featured section:
-only products marked featured=true
-*/
 
 if(currentCategory==="ALL"){
 
 list=
 products.filter(
-p=>p.featured===true
+p=>
+p.featured===true||
+p.featured==="true"
 );
 
 }
@@ -1266,7 +1405,8 @@ else{
 list=
 products.filter(
 p=>
-getCategory(p)===currentCategory
+getCategory(p)===
+currentCategory
 );
 
 }
@@ -1289,7 +1429,7 @@ el.innerHTML=
 `
 <div class="empty">
 No products available in
-<b>${currentCategory}</b>
+<b>${escapeHtml(currentCategory)}</b>
 yet.
 </div>
 `;
@@ -1319,8 +1459,7 @@ Select Size
 
 <select
 class="size-select"
-id="size-${Number(p.id)}"
->
+id="size-${Number(p.id)}">
 
 <option value="">
 Choose Size
@@ -1329,8 +1468,8 @@ Choose Size
 ${
 sizes.map(s=>
 `
-<option value="${s}">
-${s}
+<option value="${escapeHtml(s)}">
+${escapeHtml(s)}
 </option>
 `
 ).join('')
@@ -1345,7 +1484,10 @@ ${s}
 '';
 
 const featuredBadge=
-p.featured===true
+(
+p.featured===true||
+p.featured==="true"
+)
 ?
 `<span class="featured-badge">FEATURED</span>`
 :
@@ -1362,38 +1504,41 @@ ${galleryHtml(p)}
 ${featuredBadge}
 
 <h3>
-${p.name||''}
+${escapeHtml(p.name||'')}
 </h3>
 
 <div class="muted">
-${p.description||''}
+${escapeHtml(p.description||'')}
 </div>
 
-${p.fabric ? `
+${
+p.fabric
+?
+`
 
 <div class="details">
 
 <b>Fabric:</b>
-${p.fabric}
+${escapeHtml(p.fabric)}
 
 </div>
 
-` : ''}
+`
+:
+''
+}
 
 ${sizeHtml}
 
 <div class="price">
-
 ₹${Number(
 p.price||0
 ).toLocaleString('en-IN')}
-
 </div>
 
 <button
 class="btn buy-btn"
-onclick="buyNow(${Number(p.id)})"
->
+onclick="buyNow(${Number(p.id)})">
 
 BUY NOW
 
@@ -1411,14 +1556,14 @@ BUY NOW
 
 
 /* =========================
-   BUY NOW
+BUY NOW
 ========================= */
 
 function buyNow(id){
 
 const p=
 products.find(
-x=>x.id===Number(id)
+x=>Number(x.id)===Number(id)
 );
 
 if(!p)return;
@@ -1454,40 +1599,34 @@ return;
 
 cart=[
 {
-
 id:Number(id),
-
 qty:1,
-
 size:size
-
 }
-
 ];
 
 save();
 
 renderCart();
 
-location.hash='checkout';
+location.hash=
+'checkout';
+
+showCheckout();
 
 }
 
 
 /* =========================
-   CHANGE QTY
+CHANGE QTY
 ========================= */
 
-function change(
-id,
-d,
-size=""
-){
+function change(id,d,size=""){
 
 let x=
 cart.find(
 i=>
-i.id===Number(id)&&
+Number(i.id)===Number(id)&&
 String(i.size||"")===
 String(size||"")
 );
@@ -1502,7 +1641,7 @@ cart=
 cart.filter(
 i=>
 !(
-i.id===Number(id)&&
+Number(i.id)===Number(id)&&
 String(i.size||"")===
 String(size||"")
 )
@@ -1518,7 +1657,7 @@ renderCart();
 
 
 /* =========================
-   CART
+CART
 ========================= */
 
 function renderCart(){
@@ -1554,22 +1693,20 @@ cart.map(i=>{
 
 const p=
 products.find(
-x=>x.id===i.id
+x=>Number(x.id)===Number(i.id)
 );
 
 if(!p)return '';
 
 const s=
-Number(p.price)*i.qty;
+Number(p.price)*Number(i.qty);
 
 productTotal+=s;
 
 const safeSize=
 String(i.size||"")
-.replace(
-/'/g,
-"\\'"
-);
+.replace(/\\/g,"\\\\")
+.replace(/'/g,"\\'");
 
 return `
 
@@ -1577,18 +1714,19 @@ return `
 
 <span>
 
-${p.name}
+${escapeHtml(p.name)}
 
 <br>
 
 ₹${Number(
 p.price
 ).toLocaleString('en-IN')}
-× ${i.qty}
+× ${Number(i.qty)}
 
-${i.size
+${
+i.size
 ?
-`<br><small>Size: ${i.size}</small>`
+`<br><small>Size: ${escapeHtml(i.size)}</small>`
 :
 ''
 }
@@ -1600,25 +1738,27 @@ ${i.size
 <button
 type="button"
 onclick="change(
-${i.id},
+${Number(i.id)},
 -1,
 '${safeSize}'
-)"
->
+)">
+
 −
+
 </button>
 
-${i.qty}
+${Number(i.qty)}
 
 <button
 type="button"
 onclick="change(
-${i.id},
+${Number(i.id)},
 1,
 '${safeSize}'
-)"
->
+)">
+
 +
+
 </button>
 
 </span>
@@ -1653,7 +1793,7 @@ grandTotal.toLocaleString(
 
 
 /* =========================
-   CHECKOUT
+CHECKOUT
 ========================= */
 
 function showCheckout(){
@@ -1690,7 +1830,7 @@ showCheckout();
 
 
 /* =========================
-   FULLSCREEN ZOOM
+FULLSCREEN ZOOM
 ========================= */
 
 let modalZoom=1;
@@ -1757,16 +1897,15 @@ document.getElementById(
 
 }
 
-
-/* Close modal by background */
-
 document.getElementById(
 "zoomModal"
 ).addEventListener(
 "click",
 e=>{
 
-if(e.target.id==="zoomModal"){
+if(
+e.target.id==="zoomModal"
+){
 
 closeZoom();
 
@@ -1777,14 +1916,14 @@ closeZoom();
 
 
 /* =========================
-   START
+START
 ========================= */
 
 loadProducts();
 
 
 /* =========================
-   ORDER
+ORDER
 ========================= */
 
 document.getElementById(
@@ -1813,7 +1952,7 @@ cart.map(i=>{
 
 const p=
 products.find(
-x=>x.id===i.id
+x=>Number(x.id)===Number(i.id)
 );
 
 return {
@@ -1824,24 +1963,44 @@ name:p.name,
 
 price:Number(p.price),
 
-qty:i.qty,
+qty:Number(i.qty),
 
 size:i.size||""
 
 };
 
-});
+}).filter(Boolean);
+
+
+if(!itemData.length){
+
+alert(
+"Product information is missing."
+);
+
+return;
+
+}
+
 
 const productTotal=
 itemData.reduce(
 (s,i)=>
-s+i.price*i.qty,
+s+
+Number(i.price)*
+Number(i.qty),
 0
 );
 
 const grandTotal=
 productTotal+
 SHIPPING_CHARGE;
+
+
+const paymentMethod=
+data.get('payment')||
+'ONLINE';
+
 
 const btn=
 e.target.querySelector(
@@ -1854,28 +2013,129 @@ btn.textContent=
 'Please wait…';
 
 
-/* COD */
+/* =========================
+COD ORDER
+========================= */
 
 if(
-data.get('payment')==='COD'
+paymentMethod==='COD'
 ){
 
-alert(
-'COD order option selected. Please contact admin to confirm COD order.'
+try{
+
+const codRes=
+await fetch(
+'/api/create-order',
+{
+
+method:'POST',
+
+headers:{
+'Content-Type':
+'application/json'
+},
+
+body:
+JSON.stringify({
+
+receipt:
+'COD-'+Date.now(),
+
+customer:{
+
+name:
+data.get('name'),
+
+mobile:
+data.get('mobile')
+
+},
+
+items:
+itemData,
+
+address:
+data.get('address'),
+
+pin:
+data.get('pin'),
+
+paymentMethod:
+'COD'
+
+})
+
+}
 );
+
+const codOrder=
+await codRes.json();
+
+if(!codRes.ok){
+
+throw new Error(
+codOrder.error||
+'COD order create nahi hua.'
+);
+
+}
+
+
+alert(
+'✅ COD ORDER SUCCESSFULLY PLACED!\n\n'+
+'Order ID: '+
+codOrder.id+
+'\n'+
+'Total: ₹'+
+Number(
+codOrder.amount
+).toLocaleString('en-IN')+
+'\n\n'+
+'Payment: Cash on Delivery'
+);
+
+
+cart=[];
+
+save();
+
+renderCart();
+
+e.target.reset();
+
+location.hash=
+'shop';
+
+}
+catch(err){
+
+console.error(err);
+
+alert(
+err.message||
+'COD order place nahi ho paya.'
+);
+
+}
+finally{
 
 btn.disabled=false;
 
 btn.textContent=
 'BUY NOW & PAY';
 
+}
+
 return;
 
 }
 
-try{
 
-/* CREATE RAZORPAY ORDER */
+/* =========================
+ONLINE PAYMENT
+========================= */
+
+try{
 
 const orderRes=
 await fetch(
@@ -1891,11 +2151,6 @@ headers:{
 
 body:
 JSON.stringify({
-
-amount:
-Math.round(
-grandTotal*100
-),
 
 receipt:
 'SPW-'+Date.now(),
@@ -1919,19 +2174,14 @@ data.get('address'),
 pin:
 data.get('pin'),
 
-shippingCharge:
-SHIPPING_CHARGE,
-
-productTotal:
-productTotal,
-
-total:
-grandTotal
+paymentMethod:
+'ONLINE'
 
 })
 
 }
 );
+
 
 const order=
 await orderRes.json();
@@ -1941,6 +2191,19 @@ if(!orderRes.ok){
 throw new Error(
 order.error||
 'Could not create payment order'
+);
+
+}
+
+
+if(
+!order.id||
+!order.amount||
+!order.key_id
+){
+
+throw new Error(
+'Invalid Razorpay order response'
 );
 
 }
@@ -1958,7 +2221,7 @@ amount:
 order.amount,
 
 currency:
-'INR',
+order.currency||'INR',
 
 name:
 'JOYTI - SNIPER PREMIUM WEAR',
@@ -1967,7 +2230,11 @@ description:
 itemData
 .map(
 i=>
-`${i.name} x ${i.qty}${i.size?' - Size '+i.size:''}`
+`${i.name} x ${i.qty}${
+i.size
+?' - Size '+i.size
+:''
+}`
 )
 .join(', '),
 
@@ -2006,14 +2273,15 @@ color:
 
 },
 
+
 handler:
 async response=>{
 
 try{
 
-const v=
+const verifyResponse=
 await fetch(
-'/api/verify-payment',
+'/api/payment-status',
 {
 
 method:'POST',
@@ -2024,18 +2292,27 @@ headers:{
 },
 
 body:
-JSON.stringify(response)
+JSON.stringify({
+
+orderId:
+order.id,
+
+paymentId:
+response.razorpay_payment_id,
+
+signature:
+response.razorpay_signature
+
+})
 
 }
 );
 
-const result=
-await v.json();
 
-if(
-!v.ok||
-!result.verified
-){
+const result=
+await verifyResponse.json();
+
+if(!verifyResponse.ok){
 
 throw new Error(
 result.error||
@@ -2044,10 +2321,16 @@ result.error||
 
 }
 
+
 alert(
-'Payment successful!\nOrder ID: '+
-order.id
+'✅ PAYMENT SUCCESSFUL!\n\n'+
+'Order ID: '+
+order.id+
+'\n'+
+'Payment ID: '+
+response.razorpay_payment_id
 );
+
 
 cart=[];
 
@@ -2057,10 +2340,13 @@ renderCart();
 
 e.target.reset();
 
-location.hash='shop';
+location.hash=
+'shop';
 
 }
 catch(err){
+
+console.error(err);
 
 alert(
 err.message||
@@ -2079,6 +2365,7 @@ btn.textContent=
 
 },
 
+
 modal:{
 
 ondismiss:()=>{
@@ -2094,12 +2381,13 @@ btn.textContent=
 
 });
 
+
 rzp.on(
 'payment.failed',
 resp=>{
 
 alert(
-'Payment failed: '+
+'❌ Payment failed:\n'+
 (
 resp.error?.description||
 'Please try again.'
@@ -2114,10 +2402,13 @@ btn.textContent=
 }
 );
 
+
 rzp.open();
 
 }
 catch(err){
+
+console.error(err);
 
 alert(
 err.message||
