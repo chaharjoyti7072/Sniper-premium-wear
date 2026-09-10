@@ -103,6 +103,11 @@ text-decoration:none;
 cursor:pointer
 }
 
+.btn:disabled{
+opacity:.6;
+cursor:not-allowed
+}
+
 section{
 padding:45px 6%;
 max-width:1250px;
@@ -360,12 +365,16 @@ min-height:90px
 .pay{
 display:flex;
 gap:15px;
-margin:10px 0
+margin:10px 0;
+flex-wrap:wrap
 }
 
 .pay label{
 font-weight:500;
-margin:0
+margin:0;
+display:flex;
+align-items:center;
+gap:5px
 }
 
 .pay input{
@@ -388,9 +397,14 @@ padding:9px 0;
 border-bottom:1px solid #3d4236
 }
 
+.qty{
+white-space:nowrap
+}
+
 .qty button{
 padding:4px 9px;
-margin:0 3px
+margin:0 3px;
+cursor:pointer
 }
 
 .summary{
@@ -450,7 +464,8 @@ max-height:85vh;
 object-fit:contain;
 user-select:none;
 -webkit-user-drag:none;
-transform-origin:center center
+transform-origin:center center;
+will-change:transform
 }
 
 .modal-close{
@@ -489,6 +504,47 @@ font-weight:900;
 cursor:pointer
 }
 
+/* LEFT / RIGHT IMAGE BUTTONS */
+
+.modal-prev,
+.modal-next{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+width:48px;
+height:65px;
+border:0;
+border-radius:8px;
+background:rgba(255,255,255,.9);
+color:#111;
+font-size:32px;
+font-weight:900;
+cursor:pointer;
+z-index:3
+}
+
+.modal-prev{
+left:12px
+}
+
+.modal-next{
+right:12px
+}
+
+.modal-counter{
+position:absolute;
+top:18px;
+left:50%;
+transform:translateX(-50%);
+background:rgba(0,0,0,.65);
+color:#fff;
+padding:7px 12px;
+border-radius:20px;
+font-size:13px;
+font-weight:700;
+z-index:3
+}
+
 @media(max-width:650px){
 
 header{
@@ -519,6 +575,30 @@ height:230px
 gap:10px
 }
 
+.modal-prev,
+.modal-next{
+width:40px;
+height:55px;
+font-size:26px
+}
+
+.modal-prev{
+left:7px
+}
+
+.modal-next{
+right:7px
+}
+
+.zoom-modal{
+padding:10px
+}
+
+.zoom-modal-image{
+max-width:96vw;
+max-height:80vh
+}
+
 }
 
 @media(max-width:400px){
@@ -535,6 +615,11 @@ height:205px
 
 .product .info{
 padding:10px
+}
+
+.modal-controls button{
+width:42px;
+height:42px
 }
 
 }
@@ -588,7 +673,8 @@ T-shirts, trousers, shorts and footwear — a clean army-inspired fashion collec
 
 <div class="categories">
 
-<div class="card cat"
+<div
+class="card cat"
 data-category="T-Shirts"
 onclick="openCategory('T-Shirts')">
 
@@ -597,7 +683,8 @@ onclick="openCategory('T-Shirts')">
 
 </div>
 
-<div class="card cat"
+<div
+class="card cat"
 data-category="Trousers"
 onclick="openCategory('Trousers')">
 
@@ -606,7 +693,8 @@ onclick="openCategory('Trousers')">
 
 </div>
 
-<div class="card cat"
+<div
+class="card cat"
 data-category="Shorts"
 onclick="openCategory('Shorts')">
 
@@ -615,7 +703,8 @@ onclick="openCategory('Shorts')">
 
 </div>
 
-<div class="card cat"
+<div
+class="card cat"
 data-category="Footwear"
 onclick="openCategory('Footwear')">
 
@@ -805,6 +894,32 @@ onclick="closeZoom()">
 
 </button>
 
+<button
+class="modal-prev"
+type="button"
+onclick="previousModalImage()">
+
+‹
+
+</button>
+
+<button
+class="modal-next"
+type="button"
+onclick="nextModalImage()">
+
+›
+
+</button>
+
+<div
+class="modal-counter"
+id="modalCounter">
+
+1 / 1
+
+</div>
+
 <img
 id="zoomModalImage"
 class="zoom-modal-image"
@@ -812,15 +927,21 @@ alt="Product image">
 
 <div class="modal-controls">
 
-<button onclick="changeModalZoom(-0.2)">
+<button
+type="button"
+onclick="changeModalZoom(-0.2)">
 −
 </button>
 
-<button onclick="resetModalZoom()">
+<button
+type="button"
+onclick="resetModalZoom()">
 100%
 </button>
 
-<button onclick="changeModalZoom(0.2)">
+<button
+type="button"
+onclick="changeModalZoom(0.2)">
 +
 </button>
 
@@ -1209,7 +1330,7 @@ src="${escapeHtml(first)}"
 alt="${escapeHtml(p.name||'Product')}"
 loading="lazy"
 decoding="async"
-onclick="openZoom('${escapeJs(first)}')"
+onclick='openZoomGallery(${JSON.stringify(images)},0)'
 onerror="this.style.display='none'">
 
 <div class="zoom-controls">
@@ -1302,7 +1423,10 @@ i===index
 );
 
 img.onclick=
-()=>openZoom(src);
+()=>openZoomGallery(
+images,
+index
+);
 
 }
 
@@ -1357,21 +1481,6 @@ return String(value??"")
 .replace(/>/g,"&gt;")
 .replace(/"/g,"&quot;")
 .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================
-ESCAPE JS
-========================= */
-
-function escapeJs(value){
-
-return String(value)
-.replace(/\\/g,"\\\\")
-.replace(/'/g,"\\'")
-.replace(/\r/g,"\\r")
-.replace(/\n/g,"\\n");
 
 }
 
@@ -1699,7 +1808,8 @@ x=>Number(x.id)===Number(i.id)
 if(!p)return '';
 
 const s=
-Number(p.price)*Number(i.qty);
+Number(p.price)*
+Number(i.qty);
 
 productTotal+=s;
 
@@ -1830,33 +1940,123 @@ showCheckout();
 
 
 /* =========================
-FULLSCREEN ZOOM
+FULLSCREEN IMAGE GALLERY
 ========================= */
 
 let modalZoom=1;
 
-function openZoom(src){
+let modalImages=[];
+
+let modalIndex=0;
+
+
+function openZoomGallery(images,index=0){
+
+modalImages=
+Array.isArray(images)
+?
+images.filter(Boolean)
+:
+[];
+
+if(!modalImages.length){
+
+return;
+
+}
+
+modalIndex=
+Math.max(
+0,
+Math.min(
+Number(index)||0,
+modalImages.length-1
+)
+);
 
 const modal=
 document.getElementById(
 "zoomModal"
 );
 
+modalZoom=1;
+
+updateModalImage();
+
+modal.classList.add("show");
+
+}
+
+
+function updateModalImage(){
+
 const img=
 document.getElementById(
 "zoomModalImage"
 );
 
-img.src=src;
+if(!modalImages.length){
+
+return;
+
+}
+
+img.src=
+modalImages[modalIndex];
 
 modalZoom=1;
 
 img.style.transform=
 "scale(1)";
 
-modal.classList.add("show");
+
+const counter=
+document.getElementById(
+"modalCounter"
+);
+
+counter.textContent=
+`${modalIndex+1} / ${modalImages.length}`;
 
 }
+
+
+function nextModalImage(){
+
+if(modalImages.length<=1){
+
+return;
+
+}
+
+modalIndex=
+(modalIndex+1)%
+modalImages.length;
+
+updateModalImage();
+
+}
+
+
+function previousModalImage(){
+
+if(modalImages.length<=1){
+
+return;
+
+}
+
+modalIndex=
+(
+modalIndex-1+
+modalImages.length
+)%
+modalImages.length;
+
+updateModalImage();
+
+}
+
 
 function closeZoom(){
 
@@ -1865,6 +2065,7 @@ document.getElementById(
 ).classList.remove("show");
 
 }
+
 
 function changeModalZoom(amount){
 
@@ -1886,6 +2087,7 @@ document.getElementById(
 
 }
 
+
 function resetModalZoom(){
 
 modalZoom=1;
@@ -1897,14 +2099,144 @@ document.getElementById(
 
 }
 
+
+/* =========================
+MOBILE SWIPE
+========================= */
+
+let touchStartX=0;
+
+let touchStartY=0;
+
+const zoomModal=
 document.getElementById(
 "zoomModal"
-).addEventListener(
-"click",
-e=>{
+);
+
+
+zoomModal.addEventListener(
+"touchstart",
+function(e){
+
+if(!e.touches.length){
+
+return;
+
+}
+
+touchStartX=
+e.touches[0].clientX;
+
+touchStartY=
+e.touches[0].clientY;
+
+},
+{
+passive:true
+}
+);
+
+
+zoomModal.addEventListener(
+"touchend",
+function(e){
+
+if(!e.changedTouches.length){
+
+return;
+
+}
+
+const endX=
+e.changedTouches[0].clientX;
+
+const endY=
+e.changedTouches[0].clientY;
+
+const diffX=
+endX-touchStartX;
+
+const diffY=
+endY-touchStartY;
+
+
+/*
+Horizontal swipe only
+*/
 
 if(
-e.target.id==="zoomModal"
+Math.abs(diffX)>60 &&
+Math.abs(diffX)>Math.abs(diffY)
+){
+
+if(diffX<0){
+
+/* LEFT = NEXT */
+
+nextModalImage();
+
+}
+else{
+
+/* RIGHT = PREVIOUS */
+
+previousModalImage();
+
+}
+
+}
+
+},
+{
+passive:true
+}
+);
+
+
+/* Keyboard support */
+
+document.addEventListener(
+"keydown",
+function(e){
+
+if(
+!zoomModal.classList.contains("show")
+){
+
+return;
+
+}
+
+if(e.key==="ArrowLeft"){
+
+previousModalImage();
+
+}
+
+if(e.key==="ArrowRight"){
+
+nextModalImage();
+
+}
+
+if(e.key==="Escape"){
+
+closeZoom();
+
+}
+
+}
+);
+
+
+/* Close modal by background */
+
+zoomModal.addEventListener(
+"click",
+function(e){
+
+if(
+e.target===zoomModal
 ){
 
 closeZoom();
@@ -1934,6 +2266,7 @@ async e=>{
 
 e.preventDefault();
 
+
 if(!cart.length){
 
 alert(
@@ -1944,8 +2277,10 @@ return;
 
 }
 
+
 const data=
 new FormData(e.target);
+
 
 const itemData=
 cart.map(i=>{
@@ -1954,6 +2289,12 @@ const p=
 products.find(
 x=>Number(x.id)===Number(i.id)
 );
+
+if(!p){
+
+return null;
+
+}
 
 return {
 
@@ -1992,6 +2333,7 @@ Number(i.qty),
 0
 );
 
+
 const grandTotal=
 productTotal+
 SHIPPING_CHARGE;
@@ -2007,6 +2349,7 @@ e.target.querySelector(
 'button[type=submit]'
 );
 
+
 btn.disabled=true;
 
 btn.textContent=
@@ -2014,7 +2357,7 @@ btn.textContent=
 
 
 /* =========================
-COD ORDER
+COD
 ========================= */
 
 if(
@@ -2044,10 +2387,14 @@ receipt:
 customer:{
 
 name:
-data.get('name'),
+String(
+data.get('name')||''
+).trim(),
 
 mobile:
-data.get('mobile')
+String(
+data.get('mobile')||''
+).trim()
 
 },
 
@@ -2055,10 +2402,14 @@ items:
 itemData,
 
 address:
-data.get('address'),
+String(
+data.get('address')||''
+).trim(),
 
 pin:
-data.get('pin'),
+String(
+data.get('pin')||''
+).trim(),
 
 paymentMethod:
 'COD'
@@ -2068,8 +2419,10 @@ paymentMethod:
 }
 );
 
+
 const codOrder=
 await codRes.json();
+
 
 if(!codRes.ok){
 
@@ -2158,10 +2511,14 @@ receipt:
 customer:{
 
 name:
-data.get('name'),
+String(
+data.get('name')||''
+).trim(),
 
 mobile:
-data.get('mobile')
+String(
+data.get('mobile')||''
+).trim()
 
 },
 
@@ -2169,10 +2526,14 @@ items:
 itemData,
 
 address:
-data.get('address'),
+String(
+data.get('address')||''
+).trim(),
 
 pin:
-data.get('pin'),
+String(
+data.get('pin')||''
+).trim(),
 
 paymentMethod:
 'ONLINE'
@@ -2185,6 +2546,7 @@ paymentMethod:
 
 const order=
 await orderRes.json();
+
 
 if(!orderRes.ok){
 
@@ -2232,8 +2594,10 @@ itemData
 i=>
 `${i.name} x ${i.qty}${
 i.size
-?' - Size '+i.size
-:''
+?
+' - Size '+i.size
+:
+''
 }`
 )
 .join(', '),
@@ -2311,6 +2675,7 @@ response.razorpay_signature
 
 const result=
 await verifyResponse.json();
+
 
 if(!verifyResponse.ok){
 
