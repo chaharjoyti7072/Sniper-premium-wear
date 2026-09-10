@@ -35,7 +35,8 @@ section{padding:45px 6%;max-width:1250px;margin:auto}
 .price{font-size:20px;font-weight:900;margin:10px 0}
 .muted{color:#6b6d63;font-size:13px}
 .product button{width:100%;margin-top:8px}
-.product .details{margin:6px 0}
+.product .details{margin:8px 0}
+.size-select{width:100%;padding:11px;border:1px solid #bbb;border-radius:6px;font-size:15px;background:#fff}
 #checkout{display:none}
 .checkout{max-width:650px;background:#fff;padding:25px;border-radius:12px;border:1px solid #ddd;margin:auto}
 label{display:block;font-weight:700;margin:13px 0 6px}
@@ -46,6 +47,9 @@ textarea{min-height:90px}
 .cart{background:#171a14;color:#fff;padding:18px;border-radius:10px;margin-bottom:20px}
 .cart-row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid #3d4236}
 .qty button{padding:4px 9px;margin:0 3px}
+.summary{margin-top:15px;border-top:1px solid #3d4236;padding-top:12px}
+.summary-row{display:flex;justify-content:space-between;padding:5px 0}
+.summary-total{font-size:18px;font-weight:900;padding-top:8px}
 footer{background:#11140f;color:#d9dccb;padding:30px 6%;text-align:center;margin-top:30px}
 .empty{background:#fff;padding:25px;border-radius:10px;text-align:center}
 @media(max-width:650px){
@@ -128,7 +132,7 @@ T-shirts, trousers, shorts and footwear — a clean army-inspired fashion collec
 
 <div class="title">
 <h2>FEATURED PRODUCTS</h2>
-<p>Select a product and buy online</p>
+<p>Select a product, choose your size and buy online</p>
 </div>
 
 <div class="products" id="products"></div>
@@ -150,7 +154,24 @@ T-shirts, trousers, shorts and footwear — a clean army-inspired fashion collec
 
 <div id="cartItems"></div>
 
-<strong id="total"></strong>
+<div class="summary">
+
+<div class="summary-row">
+<span>Product Price</span>
+<strong id="productTotal">₹0</strong>
+</div>
+
+<div class="summary-row">
+<span>Shipping Charge</span>
+<strong>₹49</strong>
+</div>
+
+<div class="summary-row summary-total">
+<span>Grand Total</span>
+<strong id="total">₹0</strong>
+</div>
+
+</div>
 
 </div>
 
@@ -210,13 +231,15 @@ Secure online payment powered by Razorpay.
 
 let products=[];
 
+const SHIPPING_CHARGE=49;
+
 let cart=
 JSON.parse(
 localStorage.getItem("sniperCart")||"[]"
 );
 
 
-/* LOAD PRODUCTS FROM VERCEL */
+/* LOAD PRODUCTS */
 
 async function loadProducts(){
 
@@ -269,6 +292,20 @@ JSON.stringify(cart)
 }
 
 
+/* GET SIZES */
+
+function getSizes(p){
+
+return String(
+p.sizes||""
+)
+.trim()
+.split(/\s+/)
+.filter(Boolean);
+
+}
+
+
 /* RENDER PRODUCTS */
 
 function renderProducts(){
@@ -286,16 +323,56 @@ return;
 }
 
 el.innerHTML=
-products.map(p=>`
+products.map(p=>{
+
+const sizes=
+getSizes(p);
+
+const sizeHtml=
+sizes.length
+?`
+
+<div class="details">
+
+<label style="margin:0 0 6px">
+Select Size
+</label>
+
+<select
+class="size-select"
+id="size-${Number(p.id)}"
+required
+>
+
+<option value="">
+Choose Size
+</option>
+
+${sizes.map(s=>
+`<option value="${s}">
+${s}
+</option>`
+).join('')}
+
+</select>
+
+</div>
+
+`
+:'';
+
+return `
 
 <div class="card product">
 
 ${p.img ? `
+
 <img
 src="${p.img}"
 alt="${p.name||'Product'}"
 onerror="this.style.display='none'"
 >
+
 ` : ''}
 
 <div class="info">
@@ -308,17 +385,15 @@ ${p.name||''}
 ${p.description||''}
 </div>
 
-${p.sizes ? `
-<div class="details">
-<b>Size:</b> ${p.sizes}
-</div>
-` : ''}
-
 ${p.fabric ? `
+
 <div class="details">
 <b>Fabric:</b> ${p.fabric}
 </div>
+
 ` : ''}
+
+${sizeHtml}
 
 <div class="price">
 ₹${Number(p.price||0).toLocaleString('en-IN')}
@@ -335,7 +410,9 @@ BUY NOW
 
 </div>
 
-`).join('');
+`;
+
+}).join('');
 
 }
 
@@ -344,10 +421,47 @@ BUY NOW
 
 function buyNow(id){
 
+const p=
+products.find(
+x=>x.id===Number(id)
+);
+
+if(!p)return;
+
+const sizes=
+getSizes(p);
+
+let size="";
+
+if(sizes.length){
+
+const select=
+document.getElementById(
+"size-"+Number(id)
+);
+
+size=
+select
+?select.value
+:"";
+
+if(!size){
+
+alert(
+"Please select a size first."
+);
+
+return;
+
+}
+
+}
+
 cart=[
 {
 id:Number(id),
-qty:1
+qty:1,
+size:size
 }
 ];
 
@@ -360,44 +474,15 @@ location.hash='checkout';
 }
 
 
-/* ADD */
-
-function add(id){
-
-let x=
-cart.find(
-i=>i.id===Number(id)
-);
-
-if(x){
-
-x.qty++;
-
-}else{
-
-cart.push({
-id:Number(id),
-qty:1
-});
-
-}
-
-save();
-
-renderCart();
-
-location.hash='checkout';
-
-}
-
-
 /* CHANGE QTY */
 
-function change(id,d){
+function change(id,d,size=""){
 
 let x=
 cart.find(
-i=>i.id===Number(id)
+i=>
+i.id===Number(id)&&
+String(i.size||"")===String(size||"")
 );
 
 if(!x)return;
@@ -408,7 +493,11 @@ if(x.qty<=0){
 
 cart=
 cart.filter(
-i=>i.id!==Number(id)
+i=>
+!(
+i.id===Number(id)&&
+String(i.size||"")===String(size||"")
+)
 );
 
 }
@@ -432,29 +521,38 @@ if(!cart.length){
 el.innerHTML=
 '<p>Your cart is empty.</p>';
 
-document.getElementById("total")
-.textContent='';
+document.getElementById(
+"productTotal"
+).textContent='₹0';
+
+document.getElementById(
+"total"
+).textContent='₹0';
 
 return;
 
 }
 
-let total=0;
+let productTotal=0;
 
 el.innerHTML=
 cart.map(i=>{
 
-let p=
+const p=
 products.find(
 x=>x.id===i.id
 );
 
 if(!p)return '';
 
-let s=
+const s=
 Number(p.price)*i.qty;
 
-total+=s;
+productTotal+=s;
+
+const safeSize=
+String(i.size||"")
+.replace(/'/g,"\\'");
 
 return `
 
@@ -469,13 +567,17 @@ ${p.name}
 ₹${Number(p.price).toLocaleString('en-IN')}
 × ${i.qty}
 
+${i.size
+?`<br><small>Size: ${i.size}</small>`
+:''}
+
 </span>
 
 <span class="qty">
 
 <button
 type="button"
-onclick="change(${i.id},-1)"
+onclick="change(${i.id},-1,'${safeSize}')"
 >
 −
 </button>
@@ -484,7 +586,7 @@ ${i.qty}
 
 <button
 type="button"
-onclick="change(${i.id},1)"
+onclick="change(${i.id},1,'${safeSize}')"
 >
 +
 </button>
@@ -497,10 +599,21 @@ onclick="change(${i.id},1)"
 
 }).join('');
 
-document.getElementById("total")
-.textContent=
-'Total: ₹'+
-total.toLocaleString('en-IN');
+const grandTotal=
+productTotal+
+SHIPPING_CHARGE;
+
+document.getElementById(
+"productTotal"
+).textContent=
+'₹'+
+productTotal.toLocaleString('en-IN');
+
+document.getElementById(
+"total"
+).textContent=
+'₹'+
+grandTotal.toLocaleString('en-IN');
 
 }
 
@@ -519,13 +632,17 @@ window.addEventListener(
 'hashchange',
 ()=>{
 
-if(location.hash==='#checkout')
+if(
+location.hash==='#checkout'
+)
 showCheckout();
 
 }
 );
 
-if(location.hash==='#checkout')
+if(
+location.hash==='#checkout'
+)
 showCheckout();
 
 
@@ -573,18 +690,26 @@ name:p.name,
 
 price:Number(p.price),
 
-qty:i.qty
+qty:i.qty,
+
+size:i.size||""
 
 };
 
 });
 
-const total=
+
+const productTotal=
 itemData.reduce(
 (s,i)=>
 s+i.price*i.qty,
 0
 );
+
+const grandTotal=
+productTotal+
+SHIPPING_CHARGE;
+
 
 const btn=
 e.target.querySelector(
@@ -638,7 +763,9 @@ body:
 JSON.stringify({
 
 amount:
-Math.round(total*100),
+Math.round(
+grandTotal*100
+),
 
 receipt:
 'SPW-'+Date.now(),
@@ -660,7 +787,16 @@ address:
 data.get('address'),
 
 pin:
-data.get('pin')
+data.get('pin'),
+
+shippingCharge:
+SHIPPING_CHARGE,
+
+productTotal:
+productTotal,
+
+total:
+grandTotal
 
 })
 
@@ -701,7 +837,8 @@ name:
 description:
 itemData
 .map(
-i=>`${i.name} x ${i.qty}`
+i=>
+`${i.name} x ${i.qty}${i.size?' - Size '+i.size:''}`
 )
 .join(', '),
 
@@ -724,7 +861,10 @@ address:
 data.get('address'),
 
 pin:
-data.get('pin')
+data.get('pin'),
+
+shipping_charge:
+String(SHIPPING_CHARGE)
 
 },
 
@@ -757,6 +897,7 @@ JSON.stringify(response)
 
 }
 );
+
 
 const result=
 await v.json();
