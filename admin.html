@@ -127,6 +127,17 @@ button:disabled{
   display:none;
 }
 
+.category-badge{
+  display:inline-block;
+  background:#596442;
+  color:#fff;
+  padding:5px 9px;
+  border-radius:5px;
+  font-size:12px;
+  font-weight:bold;
+  margin:7px 0;
+}
+
 @media(max-width:600px){
   .top{
     flex-direction:column;
@@ -145,6 +156,7 @@ button:disabled{
 <div class="wrap">
 
 <div class="top">
+
   <div>
     <h1>SNIPER PREMIUM WEAR</h1>
     <div class="muted">Admin Panel</div>
@@ -153,6 +165,7 @@ button:disabled{
   <button onclick="location.href='/'">
     OPEN WEBSITE
   </button>
+
 </div>
 
 
@@ -201,48 +214,101 @@ LOGIN
 
 <div class="grid">
 
+
 <div>
+
 <label>Product Name</label>
+
 <input
   id="name"
   placeholder="Product name"
 >
+
 </div>
 
+
 <div>
+
+<label>Category</label>
+
+<select id="category">
+
+<option value="">
+Select Category
+</option>
+
+<option value="T-Shirts">
+T-Shirts
+</option>
+
+<option value="Trousers">
+Trousers
+</option>
+
+<option value="Shorts">
+Shorts
+</option>
+
+<option value="Footwear">
+Footwear
+</option>
+
+</select>
+
+</div>
+
+
+<div>
+
 <label>Price ₹</label>
+
 <input
   id="price"
   type="number"
   placeholder="Price"
 >
+
 </div>
 
+
 <div>
+
 <label>Sizes</label>
+
 <input
   id="sizes"
   placeholder="M L XL"
 >
+
 </div>
 
+
 <div>
+
 <label>Fabric</label>
+
 <input
   id="fabric"
   placeholder="Cotton Lycra"
 >
+
 </div>
 
+
 <div>
+
 <label>Photo URL</label>
+
 <input
   id="img"
   placeholder="Photo URL"
 >
+
 </div>
 
+
 <div>
+
 <label>Product Photo</label>
 
 <input
@@ -258,15 +324,20 @@ LOGIN
 
 </div>
 
+
 <div>
+
 <label>Description</label>
+
 <input
   id="desc"
   value="Premium quality"
 >
+
 </div>
 
 </div>
+
 
 <div class="row">
 
@@ -279,6 +350,7 @@ CLEAR
 </button>
 
 </div>
+
 
 <p
   id="uploadMsg"
@@ -436,6 +508,8 @@ async function loadProducts(){
       box.innerHTML =
         '<div class="muted">No products added yet.</div>';
 
+      window.productList = [];
+
       return;
     }
 
@@ -456,6 +530,10 @@ async function loadProducts(){
           }
 
           <h3>${safe(p.name)}</h3>
+
+          <div class="category-badge">
+            ${safe(p.category || "Category not set")}
+          </div>
 
           <div>
             ₹${Number(p.price || 0).toLocaleString("en-IN")}
@@ -537,6 +615,9 @@ function editProductById(id){
   document.getElementById("name").value =
     p.name || "";
 
+  document.getElementById("category").value =
+    p.category || "";
+
   document.getElementById("price").value =
     p.price || "";
 
@@ -573,11 +654,19 @@ function editProductById(id){
 function clearForm(){
 
   document.getElementById("pid").value = "";
+
   document.getElementById("name").value = "";
+
+  document.getElementById("category").value = "";
+
   document.getElementById("price").value = "";
+
   document.getElementById("sizes").value = "";
+
   document.getElementById("fabric").value = "";
+
   document.getElementById("img").value = "";
+
   document.getElementById("desc").value =
     "Premium quality";
 
@@ -739,6 +828,10 @@ async function saveProduct(){
       document.getElementById("name")
       .value.trim();
 
+    const category =
+      document.getElementById("category")
+      .value.trim();
+
     const price =
       Number(
         document.getElementById("price")
@@ -750,6 +843,16 @@ async function saveProduct(){
 
       alert(
         "Product name is required."
+      );
+
+      return;
+    }
+
+
+    if(!category){
+
+      alert(
+        "Please select a category."
       );
 
       return;
@@ -772,6 +875,8 @@ async function saveProduct(){
     const body = {
 
       name:name,
+
+      category:category,
 
       price:price,
 
@@ -802,6 +907,7 @@ async function saveProduct(){
     if(id){
 
       body.id = Number(id);
+
       method = "PUT";
 
     }
@@ -1062,7 +1168,10 @@ async function loadOrders(showMessage){
                   return (
                     safe(i.name || "") +
                     " × " +
-                    Number(i.qty || 0)
+                    Number(i.qty || 0) +
+                    (i.size
+                      ? " — Size: " + safe(i.size)
+                      : "")
                   );
 
                 }).join(", ")
@@ -1413,12 +1522,6 @@ async function ship(id){
 
 
   try{
-
-    /*
-      IMPORTANT:
-      Actual HTTP endpoint is
-      /api/shiprocket-order
-    */
 
     const r =
       await api(
