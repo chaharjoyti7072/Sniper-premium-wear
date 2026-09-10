@@ -1,5 +1,7 @@
 const { putJSON, getJSON } = require("../_store");
 
+const SHIPPING_CHARGE = 49;
+
 module.exports = async (req, res) => {
   try {
     if (req.method !== "POST") {
@@ -9,7 +11,6 @@ module.exports = async (req, res) => {
     }
 
     const {
-      amount,
       receipt,
       customer,
       items,
@@ -17,43 +18,96 @@ module.exports = async (req, res) => {
       pin
     } = req.body || {};
 
-    if (!amount || Number(amount) < 100) {
+    if (!Array.isArray(items) || items.length === 0) {
       return res.status(400).json({
-        error: "Invalid amount"
+        error: "Order items are missing"
       });
     }
 
-    const key = process.env.RAZORPAY_KEY_ID;
-    const secret = process.env.RAZORPAY_KEY_SECRET;
+    // Calculate product total on server
+    const productTotal = items.reduce((sum, item) => {
+      const price = Number(item.price || 0);
+      const qty = Number(item.qty || 0);
+
+      if (!Number.isFinite(price) || !Number.isFinite(qty)) {
+        return sum;
+      }
+
+      return sum + price * qty;
+    }, 0);
+
+    if (!productTotal || productTotal <= 0) {
+      return res.status(400).json({
+        error: "Invalid product total"
+      });
+    }
+
+    // Product price + fixed shipping
+    const grandTotal =
+      productTotal + SHIPPING_CHARGE;
+
+    // Razorpay amount is in paise
+    const razorpayAmount =
+      Math.round(grandTotal * 100);
+
+    if (!razorpayAmount || razorpayAmount < 100) {
+      return res.status(400).json({
+        error: "Invalid payment amount"
+      });
+    }
+
+    const key =
+      process.env.RAZORPAY_KEY_ID;
+
+    const secret =
+      process.env.RAZORPAY_KEY_SECRET;
 
     if (!key || !secret) {
       return res.status(500).json({
-        error: "Razorpay keys are not configured in Vercel"
+        error:
+          "Razorpay keys are not configured in Vercel"
       });
     }
 
-    const auth = Buffer
-      .from(`${key}:${secret}`)
-      .toString("base64");
+    const auth =
+      Buffer
+        .from(`${key}:${secret}`)
+        .toString("base64");
 
-    const response = await fetch(
-      "https://api.razorpay.com/v1/orders",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Basic ${auth}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          amount: Number(amount),
-          currency: "INR",
-          receipt: receipt || `SPW-${Date.now()}`,
-          payment_capture: 1
-        })
-      }
-    );
+    const response =
+      await fetch(
+        "https://api.razorpay.com/v1/orders",
+        {
+          method: "POST",
 
-    const data = await response.json();
+          headers: {
+            Authorization:
+              `Basic ${auth}`,
+
+            "Content-Type":
+              "application/json"
+          },
+
+          body:
+            JSON.stringify({
+              amount:
+                razorpayAmount,
+
+              currency:
+                "INR",
+
+              receipt:
+                receipt ||
+                `SPW-${Date.now()}`,
+
+              payment_capture:
+                1
+            })
+        }
+      );
+
+    const data =
+      await response.json();
 
     if (!response.ok) {
       return res.status(response.status).json({
@@ -63,36 +117,88 @@ module.exports = async (req, res) => {
       });
     }
 
-    const orders = await getJSON("orders", []);
+    const orders =
+      await getJSON("orders", []);
 
     orders.push({
-      id: data.id,
-      razorpayOrderId: data.id,
-      receipt: data.receipt,
-      amount: data.amount / 100,
-      currency: data.currency,
-      customer: customer || {},
-      items: items || [],
-      address: address || "",
-      pin: pin || "",
-      status: "Payment Pending",
-      createdAt: new Date().toISOString()
+
+      id:
+        data.id,
+
+      razorpayOrderId:
+        data.id,
+
+      receipt:
+        data.receipt,
+
+      amount:
+        data.amount / 100,
+
+      productTotal:
+        productTotal,
+
+      shippingCharge:
+        SHIPPING_CHARGE,
+
+      total:
+        grandTotal,
+
+      currency:
+        data.currency,
+
+      customer:
+        customer || {},
+
+      items:
+        items || [],
+
+      address:
+        address || "",
+
+      pin:
+        pin || "",
+
+      status:
+        "Payment Pending",
+
+      createdAt:
+        new Date().toISOString()
+
     });
 
-    await putJSON("orders", orders);
+    await putJSON(
+      "orders",
+      orders
+    );
 
     return res.status(200).json({
-      id: data.id,
-      amount: data.amount,
-      currency: data.currency,
-      key_id: key
+
+      id:
+        data.id,
+
+      amount:
+        data.amount,
+
+      currency:
+        data.currency,
+
+      key_id:
+        key
+
     });
 
   } catch (error) {
-    console.error("Create order error:", error);
+
+    console.error(
+      "Create order error:",
+      error
+    );
 
     return res.status(500).json({
-      error: error.message || "Server error"
+      error:
+        error.message ||
+        "Server error"
     });
+
   }
 };
