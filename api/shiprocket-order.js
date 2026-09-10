@@ -1,317 +1,90 @@
 const { getJSON, putJSON } = require("../_store");
+
 const {
   getShiprocketToken,
   createShiprocketOrder
 } = require("./shiprocket");
 
-const BASE_URL =
-  "https://apiv2.shiprocket.in/v1/external";
-
-async function getExistingShiprocketOrder(token, localOrder) {
-
-  const candidates = [
-    String(localOrder.id || ""),
-    String(localOrder.razorpayOrderId || ""),
-    "SPW-" + String(localOrder.id || ""),
-    String(localOrder.receipt || "")
-  ].filter(Boolean);
-
-  let page = 1;
-
-  while (page <= 20) {
-
-    const response = await fetch(
-      `${BASE_URL}/orders?per_page=100&page=${page}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        }
-      }
-    );
-
-    if (!response.ok) {
-      break;
-    }
-
-    const data = await response.json();
-
-    const list =
-      Array.isArray(data.data)
-        ? data.data
-        : [];
-
-    const found = list.find(order => {
-
-      const channelOrderId =
-        String(
-          order.channel_order_id || ""
-        );
-
-      const shiprocketId =
-        String(
-          order.id || ""
-        );
-
-      return (
-        candidates.includes(channelOrderId) ||
-        candidates.includes(shiprocketId)
-      );
-
-    });
-
-    if (found) {
-      return found;
-    }
-
-    const pagination =
-      data.meta?.pagination;
-
-    const totalPages =
-      Number(
-        pagination?.total_pages || 1
-      );
-
-    if (page >= totalPages) {
-      break;
-    }
-
-    page++;
-  }
-
-  return null;
-}
-
-
-async function getShiprocketDetails(
-  token,
-  orderId
-) {
-
-  if (!orderId) {
-    return null;
-  }
-
-  try {
-
-    const response = await fetch(
-      `${BASE_URL}/orders/show/${encodeURIComponent(orderId)}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        }
-      }
-    );
-
-    if (!response.ok) {
-      return null;
-    }
-
-    const data =
-      await response.json();
-
-    return data.data || data;
-
-  } catch (error) {
-
-    console.error(
-      "Shiprocket details error:",
-      error
-    );
-
-    return null;
-  }
-}
-
-
-function getShipmentId(order) {
-
-  return String(
-    order?.shipment_id ||
-    order?.shipments?.[0]?.id ||
-    order?.shipment?.id ||
-    ""
-  );
-
-}
-
-
 module.exports = async (req, res) => {
-
   try {
 
+    // METHOD CHECK
     if (req.method !== "POST") {
-
       return res.status(405).json({
         success: false,
         message: "Method not allowed"
       });
-
     }
 
 
-    const auth =
-      req.headers.authorization;
+    // ADMIN AUTH
+    const auth = req.headers.authorization;
 
     if (
       !process.env.ADMIN_PASSWORD ||
-      auth !==
-        `Bearer ${process.env.ADMIN_PASSWORD}`
+      auth !== `Bearer ${process.env.ADMIN_PASSWORD}`
     ) {
-
       return res.status(401).json({
         success: false,
         message: "Unauthorized"
       });
-
     }
 
 
-    const { order_id } =
-      req.body || {};
-
+    // ORDER ID
+    const { order_id } = req.body || {};
 
     if (!order_id) {
-
       return res.status(400).json({
         success: false,
         message: "Order ID is missing"
       });
-
     }
 
 
-    const orders =
-      await getJSON("orders", []);
+    // GET LOCAL ORDERS
+    const orders = await getJSON("orders", []);
 
 
-    const index =
-      orders.findIndex(order =>
-        String(order.id) ===
-        String(order_id)
-      );
+    const index = orders.findIndex(
+      order =>
+        String(order.id) === String(order_id)
+    );
 
 
     if (index === -1) {
-
       return res.status(404).json({
         success: false,
         message: "Order not found"
       });
-
     }
 
 
-    const localOrder =
-      orders[index];
+    const localOrder = orders[index];
 
 
-    // Get Shiprocket login token
-    const token =
-      await getShiprocketToken();
-
-
-    // =================================================
-    // FIRST: SEARCH EXISTING SHIPROCKET ORDER
-    // =================================================
-
-    const existing =
-      await getExistingShiprocketOrder(
-        token,
-        localOrder
-      );
-
-
-    if (existing) {
-
-      const shiprocketId =
-        String(
-          existing.id || ""
-        );
-
-
-      // Get complete order/shipment details
-      const details =
-        await getShiprocketDetails(
-          token,
-          shiprocketId
-        );
-
-
-      const finalOrder =
-        details || existing;
-
-
-      const shipmentId =
-        getShipmentId(finalOrder);
-
-
-      orders[index] = {
-
-        ...localOrder,
-
-        shiprocketOrderId:
-          shiprocketId,
-
-        shiprocketShipmentId:
-          shipmentId,
-
-        shiprocketStatus:
-          finalOrder.status ||
-          existing.status ||
-          "Created",
-
-        shiprocketResponse:
-          finalOrder,
-
-        updatedAt:
-          new Date().toISOString()
-
-      };
-
-
-      await putJSON(
-        "orders",
-        orders
-      );
-
+    // ALREADY CREATED CHECK
+    if (localOrder.shiprocketOrderId) {
 
       return res.status(200).json({
-
         success: true,
-
         alreadyCreated: true,
-
-        message:
-          "Existing Shiprocket order connected",
-
+        message: "Shiprocket order already created",
         shiprocket: {
-
           order_id:
-            shiprocketId,
+            localOrder.shiprocketOrderId,
 
           shipment_id:
-            shipmentId,
+            localOrder.shiprocketShipmentId || "",
 
           status:
-            finalOrder.status ||
-            existing.status ||
-            "Created"
-
+            localOrder.shiprocketStatus || "Created"
         }
-
       });
-
     }
 
 
-    // =================================================
     // CUSTOMER DETAILS
-    // =================================================
-
     const customer =
       localOrder.customer || {};
 
@@ -319,7 +92,7 @@ module.exports = async (req, res) => {
     const name =
       customer.name ||
       localOrder.name ||
-      "";
+      "Customer";
 
 
     const mobile =
@@ -346,138 +119,135 @@ module.exports = async (req, res) => {
       "";
 
 
+    // REQUIRED DETAILS CHECK
     if (
       !name ||
       !mobile ||
       !address ||
       !pin
     ) {
-
       return res.status(400).json({
-
         success: false,
-
         message:
           "Customer delivery details are missing"
-
       });
-
     }
 
 
-    // =================================================
-    // ITEMS
-    // =================================================
-
+    // ITEMS CHECK
     if (
-      !Array.isArray(
-        localOrder.items
-      ) ||
+      !Array.isArray(localOrder.items) ||
       localOrder.items.length === 0
     ) {
-
       return res.status(400).json({
-
         success: false,
-
-        message:
-          "Order items are missing"
-
+        message: "Order items are missing"
       });
-
     }
 
 
-    // =================================================
-    // IMPORTANT:
-    // Do NOT automatically create a duplicate order
-    // if we cannot find the old one.
-    // =================================================
+    // TOTAL
+    const total = Number(
+      localOrder.amount ||
+      localOrder.total ||
+      0
+    );
 
-    if (
-      localOrder.shiprocketAttempted
-    ) {
 
-      return res.status(409).json({
-
+    if (!total || total <= 0) {
+      return res.status(400).json({
         success: false,
-
-        message:
-          "Existing Shiprocket order could not be found. New order was NOT created to avoid duplicate shipment."
-
+        message: "Invalid order amount"
       });
-
     }
 
 
-    // =================================================
-    // CREATE NEW SHIPROCKET ORDER
-    // =================================================
+    // GET SHIPROCKET TOKEN
+    await getShiprocketToken();
 
+
+    // CREATE SHIPROCKET ORDER
     const shiprocketOrder = {
 
+      // IMPORTANT:
+      // This is our website order reference
       order_id:
         String(localOrder.id),
 
+
       name:
-        name,
+        String(name),
+
 
       mobile:
-        mobile,
+        String(mobile),
+
 
       email:
-        email,
+        String(email),
+
 
       address:
-        address,
+        String(address),
+
 
       pin:
-        pin,
+        String(pin),
+
 
       total:
-        Number(
-          localOrder.amount ||
-          localOrder.total ||
-          0
-        ),
+        total,
 
+
+      // Razorpay Paid order = Prepaid
       payment:
         localOrder.status === "Paid"
           ? "Prepaid"
           : "COD",
 
+
       items:
-        localOrder.items.map(item => ({
+        localOrder.items.map((item, index) => ({
 
           id:
             item.id ||
-            Date.now(),
+            `${localOrder.id}-${index + 1}`,
 
           name:
             item.name ||
             "Product",
 
           qty:
-            Number(
-              item.qty || 1
-            ),
+            Number(item.qty || 1),
 
           price:
-            Number(
-              item.price || 0
-            )
+            Number(item.price || 0)
 
         }))
 
     };
 
 
+    console.log(
+      "Creating Shiprocket order:",
+      shiprocketOrder
+    );
+
+
+    // CREATE
     const result =
       await createShiprocketOrder(
         shiprocketOrder
       );
 
 
+    console.log(
+      "Shiprocket response:",
+      result
+    );
+
+
+    // GET SHIPROCKET ORDER ID
     const shiprocketOrderId =
       String(
         result?.order_id ||
@@ -489,6 +259,7 @@ module.exports = async (req, res) => {
       );
 
 
+    // GET SHIPMENT ID
     const shipmentId =
       String(
         result?.shipment_id ||
@@ -500,6 +271,26 @@ module.exports = async (req, res) => {
       );
 
 
+    // IMPORTANT:
+    // If Shiprocket did not return an ID,
+    // do not pretend creation succeeded.
+    if (!shiprocketOrderId) {
+
+      console.error(
+        "Shiprocket returned no order ID:",
+        result
+      );
+
+      return res.status(502).json({
+        success: false,
+        message:
+          "Shiprocket did not return an Order ID",
+        response: result
+      });
+    }
+
+
+    // SAVE INTO OUR ORDERS
     orders[index] = {
 
       ...localOrder,
@@ -516,8 +307,8 @@ module.exports = async (req, res) => {
       shiprocketResponse:
         result,
 
-      shiprocketAttempted:
-        true,
+      shiprocketCreatedAt:
+        new Date().toISOString(),
 
       updatedAt:
         new Date().toISOString()
@@ -531,6 +322,7 @@ module.exports = async (req, res) => {
     );
 
 
+    // SUCCESS
     return res.status(200).json({
 
       success: true,
@@ -575,5 +367,4 @@ module.exports = async (req, res) => {
     });
 
   }
-
 };
