@@ -713,6 +713,7 @@ footer{
   .order-top{
     flex-direction:column;
   }
+
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -865,7 +866,7 @@ footer{
     </h2>
 
     <p>
-      Check your order using Mobile Number + Order ID
+      Check all your orders using your Mobile Number
     </p>
 
   </div>
@@ -889,24 +890,12 @@ footer{
       >
 
 
-      <label>
-        Order ID
-      </label>
-
-      <input
-        id="customerOrderId"
-        type="text"
-        placeholder="Enter your Order ID"
-        autocomplete="off"
-      >
-
-
       <button
         class="btn"
         type="button"
         onclick="findCustomerOrder()"
       >
-        VIEW MY ORDER
+        VIEW MY ORDERS
       </button>
 
 
@@ -915,7 +904,7 @@ footer{
         class="empty"
         style="margin-top:15px"
       >
-        Enter your Mobile Number and Order ID.
+        Enter the mobile number used while placing your order.
       </div>
 
     </div>
@@ -2274,7 +2263,8 @@ function showOrders(){
 
 
 /* =========================
-   FIND CUSTOMER ORDER
+   FIND CUSTOMER ORDERS
+   MOBILE ONLY
 ========================= */
 
 async function findCustomerOrder(){
@@ -2303,14 +2293,6 @@ async function findCustomerOrder(){
     .slice(-10);
 
 
-  const orderId =
-    String(
-      document.getElementById(
-        "customerOrderId"
-      ).value || ""
-    ).trim();
-
-
   if(mobile.length !== 10){
 
     message.style.display =
@@ -2332,31 +2314,11 @@ async function findCustomerOrder(){
   }
 
 
-  if(!orderId){
-
-    message.style.display =
-      "block";
-
-    message.innerHTML =
-      `
-      <b>
-        Please enter your Order ID.
-      </b>
-      `;
-
-    list.innerHTML =
-      "";
-
-    return;
-
-  }
-
-
   message.style.display =
     "block";
 
   message.textContent =
-    "Loading your order...";
+    "Loading your orders...";
 
   list.innerHTML =
     "";
@@ -2368,10 +2330,6 @@ async function findCustomerOrder(){
       "/api/customer-orders?mobile=" +
       encodeURIComponent(
         mobile
-      ) +
-      "&orderId=" +
-      encodeURIComponent(
-        orderId
       );
 
 
@@ -2393,7 +2351,7 @@ async function findCustomerOrder(){
 
       throw new Error(
         data.error ||
-        "Unable to find order"
+        "Unable to find orders"
       );
 
     }
@@ -2414,14 +2372,14 @@ async function findCustomerOrder(){
       message.innerHTML =
         `
         <b>
-          Order not found.
+          No orders found.
         </b>
 
         <br><br>
 
-        Please check your
-        Mobile Number and
-        Order ID.
+        Please check that you entered
+        the same mobile number used
+        while placing the order.
         `;
 
       return;
@@ -2447,7 +2405,7 @@ async function findCustomerOrder(){
   }catch(error){
 
     console.error(
-      "Find customer order error:",
+      "Find customer orders error:",
       error
     );
 
@@ -2455,7 +2413,7 @@ async function findCustomerOrder(){
     message.innerHTML =
       `
       <b>
-        Unable to find order.
+        Unable to find orders.
       </b>
 
       <br><br>
@@ -3730,7 +3688,7 @@ document
             order.id +
             "\n\n" +
             "Payment: Cash on Delivery\n\n" +
-            "Use this Order ID with your mobile number in MY ORDERS."
+            "You can now check your orders using your mobile number in MY ORDERS."
           );
 
 
@@ -3745,7 +3703,7 @@ document
 
           /*
             Automatically fill MY ORDERS
-            with the newly created order.
+            with mobile number only.
           */
 
           document.getElementById(
@@ -3755,14 +3713,6 @@ document
               data.get(
                 "mobile"
               ) || ""
-            );
-
-
-          document.getElementById(
-            "customerOrderId"
-          ).value =
-            String(
-              order.id || ""
             );
 
 
@@ -4007,7 +3957,7 @@ document
                     "Order ID: " +
                     order.id +
                     "\n\n" +
-                    "Use this Order ID with your mobile number in MY ORDERS."
+                    "You can now check your orders using your mobile number in MY ORDERS."
                   );
 
 
@@ -4020,6 +3970,11 @@ document
                   event.target.reset();
 
 
+                  /*
+                    Automatically fill MY ORDERS
+                    with mobile number only.
+                  */
+
                   document.getElementById(
                     "customerMobile"
                   ).value =
@@ -4027,14 +3982,6 @@ document
                       data.get(
                         "mobile"
                       ) || ""
-                    );
-
-
-                  document.getElementById(
-                    "customerOrderId"
-                  ).value =
-                    String(
-                      order.id || ""
                     );
 
 
