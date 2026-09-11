@@ -7,608 +7,219 @@
 
 <style>
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f3f3ea;
-  color:#171a14;
-}
-
-.wrap{
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
-}
-
-.top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-}
-
-.panel{
-  background:#fff;
-  padding:18px;
-  margin:18px 0;
-  border-radius:12px;
-  border:1px solid #ddd;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:12px;
-}
-
-input,select{
-  width:100%;
-  padding:11px;
-  margin:5px 0 10px;
-  border:1px solid #bbb;
-  border-radius:7px;
-}
-
-button{
-  padding:11px 15px;
-  border:0;
-  border-radius:7px;
-  background:#596442;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-button:disabled{
-  opacity:.6;
-  cursor:not-allowed;
-}
-
-.danger{
-  background:#8b3d35;
-}
-
-.row{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:10px;
-}
-
-.item{
-  border:1px solid #ddd;
-  border-radius:9px;
-  padding:12px;
-}
-
-.item img{
-  width:100%;
-  height:180px;
-  object-fit:cover;
-  border-radius:7px;
-}
-
-.order{
-  border:1px solid #ddd;
-  border-radius:9px;
-  padding:14px;
-  margin:12px 0;
-  background:#fff;
-}
-
-.status{
-  font-weight:bold;
-}
-
-.muted{
-  color:#666;
-  font-size:13px;
-  margin-top:5px;
-}
-
-.preview{
-  width:100%;
-  max-width:180px;
-  height:150px;
-  object-fit:cover;
-  display:none;
-  margin:8px 0;
-  border-radius:8px;
-}
-
-.message{
-  display:none;
-  margin-top:12px;
-  padding:10px;
-  border-radius:7px;
-  background:#eeeee4;
-}
-
-.hide{
-  display:none;
-}
-
-.category-badge{
-  display:inline-block;
-  background:#596442;
-  color:#fff;
-  padding:5px 9px;
-  border-radius:5px;
-  font-size:12px;
-  font-weight:bold;
-  margin:7px 0;
-}
-
-.featured-badge{
-  display:inline-block;
-  background:#171a14;
-  color:#fff;
-  padding:5px 9px;
-  border-radius:5px;
-  font-size:12px;
-  font-weight:bold;
-  margin:7px 0;
-}
-
-.photo-box{
-  border:1px solid #ddd;
-  border-radius:8px;
-  padding:10px;
-  margin-bottom:10px;
-}
-
-.photo-preview{
-  display:none;
-  width:100%;
-  max-width:180px;
-  height:150px;
-  object-fit:cover;
-  margin-top:8px;
-  border-radius:7px;
-}
-
-.photo-list{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:7px;
-  margin-top:10px;
-}
-
-.photo-list img{
-  width:100%;
-  height:100px;
-  object-fit:cover;
-  border-radius:6px;
-  border:1px solid #ddd;
-}
-
-.existing-photos{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(100px,1fr));
-  gap:8px;
-  margin:10px 0;
-}
-
-.existing-photo{
-  position:relative;
-}
-
-.existing-photo img{
-  width:100%;
-  height:110px;
-  object-fit:cover;
-  border-radius:7px;
-  border:1px solid #ddd;
-}
-
-.photo-number{
-  position:absolute;
-  left:5px;
-  top:5px;
-  background:#111;
-  color:#fff;
-  font-size:11px;
-  padding:3px 6px;
-  border-radius:4px;
-}
-
-.small-note{
-  font-size:12px;
-  color:#666;
-  margin:5px 0 12px;
-}
-
+body{margin:0;font-family:Arial,sans-serif;background:#f3f3ea;color:#171a14}
+.wrap{max-width:1100px;margin:auto;padding:20px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.panel{background:#fff;padding:18px;margin:18px 0;border-radius:12px;border:1px solid #ddd}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+input,select{width:100%;padding:11px;margin:5px 0 10px;border:1px solid #bbb;border-radius:7px}
+button{padding:11px 15px;border:0;border-radius:7px;background:#596442;color:white;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.6;cursor:not-allowed}
+.danger{background:#8b3d35}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.item{border:1px solid #ddd;border-radius:9px;padding:12px}
+.item img{width:100%;height:180px;object-fit:cover;border-radius:7px}
+.order{border:1px solid #ddd;border-radius:9px;padding:14px;margin:12px 0;background:#fff}
+.status{font-weight:bold}
+.muted{color:#666;font-size:13px;margin-top:5px}
+.preview{width:100%;max-width:180px;height:150px;object-fit:cover;display:none;margin:8px 0;border-radius:8px}
+.message{display:none;margin-top:12px;padding:10px;border-radius:7px;background:#eeeee4}
+.hide{display:none}
+.category-badge,.featured-badge{display:inline-block;color:#fff;padding:5px 9px;border-radius:5px;font-size:12px;font-weight:bold;margin:7px 0}
+.category-badge{background:#596442}
+.featured-badge{background:#171a14}
+.photo-box{border:1px solid #ddd;border-radius:8px;padding:10px;margin-bottom:10px}
+.photo-preview{display:none;width:100%;max-width:180px;height:150px;object-fit:cover;margin-top:8px;border-radius:7px}
+.photo-list{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:10px}
+.photo-list img{width:100%;height:100px;object-fit:cover;border-radius:6px;border:1px solid #ddd}
+.existing-photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin:10px 0}
+.existing-photo{position:relative}
+.existing-photo img{width:100%;height:110px;object-fit:cover;border-radius:7px;border:1px solid #ddd}
+.photo-number{position:absolute;left:5px;top:5px;background:#111;color:#fff;font-size:11px;padding:3px 6px;border-radius:4px}
+.small-note{font-size:12px;color:#666;margin:5px 0 12px}
+.progress{display:none;margin-top:8px;padding:10px;background:#f1f1e8;border-radius:7px;font-size:13px}
 @media(max-width:600px){
-
-  .top{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  .row button{
-    width:100%;
-  }
-
-  .photo-list{
-    grid-template-columns:repeat(2,1fr);
-  }
-
+.top{flex-direction:column;align-items:flex-start}
+.row button{width:100%}
+.photo-list{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
 
 <body>
-
 <div class="wrap">
 
 <div class="top">
-
-  <div>
-    <h1>SNIPER PREMIUM WEAR</h1>
-    <div class="muted">Admin Panel</div>
-  </div>
-
-  <button onclick="location.href='/'">
-    OPEN WEBSITE
-  </button>
-
+<div>
+<h1>SNIPER PREMIUM WEAR</h1>
+<div class="muted">Admin Panel</div>
 </div>
-
+<button onclick="location.href='/'">OPEN WEBSITE</button>
+</div>
 
 <!-- LOGIN -->
-
 <div id="login" class="panel">
-
 <h2>Admin Login</h2>
-
-<input
-  id="pw"
-  type="password"
-  placeholder="Admin password"
->
-
-<button onclick="login()">
-LOGIN
-</button>
-
+<input id="pw" type="password" placeholder="Admin password">
+<button onclick="login()">LOGIN</button>
 <p id="loginMsg"></p>
-
 </div>
 
-
 <!-- APP -->
-
 <div id="app" class="hide">
 
-
 <!-- PRODUCTS -->
-
 <div class="panel">
-
 <h2>Products</h2>
-
 <div id="products" class="grid"></div>
 
 <hr>
 
 <h3>Add / Edit Product</h3>
 
-<input
-  type="hidden"
-  id="pid"
->
+<input type="hidden" id="pid">
 
 <div class="grid">
 
-
 <div>
-
 <label>Product Name</label>
-
-<input
-  id="name"
-  placeholder="Product name"
->
-
+<input id="name" placeholder="Product name">
 </div>
 
-
 <div>
-
 <label>Category</label>
-
 <select id="category">
-
-<option value="">
-Select Category
-</option>
-
-<option value="T-Shirts">
-T-Shirts
-</option>
-
-<option value="Trousers">
-Trousers
-</option>
-
-<option value="Shorts">
-Shorts
-</option>
-
-<option value="Footwear">
-Footwear
-</option>
-
+<option value="">Select Category</option>
+<option value="T-Shirts">T-Shirts</option>
+<option value="Trousers">Trousers</option>
+<option value="Shorts">Shorts</option>
+<option value="Footwear">Footwear</option>
 </select>
-
 </div>
 
-
 <div>
-
 <label>Featured Product</label>
-
 <select id="featured">
-
-<option value="false">
-No - Featured se hatao
-</option>
-
-<option value="true">
-Yes - Featured mein dikhao
-</option>
-
+<option value="false">No - Featured se hatao</option>
+<option value="true">Yes - Featured mein dikhao</option>
 </select>
-
 </div>
 
-
 <div>
-
 <label>Price ₹</label>
-
-<input
-  id="price"
-  type="number"
-  placeholder="Price"
->
-
+<input id="price" type="number" placeholder="Price">
 </div>
 
-
 <div>
-
 <label>Sizes</label>
-
-<input
-  id="sizes"
-  placeholder="M L XL"
->
-
+<input id="sizes" placeholder="M L XL">
 </div>
 
-
 <div>
-
 <label>Fabric</label>
-
-<input
-  id="fabric"
-  placeholder="Cotton Lycra"
->
-
+<input id="fabric" placeholder="Cotton Lycra">
 </div>
-
 
 <div>
-
 <label>Photo URL 1</label>
-
-<input
-  id="img"
-  placeholder="Main Photo URL"
->
-
+<input id="img" placeholder="Main Photo URL">
 </div>
 
 </div>
-
-
-<!-- MULTI PHOTO UPLOAD -->
 
 <h3>Product Photos</h3>
 
 <div class="small-note">
 Maximum 5 photos. Front, Back, Side, Close-up etc.
+<br>
+Photos automatically resize and compress before upload.
 </div>
-
 
 <div id="existingPhotos"></div>
 
-
 <div class="grid">
 
-
 <div class="photo-box">
-
 <label>Photo 1</label>
-
-<input
-  id="photoFile1"
-  type="file"
-  accept="image/*"
-  onchange="previewPhoto(1)"
->
-
-<img
-  id="preview1"
-  class="photo-preview"
->
-
+<input id="photoFile1" type="file" accept="image/*" onchange="previewPhoto(1)">
+<img id="preview1" class="photo-preview">
 </div>
 
-
 <div class="photo-box">
-
 <label>Photo 2</label>
-
-<input
-  id="photoFile2"
-  type="file"
-  accept="image/*"
-  onchange="previewPhoto(2)"
->
-
-<img
-  id="preview2"
-  class="photo-preview"
->
-
+<input id="photoFile2" type="file" accept="image/*" onchange="previewPhoto(2)">
+<img id="preview2" class="photo-preview">
 </div>
 
-
 <div class="photo-box">
-
 <label>Photo 3</label>
-
-<input
-  id="photoFile3"
-  type="file"
-  accept="image/*"
-  onchange="previewPhoto(3)"
->
-
-<img
-  id="preview3"
-  class="photo-preview"
->
-
+<input id="photoFile3" type="file" accept="image/*" onchange="previewPhoto(3)">
+<img id="preview3" class="photo-preview">
 </div>
 
-
 <div class="photo-box">
-
 <label>Photo 4</label>
-
-<input
-  id="photoFile4"
-  type="file"
-  accept="image/*"
-  onchange="previewPhoto(4)"
->
-
-<img
-  id="preview4"
-  class="photo-preview"
->
-
+<input id="photoFile4" type="file" accept="image/*" onchange="previewPhoto(4)">
+<img id="preview4" class="photo-preview">
 </div>
-
 
 <div class="photo-box">
-
 <label>Photo 5</label>
-
-<input
-  id="photoFile5"
-  type="file"
-  accept="image/*"
-  onchange="previewPhoto(5)"
->
-
-<img
-  id="preview5"
-  class="photo-preview"
->
-
+<input id="photoFile5" type="file" accept="image/*" onchange="previewPhoto(5)">
+<img id="preview5" class="photo-preview">
 </div>
 
 </div>
-
 
 <div>
-
 <label>Description</label>
-
-<input
-  id="desc"
-  value="Premium quality"
->
-
+<input id="desc" value="Premium quality">
 </div>
-
 
 <div class="row">
-
-<button onclick="saveProduct()">
-SAVE PRODUCT
-</button>
-
-<button onclick="clearForm()">
-CLEAR
-</button>
-
+<button onclick="saveProduct()">SAVE PRODUCT</button>
+<button onclick="clearForm()">CLEAR</button>
 </div>
 
-
-<p
-  id="uploadMsg"
-  class="muted"
-></p>
+<div id="uploadProgress" class="progress"></div>
+<p id="uploadMsg" class="muted"></p>
 
 </div>
-
 
 <!-- ORDERS -->
-
 <div class="panel">
-
 <h2>Orders</h2>
 
-<button
-  id="refreshBtn"
-  onclick="loadOrders(true)"
->
+<button id="refreshBtn" onclick="loadOrders(true)">
 REFRESH ORDERS
 </button>
 
-<div
-  id="orderMessage"
-  class="message"
-></div>
-
+<div id="orderMessage" class="message"></div>
 <div id="orders"></div>
-
 </div>
 
 </div>
-
 </div>
-
 
 <script>
 
-let token = "";
-
-window.productList = [];
+let token="";
+window.productList=[];
 
 
 /* =========================
    API
 ========================= */
 
-function api(url, options = {}){
-
-  return fetch(url, {
-    ...options,
-    headers:{
-      "Content-Type":"application/json",
-      ...(options.headers || {}),
-      "Authorization":"Bearer " + token
-    }
-  });
-
+function api(url,options={}){
+return fetch(url,{
+...options,
+headers:{
+"Content-Type":"application/json",
+...(options.headers||{}),
+"Authorization":"Bearer "+token
+}
+});
 }
 
 
@@ -618,253 +229,169 @@ function api(url, options = {}){
 
 async function login(){
 
-  try{
+try{
 
-    const password =
-      document.getElementById("pw").value.trim();
+const password=document.getElementById("pw").value.trim();
 
-    if(!password){
+if(!password){
+document.getElementById("loginMsg").textContent="Please enter password.";
+return;
+}
 
-      document.getElementById("loginMsg").textContent =
-        "Please enter password.";
+const r=await fetch("/api/admin-login",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({password})
+});
 
-      return;
-    }
+const d=await r.json();
 
-    const r = await fetch("/api/admin-login",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-        password:password
-      })
-    });
+if(!r.ok){
+document.getElementById("loginMsg").textContent=d.error||"Login failed.";
+return;
+}
 
-    const d = await r.json();
+token=password;
 
-    if(!r.ok){
+localStorage.setItem("adminToken",token);
 
-      document.getElementById("loginMsg").textContent =
-        d.error || "Login failed.";
+document.getElementById("login").classList.add("hide");
+document.getElementById("app").classList.remove("hide");
 
-      return;
-    }
+await loadProducts();
+await loadOrders();
 
-    token = password;
+}catch(error){
 
-    localStorage.setItem(
-      "adminToken",
-      token
-    );
+alert("Login error:\n\n"+(error.message||"Unknown error"));
 
-    document.getElementById("login")
-      .classList.add("hide");
-
-    document.getElementById("app")
-      .classList.remove("hide");
-
-    await loadProducts();
-    await loadOrders();
-
-  }catch(error){
-
-    alert(
-      "Login error:\n\n" +
-      (error.message || "Unknown error")
-    );
-
-  }
+}
 
 }
 
 
 /* =========================
-   PRODUCTS
+   LOAD PRODUCTS
 ========================= */
 
 async function loadProducts(){
 
-  try{
+try{
 
-    const r = await api("/api/products");
+const r=await api("/api/products");
 
-    if(r.status === 401){
+if(r.status===401){
+logout();
+return;
+}
 
-      logout();
-      return;
-    }
+const d=await r.json();
+const list=Array.isArray(d.products)?d.products:[];
 
-    const d = await r.json();
+window.productList=list;
 
-    const list =
-      Array.isArray(d.products)
-      ? d.products
-      : [];
+const box=document.getElementById("products");
 
-    const box =
-      document.getElementById("products");
+if(!list.length){
+box.innerHTML='<div class="muted">No products added yet.</div>';
+return;
+}
 
-    if(!list.length){
+box.innerHTML=list.map(function(p){
 
-      box.innerHTML =
-        '<div class="muted">No products added yet.</div>';
+const images=getProductImages(p);
 
-      window.productList = [];
+const imageHtml=images.length
+?`
+<div class="photo-list">
+${images.map(function(src){
+return `<img src="${safe(src)}" alt="${safe(p.name)}" loading="lazy">`;
+}).join("")}
+</div>
+`
+:"";
 
-      return;
-    }
+return `
+<div class="item">
 
-    box.innerHTML = list.map(function(p){
+${imageHtml}
 
-      const images =
-        getProductImages(p);
+<h3>${safe(p.name)}</h3>
 
-      const imageHtml =
-        images.length
-        ? `
-          <div class="photo-list">
-            ${
-              images.map(function(src){
-                return `
-                  <img
-                    src="${safe(src)}"
-                    alt="${safe(p.name)}"
-                  >
-                `;
-              }).join("")
-            }
-          </div>
-        `
-        : (
-          p.img
-          ? `
-            <img
-              src="${safe(p.img)}"
-              alt="${safe(p.name)}"
-            >
-          `
-          : ""
-        );
+<div class="category-badge">
+${safe(p.category||"Category not set")}
+</div>
 
+<div class="featured-badge">
+${p.featured===true?"⭐ FEATURED ON":"FEATURED OFF"}
+</div>
 
-      return `
-        <div class="item">
+<div>
+₹${Number(p.price||0).toLocaleString("en-IN")}
+</div>
 
-          ${imageHtml}
+<div>
+<b>Size:</b> ${safe(p.sizes||"Not specified")}
+</div>
 
-          <h3>${safe(p.name)}</h3>
+<div>
+<b>Fabric:</b> ${safe(p.fabric||"Not specified")}
+</div>
 
-          <div class="category-badge">
-            ${safe(p.category || "Category not set")}
-          </div>
+<div class="muted">
+${safe(p.description||"")}
+</div>
 
-          <div class="featured-badge">
-            ${
-              p.featured === true
-              ? "⭐ FEATURED ON"
-              : "FEATURED OFF"
-            }
-          </div>
+<div class="row">
 
-          <div>
-            ₹${Number(p.price || 0).toLocaleString("en-IN")}
-          </div>
+<button onclick="editProductById('${jsSafe(String(p.id))}')">
+EDIT
+</button>
 
-          <div>
-            <b>Size:</b>
-            ${safe(p.sizes || "Not specified")}
-          </div>
+<button class="danger" onclick="deleteProduct('${jsSafe(String(p.id))}')">
+DELETE
+</button>
 
-          <div>
-            <b>Fabric:</b>
-            ${safe(p.fabric || "Not specified")}
-          </div>
+</div>
 
-          <div class="muted">
-            ${safe(p.description || "")}
-          </div>
+</div>
+`;
 
-          <div class="row">
+}).join("");
 
-            <button
-              onclick="editProductById('${jsSafe(String(p.id))}')"
-            >
-              EDIT
-            </button>
+}catch(error){
 
-            <button
-              class="danger"
-              onclick="deleteProduct('${jsSafe(String(p.id))}')"
-            >
-              DELETE
-            </button>
+console.error(error);
 
-          </div>
+document.getElementById("products").innerHTML=
+'<div class="muted">Unable to load products.</div>';
 
-        </div>
-      `;
-
-    }).join("");
-
-    window.productList = list;
-
-  }catch(error){
-
-    console.error(error);
-
-    document.getElementById("products").innerHTML =
-      '<div class="muted">Unable to load products.</div>';
-
-  }
+}
 
 }
 
 
 /* =========================
-   GET PRODUCT IMAGES
+   PRODUCT IMAGES
 ========================= */
 
 function getProductImages(p){
 
-  let images = [];
+let images=[];
 
-  if(Array.isArray(p.images)){
+if(Array.isArray(p.images)){
+images.push(...p.images.filter(Boolean).map(x=>String(x).trim()));
+}
 
-    images =
-      p.images
-        .filter(Boolean)
-        .map(function(x){
-          return String(x).trim();
-        })
-        .filter(Boolean);
+if(p.img){
+images.unshift(String(p.img).trim());
+}
 
-  }
+if(Array.isArray(p.photos)){
+images.push(...p.photos.filter(Boolean).map(x=>String(x).trim()));
+}
 
-  if(p.img){
-
-    images.unshift(
-      String(p.img).trim()
-    );
-
-  }
-
-  if(Array.isArray(p.photos)){
-
-    images = [
-      ...images,
-      ...p.photos
-        .filter(Boolean)
-        .map(function(x){
-          return String(x).trim();
-        })
-    ];
-
-  }
-
-  return [
-    ...new Set(images)
-  ].slice(0,5);
+return [...new Set(images)].filter(Boolean).slice(0,5);
 
 }
 
@@ -875,180 +402,79 @@ function getProductImages(p){
 
 function editProductById(id){
 
-  const list =
-    window.productList || [];
+const p=(window.productList||[]).find(
+item=>String(item.id)===String(id)
+);
 
-  const p =
-    list.find(function(item){
-      return String(item.id) === String(id);
-    });
+if(!p){
+alert("Product not found.");
+return;
+}
 
-  if(!p){
+document.getElementById("pid").value=p.id||"";
+document.getElementById("name").value=p.name||"";
+document.getElementById("category").value=p.category||"";
+document.getElementById("featured").value=p.featured===true?"true":"false";
+document.getElementById("price").value=p.price||"";
+document.getElementById("sizes").value=p.sizes||"";
+document.getElementById("fabric").value=p.fabric||"";
+document.getElementById("img").value=p.img||"";
+document.getElementById("desc").value=p.description||"Premium quality";
 
-    alert("Product not found.");
-    return;
-  }
+const images=getProductImages(p);
+const existing=document.getElementById("existingPhotos");
 
-  document.getElementById("pid").value =
-    p.id || "";
+existing.innerHTML=images.length
+?`
+<div class="small-note">Existing product photos:</div>
+<div class="existing-photos">
+${images.map((src,index)=>`
+<div class="existing-photo">
+<span class="photo-number">${index+1}</span>
+<img src="${safe(src)}" alt="Product photo" loading="lazy">
+</div>
+`).join("")}
+</div>
+`
+:"";
 
-  document.getElementById("name").value =
-    p.name || "";
+for(let i=1;i<=5;i++){
+document.getElementById("photoFile"+i).value="";
+document.getElementById("preview"+i).style.display="none";
+}
 
-  document.getElementById("category").value =
-    p.category || "";
+document.getElementById("uploadMsg").textContent=
+"Existing photos shown. Select new photos only if you want to replace them.";
 
-  document.getElementById("featured").value =
-    p.featured === true
-    ? "true"
-    : "false";
-
-  document.getElementById("price").value =
-    p.price || "";
-
-  document.getElementById("sizes").value =
-    p.sizes || "";
-
-  document.getElementById("fabric").value =
-    p.fabric || "";
-
-  document.getElementById("img").value =
-    p.img || "";
-
-  document.getElementById("desc").value =
-    p.description || "Premium quality";
-
-
-  /* SHOW EXISTING PHOTOS */
-
-  const images =
-    getProductImages(p);
-
-  const existing =
-    document.getElementById(
-      "existingPhotos"
-    );
-
-  if(images.length){
-
-    existing.innerHTML = `
-
-      <div class="small-note">
-        Existing product photos:
-      </div>
-
-      <div class="existing-photos">
-
-        ${
-          images.map(function(src,index){
-
-            return `
-
-              <div class="existing-photo">
-
-                <span class="photo-number">
-                  ${index + 1}
-                </span>
-
-                <img
-                  src="${safe(src)}"
-                  alt="Product photo"
-                >
-
-              </div>
-
-            `;
-
-          }).join("")
-        }
-
-      </div>
-
-    `;
-
-  }else{
-
-    existing.innerHTML = "";
-
-  }
-
-
-  /* CLEAR NEW FILE INPUTS */
-
-  for(let i=1;i<=5;i++){
-
-    document.getElementById(
-      "photoFile"+i
-    ).value = "";
-
-    document.getElementById(
-      "preview"+i
-    ).style.display = "none";
-
-  }
-
-
-  document.getElementById("uploadMsg")
-    .textContent =
-      "Existing photos shown above. Select new photos only if you want to replace them.";
-
-
-  window.scrollTo({
-    top:document.body.scrollHeight,
-    behavior:"smooth"
-  });
+window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});
 
 }
 
 
 /* =========================
-   CLEAR
+   CLEAR FORM
 ========================= */
 
 function clearForm(){
 
-  document.getElementById("pid").value = "";
+document.getElementById("pid").value="";
+document.getElementById("name").value="";
+document.getElementById("category").value="";
+document.getElementById("featured").value="false";
+document.getElementById("price").value="";
+document.getElementById("sizes").value="";
+document.getElementById("fabric").value="";
+document.getElementById("img").value="";
+document.getElementById("desc").value="Premium quality";
 
-  document.getElementById("name").value = "";
+for(let i=1;i<=5;i++){
+document.getElementById("photoFile"+i).value="";
+document.getElementById("preview"+i).style.display="none";
+}
 
-  document.getElementById("category").value = "";
-
-  document.getElementById("featured").value =
-    "false";
-
-  document.getElementById("price").value = "";
-
-  document.getElementById("sizes").value = "";
-
-  document.getElementById("fabric").value = "";
-
-  document.getElementById("img").value = "";
-
-  document.getElementById("desc").value =
-    "Premium quality";
-
-
-  for(let i=1;i<=5;i++){
-
-    document.getElementById(
-      "photoFile"+i
-    ).value = "";
-
-    document.getElementById(
-      "preview"+i
-    ).style.display = "none";
-
-  }
-
-
-  document.getElementById(
-    "existingPhotos"
-  ).innerHTML = "";
-
-
-  document.getElementById(
-    "uploadMsg"
-  ).textContent = "";
+document.getElementById("existingPhotos").innerHTML="";
+document.getElementById("uploadMsg").textContent="";
+document.getElementById("uploadProgress").style.display="none";
 
 }
 
@@ -1059,121 +485,166 @@ function clearForm(){
 
 function previewPhoto(number){
 
-  const file =
-    document.getElementById(
-      "photoFile"+number
-    ).files[0];
+const file=document.getElementById("photoFile"+number).files[0];
+const preview=document.getElementById("preview"+number);
 
-  const preview =
-    document.getElementById(
-      "preview"+number
-    );
+if(!file){
+preview.style.display="none";
+return;
+}
 
-  if(!file){
+if(!file.type.startsWith("image/")){
+alert("Please select an image file.");
+document.getElementById("photoFile"+number).value="";
+return;
+}
 
-    preview.style.display =
-      "none";
-
-    return;
-
-  }
-
-  preview.src =
-    URL.createObjectURL(file);
-
-  preview.style.display =
-    "block";
+preview.src=URL.createObjectURL(file);
+preview.style.display="block";
 
 }
 
 
 /* =========================
-   UPLOAD ONE PHOTO
+   COMPRESS IMAGE
+========================= */
+
+async function compressImage(file){
+
+return new Promise(function(resolve,reject){
+
+const reader=new FileReader();
+
+reader.onload=function(event){
+
+const img=new Image();
+
+img.onload=function(){
+
+/*
+  Maximum size = 1400px.
+  WebP quality = 78%.
+*/
+
+const MAX_SIZE=1400;
+
+let width=img.width;
+let height=img.height;
+
+if(width>MAX_SIZE||height>MAX_SIZE){
+
+if(width>height){
+
+height=Math.round(height*MAX_SIZE/width);
+width=MAX_SIZE;
+
+}else{
+
+width=Math.round(width*MAX_SIZE/height);
+height=MAX_SIZE;
+
+}
+
+}
+
+const canvas=document.createElement("canvas");
+
+canvas.width=width;
+canvas.height=height;
+
+const ctx=canvas.getContext("2d");
+
+ctx.drawImage(img,0,0,width,height);
+
+canvas.toBlob(function(blob){
+
+if(!blob){
+reject(new Error("Photo compression failed"));
+return;
+}
+
+resolve(blob);
+
+},"image/webp",0.78);
+
+};
+
+img.onerror=function(){
+reject(new Error("Invalid image"));
+};
+
+img.src=event.target.result;
+
+};
+
+reader.onerror=function(){
+reject(new Error("Photo read failed"));
+};
+
+reader.readAsDataURL(file);
+
+});
+
+}
+
+
+/* =========================
+   UPLOAD COMPRESSED PHOTO
 ========================= */
 
 async function uploadPhotoFile(file){
 
-  if(!file) return null;
+if(!file)return null;
 
+const compressed=await compressImage(file);
 
-  const dataUrl =
-    await new Promise(function(resolve,reject){
+const dataUrl=await new Promise(function(resolve,reject){
 
-      const reader =
-        new FileReader();
+const reader=new FileReader();
 
-      reader.onload =
-        function(){
-          resolve(reader.result);
-        };
+reader.onload=function(){
+resolve(reader.result);
+};
 
-      reader.onerror =
-        function(){
-          reject(
-            new Error("Photo read failed")
-          );
-        };
+reader.onerror=function(){
+reject(new Error("Compressed photo read failed"));
+};
 
-      reader.readAsDataURL(file);
+reader.readAsDataURL(compressed);
 
-    });
+});
 
+const r=await fetch("/api/upload",{
 
-  const r = await fetch(
-    "/api/upload",
-    {
-      method:"POST",
+method:"POST",
 
-      headers:{
-        "Content-Type":
-          "application/json",
+headers:{
+"Content-Type":"application/json",
+"Authorization":"Bearer "+token
+},
 
-        "Authorization":
-          "Bearer " + token
-      },
+body:JSON.stringify({
+data:dataUrl,
+contentType:"image/webp"
+})
 
-      body:JSON.stringify({
-        data:dataUrl,
-        contentType:file.type
-      })
-    }
-  );
+});
 
+const text=await r.text();
 
-  const text =
-    await r.text();
+let d;
 
-  let d;
+try{
+d=JSON.parse(text);
+}catch(error){
+throw new Error("Upload server response invalid");
+}
 
-  try{
+if(!r.ok){
+throw new Error(d.error||"Photo upload failed");
+}
 
-    d = JSON.parse(text);
-
-  }catch(error){
-
-    throw new Error(
-      "Upload server response invalid"
-    );
-
-  }
-
-
-  if(!r.ok){
-
-    throw new Error(
-      d.error ||
-      "Photo upload failed"
-    );
-
-  }
-
-
-  return (
-    "/api/product-image?key=" +
-    encodeURIComponent(
-      d.pathname
-    )
-  );
+return "/api/product-image?key="+encodeURIComponent(d.pathname);
 
 }
 
@@ -1184,293 +655,170 @@ async function uploadPhotoFile(file){
 
 async function saveProduct(){
 
-  try{
+try{
 
-    const name =
-      document.getElementById("name")
-      .value.trim();
+const name=document.getElementById("name").value.trim();
+const category=document.getElementById("category").value.trim();
+const price=Number(document.getElementById("price").value);
 
-    const category =
-      document.getElementById("category")
-      .value.trim();
+if(!name){
+alert("Product name is required.");
+return;
+}
 
-    const price =
-      Number(
-        document.getElementById("price")
-        .value
-      );
+if(!category){
+alert("Please select a category.");
+return;
+}
 
+if(!Number.isFinite(price)||price<=0){
+alert("Valid price is required.");
+return;
+}
 
-    if(!name){
+const selectedFiles=[];
 
-      alert(
-        "Product name is required."
-      );
+for(let i=1;i<=5;i++){
 
-      return;
-    }
+const file=document.getElementById("photoFile"+i).files[0];
 
+if(file)selectedFiles.push(file);
 
-    if(!category){
+}
 
-      alert(
-        "Please select a category."
-      );
+const progress=document.getElementById("uploadProgress");
+const msg=document.getElementById("uploadMsg");
 
-      return;
-    }
+let uploadedImages=[];
 
+if(selectedFiles.length){
 
-    if(
-      !Number.isFinite(price) ||
-      price <= 0
-    ){
+progress.style.display="block";
 
-      alert(
-        "Valid price is required."
-      );
+for(let i=0;i<selectedFiles.length;i++){
 
-      return;
-    }
+msg.textContent=
+"Photo "+(i+1)+" compressing and uploading...";
 
+progress.textContent=
+"Processing "+(i+1)+" / "+selectedFiles.length;
 
-    const selectedFiles = [];
+const uploaded=await uploadPhotoFile(selectedFiles[i]);
 
-    for(let i=1;i<=5;i++){
+if(uploaded){
+uploadedImages.push(uploaded);
+}
 
-      const file =
-        document.getElementById(
-          "photoFile"+i
-        ).files[0];
+}
 
-      if(file){
+progress.textContent="✅ All photos uploaded.";
+msg.textContent="Photos compressed and uploaded successfully.";
 
-        selectedFiles.push(file);
+}else{
 
-      }
+progress.style.display="none";
 
-    }
+}
 
+const oldImg=document.getElementById("img").value.trim();
 
-    if(selectedFiles.length){
+const body={
 
-      document.getElementById(
-        "uploadMsg"
-      ).textContent =
-        "Uploading " +
-        selectedFiles.length +
-        " photo(s)...";
+name:name,
 
-    }
+category:category,
 
+featured:
+document.getElementById("featured").value==="true",
 
-    let uploadedImages = [];
+price:price,
 
-    for(
-      let i=0;
-      i<selectedFiles.length;
-      i++
-    ){
+sizes:
+document.getElementById("sizes").value.trim(),
 
-      const uploaded =
-        await uploadPhotoFile(
-          selectedFiles[i]
-        );
+fabric:
+document.getElementById("fabric").value.trim(),
 
-      if(uploaded){
+img:
+uploadedImages.length?uploadedImages[0]:oldImg,
 
-        uploadedImages.push(
-          uploaded
-        );
+images:
+uploadedImages.length?uploadedImages:undefined,
 
-      }
+description:
+document.getElementById("desc").value.trim()
 
-      document.getElementById(
-        "uploadMsg"
-      ).textContent =
-        "Uploaded " +
-        (i+1) +
-        " of " +
-        selectedFiles.length +
-        " photo(s)...";
+};
 
-    }
+const id=document.getElementById("pid").value;
 
+let method="POST";
 
-    const oldImg =
-      document.getElementById("img")
-      .value.trim();
+if(id){
+body.id=Number(id);
+method="PUT";
+}
 
+const r=await api("/api/products",{
+method:method,
+body:JSON.stringify(body)
+});
 
-    /*
-      If new photos are selected,
-      first photo becomes main photo.
+const d=await r.json();
 
-      If no new photos are selected,
-      keep existing photo URL.
-    */
+if(!r.ok){
+alert(d.error||"Save failed.");
+return;
+}
 
-    let imageUrl =
-      oldImg;
+alert("✅ Product saved successfully.");
 
+clearForm();
 
-    if(uploadedImages.length){
+await loadProducts();
 
-      imageUrl =
-        uploadedImages[0];
+}catch(error){
 
-    }
+console.error(error);
 
+alert("❌ Error:\n\n"+(error.message||"Unknown error"));
 
-    const body = {
-
-      name:name,
-
-      category:category,
-
-      featured:
-        document.getElementById(
-          "featured"
-        ).value === "true",
-
-      price:price,
-
-      sizes:
-        document.getElementById("sizes")
-        .value.trim(),
-
-      fabric:
-        document.getElementById("fabric")
-        .value.trim(),
-
-      img:imageUrl,
-
-      images:
-        uploadedImages.length
-        ? uploadedImages
-        : undefined,
-
-      description:
-        document.getElementById("desc")
-        .value.trim()
-
-    };
-
-
-    const id =
-      document.getElementById("pid")
-      .value;
-
-    let method = "POST";
-
-
-    if(id){
-
-      body.id = Number(id);
-
-      method = "PUT";
-
-    }
-
-
-    const r =
-      await api(
-        "/api/products",
-        {
-          method:method,
-          body:JSON.stringify(body)
-        }
-      );
-
-
-    const d =
-      await r.json();
-
-
-    if(!r.ok){
-
-      alert(
-        d.error || "Save failed."
-      );
-
-      return;
-    }
-
-
-    alert(
-      "✅ Product saved successfully."
-    );
-
-
-    clearForm();
-
-    await loadProducts();
-
-  }catch(error){
-
-    console.error(error);
-
-    alert(
-      "❌ Error:\n\n" +
-      (error.message || "Unknown error")
-    );
-
-  }
+}
 
 }
 
 
 /* =========================
-   DELETE
+   DELETE PRODUCT
 ========================= */
 
 async function deleteProduct(id){
 
-  if(!confirm(
-    "Delete this product?"
-  )) return;
+if(!confirm("Delete this product?"))return;
 
+try{
 
-  try{
+const r=await api(
+"/api/products?id="+encodeURIComponent(id),
+{method:"DELETE"}
+);
 
-    const r =
-      await api(
-        "/api/products?id=" +
-        encodeURIComponent(id),
-        {
-          method:"DELETE"
-        }
-      );
+const d=await r.json();
 
+if(!r.ok){
+alert(d.error||"Delete failed.");
+return;
+}
 
-    const d =
-      await r.json();
+alert("Product deleted.");
 
+await loadProducts();
 
-    if(!r.ok){
+}catch(error){
 
-      alert(
-        d.error || "Delete failed."
-      );
+alert(error.message||"Delete failed.");
 
-      return;
-    }
-
-
-    alert(
-      "Product deleted."
-    );
-
-    await loadProducts();
-
-  }catch(error){
-
-    alert(
-      error.message ||
-      "Delete failed."
-    );
-
-  }
+}
 
 }
 
@@ -1481,313 +829,173 @@ async function deleteProduct(id){
 
 async function loadOrders(showMessage){
 
-  const btn =
-    document.getElementById(
-      "refreshBtn"
-    );
+const btn=document.getElementById("refreshBtn");
+const message=document.getElementById("orderMessage");
 
-  const message =
-    document.getElementById(
-      "orderMessage"
-    );
+try{
 
+if(showMessage){
 
-  try{
+btn.disabled=true;
+btn.textContent="REFRESHING...";
+message.style.display="block";
+message.textContent="Loading orders...";
 
-    if(showMessage){
+}
 
-      btn.disabled = true;
+const r=await api("/api/orders");
 
-      btn.textContent =
-        "REFRESHING...";
+const text=await r.text();
 
-      message.style.display =
-        "block";
+let d={};
 
-      message.textContent =
-        "Loading orders...";
+try{
+d=JSON.parse(text);
+}catch(error){
+throw new Error("Server response is not valid JSON.");
+}
 
-    }
+if(!r.ok){
+throw new Error(d.error||"Unable to load orders.");
+}
 
+const list=Array.isArray(d.orders)?d.orders:[];
 
-    const r =
-      await api("/api/orders");
+const box=document.getElementById("orders");
 
+if(!list.length){
 
-    const text =
-      await r.text();
+box.innerHTML='<div class="muted">No orders yet.</div>';
 
-    let d = {};
+}else{
 
-    try{
+box.innerHTML=list.map(function(o){
 
-      d = JSON.parse(text);
+const id=String(o.id||"");
+const customer=o.customer||{};
+const items=Array.isArray(o.items)?o.items:[];
 
-    }catch(error){
+return `
 
-      throw new Error(
-        "Server response is not valid JSON."
-      );
+<div class="order">
 
-    }
+<b>${safe(customer.name||o.name||"Customer")}</b>
 
+—
+₹${Number(o.amount||o.total||0).toLocaleString("en-IN")}
 
-    if(!r.ok){
+—
+<span class="status">
+${safe(o.status||"Payment Pending")}
+</span>
 
-      throw new Error(
-        d.error ||
-        "Unable to load orders."
-      );
+<div>
+${safe(customer.mobile||o.mobile||"")}
+</div>
 
-    }
+<div>
+${safe(o.address||"")}
+${o.pin?", "+safe(o.pin):""}
+</div>
 
+<div class="muted">
+${items.map(function(i){
 
-    const list =
-      Array.isArray(d.orders)
-      ? d.orders
-      : [];
+return safe(i.name||"")+" × "+Number(i.qty||0)+
+(i.size?" — Size: "+safe(i.size):"");
 
+}).join(", ")}
+</div>
 
-    const box =
-      document.getElementById(
-        "orders"
-      );
+<div class="muted">
 
+Payment:
+${safe(o.paymentMethod||"ONLINE")}
 
-    if(!list.length){
+|
 
-      box.innerHTML =
-        '<div class="muted">No orders yet.</div>';
+Razorpay:
+${safe(o.paymentId||"Pending")}
 
-    }else{
+|
 
-      box.innerHTML =
-        list.map(function(o){
+Shiprocket:
+${safe(o.shiprocketOrderId||"Not created")}
 
-          const id =
-            String(o.id || "");
+</div>
 
-          const customer =
-            o.customer || {};
+<div class="row">
 
-          const items =
-            Array.isArray(o.items)
-            ? o.items
-            : [];
+<select id="status-${safe(id)}">
 
+<option value="Payment Pending">Payment Pending</option>
+<option value="COD - Pending">COD - Pending</option>
+<option value="Paid">Paid</option>
+<option value="Ready to Ship">Ready to Ship</option>
+<option value="Shipped">Shipped</option>
+<option value="Delivered">Delivered</option>
+<option value="Cancelled">Cancelled</option>
 
-          return `
+</select>
 
-          <div class="order">
+<button onclick="statusUpdate('${jsSafe(id)}')">
+UPDATE STATUS
+</button>
 
-            <b>
-              ${safe(
-                customer.name ||
-                o.name ||
-                "Customer"
-              )}
-            </b>
+<button onclick="verifyPayment('${jsSafe(id)}')">
+VERIFY PAYMENT
+</button>
 
-            —
-            ₹${Number(
-              o.amount ||
-              o.total ||
-              0
-            ).toLocaleString("en-IN")}
+<button onclick="ship('${jsSafe(id)}')">
+SEND TO SHIPROCKET
+</button>
 
-            —
-            <span class="status">
-              ${safe(
-                o.status ||
-                "Payment Pending"
-              )}
-            </span>
+</div>
 
+</div>
 
-            <div>
-              ${safe(
-                customer.mobile ||
-                o.mobile ||
-                ""
-              )}
-            </div>
+`;
 
+}).join("");
 
-            <div>
-              ${safe(
-                o.address ||
-                ""
-              )}
-              ${o.pin ? ", " + safe(o.pin) : ""}
-            </div>
+list.forEach(function(o){
 
+const select=document.getElementById(
+"status-"+String(o.id)
+);
 
-            <div class="muted">
+if(select){
+select.value=o.status||"Payment Pending";
+}
 
-              ${
-                items.map(function(i){
+});
 
-                  return (
-                    safe(i.name || "") +
-                    " × " +
-                    Number(i.qty || 0) +
-                    (i.size
-                      ? " — Size: " + safe(i.size)
-                      : "")
-                  );
+}
 
-                }).join(", ")
-              }
+if(showMessage){
 
-            </div>
+message.style.display="block";
+message.textContent="✅ Orders refreshed successfully.";
 
+setTimeout(function(){
+message.style.display="none";
+},2500);
 
-            <div class="muted">
+}
 
-              Razorpay:
-              ${safe(
-                o.paymentId ||
-                "Pending"
-              )}
+}catch(error){
 
-              |
+console.error("Orders error:",error);
 
-              Shiprocket:
-              ${safe(
-                o.shiprocketOrderId ||
-                "Not created"
-              )}
+message.style.display="block";
+message.textContent="❌ "+(error.message||"Unable to load orders.");
 
-            </div>
+}finally{
 
+btn.disabled=false;
+btn.textContent="REFRESH ORDERS";
 
-            <div class="row">
-
-              <select
-                id="status-${safe(id)}"
-              >
-
-                <option value="Payment Pending">
-                  Payment Pending
-                </option>
-
-                <option value="Paid">
-                  Paid
-                </option>
-
-                <option value="Ready to Ship">
-                  Ready to Ship
-                </option>
-
-                <option value="Shipped">
-                  Shipped
-                </option>
-
-                <option value="Delivered">
-                  Delivered
-                </option>
-
-                <option value="Cancelled">
-                  Cancelled
-                </option>
-
-              </select>
-
-
-              <button
-                onclick="statusUpdate('${jsSafe(id)}')"
-              >
-                UPDATE STATUS
-              </button>
-
-
-              <button
-                onclick="verifyPayment('${jsSafe(id)}')"
-              >
-                VERIFY PAYMENT
-              </button>
-
-
-              <button
-                onclick="ship('${jsSafe(id)}')"
-              >
-                SEND TO SHIPROCKET
-              </button>
-
-            </div>
-
-          </div>
-
-          `;
-
-        }).join("");
-
-
-      list.forEach(function(o){
-
-        const select =
-          document.getElementById(
-            "status-" +
-            String(o.id)
-          );
-
-        if(select){
-
-          select.value =
-            o.status ||
-            "Payment Pending";
-
-        }
-
-      });
-
-    }
-
-
-    if(showMessage){
-
-      message.style.display =
-        "block";
-
-      message.textContent =
-        "✅ Orders refreshed successfully.";
-
-      setTimeout(function(){
-
-        message.style.display =
-          "none";
-
-      },2500);
-
-    }
-
-
-  }catch(error){
-
-    console.error(
-      "Orders error:",
-      error
-    );
-
-
-    message.style.display =
-      "block";
-
-    message.textContent =
-      "❌ " +
-      (
-        error.message ||
-        "Unable to load orders."
-      );
-
-  }finally{
-
-    btn.disabled = false;
-
-    btn.textContent =
-      "REFRESH ORDERS";
-
-  }
+}
 
 }
 
@@ -1798,103 +1006,76 @@ async function loadOrders(showMessage){
 
 async function verifyPayment(id){
 
-  try{
+try{
 
-    alert(
-      "🔍 Payment checking..."
-    );
+alert("🔍 Payment checking...");
 
+const r=await fetch("/api/payment-status",{
 
-    const r =
-      await fetch(
-        "/api/payment-status",
-        {
-          method:"POST",
+method:"POST",
 
-          headers:{
-            "Content-Type":
-              "application/json",
+headers:{
+"Content-Type":"application/json",
+"Authorization":"Bearer "+token
+},
 
-            "Authorization":
-              "Bearer " + token
-          },
+body:JSON.stringify({
+orderId:id
+})
 
-          body:JSON.stringify({
-            orderId:id
-          })
-        }
-      );
+});
 
+const text=await r.text();
 
-    const text =
-      await r.text();
+let d;
 
+try{
+d=JSON.parse(text);
+}catch(error){
 
-    let d;
+alert("❌ Server response error:\n\n"+text.substring(0,500));
+return;
 
-    try{
+}
 
-      d = JSON.parse(text);
+if(!r.ok){
 
-    }catch(error){
+alert(
+"❌ Payment check failed:\n\n"+
+(d.error||"Unknown error")
+);
 
-      alert(
-        "❌ Server response error:\n\n" +
-        text.substring(0,500)
-      );
+return;
 
-      return;
-    }
+}
 
+if(d.paid){
 
-    if(!r.ok){
+alert(
+"✅ PAYMENT VERIFIED\n\n"+
+"Payment ID: "+(d.paymentId||"")+
+"\n\nOrder status is now PAID."
+);
 
-      alert(
-        "❌ Payment check failed:\n\n" +
-        (
-          d.error ||
-          "Unknown error"
-        )
-      );
+}else{
 
-      return;
-    }
+alert(
+"❌ NO CAPTURED PAYMENT FOUND\n\n"+
+"This order is still Payment Pending."
+);
 
+}
 
-    if(d.paid){
+await loadOrders(false);
 
-      alert(
-        "✅ PAYMENT VERIFIED\n\n" +
-        "Payment ID: " +
-        (d.paymentId || "") +
-        "\n\n" +
-        "Order status is now PAID."
-      );
+}catch(error){
 
-    }else{
+alert(
+"❌ Connection / Error:\n\n"+
+(error.message||"Payment check failed.")
+);
 
-      alert(
-        "❌ NO CAPTURED PAYMENT FOUND\n\n" +
-        "This order is still Payment Pending."
-      );
-
-    }
-
-
-    await loadOrders(false);
-
-
-  }catch(error){
-
-    alert(
-      "❌ Connection / Error:\n\n" +
-      (
-        error.message ||
-        "Payment check failed."
-      )
-    );
-
-  }
+}
 
 }
 
@@ -1905,73 +1086,44 @@ async function verifyPayment(id){
 
 async function statusUpdate(id){
 
-  const select =
-    document.getElementById(
-      "status-" + id
-    );
+const select=document.getElementById("status-"+id);
 
+if(!select){
+alert("Status selector not found.");
+return;
+}
 
-  if(!select){
+try{
 
-    alert(
-      "Status selector not found."
-    );
+const r=await api("/api/orders",{
 
-    return;
-  }
+method:"PATCH",
 
+body:JSON.stringify({
+id:id,
+status:select.value
+})
 
-  const status =
-    select.value;
+});
 
+const d=await r.json();
 
-  try{
+if(!r.ok){
 
-    const r =
-      await api(
-        "/api/orders",
-        {
-          method:"PATCH",
+alert(d.error||"Status update failed.");
+return;
 
-          body:JSON.stringify({
-            id:id,
-            status:status
-          })
+}
 
-        }
-      );
+alert("✅ Order status updated.");
 
+await loadOrders(false);
 
-    const d =
-      await r.json();
+}catch(error){
 
+alert(error.message||"Status update failed.");
 
-    if(!r.ok){
-
-      alert(
-        d.error ||
-        "Status update failed."
-      );
-
-      return;
-    }
-
-
-    alert(
-      "✅ Order status updated."
-    );
-
-
-    await loadOrders(false);
-
-  }catch(error){
-
-    alert(
-      error.message ||
-      "Status update failed."
-    );
-
-  }
+}
 
 }
 
@@ -1982,73 +1134,51 @@ async function statusUpdate(id){
 
 async function ship(id){
 
-  if(!confirm(
-    "Create this order in Shiprocket?"
-  )) return;
+if(!confirm("Create this order in Shiprocket?"))return;
 
+try{
 
-  try{
+const r=await api("/api/shiprocket-order",{
 
-    const r =
-      await api(
-        "/api/shiprocket-order",
-        {
-          method:"POST",
+method:"POST",
 
-          body:JSON.stringify({
-            order_id:id
-          })
+body:JSON.stringify({
+order_id:id
+})
 
-        }
-      );
+});
 
+const text=await r.text();
 
-    const text =
-      await r.text();
+let d={};
 
+try{
+d=JSON.parse(text);
+}catch(error){}
 
-    let d = {};
+if(!r.ok){
 
-    try{
+alert(
+"❌ Shiprocket error:\n\n"+
+(d.message||d.error||text.substring(0,500))
+);
 
-      d = JSON.parse(text);
+return;
 
-    }catch(error){}
+}
 
+alert("✅ Order sent to Shiprocket.");
 
-    if(!r.ok){
+await loadOrders(false);
 
-      alert(
-        "❌ Shiprocket error:\n\n" +
-        (
-          d.message ||
-          d.error ||
-          text.substring(0,500)
-        )
-      );
+}catch(error){
 
-      return;
-    }
+alert(
+"❌ Shiprocket error:\n\n"+
+(error.message||"Shiprocket order failed.")
+);
 
-
-    alert(
-      "✅ Order sent to Shiprocket."
-    );
-
-
-    await loadOrders(false);
-
-  }catch(error){
-
-    alert(
-      "❌ Shiprocket error:\n\n" +
-      (
-        error.message ||
-        "Shiprocket order failed."
-      )
-    );
-
-  }
+}
 
 }
 
@@ -2059,13 +1189,11 @@ async function ship(id){
 
 function logout(){
 
-  token = "";
+token="";
 
-  localStorage.removeItem(
-    "adminToken"
-  );
+localStorage.removeItem("adminToken");
 
-  location.reload();
+location.reload();
 
 }
 
@@ -2076,21 +1204,20 @@ function logout(){
 
 function safe(value){
 
-  return String(value || "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+return String(value||"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
 }
 
-
 function jsSafe(value){
 
-  return String(value || "")
-    .replace(/\\/g,"\\\\")
-    .replace(/'/g,"\\'");
+return String(value||"")
+.replace(/\\/g,"\\\\")
+.replace(/'/g,"\\'");
 
 }
 
@@ -2099,53 +1226,41 @@ function jsSafe(value){
    AUTO LOGIN
 ========================= */
 
-const savedToken =
-  localStorage.getItem(
-    "adminToken"
-  );
-
+const savedToken=localStorage.getItem("adminToken");
 
 if(savedToken){
 
-  token = savedToken;
+token=savedToken;
 
-  autoLogin();
+autoLogin();
 
 }
 
 
 async function autoLogin(){
 
-  try{
+try{
 
-    const r =
-      await api("/api/orders");
+const r=await api("/api/orders");
 
+if(!r.ok){
 
-    if(!r.ok){
+logout();
+return;
 
-      logout();
-      return;
-    }
+}
 
+document.getElementById("login").classList.add("hide");
+document.getElementById("app").classList.remove("hide");
 
-    document.getElementById("login")
-      .classList.add("hide");
+await loadProducts();
+await loadOrders(false);
 
-    document.getElementById("app")
-      .classList.remove("hide");
+}catch(error){
 
+logout();
 
-    await loadProducts();
-
-    await loadOrders(false);
-
-
-  }catch(error){
-
-    logout();
-
-  }
+}
 
 }
 
