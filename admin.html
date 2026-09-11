@@ -3,223 +3,1173 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>Admin | SNIPER PREMIUM WEAR</title>
 
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f3f3ea;color:#171a14}
-.wrap{max-width:1100px;margin:auto;padding:20px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.panel{background:#fff;padding:18px;margin:18px 0;border-radius:12px;border:1px solid #ddd}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-input,select{width:100%;padding:11px;margin:5px 0 10px;border:1px solid #bbb;border-radius:7px}
-button{padding:11px 15px;border:0;border-radius:7px;background:#596442;color:white;font-weight:bold;cursor:pointer}
-button:disabled{opacity:.6;cursor:not-allowed}
-.danger{background:#8b3d35}
-.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.item{border:1px solid #ddd;border-radius:9px;padding:12px}
-.item img{width:100%;height:180px;object-fit:cover;border-radius:7px}
-.order{border:1px solid #ddd;border-radius:9px;padding:14px;margin:12px 0;background:#fff}
-.status{font-weight:bold}
-.muted{color:#666;font-size:13px;margin-top:5px}
-.preview{width:100%;max-width:180px;height:150px;object-fit:cover;display:none;margin:8px 0;border-radius:8px}
-.message{display:none;margin-top:12px;padding:10px;border-radius:7px;background:#eeeee4}
-.hide{display:none}
-.category-badge,.featured-badge{display:inline-block;color:#fff;padding:5px 9px;border-radius:5px;font-size:12px;font-weight:bold;margin:7px 0}
-.category-badge{background:#596442}
-.featured-badge{background:#171a14}
-.photo-box{border:1px solid #ddd;border-radius:8px;padding:10px;margin-bottom:10px}
-.photo-preview{display:none;width:100%;max-width:180px;height:150px;object-fit:cover;margin-top:8px;border-radius:7px}
-.photo-list{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:10px}
-.photo-list img{width:100%;height:100px;object-fit:cover;border-radius:6px;border:1px solid #ddd}
-.existing-photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin:10px 0}
-.existing-photo{position:relative}
-.existing-photo img{width:100%;height:110px;object-fit:cover;border-radius:7px;border:1px solid #ddd}
-.photo-number{position:absolute;left:5px;top:5px;background:#111;color:#fff;font-size:11px;padding:3px 6px;border-radius:4px}
-.small-note{font-size:12px;color:#666;margin:5px 0 12px}
-.progress{display:none;margin-top:8px;padding:10px;background:#f1f1e8;border-radius:7px;font-size:13px}
-@media(max-width:600px){
-.top{flex-direction:column;align-items:flex-start}
-.row button{width:100%}
-.photo-list{grid-template-columns:repeat(2,1fr)}
+
+*{
+  box-sizing:border-box;
 }
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f3f3ea;
+  color:#171a14;
+}
+
+.wrap{
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.top h1{
+  margin:0;
+}
+
+.panel{
+  background:#fff;
+  padding:18px;
+  margin:18px 0;
+  border-radius:12px;
+  border:1px solid #ddd;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
+}
+
+input,
+select{
+  width:100%;
+  padding:11px;
+  margin:5px 0 10px;
+  border:1px solid #bbb;
+  border-radius:7px;
+}
+
+button{
+  padding:11px 15px;
+  border:0;
+  border-radius:7px;
+  background:#596442;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+.danger{
+  background:#8b3d35;
+}
+
+.row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.item{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:12px;
+  background:#fff;
+}
+
+.item img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:7px;
+}
+
+.product-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(240px,1fr));
+  gap:14px;
+}
+
+.order{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:16px;
+  margin:12px 0;
+  background:#fff;
+}
+
+.status{
+  font-weight:bold;
+}
+
+.muted{
+  color:#666;
+  font-size:13px;
+  margin-top:5px;
+  line-height:1.5;
+}
+
+.preview{
+  width:100%;
+  max-width:180px;
+  height:150px;
+  object-fit:cover;
+  display:none;
+  margin:8px 0;
+  border-radius:8px;
+}
+
+.message{
+  display:none;
+  margin-top:12px;
+  padding:10px;
+  border-radius:7px;
+  background:#eeeee4;
+}
+
+.hide{
+  display:none!important;
+}
+
+.category-badge,
+.featured-badge{
+  display:inline-block;
+  color:#fff;
+  padding:5px 9px;
+  border-radius:5px;
+  font-size:12px;
+  font-weight:bold;
+  margin:7px 0;
+}
+
+.category-badge{
+  background:#596442;
+}
+
+.featured-badge{
+  background:#171a14;
+}
+
+.photo-box{
+  border:1px solid #ddd;
+  border-radius:8px;
+  padding:10px;
+  margin-bottom:10px;
+}
+
+.photo-preview{
+  display:none;
+  width:100%;
+  max-width:180px;
+  height:150px;
+  object-fit:cover;
+  margin-top:8px;
+  border-radius:7px;
+}
+
+.photo-list{
+  display:grid;
+  grid-template-columns:
+    repeat(5,1fr);
+  gap:7px;
+  margin-top:10px;
+}
+
+.photo-list img{
+  width:100%;
+  height:100px;
+  object-fit:cover;
+  border-radius:6px;
+  border:1px solid #ddd;
+}
+
+.existing-photos{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(100px,1fr));
+  gap:8px;
+  margin:10px 0;
+}
+
+.existing-photo{
+  position:relative;
+}
+
+.existing-photo img{
+  width:100%;
+  height:110px;
+  object-fit:cover;
+  border-radius:7px;
+  border:1px solid #ddd;
+}
+
+.photo-number{
+  position:absolute;
+  left:5px;
+  top:5px;
+  background:#111;
+  color:#fff;
+  font-size:11px;
+  padding:3px 6px;
+  border-radius:4px;
+}
+
+.small-note{
+  font-size:12px;
+  color:#666;
+  margin:5px 0 12px;
+}
+
+.progress{
+  display:none;
+  margin-top:8px;
+  padding:10px;
+  background:#f1f1e8;
+  border-radius:7px;
+  font-size:13px;
+}
+
+/* =========================
+   ADMIN NAVIGATION
+========================= */
+
+.admin-nav{
+  display:grid;
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin:18px 0;
+}
+
+.admin-nav button{
+  min-height:70px;
+  font-size:18px;
+  background:#d7d0b2;
+  color:#171a14;
+}
+
+.admin-nav button.active{
+  background:#596442;
+  color:#fff;
+}
+
+.nav-icon{
+  display:block;
+  font-size:25px;
+  margin-bottom:4px;
+}
+
+/* =========================
+   SECTION HEADERS
+========================= */
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:15px;
+}
+
+.section-head h2{
+  margin:0;
+}
+
+/* =========================
+   PRODUCT CATEGORY TABS
+========================= */
+
+.category-tabs{
+  display:grid;
+  grid-template-columns:
+    repeat(5,minmax(0,1fr));
+  gap:8px;
+  margin-bottom:18px;
+}
+
+.category-tabs button{
+  background:#e4e2d4;
+  color:#171a14;
+  padding:12px 8px;
+}
+
+.category-tabs button.active{
+  background:#596442;
+  color:#fff;
+}
+
+/* =========================
+   PRODUCT COUNT
+========================= */
+
+.count-box{
+  background:#f1f1e8;
+  border:1px solid #ddd;
+  border-radius:8px;
+  padding:10px 12px;
+  margin-bottom:15px;
+  font-weight:bold;
+}
+
+/* =========================
+   ORDER ITEMS
+========================= */
+
+.order-items{
+  margin:10px 0;
+  padding:10px 0;
+  border-top:1px solid #eee;
+  border-bottom:1px solid #eee;
+}
+
+.order-item{
+  padding:6px 0;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+  .wrap{
+    padding:12px;
+  }
+
+  .top{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .top button{
+    width:100%;
+  }
+
+  .admin-nav{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .admin-nav button{
+    font-size:14px;
+    min-height:65px;
+  }
+
+  .category-tabs{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .category-tabs button:last-child{
+    grid-column:span 2;
+  }
+
+  .row button{
+    width:100%;
+  }
+
+  .photo-list{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+}
+
 </style>
 </head>
 
+
 <body>
+
 <div class="wrap">
 
+
+<!-- =========================
+     TOP
+========================= -->
+
 <div class="top">
-<div>
-<h1>SNIPER PREMIUM WEAR</h1>
-<div class="muted">Admin Panel</div>
-</div>
-<button onclick="location.href='/'">OPEN WEBSITE</button>
+
+  <div>
+
+    <h1>
+      SNIPER PREMIUM WEAR
+    </h1>
+
+    <div class="muted">
+      Admin Panel
+    </div>
+
+  </div>
+
+
+  <button
+    onclick="location.href='/'"
+  >
+    OPEN WEBSITE
+  </button>
+
 </div>
 
-<!-- LOGIN -->
-<div id="login" class="panel">
-<h2>Admin Login</h2>
-<input id="pw" type="password" placeholder="Admin password">
-<button onclick="login()">LOGIN</button>
-<p id="loginMsg"></p>
+
+<!-- =========================
+     LOGIN
+========================= -->
+
+<div
+  id="login"
+  class="panel"
+>
+
+  <h2>
+    Admin Login
+  </h2>
+
+  <input
+    id="pw"
+    type="password"
+    placeholder="Admin password"
+  >
+
+  <button onclick="login()">
+    LOGIN
+  </button>
+
+  <p id="loginMsg"></p>
+
 </div>
 
-<!-- APP -->
-<div id="app" class="hide">
 
-<!-- PRODUCTS -->
+<!-- =========================
+     APP
+========================= -->
+
+<div
+  id="app"
+  class="hide"
+>
+
+
+<!-- =========================
+     MAIN ADMIN NAV
+========================= -->
+
+<div class="admin-nav">
+
+  <button
+    id="productsNavBtn"
+    class="active"
+    onclick="showAdminSection('productsSection')"
+  >
+
+    <span class="nav-icon">
+      🛍️
+    </span>
+
+    PRODUCTS
+
+  </button>
+
+
+  <button
+    id="ordersNavBtn"
+    onclick="showAdminSection('ordersSection')"
+  >
+
+    <span class="nav-icon">
+      📦
+    </span>
+
+    ORDERS
+
+  </button>
+
+</div>
+
+
+<!-- =====================================================
+     PRODUCTS SECTION
+===================================================== -->
+
+<div
+  id="productsSection"
+>
+
+
+<!-- =========================
+     PRODUCT LIST
+========================= -->
+
 <div class="panel">
-<h2>Products</h2>
-<div id="products" class="grid"></div>
 
-<hr>
+  <div class="section-head">
 
-<h3>Add / Edit Product</h3>
+    <div>
 
-<input type="hidden" id="pid">
+      <h2>
+        PRODUCTS
+      </h2>
 
-<div class="grid">
+      <div class="muted">
+        Products category-wise manage करें
+      </div>
 
-<div>
-<label>Product Name</label>
-<input id="name" placeholder="Product name">
-</div>
+    </div>
 
-<div>
-<label>Category</label>
-<select id="category">
-<option value="">Select Category</option>
-<option value="T-Shirts">T-Shirts</option>
-<option value="Trousers">Trousers</option>
-<option value="Shorts">Shorts</option>
-<option value="Footwear">Footwear</option>
-</select>
-</div>
 
-<div>
-<label>Featured Product</label>
-<select id="featured">
-<option value="false">No - Featured se hatao</option>
-<option value="true">Yes - Featured mein dikhao</option>
-</select>
-</div>
+    <button
+      onclick="showProductForm()"
+    >
+      ➕ ADD PRODUCT
+    </button>
 
-<div>
-<label>Price ₹</label>
-<input id="price" type="number" placeholder="Price">
-</div>
+  </div>
 
-<div>
-<label>Sizes</label>
-<input id="sizes" placeholder="M L XL">
-</div>
 
-<div>
-<label>Fabric</label>
-<input id="fabric" placeholder="Cotton Lycra">
-</div>
+  <!-- CATEGORY TABS -->
 
-<div>
-<label>Photo URL 1</label>
-<input id="img" placeholder="Main Photo URL">
-</div>
+  <div class="category-tabs">
 
-</div>
+    <button
+      id="tab-all"
+      class="active"
+      onclick="filterProducts('ALL')"
+    >
+      ALL
+    </button>
 
-<h3>Product Photos</h3>
 
-<div class="small-note">
-Maximum 5 photos. Front, Back, Side, Close-up etc.
-<br>
-Photos automatically resize and compress before upload.
-</div>
+    <button
+      id="tab-T-Shirts"
+      onclick="filterProducts('T-Shirts')"
+    >
+      👕 T-SHIRTS
+    </button>
 
-<div id="existingPhotos"></div>
 
-<div class="grid">
+    <button
+      id="tab-Trousers"
+      onclick="filterProducts('Trousers')"
+    >
+      👖 TROUSERS
+    </button>
 
-<div class="photo-box">
-<label>Photo 1</label>
-<input id="photoFile1" type="file" accept="image/*" onchange="previewPhoto(1)">
-<img id="preview1" class="photo-preview">
-</div>
 
-<div class="photo-box">
-<label>Photo 2</label>
-<input id="photoFile2" type="file" accept="image/*" onchange="previewPhoto(2)">
-<img id="preview2" class="photo-preview">
-</div>
+    <button
+      id="tab-Shorts"
+      onclick="filterProducts('Shorts')"
+    >
+      🩳 SHORTS
+    </button>
 
-<div class="photo-box">
-<label>Photo 3</label>
-<input id="photoFile3" type="file" accept="image/*" onchange="previewPhoto(3)">
-<img id="preview3" class="photo-preview">
-</div>
 
-<div class="photo-box">
-<label>Photo 4</label>
-<input id="photoFile4" type="file" accept="image/*" onchange="previewPhoto(4)">
-<img id="preview4" class="photo-preview">
-</div>
+    <button
+      id="tab-Footwear"
+      onclick="filterProducts('Footwear')"
+    >
+      👟 FOOTWEAR
+    </button>
 
-<div class="photo-box">
-<label>Photo 5</label>
-<input id="photoFile5" type="file" accept="image/*" onchange="previewPhoto(5)">
-<img id="preview5" class="photo-preview">
-</div>
+  </div>
+
+
+  <div
+    id="productCount"
+    class="count-box"
+  >
+    All Products
+  </div>
+
+
+  <div
+    id="products"
+    class="product-grid"
+  ></div>
 
 </div>
 
-<div>
-<label>Description</label>
-<input id="desc" value="Premium quality">
+
+<!-- =========================
+     ADD / EDIT PRODUCT
+========================= -->
+
+<div
+  id="productFormSection"
+  class="panel hide"
+>
+
+  <div class="section-head">
+
+    <h2>
+      ADD / EDIT PRODUCT
+    </h2>
+
+    <button
+      type="button"
+      onclick="hideProductForm()"
+    >
+      ✕ CLOSE
+    </button>
+
+  </div>
+
+
+  <input
+    type="hidden"
+    id="pid"
+  >
+
+
+  <div class="grid">
+
+
+    <div>
+
+      <label>
+        Product Name
+      </label>
+
+      <input
+        id="name"
+        placeholder="Product name"
+      >
+
+    </div>
+
+
+    <div>
+
+      <label>
+        Category
+      </label>
+
+      <select id="category">
+
+        <option value="">
+          Select Category
+        </option>
+
+        <option value="T-Shirts">
+          T-Shirts
+        </option>
+
+        <option value="Trousers">
+          Trousers
+        </option>
+
+        <option value="Shorts">
+          Shorts
+        </option>
+
+        <option value="Footwear">
+          Footwear
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div>
+
+      <label>
+        Featured Product
+      </label>
+
+      <select id="featured">
+
+        <option value="false">
+          No - Featured se hatao
+        </option>
+
+        <option value="true">
+          Yes - Featured mein dikhao
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div>
+
+      <label>
+        Price ₹
+      </label>
+
+      <input
+        id="price"
+        type="number"
+        placeholder="Price"
+      >
+
+    </div>
+
+
+    <div>
+
+      <label>
+        Sizes
+      </label>
+
+      <input
+        id="sizes"
+        placeholder="M L XL"
+      >
+
+    </div>
+
+
+    <div>
+
+      <label>
+        Fabric
+      </label>
+
+      <input
+        id="fabric"
+        placeholder="Cotton Lycra"
+      >
+
+    </div>
+
+
+    <div>
+
+      <label>
+        Photo URL 1
+      </label>
+
+      <input
+        id="img"
+        placeholder="Main Photo URL"
+      >
+
+    </div>
+
+
+  </div>
+
+
+  <h3>
+    Product Photos
+  </h3>
+
+
+  <div class="small-note">
+
+    Maximum 5 photos.
+    Front, Back, Side, Close-up etc.
+
+    <br>
+
+    Photos automatically resize and compress before upload.
+
+  </div>
+
+
+  <div id="existingPhotos"></div>
+
+
+  <div class="grid">
+
+
+    <div class="photo-box">
+
+      <label>
+        Photo 1
+      </label>
+
+      <input
+        id="photoFile1"
+        type="file"
+        accept="image/*"
+        onchange="previewPhoto(1)"
+      >
+
+      <img
+        id="preview1"
+        class="photo-preview"
+      >
+
+    </div>
+
+
+    <div class="photo-box">
+
+      <label>
+        Photo 2
+      </label>
+
+      <input
+        id="photoFile2"
+        type="file"
+        accept="image/*"
+        onchange="previewPhoto(2)"
+      >
+
+      <img
+        id="preview2"
+        class="photo-preview"
+      >
+
+    </div>
+
+
+    <div class="photo-box">
+
+      <label>
+        Photo 3
+      </label>
+
+      <input
+        id="photoFile3"
+        type="file"
+        accept="image/*"
+        onchange="previewPhoto(3)"
+      >
+
+      <img
+        id="preview3"
+        class="photo-preview"
+      >
+
+    </div>
+
+
+    <div class="photo-box">
+
+      <label>
+        Photo 4
+      </label>
+
+      <input
+        id="photoFile4"
+        type="file"
+        accept="image/*"
+        onchange="previewPhoto(4)"
+      >
+
+      <img
+        id="preview4"
+        class="photo-preview"
+      >
+
+    </div>
+
+
+    <div class="photo-box">
+
+      <label>
+        Photo 5
+      </label>
+
+      <input
+        id="photoFile5"
+        type="file"
+        accept="image/*"
+        onchange="previewPhoto(5)"
+      >
+
+      <img
+        id="preview5"
+        class="photo-preview"
+      >
+
+    </div>
+
+
+  </div>
+
+
+  <div>
+
+    <label>
+      Description
+    </label>
+
+    <input
+      id="desc"
+      value="Premium quality"
+    >
+
+  </div>
+
+
+  <div class="row">
+
+    <button
+      onclick="saveProduct()"
+    >
+      SAVE PRODUCT
+    </button>
+
+    <button
+      onclick="clearForm()"
+    >
+      CLEAR
+    </button>
+
+  </div>
+
+
+  <div
+    id="uploadProgress"
+    class="progress"
+  ></div>
+
+
+  <p
+    id="uploadMsg"
+    class="muted"
+  ></p>
+
 </div>
 
-<div class="row">
-<button onclick="saveProduct()">SAVE PRODUCT</button>
-<button onclick="clearForm()">CLEAR</button>
 </div>
 
-<div id="uploadProgress" class="progress"></div>
-<p id="uploadMsg" class="muted"></p>
 
-</div>
+<!-- =====================================================
+     ORDERS SECTION
+===================================================== -->
 
-<!-- ORDERS -->
+<div
+  id="ordersSection"
+  class="hide"
+>
+
+
 <div class="panel">
-<h2>Orders</h2>
 
-<button id="refreshBtn" onclick="loadOrders(true)">
-REFRESH ORDERS
-</button>
+  <div class="section-head">
 
-<div id="orderMessage" class="message"></div>
-<div id="orders"></div>
+    <div>
+
+      <h2>
+        📦 ORDERS
+      </h2>
+
+      <div class="muted">
+        All customer orders are shown here
+      </div>
+
+    </div>
+
+
+    <button
+      id="refreshBtn"
+      onclick="loadOrders(true)"
+    >
+      🔄 REFRESH ORDERS
+    </button>
+
+  </div>
+
+
+  <div
+    id="orderMessage"
+    class="message"
+  ></div>
+
+
+  <div
+    id="orders"
+  ></div>
+
+</div>
+
+
+</div>
+
+
 </div>
 
 </div>
-</div>
+
 
 <script>
 
-let token="";
-window.productList=[];
+let token = "";
+
+window.productList = [];
+
+let selectedProductCategory = "ALL";
 
 
 /* =========================
    API
 ========================= */
 
-function api(url,options={}){
-return fetch(url,{
-...options,
-headers:{
-"Content-Type":"application/json",
-...(options.headers||{}),
-"Authorization":"Bearer "+token
+function api(
+  url,
+  options={}
+){
+
+  return fetch(
+    url,
+    {
+      ...options,
+
+      headers:{
+        "Content-Type":
+          "application/json",
+
+        ...(options.headers || {}),
+
+        "Authorization":
+          "Bearer " + token
+      }
+    }
+  );
+
 }
-});
+
+
+/* =========================
+   ADMIN SECTION
+========================= */
+
+function showAdminSection(section){
+
+  const productsSection =
+    document.getElementById(
+      "productsSection"
+    );
+
+  const ordersSection =
+    document.getElementById(
+      "ordersSection"
+    );
+
+  const productsBtn =
+    document.getElementById(
+      "productsNavBtn"
+    );
+
+  const ordersBtn =
+    document.getElementById(
+      "ordersNavBtn"
+    );
+
+
+  productsSection.classList.add(
+    "hide"
+  );
+
+  ordersSection.classList.add(
+    "hide"
+  );
+
+  productsBtn.classList.remove(
+    "active"
+  );
+
+  ordersBtn.classList.remove(
+    "active"
+  );
+
+
+  if(
+    section ===
+    "ordersSection"
+  ){
+
+    ordersSection.classList.remove(
+      "hide"
+    );
+
+    ordersBtn.classList.add(
+      "active"
+    );
+
+    loadOrders(false);
+
+    window.scrollTo({
+      top:0,
+      behavior:"auto"
+    });
+
+  }else{
+
+    productsSection.classList.remove(
+      "hide"
+    );
+
+    productsBtn.classList.add(
+      "active"
+    );
+
+    window.scrollTo({
+      top:0,
+      behavior:"auto"
+    });
+
+  }
+
+}
+
+
+/* =========================
+   PRODUCT FORM
+========================= */
+
+function showProductForm(){
+
+  document
+    .getElementById(
+      "productFormSection"
+    )
+    .classList.remove(
+      "hide"
+    );
+
+  setTimeout(
+    function(){
+
+      document
+        .getElementById(
+          "productFormSection"
+        )
+        .scrollIntoView({
+          behavior:"smooth",
+          block:"start"
+        });
+
+    },
+    50
+  );
+
+}
+
+
+function hideProductForm(){
+
+  document
+    .getElementById(
+      "productFormSection"
+    )
+    .classList.add(
+      "hide"
+    );
+
 }
 
 
@@ -229,43 +1179,111 @@ headers:{
 
 async function login(){
 
-try{
+  try{
 
-const password=document.getElementById("pw").value.trim();
+    const password =
+      document
+        .getElementById("pw")
+        .value
+        .trim();
 
-if(!password){
-document.getElementById("loginMsg").textContent="Please enter password.";
-return;
-}
 
-const r=await fetch("/api/admin-login",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({password})
-});
+    if(!password){
 
-const d=await r.json();
+      document
+        .getElementById(
+          "loginMsg"
+        )
+        .textContent =
+          "Please enter password.";
 
-if(!r.ok){
-document.getElementById("loginMsg").textContent=d.error||"Login failed.";
-return;
-}
+      return;
 
-token=password;
+    }
 
-localStorage.setItem("adminToken",token);
 
-document.getElementById("login").classList.add("hide");
-document.getElementById("app").classList.remove("hide");
+    const r =
+      await fetch(
+        "/api/admin-login",
+        {
+          method:"POST",
 
-await loadProducts();
-await loadOrders();
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
 
-}catch(error){
+          body:
+            JSON.stringify({
+              password
+            })
+        }
+      );
 
-alert("Login error:\n\n"+(error.message||"Unknown error"));
 
-}
+    const d =
+      await r.json();
+
+
+    if(!r.ok){
+
+      document
+        .getElementById(
+          "loginMsg"
+        )
+        .textContent =
+          d.error ||
+          "Login failed.";
+
+      return;
+
+    }
+
+
+    token =
+      password;
+
+
+    localStorage.setItem(
+      "adminToken",
+      token
+    );
+
+
+    document
+      .getElementById(
+        "login"
+      )
+      .classList.add(
+        "hide"
+      );
+
+
+    document
+      .getElementById(
+        "app"
+      )
+      .classList.remove(
+        "hide"
+      );
+
+
+    await loadProducts();
+
+    await loadOrders();
+
+
+  }catch(error){
+
+    alert(
+      "Login error:\n\n" +
+      (
+        error.message ||
+        "Unknown error"
+      )
+    );
+
+  }
 
 }
 
@@ -276,97 +1294,379 @@ alert("Login error:\n\n"+(error.message||"Unknown error"));
 
 async function loadProducts(){
 
-try{
+  try{
 
-const r=await api("/api/products");
+    const r =
+      await api(
+        "/api/products"
+      );
 
-if(r.status===401){
-logout();
-return;
-}
 
-const d=await r.json();
-const list=Array.isArray(d.products)?d.products:[];
+    if(
+      r.status === 401
+    ){
 
-window.productList=list;
+      logout();
 
-const box=document.getElementById("products");
+      return;
 
-if(!list.length){
-box.innerHTML='<div class="muted">No products added yet.</div>';
-return;
-}
+    }
 
-box.innerHTML=list.map(function(p){
 
-const images=getProductImages(p);
+    const d =
+      await r.json();
 
-const imageHtml=images.length
-?`
-<div class="photo-list">
-${images.map(function(src){
-return `<img src="${safe(src)}" alt="${safe(p.name)}" loading="lazy">`;
-}).join("")}
-</div>
-`
-:"";
 
-return `
-<div class="item">
+    const list =
+      Array.isArray(
+        d.products
+      )
+      ?
+        d.products
+      :
+        [];
 
-${imageHtml}
 
-<h3>${safe(p.name)}</h3>
+    window.productList =
+      list;
 
-<div class="category-badge">
-${safe(p.category||"Category not set")}
-</div>
 
-<div class="featured-badge">
-${p.featured===true?"⭐ FEATURED ON":"FEATURED OFF"}
-</div>
+    renderProducts();
 
-<div>
-₹${Number(p.price||0).toLocaleString("en-IN")}
-</div>
 
-<div>
-<b>Size:</b> ${safe(p.sizes||"Not specified")}
-</div>
+  }catch(error){
 
-<div>
-<b>Fabric:</b> ${safe(p.fabric||"Not specified")}
-</div>
+    console.error(error);
 
-<div class="muted">
-${safe(p.description||"")}
-</div>
 
-<div class="row">
+    document
+      .getElementById(
+        "products"
+      )
+      .innerHTML =
+        `
+        <div class="muted">
+          Unable to load products.
+        </div>
+        `;
 
-<button onclick="editProductById('${jsSafe(String(p.id))}')">
-EDIT
-</button>
-
-<button class="danger" onclick="deleteProduct('${jsSafe(String(p.id))}')">
-DELETE
-</button>
-
-</div>
-
-</div>
-`;
-
-}).join("");
-
-}catch(error){
-
-console.error(error);
-
-document.getElementById("products").innerHTML=
-'<div class="muted">Unable to load products.</div>';
+  }
 
 }
+
+
+/* =========================
+   FILTER PRODUCTS
+========================= */
+
+function filterProducts(
+  category
+){
+
+  selectedProductCategory =
+    category;
+
+
+  document
+    .querySelectorAll(
+      ".category-tabs button"
+    )
+    .forEach(
+      btn => {
+
+        btn.classList.remove(
+          "active"
+        );
+
+      }
+    );
+
+
+  const tab =
+    document.getElementById(
+      category === "ALL"
+      ?
+        "tab-all"
+      :
+        "tab-" + category
+    );
+
+
+  if(tab){
+
+    tab.classList.add(
+      "active"
+    );
+
+  }
+
+
+  renderProducts();
+
+}
+
+
+/* =========================
+   RENDER PRODUCTS
+========================= */
+
+function renderProducts(){
+
+  const box =
+    document.getElementById(
+      "products"
+    );
+
+
+  let list =
+    window.productList || [];
+
+
+  if(
+    selectedProductCategory !==
+    "ALL"
+  ){
+
+    list =
+      list.filter(
+        p =>
+          String(
+            p.category || ""
+          )
+          .trim()
+          .toLowerCase()
+          ===
+          selectedProductCategory
+            .trim()
+            .toLowerCase()
+      );
+
+  }
+
+
+  const categoryName =
+    selectedProductCategory ===
+    "ALL"
+      ?
+        "All Products"
+      :
+        selectedProductCategory;
+
+
+  document
+    .getElementById(
+      "productCount"
+    )
+    .textContent =
+      categoryName +
+      " • " +
+      list.length +
+      " product" +
+      (
+        list.length === 1
+          ? ""
+          : "s"
+      );
+
+
+  if(!list.length){
+
+    box.innerHTML =
+      `
+      <div class="item">
+
+        <b>
+          No products in
+          ${safe(categoryName)}
+        </b>
+
+        <div class="muted">
+          Add a product from
+          the ADD PRODUCT button.
+        </div>
+
+      </div>
+      `;
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    list
+      .map(
+        function(p){
+
+          const images =
+            getProductImages(p);
+
+
+          const imageHtml =
+            images.length
+            ?
+              `
+              <div class="photo-list">
+
+                ${
+                  images
+                    .map(
+                      function(src){
+
+                        return `
+                          <img
+                            src="${safe(src)}"
+                            alt="${safe(p.name)}"
+                            loading="lazy"
+                          >
+                        `;
+
+                      }
+                    )
+                    .join("")
+                }
+
+              </div>
+              `
+            :
+              "";
+
+
+          return `
+
+          <div class="item">
+
+            ${imageHtml}
+
+
+            <h3>
+              ${safe(
+                p.name
+              )}
+            </h3>
+
+
+            <div>
+
+              <span
+                class="category-badge"
+              >
+                ${safe(
+                  p.category ||
+                  "Category not set"
+                )}
+              </span>
+
+
+              <span
+                class="featured-badge"
+              >
+                ${
+                  p.featured === true
+                  ?
+                    "⭐ FEATURED ON"
+                  :
+                    "FEATURED OFF"
+                }
+              </span>
+
+            </div>
+
+
+            <div
+              style="
+                font-size:20px;
+                font-weight:bold;
+                margin:8px 0
+              "
+            >
+              ₹${Number(
+                p.price || 0
+              ).toLocaleString(
+                "en-IN"
+              )}
+            </div>
+
+
+            <div>
+
+              <b>
+                Size:
+              </b>
+
+              ${safe(
+                p.sizes ||
+                "Not specified"
+              )}
+
+            </div>
+
+
+            <div>
+
+              <b>
+                Fabric:
+              </b>
+
+              ${safe(
+                p.fabric ||
+                "Not specified"
+              )}
+
+            </div>
+
+
+            <div class="muted">
+
+              ${safe(
+                p.description ||
+                ""
+              )}
+
+            </div>
+
+
+            <div class="row">
+
+              <button
+                onclick="
+                  editProductById(
+                    '${jsSafe(
+                      String(
+                        p.id
+                      )
+                    )}'
+                  )
+                "
+              >
+                EDIT
+              </button>
+
+
+              <button
+                class="danger"
+                onclick="
+                  deleteProduct(
+                    '${jsSafe(
+                      String(
+                        p.id
+                      )
+                    )}'
+                  )
+                "
+              >
+                DELETE
+              </button>
+
+            </div>
+
+          </div>
+
+          `;
+
+        }
+      )
+      .join("");
 
 }
 
@@ -377,21 +1677,63 @@ document.getElementById("products").innerHTML=
 
 function getProductImages(p){
 
-let images=[];
+  let images = [];
 
-if(Array.isArray(p.images)){
-images.push(...p.images.filter(Boolean).map(x=>String(x).trim()));
-}
 
-if(p.img){
-images.unshift(String(p.img).trim());
-}
+  if(
+    Array.isArray(
+      p.images
+    )
+  ){
 
-if(Array.isArray(p.photos)){
-images.push(...p.photos.filter(Boolean).map(x=>String(x).trim()));
-}
+    images.push(
+      ...p.images
+        .filter(Boolean)
+        .map(
+          x =>
+            String(x).trim()
+        )
+    );
 
-return [...new Set(images)].filter(Boolean).slice(0,5);
+  }
+
+
+  if(p.img){
+
+    images.unshift(
+      String(
+        p.img
+      ).trim()
+    );
+
+  }
+
+
+  if(
+    Array.isArray(
+      p.photos
+    )
+  ){
+
+    images.push(
+      ...p.photos
+        .filter(Boolean)
+        .map(
+          x =>
+            String(x).trim()
+        )
+    );
+
+  }
+
+
+  return [
+    ...new Set(
+      images
+    )
+  ]
+  .filter(Boolean)
+  .slice(0,5);
 
 }
 
@@ -400,53 +1742,182 @@ return [...new Set(images)].filter(Boolean).slice(0,5);
    EDIT PRODUCT
 ========================= */
 
-function editProductById(id){
+function editProductById(
+  id
+){
 
-const p=(window.productList||[]).find(
-item=>String(item.id)===String(id)
-);
+  const p =
+    (
+      window.productList ||
+      []
+    ).find(
+      item =>
+        String(item.id) ===
+        String(id)
+    );
 
-if(!p){
-alert("Product not found.");
-return;
-}
 
-document.getElementById("pid").value=p.id||"";
-document.getElementById("name").value=p.name||"";
-document.getElementById("category").value=p.category||"";
-document.getElementById("featured").value=p.featured===true?"true":"false";
-document.getElementById("price").value=p.price||"";
-document.getElementById("sizes").value=p.sizes||"";
-document.getElementById("fabric").value=p.fabric||"";
-document.getElementById("img").value=p.img||"";
-document.getElementById("desc").value=p.description||"Premium quality";
+  if(!p){
 
-const images=getProductImages(p);
-const existing=document.getElementById("existingPhotos");
+    alert(
+      "Product not found."
+    );
 
-existing.innerHTML=images.length
-?`
-<div class="small-note">Existing product photos:</div>
-<div class="existing-photos">
-${images.map((src,index)=>`
-<div class="existing-photo">
-<span class="photo-number">${index+1}</span>
-<img src="${safe(src)}" alt="Product photo" loading="lazy">
-</div>
-`).join("")}
-</div>
-`
-:"";
+    return;
 
-for(let i=1;i<=5;i++){
-document.getElementById("photoFile"+i).value="";
-document.getElementById("preview"+i).style.display="none";
-}
+  }
 
-document.getElementById("uploadMsg").textContent=
-"Existing photos shown. Select new photos only if you want to replace them.";
 
-window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});
+  document
+    .getElementById("pid")
+    .value =
+      p.id || "";
+
+
+  document
+    .getElementById("name")
+    .value =
+      p.name || "";
+
+
+  document
+    .getElementById("category")
+    .value =
+      p.category || "";
+
+
+  document
+    .getElementById("featured")
+    .value =
+      p.featured === true
+      ?
+        "true"
+      :
+        "false";
+
+
+  document
+    .getElementById("price")
+    .value =
+      p.price || "";
+
+
+  document
+    .getElementById("sizes")
+    .value =
+      p.sizes || "";
+
+
+  document
+    .getElementById("fabric")
+    .value =
+      p.fabric || "";
+
+
+  document
+    .getElementById("img")
+    .value =
+      p.img || "";
+
+
+  document
+    .getElementById("desc")
+    .value =
+      p.description ||
+      "Premium quality";
+
+
+  const images =
+    getProductImages(p);
+
+
+  const existing =
+    document.getElementById(
+      "existingPhotos"
+    );
+
+
+  existing.innerHTML =
+    images.length
+    ?
+      `
+      <div class="small-note">
+        Existing product photos:
+      </div>
+
+      <div class="existing-photos">
+
+        ${
+          images
+            .map(
+              function(src,index){
+
+                return `
+
+                <div
+                  class="existing-photo"
+                >
+
+                  <span
+                    class="photo-number"
+                  >
+                    ${index + 1}
+                  </span>
+
+                  <img
+                    src="${safe(src)}"
+                    alt="Product photo"
+                    loading="lazy"
+                  >
+
+                </div>
+
+                `;
+
+              }
+            )
+            .join("")
+        }
+
+      </div>
+      `
+    :
+      "";
+
+
+  for(
+    let i=1;
+    i<=5;
+    i++
+  ){
+
+    document
+      .getElementById(
+        "photoFile" + i
+      )
+      .value =
+        "";
+
+
+    document
+      .getElementById(
+        "preview" + i
+      )
+      .style.display =
+        "none";
+
+  }
+
+
+  document
+    .getElementById(
+      "uploadMsg"
+    )
+    .textContent =
+      "Existing photos shown. Select new photos only if you want to replace them.";
+
+
+  showProductForm();
 
 }
 
@@ -457,24 +1928,106 @@ window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});
 
 function clearForm(){
 
-document.getElementById("pid").value="";
-document.getElementById("name").value="";
-document.getElementById("category").value="";
-document.getElementById("featured").value="false";
-document.getElementById("price").value="";
-document.getElementById("sizes").value="";
-document.getElementById("fabric").value="";
-document.getElementById("img").value="";
-document.getElementById("desc").value="Premium quality";
+  document
+    .getElementById("pid")
+    .value =
+      "";
 
-for(let i=1;i<=5;i++){
-document.getElementById("photoFile"+i).value="";
-document.getElementById("preview"+i).style.display="none";
-}
 
-document.getElementById("existingPhotos").innerHTML="";
-document.getElementById("uploadMsg").textContent="";
-document.getElementById("uploadProgress").style.display="none";
+  document
+    .getElementById("name")
+    .value =
+      "";
+
+
+  document
+    .getElementById("category")
+    .value =
+      "";
+
+
+  document
+    .getElementById("featured")
+    .value =
+      "false";
+
+
+  document
+    .getElementById("price")
+    .value =
+      "";
+
+
+  document
+    .getElementById("sizes")
+    .value =
+      "";
+
+
+  document
+    .getElementById("fabric")
+    .value =
+      "";
+
+
+  document
+    .getElementById("img")
+    .value =
+      "";
+
+
+  document
+    .getElementById("desc")
+    .value =
+      "Premium quality";
+
+
+  for(
+    let i=1;
+    i<=5;
+    i++
+  ){
+
+    document
+      .getElementById(
+        "photoFile" + i
+      )
+      .value =
+        "";
+
+
+    document
+      .getElementById(
+        "preview" + i
+      )
+      .style.display =
+        "none";
+
+  }
+
+
+  document
+    .getElementById(
+      "existingPhotos"
+    )
+    .innerHTML =
+      "";
+
+
+  document
+    .getElementById(
+      "uploadMsg"
+    )
+    .textContent =
+      "";
+
+
+  document
+    .getElementById(
+      "uploadProgress"
+    )
+    .style.display =
+      "none";
 
 }
 
@@ -483,24 +2036,66 @@ document.getElementById("uploadProgress").style.display="none";
    PHOTO PREVIEW
 ========================= */
 
-function previewPhoto(number){
+function previewPhoto(
+  number
+){
 
-const file=document.getElementById("photoFile"+number).files[0];
-const preview=document.getElementById("preview"+number);
+  const file =
+    document
+      .getElementById(
+        "photoFile" + number
+      )
+      .files[0];
 
-if(!file){
-preview.style.display="none";
-return;
-}
 
-if(!file.type.startsWith("image/")){
-alert("Please select an image file.");
-document.getElementById("photoFile"+number).value="";
-return;
-}
+  const preview =
+    document.getElementById(
+      "preview" + number
+    );
 
-preview.src=URL.createObjectURL(file);
-preview.style.display="block";
+
+  if(!file){
+
+    preview.style.display =
+      "none";
+
+    return;
+
+  }
+
+
+  if(
+    !file.type.startsWith(
+      "image/"
+    )
+  ){
+
+    alert(
+      "Please select an image file."
+    );
+
+
+    document
+      .getElementById(
+        "photoFile" + number
+      )
+      .value =
+        "";
+
+
+    return;
+
+  }
+
+
+  preview.src =
+    URL.createObjectURL(
+      file
+    );
+
+
+  preview.style.display =
+    "block";
 
 }
 
@@ -509,142 +2104,300 @@ preview.style.display="block";
    COMPRESS IMAGE
 ========================= */
 
-async function compressImage(file){
+async function compressImage(
+  file
+){
 
-return new Promise(function(resolve,reject){
+  return new Promise(
+    function(
+      resolve,
+      reject
+    ){
 
-const reader=new FileReader();
+      const reader =
+        new FileReader();
 
-reader.onload=function(event){
 
-const img=new Image();
+      reader.onload =
+        function(event){
 
-img.onload=function(){
+          const img =
+            new Image();
 
-/*
-  Maximum size = 1400px.
-  WebP quality = 78%.
-*/
 
-const MAX_SIZE=1400;
+          img.onload =
+            function(){
 
-let width=img.width;
-let height=img.height;
+              const MAX_SIZE =
+                1400;
 
-if(width>MAX_SIZE||height>MAX_SIZE){
 
-if(width>height){
+              let width =
+                img.width;
 
-height=Math.round(height*MAX_SIZE/width);
-width=MAX_SIZE;
+              let height =
+                img.height;
 
-}else{
 
-width=Math.round(width*MAX_SIZE/height);
-height=MAX_SIZE;
+              if(
+                width > MAX_SIZE ||
+                height > MAX_SIZE
+              ){
 
-}
+                if(
+                  width > height
+                ){
 
-}
+                  height =
+                    Math.round(
+                      height *
+                      MAX_SIZE /
+                      width
+                    );
 
-const canvas=document.createElement("canvas");
+                  width =
+                    MAX_SIZE;
 
-canvas.width=width;
-canvas.height=height;
+                }else{
 
-const ctx=canvas.getContext("2d");
+                  width =
+                    Math.round(
+                      width *
+                      MAX_SIZE /
+                      height
+                    );
 
-ctx.drawImage(img,0,0,width,height);
+                  height =
+                    MAX_SIZE;
 
-canvas.toBlob(function(blob){
+                }
 
-if(!blob){
-reject(new Error("Photo compression failed"));
-return;
-}
+              }
 
-resolve(blob);
 
-},"image/webp",0.78);
+              const canvas =
+                document.createElement(
+                  "canvas"
+                );
 
-};
 
-img.onerror=function(){
-reject(new Error("Invalid image"));
-};
+              canvas.width =
+                width;
 
-img.src=event.target.result;
+              canvas.height =
+                height;
 
-};
 
-reader.onerror=function(){
-reject(new Error("Photo read failed"));
-};
+              const ctx =
+                canvas.getContext(
+                  "2d"
+                );
 
-reader.readAsDataURL(file);
 
-});
+              ctx.drawImage(
+                img,
+                0,
+                0,
+                width,
+                height
+              );
+
+
+              canvas.toBlob(
+                function(blob){
+
+                  if(!blob){
+
+                    reject(
+                      new Error(
+                        "Photo compression failed"
+                      )
+                    );
+
+                    return;
+
+                  }
+
+
+                  resolve(
+                    blob
+                  );
+
+                },
+                "image/webp",
+                0.78
+              );
+
+            };
+
+
+          img.onerror =
+            function(){
+
+              reject(
+                new Error(
+                  "Invalid image"
+                )
+              );
+
+            };
+
+
+          img.src =
+            event.target.result;
+
+        };
+
+
+      reader.onerror =
+        function(){
+
+          reject(
+            new Error(
+              "Photo read failed"
+            )
+          );
+
+        };
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
 
 }
 
 
 /* =========================
-   UPLOAD COMPRESSED PHOTO
+   UPLOAD PHOTO
 ========================= */
 
-async function uploadPhotoFile(file){
+async function uploadPhotoFile(
+  file
+){
 
-if(!file)return null;
+  if(!file){
+    return null;
+  }
 
-const compressed=await compressImage(file);
 
-const dataUrl=await new Promise(function(resolve,reject){
+  const compressed =
+    await compressImage(
+      file
+    );
 
-const reader=new FileReader();
 
-reader.onload=function(){
-resolve(reader.result);
-};
+  const dataUrl =
+    await new Promise(
+      function(
+        resolve,
+        reject
+      ){
 
-reader.onerror=function(){
-reject(new Error("Compressed photo read failed"));
-};
+        const reader =
+          new FileReader();
 
-reader.readAsDataURL(compressed);
 
-});
+        reader.onload =
+          function(){
 
-const r=await fetch("/api/upload",{
+            resolve(
+              reader.result
+            );
 
-method:"POST",
+          };
 
-headers:{
-"Content-Type":"application/json",
-"Authorization":"Bearer "+token
-},
 
-body:JSON.stringify({
-data:dataUrl,
-contentType:"image/webp"
-})
+        reader.onerror =
+          function(){
 
-});
+            reject(
+              new Error(
+                "Compressed photo read failed"
+              )
+            );
 
-const text=await r.text();
+          };
 
-let d;
 
-try{
-d=JSON.parse(text);
-}catch(error){
-throw new Error("Upload server response invalid");
-}
+        reader.readAsDataURL(
+          compressed
+        );
 
-if(!r.ok){
-throw new Error(d.error||"Photo upload failed");
-}
+      }
+    );
 
-return "/api/product-image?key="+encodeURIComponent(d.pathname);
+
+  const r =
+    await fetch(
+      "/api/upload",
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":
+            "application/json",
+
+          "Authorization":
+            "Bearer " + token
+        },
+
+        body:
+          JSON.stringify({
+
+            data:
+              dataUrl,
+
+            contentType:
+              "image/webp"
+
+          })
+      }
+    );
+
+
+  const text =
+    await r.text();
+
+
+  let d;
+
+
+  try{
+
+    d =
+      JSON.parse(
+        text
+      );
+
+  }catch(error){
+
+    throw new Error(
+      "Upload server response invalid"
+    );
+
+  }
+
+
+  if(!r.ok){
+
+    throw new Error(
+      d.error ||
+      "Photo upload failed"
+    );
+
+  }
+
+
+  return (
+    "/api/product-image?key=" +
+    encodeURIComponent(
+      d.pathname
+    )
+  );
 
 }
 
@@ -655,135 +2408,317 @@ return "/api/product-image?key="+encodeURIComponent(d.pathname);
 
 async function saveProduct(){
 
-try{
+  try{
 
-const name=document.getElementById("name").value.trim();
-const category=document.getElementById("category").value.trim();
-const price=Number(document.getElementById("price").value);
+    const name =
+      document
+        .getElementById("name")
+        .value
+        .trim();
 
-if(!name){
-alert("Product name is required.");
-return;
-}
 
-if(!category){
-alert("Please select a category.");
-return;
-}
+    const category =
+      document
+        .getElementById("category")
+        .value
+        .trim();
 
-if(!Number.isFinite(price)||price<=0){
-alert("Valid price is required.");
-return;
-}
 
-const selectedFiles=[];
+    const price =
+      Number(
+        document
+          .getElementById("price")
+          .value
+      );
 
-for(let i=1;i<=5;i++){
 
-const file=document.getElementById("photoFile"+i).files[0];
+    if(!name){
 
-if(file)selectedFiles.push(file);
+      alert(
+        "Product name is required."
+      );
 
-}
+      return;
 
-const progress=document.getElementById("uploadProgress");
-const msg=document.getElementById("uploadMsg");
+    }
 
-let uploadedImages=[];
 
-if(selectedFiles.length){
+    if(!category){
 
-progress.style.display="block";
+      alert(
+        "Please select a category."
+      );
 
-for(let i=0;i<selectedFiles.length;i++){
+      return;
 
-msg.textContent=
-"Photo "+(i+1)+" compressing and uploading...";
+    }
 
-progress.textContent=
-"Processing "+(i+1)+" / "+selectedFiles.length;
 
-const uploaded=await uploadPhotoFile(selectedFiles[i]);
+    if(
+      !Number.isFinite(price) ||
+      price <= 0
+    ){
 
-if(uploaded){
-uploadedImages.push(uploaded);
-}
+      alert(
+        "Valid price is required."
+      );
 
-}
+      return;
 
-progress.textContent="✅ All photos uploaded.";
-msg.textContent="Photos compressed and uploaded successfully.";
+    }
 
-}else{
 
-progress.style.display="none";
+    const selectedFiles = [];
 
-}
 
-const oldImg=document.getElementById("img").value.trim();
+    for(
+      let i=1;
+      i<=5;
+      i++
+    ){
 
-const body={
+      const file =
+        document
+          .getElementById(
+            "photoFile" + i
+          )
+          .files[0];
 
-name:name,
 
-category:category,
+      if(file){
 
-featured:
-document.getElementById("featured").value==="true",
+        selectedFiles.push(
+          file
+        );
 
-price:price,
+      }
 
-sizes:
-document.getElementById("sizes").value.trim(),
+    }
 
-fabric:
-document.getElementById("fabric").value.trim(),
 
-img:
-uploadedImages.length?uploadedImages[0]:oldImg,
+    const progress =
+      document.getElementById(
+        "uploadProgress"
+      );
 
-images:
-uploadedImages.length?uploadedImages:undefined,
 
-description:
-document.getElementById("desc").value.trim()
+    const msg =
+      document.getElementById(
+        "uploadMsg"
+      );
 
-};
 
-const id=document.getElementById("pid").value;
+    let uploadedImages = [];
 
-let method="POST";
 
-if(id){
-body.id=Number(id);
-method="PUT";
-}
+    if(
+      selectedFiles.length
+    ){
 
-const r=await api("/api/products",{
-method:method,
-body:JSON.stringify(body)
-});
+      progress.style.display =
+        "block";
 
-const d=await r.json();
 
-if(!r.ok){
-alert(d.error||"Save failed.");
-return;
-}
+      for(
+        let i=0;
+        i<selectedFiles.length;
+        i++
+      ){
 
-alert("✅ Product saved successfully.");
+        msg.textContent =
+          "Photo " +
+          (i+1) +
+          " compressing and uploading...";
 
-clearForm();
 
-await loadProducts();
+        progress.textContent =
+          "Processing " +
+          (i+1) +
+          " / " +
+          selectedFiles.length;
 
-}catch(error){
 
-console.error(error);
+        const uploaded =
+          await uploadPhotoFile(
+            selectedFiles[i]
+          );
 
-alert("❌ Error:\n\n"+(error.message||"Unknown error"));
 
-}
+        if(uploaded){
+
+          uploadedImages.push(
+            uploaded
+          );
+
+        }
+
+      }
+
+
+      progress.textContent =
+        "✅ All photos uploaded.";
+
+
+      msg.textContent =
+        "Photos compressed and uploaded successfully.";
+
+    }else{
+
+      progress.style.display =
+        "none";
+
+    }
+
+
+    const oldImg =
+      document
+        .getElementById("img")
+        .value
+        .trim();
+
+
+    const body = {
+
+      name:
+        name,
+
+      category:
+        category,
+
+      featured:
+        document
+          .getElementById(
+            "featured"
+          )
+          .value === "true",
+
+      price:
+        price,
+
+      sizes:
+        document
+          .getElementById(
+            "sizes"
+          )
+          .value
+          .trim(),
+
+      fabric:
+        document
+          .getElementById(
+            "fabric"
+          )
+          .value
+          .trim(),
+
+      img:
+        uploadedImages.length
+        ?
+          uploadedImages[0]
+        :
+          oldImg,
+
+      images:
+        uploadedImages.length
+        ?
+          uploadedImages
+        :
+          undefined,
+
+      description:
+        document
+          .getElementById(
+            "desc"
+          )
+          .value
+          .trim()
+
+    };
+
+
+    const id =
+      document
+        .getElementById(
+          "pid"
+        )
+        .value;
+
+
+    let method =
+      "POST";
+
+
+    if(id){
+
+      body.id =
+        Number(id);
+
+      method =
+        "PUT";
+
+    }
+
+
+    const r =
+      await api(
+        "/api/products",
+        {
+          method:
+            method,
+
+          body:
+            JSON.stringify(
+              body
+            )
+        }
+      );
+
+
+    const d =
+      await r.json();
+
+
+    if(!r.ok){
+
+      alert(
+        d.error ||
+        "Save failed."
+      );
+
+      return;
+
+    }
+
+
+    alert(
+      "✅ Product saved successfully."
+    );
+
+
+    clearForm();
+
+    hideProductForm();
+
+
+    await loadProducts();
+
+
+  }catch(error){
+
+    console.error(
+      error
+    );
+
+
+    alert(
+      "❌ Error:\n\n" +
+      (
+        error.message ||
+        "Unknown error"
+      )
+    );
+
+  }
 
 }
 
@@ -792,33 +2727,68 @@ alert("❌ Error:\n\n"+(error.message||"Unknown error"));
    DELETE PRODUCT
 ========================= */
 
-async function deleteProduct(id){
+async function deleteProduct(
+  id
+){
 
-if(!confirm("Delete this product?"))return;
+  if(
+    !confirm(
+      "Delete this product?"
+    )
+  ){
 
-try{
+    return;
 
-const r=await api(
-"/api/products?id="+encodeURIComponent(id),
-{method:"DELETE"}
-);
+  }
 
-const d=await r.json();
 
-if(!r.ok){
-alert(d.error||"Delete failed.");
-return;
-}
+  try{
 
-alert("Product deleted.");
+    const r =
+      await api(
+        "/api/products?id=" +
+        encodeURIComponent(
+          id
+        ),
+        {
+          method:
+            "DELETE"
+        }
+      );
 
-await loadProducts();
 
-}catch(error){
+    const d =
+      await r.json();
 
-alert(error.message||"Delete failed.");
 
-}
+    if(!r.ok){
+
+      alert(
+        d.error ||
+        "Delete failed."
+      );
+
+      return;
+
+    }
+
+
+    alert(
+      "Product deleted."
+    );
+
+
+    await loadProducts();
+
+
+  }catch(error){
+
+    alert(
+      error.message ||
+      "Delete failed."
+    );
+
+  }
 
 }
 
@@ -827,175 +2797,547 @@ alert(error.message||"Delete failed.");
    LOAD ORDERS
 ========================= */
 
-async function loadOrders(showMessage){
+async function loadOrders(
+  showMessage
+){
 
-const btn=document.getElementById("refreshBtn");
-const message=document.getElementById("orderMessage");
+  const btn =
+    document.getElementById(
+      "refreshBtn"
+    );
 
-try{
 
-if(showMessage){
+  const message =
+    document.getElementById(
+      "orderMessage"
+    );
 
-btn.disabled=true;
-btn.textContent="REFRESHING...";
-message.style.display="block";
-message.textContent="Loading orders...";
 
-}
+  try{
 
-const r=await api("/api/orders");
+    if(showMessage){
 
-const text=await r.text();
+      btn.disabled =
+        true;
 
-let d={};
+      btn.textContent =
+        "REFRESHING...";
 
-try{
-d=JSON.parse(text);
-}catch(error){
-throw new Error("Server response is not valid JSON.");
-}
 
-if(!r.ok){
-throw new Error(d.error||"Unable to load orders.");
-}
+      message.style.display =
+        "block";
 
-const list=Array.isArray(d.orders)?d.orders:[];
+      message.textContent =
+        "Loading orders...";
 
-const box=document.getElementById("orders");
+    }
 
-if(!list.length){
 
-box.innerHTML='<div class="muted">No orders yet.</div>';
+    const r =
+      await api(
+        "/api/orders"
+      );
 
-}else{
 
-box.innerHTML=list.map(function(o){
+    const text =
+      await r.text();
 
-const id=String(o.id||"");
-const customer=o.customer||{};
-const items=Array.isArray(o.items)?o.items:[];
 
-return `
+    let d = {};
 
-<div class="order">
 
-<b>${safe(customer.name||o.name||"Customer")}</b>
+    try{
 
-—
-₹${Number(o.amount||o.total||0).toLocaleString("en-IN")}
+      d =
+        JSON.parse(
+          text
+        );
 
-—
-<span class="status">
-${safe(o.status||"Payment Pending")}
-</span>
+    }catch(error){
 
-<div>
-${safe(customer.mobile||o.mobile||"")}
-</div>
+      throw new Error(
+        "Server response is not valid JSON."
+      );
 
-<div>
-${safe(o.address||"")}
-${o.pin?", "+safe(o.pin):""}
-</div>
+    }
 
-<div class="muted">
-${items.map(function(i){
 
-return safe(i.name||"")+" × "+Number(i.qty||0)+
-(i.size?" — Size: "+safe(i.size):"");
+    if(!r.ok){
 
-}).join(", ")}
-</div>
+      throw new Error(
+        d.error ||
+        "Unable to load orders."
+      );
 
-<div class="muted">
+    }
 
-Payment:
-${safe(o.paymentMethod||"ONLINE")}
 
-|
+    const list =
+      Array.isArray(
+        d.orders
+      )
+      ?
+        d.orders
+      :
+        [];
 
-Razorpay:
-${safe(o.paymentId||"Pending")}
 
-|
+    const box =
+      document.getElementById(
+        "orders"
+      );
 
-Shiprocket:
-${safe(o.shiprocketOrderId||"Not created")}
 
-</div>
+    if(!list.length){
 
-<div class="row">
+      box.innerHTML =
+        `
+        <div class="muted">
+          No orders yet.
+        </div>
+        `;
 
-<select id="status-${safe(id)}">
+    }else{
 
-<option value="Payment Pending">Payment Pending</option>
-<option value="COD - Pending">COD - Pending</option>
-<option value="Paid">Paid</option>
-<option value="Ready to Ship">Ready to Ship</option>
-<option value="Shipped">Shipped</option>
-<option value="Delivered">Delivered</option>
-<option value="Cancelled">Cancelled</option>
+      box.innerHTML =
+        list
+          .map(
+            function(o){
 
-</select>
+              const id =
+                String(
+                  o.id || ""
+                );
 
-<button onclick="statusUpdate('${jsSafe(id)}')">
-UPDATE STATUS
-</button>
 
-<button onclick="verifyPayment('${jsSafe(id)}')">
-VERIFY PAYMENT
-</button>
+              const customer =
+                o.customer ||
+                {};
 
-<button onclick="ship('${jsSafe(id)}')">
-SEND TO SHIPROCKET
-</button>
 
-</div>
+              const items =
+                Array.isArray(
+                  o.items
+                )
+                ?
+                  o.items
+                :
+                  [];
 
-</div>
 
-`;
+              const paymentMethod =
+                String(
+                  o.paymentMethod ||
+                  o.payment_method ||
+                  "ONLINE"
+                );
 
-}).join("");
 
-list.forEach(function(o){
+              return `
 
-const select=document.getElementById(
-"status-"+String(o.id)
-);
+              <div class="order">
 
-if(select){
-select.value=o.status||"Payment Pending";
-}
+                <div
+                  style="
+                    font-size:19px;
+                    font-weight:bold;
+                  "
+                >
 
-});
+                  ${safe(
+                    customer.name ||
+                    o.name ||
+                    "Customer"
+                  )}
 
-}
+                </div>
 
-if(showMessage){
 
-message.style.display="block";
-message.textContent="✅ Orders refreshed successfully.";
+                <div
+                  style="
+                    margin-top:5px;
+                    font-weight:bold;
+                  "
+                >
 
-setTimeout(function(){
-message.style.display="none";
-},2500);
+                  ₹${Number(
+                    o.amount ||
+                    o.total ||
+                    0
+                  ).toLocaleString(
+                    "en-IN"
+                  )}
 
-}
+                  &nbsp; • &nbsp;
 
-}catch(error){
+                  <span class="status">
 
-console.error("Orders error:",error);
+                    ${safe(
+                      o.status ||
+                      "Payment Pending"
+                    )}
 
-message.style.display="block";
-message.textContent="❌ "+(error.message||"Unable to load orders.");
+                  </span>
 
-}finally{
+                </div>
 
-btn.disabled=false;
-btn.textContent="REFRESH ORDERS";
 
-}
+                <div class="muted">
+
+                  Order ID:
+                  <b>
+                    ${safe(id)}
+                  </b>
+
+                </div>
+
+
+                <div>
+
+                  📱
+                  ${safe(
+                    customer.mobile ||
+                    o.mobile ||
+                    ""
+                  )}
+
+                </div>
+
+
+                <div>
+
+                  📍
+                  ${safe(
+                    customer.address ||
+                    o.address ||
+                    ""
+                  )}
+
+                  ${
+                    (
+                      customer.pincode ||
+                      customer.pin ||
+                      o.pin
+                    )
+                    ?
+                      ", " +
+                      safe(
+                        customer.pincode ||
+                        customer.pin ||
+                        o.pin
+                      )
+                    :
+                      ""
+                  }
+
+                </div>
+
+
+                <!-- ORDER ITEMS -->
+
+                <div class="order-items">
+
+                  <b>
+                    Products:
+                  </b>
+
+
+                  ${
+                    items.length
+                    ?
+                      items
+                        .map(
+                          function(i){
+
+                            return `
+                            <div
+                              class="order-item"
+                            >
+
+                              ${safe(
+                                i.name ||
+                                "Product"
+                              )}
+
+                              ×
+                              ${Number(
+                                i.qty || 0
+                              )}
+
+                              ${
+                                i.size
+                                ?
+                                  " — Size: " +
+                                  safe(
+                                    i.size
+                                  )
+                                :
+                                  ""
+                              }
+
+                            </div>
+                            `;
+
+                          }
+                        )
+                        .join("")
+                    :
+                      `
+                      <div class="muted">
+                        No item details available.
+                      </div>
+                      `
+                  }
+
+                </div>
+
+
+                <div class="muted">
+
+                  💳 Payment:
+                  <b>
+                    ${safe(
+                      paymentMethod
+                    )}
+                  </b>
+
+
+                  &nbsp; | &nbsp;
+
+
+                  Razorpay:
+                  <b>
+                    ${safe(
+                      o.razorpayPaymentId ||
+                      o.paymentId ||
+                      "Pending"
+                    )}
+                  </b>
+
+
+                  &nbsp; | &nbsp;
+
+
+                  Shiprocket:
+                  <b>
+                    ${safe(
+                      o.shiprocketOrderId ||
+                      "Not created"
+                    )}
+                  </b>
+
+                </div>
+
+
+                ${
+                  o.awb
+                  ?
+                    `
+                    <div class="muted">
+
+                      📦 AWB:
+                      <b>
+                        ${safe(
+                          o.awb
+                        )}
+                      </b>
+
+                    </div>
+                    `
+                  :
+                    ""
+                }
+
+
+                ${
+                  o.courier
+                  ?
+                    `
+                    <div class="muted">
+
+                      🚚 Courier:
+                      <b>
+                        ${safe(
+                          o.courier
+                        )}
+                      </b>
+
+                    </div>
+                    `
+                  :
+                    ""
+                }
+
+
+                <!-- ORDER CONTROLS -->
+
+                <div class="row">
+
+
+                  <select
+                    id="status-${safe(id)}"
+                  >
+
+                    <option value="Payment Pending">
+                      Payment Pending
+                    </option>
+
+                    <option value="Order Confirmed">
+                      Order Confirmed
+                    </option>
+
+                    <option value="COD - Pending">
+                      COD - Pending
+                    </option>
+
+                    <option value="Paid">
+                      Paid
+                    </option>
+
+                    <option value="Ready to Ship">
+                      Ready to Ship
+                    </option>
+
+                    <option value="Shipped">
+                      Shipped
+                    </option>
+
+                    <option value="Delivered">
+                      Delivered
+                    </option>
+
+                    <option value="Cancelled">
+                      Cancelled
+                    </option>
+
+                  </select>
+
+
+                  <button
+                    onclick="
+                      statusUpdate(
+                        '${jsSafe(id)}'
+                      )
+                    "
+                  >
+                    UPDATE STATUS
+                  </button>
+
+
+                  <button
+                    onclick="
+                      verifyPayment(
+                        '${jsSafe(id)}'
+                      )
+                    "
+                  >
+                    VERIFY PAYMENT
+                  </button>
+
+
+                  <button
+                    onclick="
+                      ship(
+                        '${jsSafe(id)}'
+                      )
+                    "
+                  >
+                    SEND TO SHIPROCKET
+                  </button>
+
+
+                </div>
+
+              </div>
+
+              `;
+
+            }
+          )
+          .join("");
+
+
+      list.forEach(
+        function(o){
+
+          const select =
+            document.getElementById(
+              "status-" +
+              String(
+                o.id
+              )
+            );
+
+
+          if(select){
+
+            select.value =
+              o.status ||
+              (
+                o.paymentMethod === "COD"
+                  ?
+                    "Order Confirmed"
+                  :
+                    "Payment Pending"
+              );
+
+          }
+
+        }
+      );
+
+    }
+
+
+    if(showMessage){
+
+      message.style.display =
+        "block";
+
+      message.textContent =
+        "✅ Orders refreshed successfully.";
+
+
+      setTimeout(
+        function(){
+
+          message.style.display =
+            "none";
+
+        },
+        2500
+      );
+
+    }
+
+
+  }catch(error){
+
+    console.error(
+      "Orders error:",
+      error
+    );
+
+
+    message.style.display =
+      "block";
+
+    message.textContent =
+      "❌ " +
+      (
+        error.message ||
+        "Unable to load orders."
+      );
+
+  }finally{
+
+    btn.disabled =
+      false;
+
+    btn.textContent =
+      "🔄 REFRESH ORDERS";
+
+  }
 
 }
 
@@ -1004,78 +3346,121 @@ btn.textContent="REFRESH ORDERS";
    VERIFY PAYMENT
 ========================= */
 
-async function verifyPayment(id){
+async function verifyPayment(
+  id
+){
 
-try{
+  try{
 
-alert("🔍 Payment checking...");
+    alert(
+      "🔍 Payment checking..."
+    );
 
-const r=await fetch("/api/payment-status",{
 
-method:"POST",
+    const r =
+      await fetch(
+        "/api/payment-status",
+        {
+          method:"POST",
 
-headers:{
-"Content-Type":"application/json",
-"Authorization":"Bearer "+token
-},
+          headers:{
+            "Content-Type":
+              "application/json",
 
-body:JSON.stringify({
-orderId:id
-})
+            "Authorization":
+              "Bearer " + token
+          },
 
-});
+          body:
+            JSON.stringify({
+              orderId:id
+            })
+        }
+      );
 
-const text=await r.text();
 
-let d;
+    const text =
+      await r.text();
 
-try{
-d=JSON.parse(text);
-}catch(error){
 
-alert("❌ Server response error:\n\n"+text.substring(0,500));
-return;
+    let d;
 
-}
 
-if(!r.ok){
+    try{
 
-alert(
-"❌ Payment check failed:\n\n"+
-(d.error||"Unknown error")
-);
+      d =
+        JSON.parse(
+          text
+        );
 
-return;
+    }catch(error){
 
-}
+      alert(
+        "❌ Server response error:\n\n" +
+        text.substring(
+          0,
+          500
+        )
+      );
 
-if(d.paid){
+      return;
 
-alert(
-"✅ PAYMENT VERIFIED\n\n"+
-"Payment ID: "+(d.paymentId||"")+
-"\n\nOrder status is now PAID."
-);
+    }
 
-}else{
 
-alert(
-"❌ NO CAPTURED PAYMENT FOUND\n\n"+
-"This order is still Payment Pending."
-);
+    if(!r.ok){
 
-}
+      alert(
+        "❌ Payment check failed:\n\n" +
+        (
+          d.error ||
+          "Unknown error"
+        )
+      );
 
-await loadOrders(false);
+      return;
 
-}catch(error){
+    }
 
-alert(
-"❌ Connection / Error:\n\n"+
-(error.message||"Payment check failed.")
-);
 
-}
+    if(d.paid){
+
+      alert(
+        "✅ PAYMENT VERIFIED\n\n" +
+        "Payment ID: " +
+        (
+          d.paymentId ||
+          ""
+        ) +
+        "\n\nOrder status is now PAID."
+      );
+
+    }else{
+
+      alert(
+        "❌ NO CAPTURED PAYMENT FOUND\n\n" +
+        "This order is still Payment Pending."
+      );
+
+    }
+
+
+    await loadOrders(
+      false
+    );
+
+
+  }catch(error){
+
+    alert(
+      "❌ Connection / Error:\n\n" +
+      (
+        error.message ||
+        "Payment check failed."
+      )
+    );
+
+  }
 
 }
 
@@ -1084,46 +3469,85 @@ alert(
    STATUS UPDATE
 ========================= */
 
-async function statusUpdate(id){
+async function statusUpdate(
+  id
+){
 
-const select=document.getElementById("status-"+id);
+  const select =
+    document.getElementById(
+      "status-" +
+      id
+    );
 
-if(!select){
-alert("Status selector not found.");
-return;
-}
 
-try{
+  if(!select){
 
-const r=await api("/api/orders",{
+    alert(
+      "Status selector not found."
+    );
 
-method:"PATCH",
+    return;
 
-body:JSON.stringify({
-id:id,
-status:select.value
-})
+  }
 
-});
 
-const d=await r.json();
+  try{
 
-if(!r.ok){
+    const r =
+      await api(
+        "/api/orders",
+        {
+          method:"PATCH",
 
-alert(d.error||"Status update failed.");
-return;
+          body:
+            JSON.stringify({
 
-}
+              id:
+                id,
 
-alert("✅ Order status updated.");
+              status:
+                select.value
 
-await loadOrders(false);
+            })
 
-}catch(error){
+        }
+      );
 
-alert(error.message||"Status update failed.");
 
-}
+    const d =
+      await r.json();
+
+
+    if(!r.ok){
+
+      alert(
+        d.error ||
+        "Status update failed."
+      );
+
+      return;
+
+    }
+
+
+    alert(
+      "✅ Order status updated."
+    );
+
+
+    await loadOrders(
+      false
+    );
+
+
+  }catch(error){
+
+    alert(
+      error.message ||
+      "Status update failed."
+    );
+
+  }
 
 }
 
@@ -1132,53 +3556,94 @@ alert(error.message||"Status update failed.");
    SHIPROCKET
 ========================= */
 
-async function ship(id){
+async function ship(
+  id
+){
 
-if(!confirm("Create this order in Shiprocket?"))return;
+  if(
+    !confirm(
+      "Create this order in Shiprocket?"
+    )
+  ){
 
-try{
+    return;
 
-const r=await api("/api/shiprocket-order",{
+  }
 
-method:"POST",
 
-body:JSON.stringify({
-order_id:id
-})
+  try{
 
-});
+    const r =
+      await api(
+        "/api/shiprocket-order",
+        {
+          method:"POST",
 
-const text=await r.text();
+          body:
+            JSON.stringify({
+              order_id:id
+            })
+        }
+      );
 
-let d={};
 
-try{
-d=JSON.parse(text);
-}catch(error){}
+    const text =
+      await r.text();
 
-if(!r.ok){
 
-alert(
-"❌ Shiprocket error:\n\n"+
-(d.message||d.error||text.substring(0,500))
-);
+    let d = {};
 
-return;
 
-}
+    try{
 
-alert("✅ Order sent to Shiprocket.");
+      d =
+        JSON.parse(
+          text
+        );
 
-await loadOrders(false);
+    }catch(error){}
 
-}catch(error){
 
-alert(
-"❌ Shiprocket error:\n\n"+
-(error.message||"Shiprocket order failed.")
-);
+    if(!r.ok){
 
-}
+      alert(
+        "❌ Shiprocket error:\n\n" +
+        (
+          d.message ||
+          d.error ||
+          text.substring(
+            0,
+            500
+          )
+        )
+      );
+
+      return;
+
+    }
+
+
+    alert(
+      "✅ Order sent to Shiprocket."
+    );
+
+
+    await loadOrders(
+      false
+    );
+
+
+  }catch(error){
+
+    alert(
+      "❌ Shiprocket error:\n\n" +
+      (
+        error.message ||
+        "Shiprocket order failed."
+      )
+    );
+
+  }
 
 }
 
@@ -1189,11 +3654,13 @@ alert(
 
 function logout(){
 
-token="";
+  token = "";
 
-localStorage.removeItem("adminToken");
+  localStorage.removeItem(
+    "adminToken"
+  );
 
-location.reload();
+  location.reload();
 
 }
 
@@ -1202,22 +3669,52 @@ location.reload();
    SAFE HTML
 ========================= */
 
-function safe(value){
+function safe(
+  value
+){
 
-return String(value||"")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+  return String(
+    value || ""
+  )
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+  .replace(
+    /</g,
+    "&lt;"
+  )
+  .replace(
+    />/g,
+    "&gt;"
+  )
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+  .replace(
+    /'/g,
+    "&#039;"
+  );
 
 }
 
-function jsSafe(value){
 
-return String(value||"")
-.replace(/\\/g,"\\\\")
-.replace(/'/g,"\\'");
+function jsSafe(
+  value
+){
+
+  return String(
+    value || ""
+  )
+  .replace(
+    /\\/g,
+    "\\\\"
+  )
+  .replace(
+    /'/g,
+    "\\'"
+  );
 
 }
 
@@ -1226,41 +3723,71 @@ return String(value||"")
    AUTO LOGIN
 ========================= */
 
-const savedToken=localStorage.getItem("adminToken");
+const savedToken =
+  localStorage.getItem(
+    "adminToken"
+  );
+
 
 if(savedToken){
 
-token=savedToken;
+  token =
+    savedToken;
 
-autoLogin();
+  autoLogin();
 
 }
 
 
 async function autoLogin(){
 
-try{
+  try{
 
-const r=await api("/api/orders");
+    const r =
+      await api(
+        "/api/orders"
+      );
 
-if(!r.ok){
 
-logout();
-return;
+    if(!r.ok){
 
-}
+      logout();
 
-document.getElementById("login").classList.add("hide");
-document.getElementById("app").classList.remove("hide");
+      return;
 
-await loadProducts();
-await loadOrders(false);
+    }
 
-}catch(error){
 
-logout();
+    document
+      .getElementById(
+        "login"
+      )
+      .classList.add(
+        "hide"
+      );
 
-}
+
+    document
+      .getElementById(
+        "app"
+      )
+      .classList.remove(
+        "hide"
+      );
+
+
+    await loadProducts();
+
+    await loadOrders(
+      false
+    );
+
+
+  }catch(error){
+
+    logout();
+
+  }
 
 }
 
