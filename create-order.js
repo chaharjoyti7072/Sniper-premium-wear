@@ -1,362 +1,221 @@
-const { putJSON, getJSON } = require("../_store");
-
-const SHIPPING_CHARGE = 49;
+const crypto = require("crypto");
+const { getJSON, putJSON } = require("../_store");
 
 module.exports = async (req, res) => {
   try {
-
     if (req.method !== "POST") {
       return res.status(405).json({
         error: "Method not allowed"
       });
     }
 
-    const {
-      receipt,
-      customer,
-      items,
-      address,
-      pin,
-      paymentMethod
-    } = req.body || {};
+    const body = req.body || {};
 
-    /* =========================
-       BASIC VALIDATION
-    ========================= */
+    const customer = {
+      name: String(body.name || "").trim(),
+      mobile: String(body.mobile || "").trim(),
+      address: String(body.address || "").trim(),
+      pincode: String(body.pincode || "").trim()
+    };
 
-    if (!Array.isArray(items) || items.length === 0) {
+    if (!customer.name) {
       return res.status(400).json({
-        error: "Order items are missing"
+        error: "Name is required"
       });
     }
 
-    if (!customer || !customer.name || !customer.mobile) {
+    if (!customer.mobile) {
       return res.status(400).json({
-        error: "Customer details are required"
+        error: "Mobile number is required"
       });
     }
 
-    if (!address || !pin) {
+    if (!customer.address) {
       return res.status(400).json({
-        error: "Delivery address and PIN are required"
+        error: "Address is required"
       });
     }
 
-    /* =========================
-       CALCULATE PRODUCT TOTAL
-    ========================= */
+    if (!customer.pincode) {
+      return res.status(400).json({
+        error: "Pincode is required"
+      });
+    }
 
-    const productTotal = items.reduce((sum, item) => {
+    /*
+      Support both:
+      - items
+      - itemData
+    */
+    const rawItems = Array.isArray(body.items)
+      ? body.items
+      : Array.isArray(body.itemData)
+      ? body.itemData
+      : [];
 
-      const price = Number(item.price || 0);
-      const qty = Number(item.qty || 0);
+    if (!rawItems.length) {
+      return res.status(400).json({
+        error: "At least one product is required"
+      });
+    }
 
-      if (
-        !Number.isFinite(price) ||
-        !Number.isFinite(qty) ||
-        price <= 0 ||
-        qty <= 0
-      ) {
-        return sum;
+    const items = rawItems
+      .map(item => ({
+        id: Number(item.id || 0),
+        name: String(item.name || "").trim(),
+        qty: Math.max(1, Number(item.qty || 1)),
+        size: String(item.size || "").trim(),
+        price: Number(item.price || 0),
+        image: String(item.image || "").trim()
+      }))
+      .filter(item => item.name);
+
+    if (!items.length) {
+      return res.status(400).json({
+        error: "Invalid products"
+      });
+    }
+
+    /*
+      Maximum 10 quantity for each product/size.
+    */
+    for (const item of items) {
+      if (item.qty > 10) {
+        return res.status(400).json({
+          error: "Maximum 10 quantity allowed for one product/size."
+        });
       }
-
-      return sum + price * qty;
-
-    }, 0);
-
-    if (!productTotal || productTotal <= 0) {
-      return res.status(400).json({
-        error: "Invalid product total"
-      });
     }
 
-    const grandTotal =
-      productTotal + SHIPPING_CHARGE;
-
-
-    /* =========================
-       COD ORDER
-    ========================= */
-
-    if (paymentMethod === "COD") {
-
-      const orders =
-        await getJSON("orders", []);
-
-      const orderId =
-        receipt ||
-        `COD-${Date.now()}`;
-
-      const codOrder = {
-
-        id: orderId,
-
-        razorpayOrderId: "",
-
-        paymentId: "",
-
-        receipt: orderId,
-
-        amount: grandTotal,
-
-        productTotal: productTotal,
-
-        shippingCharge: SHIPPING_CHARGE,
-
-        total: grandTotal,
-
-        currency: "INR",
-
-        customer: {
-          name: String(customer.name).trim(),
-          mobile: String(customer.mobile).trim()
-        },
-
-        items: items.map(item => ({
-          id: item.id,
-          name: String(item.name || ""),
-          price: Number(item.price || 0),
-          qty: Number(item.qty || 0),
-          size: String(item.size || "")
-        })),
-
-        address: String(address).trim(),
-
-        pin: String(pin).trim(),
-
-        paymentMethod: "COD",
-
-        status: "COD - Pending",
-
-        createdAt: new Date().toISOString()
-
-      };
-
-      orders.push(codOrder);
-
-      await putJSON(
-        "orders",
-        orders
-      );
-
-      return res.status(200).json({
-
-        ok: true,
-
-        cod: true,
-
-        id: orderId,
-
-        amount: grandTotal,
-
-        currency: "INR",
-
-        paymentMethod: "COD"
-
-      });
-
-    }
-
-
-    /* =========================
-       ONLINE PAYMENT
-    ========================= */
-
-    const razorpayAmount =
-      Math.round(grandTotal * 100);
-
-    if (
-      !razorpayAmount ||
-      razorpayAmount < 100
-    ) {
-      return res.status(400).json({
-        error: "Invalid payment amount"
-      });
-    }
-
-
-    const key =
-      process.env.RAZORPAY_KEY_ID;
-
-    const secret =
-      process.env.RAZORPAY_KEY_SECRET;
-
-
-    if (!key || !secret) {
-
-      return res.status(500).json({
-        error:
-          "Razorpay keys are not configured in Vercel"
-      });
-
-    }
-
-
-    const auth =
-      Buffer
-        .from(`${key}:${secret}`)
-        .toString("base64");
-
-
-    const response =
-      await fetch(
-        "https://api.razorpay.com/v1/orders",
-        {
-
-          method: "POST",
-
-          headers: {
-            Authorization:
-              `Basic ${auth}`,
-
-            "Content-Type":
-              "application/json"
-          },
-
-          body:
-            JSON.stringify({
-
-              amount:
-                razorpayAmount,
-
-              currency:
-                "INR",
-
-              receipt:
-                receipt ||
-                `SPW-${Date.now()}`,
-
-              payment_capture:
-                1
-
-            })
-
-        }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if (!response.ok) {
-
-      return res.status(
-        response.status
-      ).json({
-
-        error:
-          data.error?.description ||
-          "Razorpay order failed"
-
-      });
-
-    }
-
-
-    /* =========================
-       SAVE ONLINE ORDER
-    ========================= */
-
-    const orders =
-      await getJSON(
-        "orders",
-        []
-      );
-
-
-    orders.push({
-
-      id:
-        data.id,
-
-      razorpayOrderId:
-        data.id,
-
-      receipt:
-        data.receipt,
-
-      amount:
-        data.amount / 100,
-
-      productTotal:
-        productTotal,
-
-      shippingCharge:
-        SHIPPING_CHARGE,
-
-      total:
-        grandTotal,
-
-      currency:
-        data.currency,
-
-      customer:
-        customer || {},
-
-      items:
-        items || [],
-
-      address:
-        address || "",
-
-      pin:
-        pin || "",
-
-      paymentMethod:
-        "ONLINE",
-
-      status:
-        "Payment Pending",
-
-      createdAt:
-        new Date().toISOString()
-
-    });
-
-
-    await putJSON(
-      "orders",
-      orders
+    /*
+      Calculate product total from the submitted products.
+    */
+    const calculatedProductTotal = items.reduce(
+      (sum, item) => {
+        return sum + Number(item.price || 0) * Number(item.qty || 0);
+      },
+      0
     );
 
+    /*
+      Website shipping charge = ₹49 per order.
+    */
+    const shippingCharge = 49;
+
+    const calculatedTotal =
+      calculatedProductTotal + shippingCharge;
+
+    /*
+      Accept payment method from frontend.
+      COD must NEVER become ONLINE.
+    */
+    let paymentMethod = String(
+      body.paymentMethod || body.payment_method || ""
+    )
+      .trim()
+      .toUpperCase();
+
+    if (paymentMethod === "CASH ON DELIVERY") {
+      paymentMethod = "COD";
+    }
+
+    if (paymentMethod !== "COD" && paymentMethod !== "ONLINE") {
+      paymentMethod = "COD";
+    }
+
+    /*
+      ONLINE orders wait for Razorpay payment confirmation.
+      COD orders are confirmed immediately.
+    */
+    const status =
+      paymentMethod === "COD"
+        ? "Order Confirmed"
+        : "Payment Pending";
+
+    const orderId =
+      "order_" +
+      crypto.randomBytes(8).toString("base64url");
+
+    const receipt =
+      "JOYTI-" +
+      Date.now().toString().slice(-8);
+
+    const customerAccessToken =
+      crypto.randomBytes(32).toString("hex");
+
+    const createdAt = new Date().toISOString();
+
+    const order = {
+      id: orderId,
+      receipt,
+
+      amount: calculatedTotal,
+      productTotal: calculatedProductTotal,
+      shippingCharge,
+      total: calculatedTotal,
+      currency: "INR",
+
+      customer,
+
+      /*
+        Keep both fields for compatibility
+        with existing frontend/backend.
+      */
+      items,
+      itemData: items,
+
+      paymentMethod,
+      payment_method: paymentMethod,
+
+      status,
+
+      customerAccessToken,
+
+      razorpayOrderId: "",
+      razorpayPaymentId: "",
+      razorpaySignature: "",
+
+      shiprocketOrderId: "",
+      shiprocketShipmentId: "",
+      awb: "",
+      courier: "",
+
+      createdAt,
+      updatedAt: createdAt
+    };
+
+    const orders = await getJSON("orders", []);
+
+    orders.push(order);
+
+    await putJSON("orders", orders);
 
     return res.status(200).json({
-
       ok: true,
 
-      cod: false,
+      order: {
+        id: order.id,
+        receipt: order.receipt,
+        amount: order.amount,
+        productTotal: order.productTotal,
+        shippingCharge: order.shippingCharge,
+        total: order.total,
+        currency: order.currency,
+        items: order.items,
+        customer: order.customer,
+        paymentMethod: order.paymentMethod,
+        status: order.status,
+        createdAt: order.createdAt
+      },
 
-      id:
-        data.id,
-
-      amount:
-        data.amount,
-
-      currency:
-        data.currency,
-
-      key_id:
-        key
-
+      customerAccessToken
     });
-
 
   } catch (error) {
-
-    console.error(
-      "Create order error:",
-      error
-    );
+    console.error("Create order error:", error);
 
     return res.status(500).json({
-
-      error:
-        error.message ||
-        "Server error"
-
+      error: error.message || "Unable to create order"
     });
-
   }
-
 };
