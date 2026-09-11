@@ -80,6 +80,7 @@ header{
 nav{
   display:flex;
   gap:18px;
+  align-items:center;
 }
 
 nav a{
@@ -87,6 +88,13 @@ nav a{
   text-decoration:none;
   font-weight:700;
   font-size:14px;
+}
+
+.orders-nav{
+  background:var(--accent);
+  color:#111!important;
+  padding:8px 10px;
+  border-radius:6px;
 }
 
 /* HERO */
@@ -181,8 +189,6 @@ section{
   text-align:left;
   cursor:pointer;
   box-shadow:0 4px 12px rgba(0,0,0,.08);
-
-  /* performance */
   contain:layout paint;
   touch-action:manipulation;
 }
@@ -208,20 +214,12 @@ section{
   gap:18px;
 }
 
-/*
-  IMPORTANT PERFORMANCE:
-  Each card gets its own layout/paint area.
-  Browser does not continuously recalculate the whole product list
-  while the customer scrolls.
-*/
-
 .product{
   background:#fff;
   border:1px solid var(--border);
   border-radius:10px;
   overflow:hidden;
   box-shadow:0 4px 14px rgba(0,0,0,.06);
-
   contain:layout paint style;
   content-visibility:auto;
   contain-intrinsic-size:420px;
@@ -234,9 +232,6 @@ section{
   object-fit:contain;
   display:block;
   background:#f0f0eb;
-
-  /* important */
-  loading:lazy;
 }
 
 .product .info{
@@ -555,6 +550,84 @@ textarea{
   font-weight:900;
 }
 
+/* CUSTOMER ORDERS */
+
+.orders-box{
+  max-width:850px;
+  margin:auto;
+}
+
+.order-card{
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:18px;
+  margin-bottom:15px;
+  box-shadow:0 4px 12px rgba(0,0,0,.05);
+}
+
+.order-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:flex-start;
+  border-bottom:1px solid #eee;
+  padding-bottom:12px;
+}
+
+.order-id{
+  font-weight:900;
+  word-break:break-all;
+}
+
+.order-status{
+  background:#e7ecd7;
+  color:#303820;
+  padding:6px 9px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:900;
+}
+
+.order-items{
+  margin:12px 0;
+}
+
+.order-item{
+  padding:8px 0;
+  border-bottom:1px solid #eee;
+}
+
+.order-meta{
+  color:#666;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.order-total{
+  font-size:20px;
+  font-weight:900;
+  margin:12px 0;
+}
+
+.track-result{
+  background:#f5f3e9;
+  border:1px solid #ddd;
+  border-radius:8px;
+  padding:12px;
+  margin-top:12px;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.track-result b{
+  color:#303820;
+}
+
+.track-loading{
+  color:#666;
+}
+
 /* FOOTER */
 
 footer{
@@ -612,11 +685,15 @@ footer{
   }
 
   nav{
-    gap:10px;
+    gap:6px;
   }
 
   nav a{
-    font-size:12px;
+    font-size:11px;
+  }
+
+  .orders-nav{
+    padding:7px 8px;
   }
 
   .logo{
@@ -660,6 +737,10 @@ footer{
     height:42px;
     font-size:25px;
   }
+
+  .order-top{
+    flex-direction:column;
+  }
 }
 
 /* REDUCED MOTION */
@@ -687,6 +768,7 @@ footer{
     <a href="#home">HOME</a>
     <a href="#shop">SHOP</a>
     <a href="#checkout">CHECKOUT</a>
+    <a href="#orders" class="orders-nav">MY ORDERS</a>
   </nav>
 
 </header>
@@ -768,6 +850,36 @@ footer{
     class="products"
     id="products"
   ></div>
+
+</section>
+
+
+<!-- CUSTOMER ORDERS -->
+
+<section id="orders">
+
+  <div class="title">
+
+    <h2>MY ORDERS</h2>
+
+    <p>
+      View your previous orders and track your shipment
+    </p>
+
+  </div>
+
+  <div class="orders-box">
+
+    <div
+      id="ordersMessage"
+      class="empty"
+    >
+      Loading your orders...
+    </div>
+
+    <div id="ordersList"></div>
+
+  </div>
 
 </section>
 
@@ -995,6 +1107,39 @@ const SHIPPING_CHARGE = 49;
 let cart = JSON.parse(
   localStorage.getItem("sniperCart") || "[]"
 );
+
+
+/* -------------------------
+   CUSTOMER ACCESS TOKEN
+------------------------- */
+
+const CUSTOMER_TOKEN_KEY =
+  "sniperCustomerAccessToken";
+
+
+function saveCustomerToken(token){
+
+  if(!token){
+    return;
+  }
+
+  localStorage.setItem(
+    CUSTOMER_TOKEN_KEY,
+    String(token)
+  );
+
+}
+
+
+function getCustomerToken(){
+
+  return String(
+    localStorage.getItem(
+      CUSTOMER_TOKEN_KEY
+    ) || ""
+  ).trim();
+
+}
 
 
 /* -------------------------
@@ -1311,11 +1456,6 @@ function renderProducts(){
     products.filter(categoryMatch);
 
 
-  /*
-    Main FEATURED section:
-    only featured products when no category is selected.
-  */
-
   if(!selectedCategory){
 
     list =
@@ -1450,11 +1590,6 @@ function renderProducts(){
 
     }).join("");
 
-
-  /*
-    Attach gallery click events AFTER rendering.
-    No onclick strings for gallery = less repeated parsing.
-  */
 
   attachGalleryEvents();
 
@@ -1893,6 +2028,596 @@ function showCheckout(){
 
 
 /* -------------------------
+   ORDERS SECTION
+------------------------- */
+
+function showOrders(){
+
+  const section =
+    document.getElementById("orders");
+
+  if(!section){
+    return;
+  }
+
+  section.scrollIntoView({
+    behavior:"auto",
+    block:"start"
+  });
+
+  loadCustomerOrders();
+
+}
+
+
+/* -------------------------
+   LOAD CUSTOMER ORDERS
+------------------------- */
+
+async function loadCustomerOrders(){
+
+  const message =
+    document.getElementById(
+      "ordersMessage"
+    );
+
+  const list =
+    document.getElementById(
+      "ordersList"
+    );
+
+  if(!message || !list){
+    return;
+  }
+
+
+  const token =
+    getCustomerToken();
+
+
+  if(!token){
+
+    message.style.display =
+      "block";
+
+    message.innerHTML =
+      `
+      <b>No order history found on this device.</b>
+      <br><br>
+      After you place an order, your order history will appear here automatically.
+      `;
+
+    list.innerHTML =
+      "";
+
+    return;
+
+  }
+
+
+  message.style.display =
+    "block";
+
+  message.textContent =
+    "Loading your orders...";
+
+  list.innerHTML =
+    "";
+
+
+  try{
+
+    const response =
+      await fetch(
+        "/api/customer-orders?token=" +
+        encodeURIComponent(token),
+        {
+          method:"GET",
+          cache:"no-store"
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(!response.ok){
+
+      throw new Error(
+        data.error ||
+        "Unable to load orders"
+      );
+
+    }
+
+
+    const orders =
+      Array.isArray(data.orders)
+      ? data.orders
+      : [];
+
+
+    if(!orders.length){
+
+      message.innerHTML =
+        `
+        <b>No orders found.</b>
+        <br><br>
+        Your confirmed orders will appear here.
+        `;
+
+      return;
+
+    }
+
+
+    message.style.display =
+      "none";
+
+
+    list.innerHTML =
+      orders
+        .map(order => orderHTML(order))
+        .join("");
+
+
+  }catch(error){
+
+    console.error(
+      "Customer orders error:",
+      error
+    );
+
+    message.innerHTML =
+      `
+      <b>Unable to load order history.</b>
+      <br><br>
+      ${escapeHTML(
+        error.message ||
+        "Please try again."
+      )}
+      `;
+
+  }
+
+}
+
+
+/* -------------------------
+   ORDER HTML
+------------------------- */
+
+function orderHTML(order){
+
+  const created =
+    order.createdAt
+    ? new Date(
+        order.createdAt
+      ).toLocaleString(
+        "en-IN",
+        {
+          dateStyle:"medium",
+          timeStyle:"short"
+        }
+      )
+    : "";
+
+
+  const items =
+    Array.isArray(order.items)
+    ? order.items
+    : [];
+
+
+  const itemHTML =
+    items.length
+    ?
+    items.map(item => {
+
+      return `
+        <div class="order-item">
+
+          <b>
+            ${escapeHTML(
+              item.name || "Product"
+            )}
+          </b>
+
+          <br>
+
+          Qty:
+          ${Number(
+            item.qty || 0
+          )}
+
+          ${
+            item.size
+            ?
+            ` • Size ${escapeHTML(item.size)}`
+            :
+            ""
+          }
+
+        </div>
+      `;
+
+    }).join("")
+    :
+    "<div>No item details available.</div>";
+
+
+  const hasShipment =
+    !!(
+      order.shiprocketShipmentId ||
+      order.awb
+    );
+
+
+  return `
+
+    <div
+      class="order-card"
+      id="order-${escapeHTML(
+        String(order.id)
+      )}"
+    >
+
+      <div class="order-top">
+
+        <div>
+
+          <div class="order-id">
+            Order ID:
+            ${escapeHTML(
+              order.id
+            )}
+          </div>
+
+          <div class="order-meta">
+            ${escapeHTML(created)}
+          </div>
+
+        </div>
+
+        <div class="order-status">
+          ${escapeHTML(
+            order.status ||
+            "Order Confirmed"
+          )}
+        </div>
+
+      </div>
+
+
+      <div class="order-items">
+
+        ${itemHTML}
+
+      </div>
+
+
+      <div class="order-meta">
+
+        Payment:
+        <b>
+          ${escapeHTML(
+            order.paymentMethod ||
+            "ONLINE"
+          )}
+        </b>
+
+        ${
+          order.awb
+          ?
+          `
+          <br>
+          AWB:
+          <b>
+            ${escapeHTML(order.awb)}
+          </b>
+          `
+          :
+          ""
+        }
+
+        ${
+          order.courier
+          ?
+          `
+          <br>
+          Courier:
+          <b>
+            ${escapeHTML(order.courier)}
+          </b>
+          `
+          :
+          ""
+        }
+
+      </div>
+
+
+      <div class="order-total">
+
+        Total:
+        ₹${Number(
+          order.total ||
+          order.amount ||
+          0
+        ).toLocaleString("en-IN")}
+
+      </div>
+
+
+      ${
+        hasShipment
+        ?
+        `
+        <button
+          class="btn"
+          type="button"
+          onclick="trackCustomerOrder('${escapeHTML(String(order.id))}')"
+        >
+          🚚 TRACK ORDER
+        </button>
+
+        <div
+          id="tracking-${escapeHTML(String(order.id))}"
+          class="track-result"
+          style="display:none"
+        ></div>
+        `
+        :
+        `
+        <div class="track-result">
+
+          📦 Tracking will appear here after your order is shipped.
+
+        </div>
+        `
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+/* -------------------------
+   TRACK CUSTOMER ORDER
+------------------------- */
+
+async function trackCustomerOrder(
+  orderId
+){
+
+  const box =
+    document.getElementById(
+      "tracking-" + orderId
+    );
+
+
+  if(!box){
+    return;
+  }
+
+
+  const token =
+    getCustomerToken();
+
+
+  if(!token){
+
+    box.style.display =
+      "block";
+
+    box.innerHTML =
+      "Customer access token not found.";
+
+    return;
+
+  }
+
+
+  box.style.display =
+    "block";
+
+  box.innerHTML =
+    `<span class="track-loading">Loading live tracking...</span>`;
+
+
+  try{
+
+    const response =
+      await fetch(
+        "/api/customer-tracking?token=" +
+        encodeURIComponent(token) +
+        "&orderId=" +
+        encodeURIComponent(orderId),
+        {
+          method:"GET",
+          cache:"no-store"
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(!response.ok){
+
+      throw new Error(
+        data.error ||
+        "Unable to load tracking"
+      );
+
+    }
+
+
+    if(
+      data.trackingAvailable === false
+    ){
+
+      box.innerHTML =
+        `
+        📦
+        ${escapeHTML(
+          data.message ||
+          "Tracking is not available yet."
+        )}
+        `;
+
+      return;
+
+    }
+
+
+    const tracking =
+      data.tracking || {};
+
+    const trackingData =
+      tracking.tracking_data ||
+      {};
+
+    const tracks =
+      Array.isArray(
+        trackingData.shipment_track
+      )
+      ?
+      trackingData.shipment_track
+      :
+      [];
+
+
+    const latest =
+      tracks.length
+      ? tracks[0]
+      : null;
+
+
+    const currentStatus =
+      latest?.current_status ||
+      trackingData.shipment_status ||
+      data.order?.status ||
+      "Shipment in process";
+
+
+    const courier =
+      latest?.courier_name ||
+      data.order?.courier ||
+      "Courier";
+
+
+    const awb =
+      latest?.awb_code ||
+      data.order?.awb ||
+      "";
+
+
+    const origin =
+      latest?.origin ||
+      "";
+
+    const destination =
+      latest?.destination ||
+      "";
+
+
+    box.innerHTML =
+      `
+
+      <b>🚚 Current Status:</b>
+      ${escapeHTML(
+        currentStatus
+      )}
+
+      <br>
+
+      <b>Courier:</b>
+      ${escapeHTML(
+        courier
+      )}
+
+      ${
+        awb
+        ?
+        `
+        <br>
+        <b>AWB:</b>
+        ${escapeHTML(awb)}
+        `
+        :
+        ""
+      }
+
+      ${
+        origin
+        ?
+        `
+        <br>
+        <b>From:</b>
+        ${escapeHTML(origin)}
+        `
+        :
+        ""
+      }
+
+      ${
+        destination
+        ?
+        `
+        <br>
+        <b>To:</b>
+        ${escapeHTML(destination)}
+        `
+        :
+        ""
+      }
+
+      ${
+        tracks.length
+        ?
+        `
+        <br><br>
+        <b>Latest shipment update:</b>
+        <br>
+        ${escapeHTML(
+          latest.current_status ||
+          currentStatus
+        )}
+        `
+        :
+        ""
+      }
+
+      `;
+
+
+  }catch(error){
+
+    console.error(
+      "Tracking error:",
+      error
+    );
+
+    box.innerHTML =
+      `
+      ❌
+      ${escapeHTML(
+        error.message ||
+        "Unable to load tracking."
+      )}
+      `;
+
+  }
+
+}
+
+
+/* -------------------------
    HASH
 ------------------------- */
 
@@ -1909,6 +2634,16 @@ window.addEventListener(
 
     }
 
+
+    if(
+      location.hash ===
+      "#orders"
+    ){
+
+      showOrders();
+
+    }
+
   }
 );
 
@@ -1919,6 +2654,16 @@ if(
 ){
 
   showCheckout();
+
+}
+
+
+if(
+  location.hash ===
+  "#orders"
+){
+
+  showOrders();
 
 }
 
@@ -1977,12 +2722,6 @@ let modalImages = [];
 
 let zoom = 1;
 
-
-/*
-  IMPORTANT:
-  Full-size image is assigned only when modal opens.
-  This prevents all 5 large images from loading during normal scroll.
-*/
 
 function openProductGallery(
   id,
@@ -2050,10 +2789,6 @@ function closeModal(){
 
   document.body.style.overflow =
     "";
-
-  /*
-    Release the large image after closing.
-  */
 
   setTimeout(
     () => {
@@ -2198,8 +2933,6 @@ document
     }
   );
 
-
-/* Close by clicking dark background */
 
 modal.addEventListener(
   "click",
@@ -2512,12 +3245,30 @@ document
           }
 
 
+          /*
+            Save customer access token.
+            This makes the order visible
+            in My Orders on this device.
+          */
+
+          if(
+            order.customerAccessToken
+          ){
+
+            saveCustomerToken(
+              order.customerAccessToken
+            );
+
+          }
+
+
           alert(
             "Order confirmed successfully!\n\n" +
             "Order ID: " +
             order.id +
             "\n\n" +
-            "Payment: Cash on Delivery"
+            "Payment: Cash on Delivery\n\n" +
+            "You can check your order in MY ORDERS."
           );
 
 
@@ -2530,7 +3281,7 @@ document
           event.target.reset();
 
           location.hash =
-            "shop";
+            "orders";
 
 
         }catch(error){
@@ -2619,6 +3370,22 @@ document
         }
 
 
+        /*
+          Save token immediately after
+          Razorpay order is created.
+        */
+
+        if(
+          order.customerAccessToken
+        ){
+
+          saveCustomerToken(
+            order.customerAccessToken
+          );
+
+        }
+
+
         const rzp =
           new Razorpay({
 
@@ -2681,11 +3448,6 @@ document
 
                 try{
 
-                  /*
-                    Current production payment
-                    verification endpoint.
-                  */
-
                   const v =
                     await fetch(
                       "/api/payment-status",
@@ -2733,7 +3495,9 @@ document
                   alert(
                     "Payment successful!\n\n" +
                     "Order ID: " +
-                    order.id
+                    order.id +
+                    "\n\n" +
+                    "You can check your order in MY ORDERS."
                   );
 
 
@@ -2746,7 +3510,7 @@ document
                   event.target.reset();
 
                   location.hash =
-                    "shop";
+                    "orders";
 
 
                 }catch(error){
@@ -2837,6 +3601,17 @@ document
 ------------------------- */
 
 loadProducts();
+
+/*
+  Load customer orders quietly
+  if this device already has a token.
+*/
+
+if(getCustomerToken()){
+
+  loadCustomerOrders();
+
+}
 
 </script>
 
