@@ -49,8 +49,6 @@ select{
   font:inherit;
 }
 
-/* HEADER */
-
 header{
   position:sticky;
   top:0;
@@ -96,8 +94,6 @@ nav a{
   padding:8px 10px;
   border-radius:6px;
 }
-
-/* HERO */
 
 .hero{
   min-height:430px;
@@ -146,8 +142,6 @@ nav a{
   cursor:not-allowed;
 }
 
-/* SECTIONS */
-
 section{
   padding:45px 6%;
   max-width:1250px;
@@ -167,8 +161,6 @@ section{
 .title p{
   color:#666;
 }
-
-/* CATEGORY */
 
 .categories{
   display:grid;
@@ -205,8 +197,6 @@ section{
 .cat.active{
   outline:3px solid var(--accent);
 }
-
-/* PRODUCTS */
 
 .products{
   display:grid;
@@ -265,8 +255,6 @@ section{
   margin-top:8px;
 }
 
-/* SIZE */
-
 .size-select{
   width:100%;
   padding:12px;
@@ -274,8 +262,6 @@ section{
   border-radius:6px;
   background:#fff;
 }
-
-/* CHECKOUT */
 
 #checkout{
   display:none;
@@ -326,8 +312,6 @@ textarea{
 .pay input{
   width:auto;
 }
-
-/* CART */
 
 .cart{
   background:#171a14;
@@ -380,8 +364,6 @@ textarea{
   font-size:19px;
 }
 
-/* EMPTY */
-
 .empty{
   background:#fff;
   border:1px solid #ddd;
@@ -390,8 +372,6 @@ textarea{
   border-radius:10px;
   color:#666;
 }
-
-/* GALLERY */
 
 .gallery{
   background:#fff;
@@ -454,8 +434,6 @@ textarea{
   border-radius:20px;
   font-size:12px;
 }
-
-/* FULLSCREEN IMAGE */
 
 .image-modal{
   display:none;
@@ -550,8 +528,6 @@ textarea{
   font-weight:900;
 }
 
-/* CUSTOMER ORDERS */
-
 .orders-box{
   max-width:850px;
   margin:auto;
@@ -628,8 +604,6 @@ textarea{
   color:#666;
 }
 
-/* FOOTER */
-
 footer{
   background:#11140f;
   color:#d9dccb;
@@ -637,8 +611,6 @@ footer{
   text-align:center;
   margin-top:30px;
 }
-
-/* MOBILE */
 
 @media(max-width:800px){
 
@@ -743,14 +715,14 @@ footer{
   }
 }
 
-/* REDUCED MOTION */
-
 @media(prefers-reduced-motion:reduce){
+
   *{
     scroll-behavior:auto!important;
     animation:none!important;
     transition:none!important;
   }
+
 }
 </style>
 </head>
@@ -778,14 +750,21 @@ footer{
 <section class="hero" id="home">
 
   <div>
-    <h1>ARMY INSPIRED.<br>PREMIUM STYLE.</h1>
+
+    <h1>
+      ARMY INSPIRED.<br>
+      PREMIUM STYLE.
+    </h1>
 
     <p>
       T-shirts, trousers, shorts and footwear —
       a clean army-inspired fashion collection for everyday style.
     </p>
 
-    <a class="btn" href="#shop">SHOP NOW</a>
+    <a class="btn" href="#shop">
+      SHOP NOW
+    </a>
+
   </div>
 
 </section>
@@ -794,28 +773,47 @@ footer{
 <section>
 
   <div class="title">
-    <h2>SHOP BY CATEGORY</h2>
-    <p>Choose your style</p>
+
+    <h2>
+      SHOP BY CATEGORY
+    </h2>
+
+    <p>
+      Choose your style
+    </p>
+
   </div>
 
   <div class="categories">
 
-    <button class="cat" data-category="T-Shirts">
+    <button
+      class="cat"
+      data-category="T-Shirts"
+    >
       <b>T-Shirts</b>
       <span>Premium everyday wear</span>
     </button>
 
-    <button class="cat" data-category="Trousers">
+    <button
+      class="cat"
+      data-category="Trousers"
+    >
       <b>Trousers</b>
       <span>Comfort & utility style</span>
     </button>
 
-    <button class="cat" data-category="Shorts">
+    <button
+      class="cat"
+      data-category="Shorts"
+    >
       <b>Shorts</b>
       <span>Easy casual fit</span>
     </button>
 
-    <button class="cat" data-category="Footwear">
+    <button
+      class="cat"
+      data-category="Footwear"
+    >
       <b>Footwear</b>
       <span>Complete the look</span>
     </button>
@@ -829,7 +827,9 @@ footer{
 
   <div class="title">
 
-    <h2 id="shopTitle">FEATURED PRODUCTS</h2>
+    <h2 id="shopTitle">
+      FEATURED PRODUCTS
+    </h2>
 
     <p>
       Select a product, choose your size and buy online
@@ -860,22 +860,66 @@ footer{
 
   <div class="title">
 
-    <h2>MY ORDERS</h2>
+    <h2>
+      MY ORDERS
+    </h2>
 
     <p>
-      View your previous orders and track your shipment
+      Check your order using Mobile Number + Order ID
     </p>
 
   </div>
 
+
   <div class="orders-box">
 
-    <div
-      id="ordersMessage"
-      class="empty"
-    >
-      Loading your orders...
+    <div class="order-card">
+
+      <label>
+        Mobile Number
+      </label>
+
+      <input
+        id="customerMobile"
+        type="tel"
+        inputmode="numeric"
+        maxlength="10"
+        placeholder="10-digit mobile number"
+        autocomplete="tel"
+      >
+
+
+      <label>
+        Order ID
+      </label>
+
+      <input
+        id="customerOrderId"
+        type="text"
+        placeholder="Enter your Order ID"
+        autocomplete="off"
+      >
+
+
+      <button
+        class="btn"
+        type="button"
+        onclick="findCustomerOrder()"
+      >
+        VIEW MY ORDER
+      </button>
+
+
+      <div
+        id="ordersMessage"
+        class="empty"
+        style="margin-top:15px"
+      >
+        Enter your Mobile Number and Order ID.
+      </div>
+
     </div>
+
 
     <div id="ordersList"></div>
 
@@ -888,7 +932,9 @@ footer{
 
   <div class="title">
 
-    <h2>CHECKOUT</h2>
+    <h2>
+      CHECKOUT
+    </h2>
 
     <p>
       Enter delivery details and place your order
@@ -901,7 +947,9 @@ footer{
 
     <div class="cart">
 
-      <h3>Your Cart</h3>
+      <h3>
+        Your Cart
+      </h3>
 
       <div id="cartItems"></div>
 
@@ -929,7 +977,9 @@ footer{
 
     <form id="orderForm">
 
-      <label>Full Name</label>
+      <label>
+        Full Name
+      </label>
 
       <input
         required
@@ -938,19 +988,24 @@ footer{
       >
 
 
-      <label>Mobile Number</label>
+      <label>
+        Mobile Number
+      </label>
 
       <input
         required
         name="mobile"
         inputmode="tel"
         pattern="[0-9]{10}"
+        maxlength="10"
         placeholder="10-digit mobile number"
         autocomplete="tel"
       >
 
 
-      <label>Full Address</label>
+      <label>
+        Full Address
+      </label>
 
       <textarea
         required
@@ -959,38 +1014,50 @@ footer{
       ></textarea>
 
 
-      <label>PIN Code</label>
+      <label>
+        PIN Code
+      </label>
 
       <input
         required
         name="pin"
         inputmode="numeric"
         pattern="[0-9]{6}"
+        maxlength="6"
         autocomplete="postal-code"
       >
 
 
-      <label>Payment Method</label>
+      <label>
+        Payment Method
+      </label>
 
       <div class="pay">
 
         <label>
+
           <input
             type="radio"
             name="payment"
             value="ONLINE"
             checked
           >
+
           Online Payment
+
         </label>
 
+
         <label>
+
           <input
             type="radio"
             name="payment"
             value="COD"
           >
+
           Cash on Delivery
+
         </label>
 
       </div>
@@ -1021,7 +1088,9 @@ footer{
 
 
 <footer>
+
   © 2026 JOYTI • SNIPER PREMIUM WEAR • PREMIUM FASHION STORE
+
 </footer>
 
 
@@ -1109,9 +1178,9 @@ let cart = JSON.parse(
 );
 
 
-/* -------------------------
+/* =========================
    CUSTOMER ACCESS TOKEN
-------------------------- */
+========================= */
 
 const CUSTOMER_TOKEN_KEY =
   "sniperCustomerAccessToken";
@@ -1142,9 +1211,9 @@ function getCustomerToken(){
 }
 
 
-/* -------------------------
+/* =========================
    STORAGE
-------------------------- */
+========================= */
 
 function save(){
 
@@ -1156,9 +1225,9 @@ function save(){
 }
 
 
-/* -------------------------
+/* =========================
    PRODUCT IMAGES
-------------------------- */
+========================= */
 
 function getProductImages(p){
 
@@ -1186,18 +1255,21 @@ function getProductImages(p){
 
   }
 
-  images = images
-    .map(x => String(x).trim())
-    .filter(Boolean);
+  images =
+    images
+      .map(x => String(x).trim())
+      .filter(Boolean);
 
-  return [...new Set(images)].slice(0,5);
+  return [
+    ...new Set(images)
+  ].slice(0,5);
 
 }
 
 
-/* -------------------------
+/* =========================
    SIZES
-------------------------- */
+========================= */
 
 function getSizes(p){
 
@@ -1211,14 +1283,16 @@ function getSizes(p){
 }
 
 
-/* -------------------------
+/* =========================
    LOAD PRODUCTS
-------------------------- */
+========================= */
 
 async function loadProducts(){
 
   const el =
-    document.getElementById("products");
+    document.getElementById(
+      "products"
+    );
 
   try{
 
@@ -1255,16 +1329,20 @@ async function loadProducts(){
     console.error(error);
 
     el.innerHTML =
-      '<div class="empty">Products are temporarily unavailable.</div>';
+      `
+      <div class="empty">
+        Products are temporarily unavailable.
+      </div>
+      `;
 
   }
 
 }
 
 
-/* -------------------------
+/* =========================
    CATEGORY FILTER
-------------------------- */
+========================= */
 
 let selectedCategory = "";
 
@@ -1277,16 +1355,21 @@ function categoryMatch(p){
 
   return String(
     p.category || ""
-  ).trim().toLowerCase()
+  )
+  .trim()
+  .toLowerCase()
   ===
-  selectedCategory.trim().toLowerCase();
+  selectedCategory
+    .trim()
+    .toLowerCase();
 
 }
 
 
 function showCategory(category){
 
-  selectedCategory = category;
+  selectedCategory =
+    category;
 
   document
     .querySelectorAll(".cat")
@@ -1294,7 +1377,8 @@ function showCategory(category){
 
       btn.classList.toggle(
         "active",
-        btn.dataset.category === category
+        btn.dataset.category ===
+        category
       );
 
     });
@@ -1306,15 +1390,19 @@ function showCategory(category){
 
   document.getElementById(
     "showAllBtn"
-  ).style.display = "inline-block";
+  ).style.display =
+    "inline-block";
 
   renderProducts();
 
   const shop =
-    document.getElementById("shop");
+    document.getElementById(
+      "shop"
+    );
 
   window.scrollTo({
-    top:shop.offsetTop - 60,
+    top:
+      shop.offsetTop - 60,
     behavior:"auto"
   });
 
@@ -1328,7 +1416,11 @@ function showAllProducts(){
   document
     .querySelectorAll(".cat")
     .forEach(btn => {
-      btn.classList.remove("active");
+
+      btn.classList.remove(
+        "active"
+      );
+
     });
 
   document.getElementById(
@@ -1338,16 +1430,17 @@ function showAllProducts(){
 
   document.getElementById(
     "showAllBtn"
-  ).style.display = "none";
+  ).style.display =
+    "none";
 
   renderProducts();
 
 }
 
 
-/* -------------------------
+/* =========================
    GALLERY
-------------------------- */
+========================= */
 
 function galleryHTML(p){
 
@@ -1358,7 +1451,9 @@ function galleryHTML(p){
 
     return `
       <div class="gallery-main">
-        <span class="muted">No image</span>
+        <span class="muted">
+          No image
+        </span>
       </div>
     `;
 
@@ -1379,8 +1474,10 @@ function galleryHTML(p){
 
         <img
           class="product-main-image"
-          src="${first}"
-          alt="${escapeHTML(p.name || "Product")}"
+          src="${escapeHTML(first)}"
+          alt="${escapeHTML(
+            p.name || "Product"
+          )}"
           loading="lazy"
           decoding="async"
           fetchpriority="low"
@@ -1388,7 +1485,8 @@ function galleryHTML(p){
         >
 
         <span class="gallery-count">
-          ${images.length} photo${images.length > 1 ? "s" : ""}
+          ${images.length}
+          photo${images.length > 1 ? "s" : ""}
         </span>
 
       </div>
@@ -1399,20 +1497,26 @@ function galleryHTML(p){
         `
         <div class="gallery-thumbs">
 
-          ${images.map((src,i)=>`
-
-            <img
-              src="${src}"
-              alt=""
-              loading="lazy"
-              decoding="async"
-              class="${i===0 ? "active" : ""}"
-              data-gallery-thumb="${Number(p.id)}"
-              data-index="${i}"
-              draggable="false"
-            >
-
-          `).join("")}
+          ${
+            images.map(
+              (src,i) => `
+                <img
+                  src="${escapeHTML(src)}"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  class="${
+                    i===0
+                    ? "active"
+                    : ""
+                  }"
+                  data-gallery-thumb="${Number(p.id)}"
+                  data-index="${i}"
+                  draggable="false"
+                >
+              `
+            ).join("")
+          }
 
         </div>
         `
@@ -1427,40 +1531,62 @@ function galleryHTML(p){
 }
 
 
-/* -------------------------
+/* =========================
    HTML ESCAPE
-------------------------- */
+========================= */
 
 function escapeHTML(value){
 
-  return String(value || "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  return String(
+    value || ""
+  )
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+  .replace(
+    /</g,
+    "&lt;"
+  )
+  .replace(
+    />/g,
+    "&gt;"
+  )
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+  .replace(
+    /'/g,
+    "&#039;"
+  );
 
 }
 
 
-/* -------------------------
+/* =========================
    RENDER PRODUCTS
-------------------------- */
+========================= */
 
 function renderProducts(){
 
   const el =
-    document.getElementById("products");
+    document.getElementById(
+      "products"
+    );
 
   let list =
-    products.filter(categoryMatch);
+    products.filter(
+      categoryMatch
+    );
 
 
   if(!selectedCategory){
 
     list =
       products.filter(
-        p => p.featured === true
+        p =>
+          p.featured === true
       );
 
   }
@@ -1489,15 +1615,11 @@ function renderProducts(){
       const sizes =
         getSizes(p);
 
-      const images =
-        getProductImages(p);
-
 
       const sizeHTML =
         sizes.length
         ?
         `
-
         <div class="details">
 
           <label
@@ -1516,16 +1638,22 @@ function renderProducts(){
             </option>
 
             ${
-              sizes.map(
-                s =>
-                `<option value="${escapeHTML(s)}">${escapeHTML(s)}</option>`
-              ).join("")
+              sizes
+                .map(
+                  s => `
+                    <option
+                      value="${escapeHTML(s)}"
+                    >
+                      ${escapeHTML(s)}
+                    </option>
+                  `
+                )
+                .join("")
             }
 
           </select>
 
         </div>
-
         `
         :
         "";
@@ -1559,7 +1687,9 @@ function renderProducts(){
               `
               <div class="details">
                 <b>Fabric:</b>
-                ${escapeHTML(p.fabric)}
+                ${escapeHTML(
+                  p.fabric
+                )}
               </div>
               `
               :
@@ -1571,7 +1701,9 @@ function renderProducts(){
             <div class="price">
               ₹${Number(
                 p.price || 0
-              ).toLocaleString("en-IN")}
+              ).toLocaleString(
+                "en-IN"
+              )}
             </div>
 
             <button
@@ -1596,14 +1728,16 @@ function renderProducts(){
 }
 
 
-/* -------------------------
+/* =========================
    GALLERY EVENTS
-------------------------- */
+========================= */
 
 function attachGalleryEvents(){
 
   document
-    .querySelectorAll(".gallery-main")
+    .querySelectorAll(
+      ".gallery-main"
+    )
     .forEach(main => {
 
       main.addEventListener(
@@ -1617,7 +1751,8 @@ function attachGalleryEvents(){
 
           const index =
             Number(
-              this.dataset.imageIndex || 0
+              this.dataset.imageIndex ||
+              0
             );
 
           openProductGallery(
@@ -1632,7 +1767,9 @@ function attachGalleryEvents(){
 
 
   document
-    .querySelectorAll("[data-gallery-thumb]")
+    .querySelectorAll(
+      "[data-gallery-thumb]"
+    )
     .forEach(thumb => {
 
       thumb.addEventListener(
@@ -1662,23 +1799,33 @@ function attachGalleryEvents(){
 }
 
 
-/* -------------------------
+/* =========================
    CHANGE CARD IMAGE
-------------------------- */
+========================= */
 
-function changeCardImage(id,index){
+function changeCardImage(
+  id,
+  index
+){
 
   const p =
     products.find(
-      x => Number(x.id) === Number(id)
+      x =>
+        Number(x.id) ===
+        Number(id)
     );
 
-  if(!p)return;
+  if(!p){
+    return;
+  }
+
 
   const images =
     getProductImages(p);
 
-  if(!images[index])return;
+  if(!images[index]){
+    return;
+  }
 
 
   const card =
@@ -1686,7 +1833,9 @@ function changeCardImage(id,index){
       `[data-product-id="${Number(id)}"]`
     );
 
-  if(!card)return;
+  if(!card){
+    return;
+  }
 
 
   const main =
@@ -1698,9 +1847,6 @@ function changeCardImage(id,index){
 
     main.src =
       images[index];
-
-    main.dataset.index =
-      index;
 
   }
 
@@ -1722,30 +1868,36 @@ function changeCardImage(id,index){
     .querySelectorAll(
       "[data-gallery-thumb]"
     )
-    .forEach((thumb,i)=>{
+    .forEach(
+      (thumb,i) => {
 
-      thumb.classList.toggle(
-        "active",
-        i === index
-      );
+        thumb.classList.toggle(
+          "active",
+          i === index
+        );
 
-    });
+      }
+    );
 
 }
 
 
-/* -------------------------
+/* =========================
    BUY NOW
-------------------------- */
+========================= */
 
 function buyNow(id){
 
   const p =
     products.find(
-      x => Number(x.id) === Number(id)
+      x =>
+        Number(x.id) ===
+        Number(id)
     );
 
-  if(!p)return;
+  if(!p){
+    return;
+  }
 
 
   const sizes =
@@ -1758,7 +1910,8 @@ function buyNow(id){
 
     const select =
       document.getElementById(
-        "size-" + Number(id)
+        "size-" +
+        Number(id)
       );
 
     size =
@@ -1782,9 +1935,14 @@ function buyNow(id){
 
   cart = [
     {
-      id:Number(id),
-      qty:1,
-      size:size
+      id:
+        Number(id),
+
+      qty:
+        1,
+
+      size:
+        size
     }
   ];
 
@@ -1793,25 +1951,32 @@ function buyNow(id){
 
   renderCart();
 
-
   location.hash =
     "checkout";
 
 }
 
 
-/* -------------------------
+/* =========================
    ADD TO CART
-------------------------- */
+========================= */
 
-function add(id,size=""){
+function add(
+  id,
+  size=""
+){
 
   const existing =
     cart.find(
       i =>
-        i.id === Number(id) &&
-        String(i.size || "") ===
-        String(size || "")
+        i.id ===
+          Number(id) &&
+        String(
+          i.size || ""
+        ) ===
+          String(
+            size || ""
+          )
     );
 
 
@@ -1822,9 +1987,16 @@ function add(id,size=""){
   }else{
 
     cart.push({
-      id:Number(id),
-      qty:1,
-      size:size
+
+      id:
+        Number(id),
+
+      qty:
+        1,
+
+      size:
+        size
+
     });
 
   }
@@ -1840,21 +2012,32 @@ function add(id,size=""){
 }
 
 
-/* -------------------------
+/* =========================
    CHANGE QUANTITY
-------------------------- */
+========================= */
 
-function change(id,d,size=""){
+function change(
+  id,
+  d,
+  size=""
+){
 
   const item =
     cart.find(
       i =>
-        i.id === Number(id) &&
-        String(i.size || "") ===
-        String(size || "")
+        i.id ===
+          Number(id) &&
+        String(
+          i.size || ""
+        ) ===
+          String(
+            size || ""
+          )
     );
 
-  if(!item)return;
+  if(!item){
+    return;
+  }
 
 
   item.qty += d;
@@ -1866,9 +2049,14 @@ function change(id,d,size=""){
       cart.filter(
         i =>
           !(
-            i.id === Number(id) &&
-            String(i.size || "") ===
-            String(size || "")
+            i.id ===
+              Number(id) &&
+            String(
+              i.size || ""
+            ) ===
+              String(
+                size || ""
+              )
           )
       );
 
@@ -1882,9 +2070,9 @@ function change(id,d,size=""){
 }
 
 
-/* -------------------------
+/* =========================
    CART
-------------------------- */
+========================= */
 
 function renderCart(){
 
@@ -1918,78 +2106,109 @@ function renderCart(){
 
 
   el.innerHTML =
-    cart.map(item => {
+    cart
+      .map(item => {
 
-      const p =
-        products.find(
-          x =>
-            Number(x.id) ===
-            Number(item.id)
-        );
-
-
-      if(!p)return "";
+        const p =
+          products.find(
+            x =>
+              Number(x.id) ===
+              Number(item.id)
+          );
 
 
-      const price =
-        Number(p.price || 0);
-
-      const subtotal =
-        price * Number(item.qty || 0);
-
-      productTotal +=
-        subtotal;
+        if(!p){
+          return "";
+        }
 
 
-      return `
+        const price =
+          Number(
+            p.price || 0
+          );
 
-        <div class="cart-row">
-
-          <span>
-
-            <b>
-              ${escapeHTML(p.name)}
-            </b>
-
-            <br>
-
-            ₹${price.toLocaleString("en-IN")}
-            × ${item.qty}
-
-            ${
-              item.size
-              ? ` • Size ${escapeHTML(item.size)}`
-              : ""
-            }
-
-          </span>
+        const subtotal =
+          price *
+          Number(
+            item.qty || 0
+          );
 
 
-          <span class="qty">
+        productTotal +=
+          subtotal;
 
-            <button
-              type="button"
-              onclick="change(${Number(item.id)},-1,'${escapeHTML(item.size || "")}')"
-            >
-              −
-            </button>
 
-            ${item.qty}
+        return `
 
-            <button
-              type="button"
-              onclick="change(${Number(item.id)},1,'${escapeHTML(item.size || "")}')"
-            >
-              +
-            </button>
+          <div class="cart-row">
 
-          </span>
+            <span>
 
-        </div>
+              <b>
+                ${escapeHTML(
+                  p.name
+                )}
+              </b>
 
-      `;
+              <br>
 
-    }).join("");
+              ₹${price.toLocaleString(
+                "en-IN"
+              )}
+
+              × ${item.qty}
+
+              ${
+                item.size
+                ?
+                ` • Size ${escapeHTML(
+                  item.size
+                )}`
+                :
+                ""
+              }
+
+            </span>
+
+
+            <span class="qty">
+
+              <button
+                type="button"
+                onclick="change(
+                  ${Number(item.id)},
+                  -1,
+                  '${escapeHTML(
+                    item.size || ""
+                  )}'
+                )"
+              >
+                −
+              </button>
+
+              ${item.qty}
+
+              <button
+                type="button"
+                onclick="change(
+                  ${Number(item.id)},
+                  1,
+                  '${escapeHTML(
+                    item.size || ""
+                  )}'
+                )"
+              >
+                +
+              </button>
+
+            </span>
+
+          </div>
+
+        `;
+
+      })
+      .join("");
 
 
   const grandTotal =
@@ -2001,21 +2220,25 @@ function renderCart(){
     "productTotal"
   ).textContent =
     "₹" +
-    productTotal.toLocaleString("en-IN");
+    productTotal.toLocaleString(
+      "en-IN"
+    );
 
 
   document.getElementById(
     "total"
   ).textContent =
     "₹" +
-    grandTotal.toLocaleString("en-IN");
+    grandTotal.toLocaleString(
+      "en-IN"
+    );
 
 }
 
 
-/* -------------------------
+/* =========================
    CHECKOUT
-------------------------- */
+========================= */
 
 function showCheckout(){
 
@@ -2027,14 +2250,16 @@ function showCheckout(){
 }
 
 
-/* -------------------------
+/* =========================
    ORDERS SECTION
-------------------------- */
+========================= */
 
 function showOrders(){
 
   const section =
-    document.getElementById("orders");
+    document.getElementById(
+      "orders"
+    );
 
   if(!section){
     return;
@@ -2045,16 +2270,14 @@ function showOrders(){
     block:"start"
   });
 
-  loadCustomerOrders();
-
 }
 
 
-/* -------------------------
-   LOAD CUSTOMER ORDERS
-------------------------- */
+/* =========================
+   FIND CUSTOMER ORDER
+========================= */
 
-async function loadCustomerOrders(){
+async function findCustomerOrder(){
 
   const message =
     document.getElementById(
@@ -2066,25 +2289,59 @@ async function loadCustomerOrders(){
       "ordersList"
     );
 
-  if(!message || !list){
-    return;
-  }
+
+  const mobile =
+    String(
+      document.getElementById(
+        "customerMobile"
+      ).value || ""
+    )
+    .replace(
+      /\D/g,
+      ""
+    )
+    .slice(-10);
 
 
-  const token =
-    getCustomerToken();
+  const orderId =
+    String(
+      document.getElementById(
+        "customerOrderId"
+      ).value || ""
+    ).trim();
 
 
-  if(!token){
+  if(mobile.length !== 10){
 
     message.style.display =
       "block";
 
     message.innerHTML =
       `
-      <b>No order history found on this device.</b>
-      <br><br>
-      After you place an order, your order history will appear here automatically.
+      <b>
+        Please enter a valid
+        10-digit mobile number.
+      </b>
+      `;
+
+    list.innerHTML =
+      "";
+
+    return;
+
+  }
+
+
+  if(!orderId){
+
+    message.style.display =
+      "block";
+
+    message.innerHTML =
+      `
+      <b>
+        Please enter your Order ID.
+      </b>
       `;
 
     list.innerHTML =
@@ -2099,7 +2356,7 @@ async function loadCustomerOrders(){
     "block";
 
   message.textContent =
-    "Loading your orders...";
+    "Loading your order...";
 
   list.innerHTML =
     "";
@@ -2107,10 +2364,20 @@ async function loadCustomerOrders(){
 
   try{
 
+    const url =
+      "/api/customer-orders?mobile=" +
+      encodeURIComponent(
+        mobile
+      ) +
+      "&orderId=" +
+      encodeURIComponent(
+        orderId
+      );
+
+
     const response =
       await fetch(
-        "/api/customer-orders?token=" +
-        encodeURIComponent(token),
+        url,
         {
           method:"GET",
           cache:"no-store"
@@ -2126,25 +2393,35 @@ async function loadCustomerOrders(){
 
       throw new Error(
         data.error ||
-        "Unable to load orders"
+        "Unable to find order"
       );
 
     }
 
 
     const orders =
-      Array.isArray(data.orders)
-      ? data.orders
-      : [];
+      Array.isArray(
+        data.orders
+      )
+      ?
+      data.orders
+      :
+      [];
 
 
     if(!orders.length){
 
       message.innerHTML =
         `
-        <b>No orders found.</b>
+        <b>
+          Order not found.
+        </b>
+
         <br><br>
-        Your confirmed orders will appear here.
+
+        Please check your
+        Mobile Number and
+        Order ID.
         `;
 
       return;
@@ -2158,21 +2435,31 @@ async function loadCustomerOrders(){
 
     list.innerHTML =
       orders
-        .map(order => orderHTML(order))
+        .map(
+          order =>
+            orderHTML(
+              order
+            )
+        )
         .join("");
 
 
   }catch(error){
 
     console.error(
-      "Customer orders error:",
+      "Find customer order error:",
       error
     );
 
+
     message.innerHTML =
       `
-      <b>Unable to load order history.</b>
+      <b>
+        Unable to find order.
+      </b>
+
       <br><br>
+
       ${escapeHTML(
         error.message ||
         "Please try again."
@@ -2184,67 +2471,92 @@ async function loadCustomerOrders(){
 }
 
 
-/* -------------------------
+/* =========================
    ORDER HTML
-------------------------- */
+========================= */
 
-function orderHTML(order){
+function orderHTML(
+  order
+){
 
   const created =
     order.createdAt
-    ? new Date(
+    ?
+      new Date(
         order.createdAt
       ).toLocaleString(
         "en-IN",
         {
-          dateStyle:"medium",
-          timeStyle:"short"
+          dateStyle:
+            "medium",
+
+          timeStyle:
+            "short"
         }
       )
-    : "";
+    :
+      "";
 
 
   const items =
-    Array.isArray(order.items)
-    ? order.items
-    : [];
+    Array.isArray(
+      order.items
+    )
+    ?
+      order.items
+    :
+      [];
 
 
   const itemHTML =
     items.length
     ?
-    items.map(item => {
+      items
+        .map(
+          item => {
 
-      return `
-        <div class="order-item">
+            return `
+              <div class="order-item">
 
-          <b>
-            ${escapeHTML(
-              item.name || "Product"
-            )}
-          </b>
+                <b>
+                  ${escapeHTML(
+                    item.name ||
+                    "Product"
+                  )}
+                </b>
 
-          <br>
+                <br>
 
-          Qty:
-          ${Number(
-            item.qty || 0
-          )}
+                Qty:
+                ${Number(
+                  item.qty || 0
+                )}
 
-          ${
-            item.size
-            ?
-            ` • Size ${escapeHTML(item.size)}`
-            :
-            ""
+                ${
+                  item.size
+                  ?
+                  `
+                  • Size
+                  ${escapeHTML(
+                    item.size
+                  )}
+                  `
+                  :
+                  ""
+                }
+
+              </div>
+            `;
+
           }
-
-        </div>
-      `;
-
-    }).join("")
+        )
+        .join("")
     :
-    "<div>No item details available.</div>";
+      `
+      <div>
+        No item details available.
+      </div>
+      `;
 
 
   const hasShipment =
@@ -2254,12 +2566,18 @@ function orderHTML(order){
     );
 
 
+  const orderId =
+    String(
+      order.id || ""
+    );
+
+
   return `
 
     <div
       class="order-card"
       id="order-${escapeHTML(
-        String(order.id)
+        orderId
       )}"
     >
 
@@ -2268,23 +2586,32 @@ function orderHTML(order){
         <div>
 
           <div class="order-id">
+
             Order ID:
             ${escapeHTML(
-              order.id
+              orderId
             )}
+
           </div>
 
           <div class="order-meta">
-            ${escapeHTML(created)}
+
+            ${escapeHTML(
+              created
+            )}
+
           </div>
 
         </div>
 
+
         <div class="order-status">
+
           ${escapeHTML(
             order.status ||
             "Order Confirmed"
           )}
+
         </div>
 
       </div>
@@ -2307,28 +2634,36 @@ function orderHTML(order){
           )}
         </b>
 
+
         ${
           order.awb
           ?
           `
           <br>
+
           AWB:
           <b>
-            ${escapeHTML(order.awb)}
+            ${escapeHTML(
+              order.awb
+            )}
           </b>
           `
           :
           ""
         }
 
+
         ${
           order.courier
           ?
           `
           <br>
+
           Courier:
           <b>
-            ${escapeHTML(order.courier)}
+            ${escapeHTML(
+              order.courier
+            )}
           </b>
           `
           :
@@ -2345,7 +2680,9 @@ function orderHTML(order){
           order.total ||
           order.amount ||
           0
-        ).toLocaleString("en-IN")}
+        ).toLocaleString(
+          "en-IN"
+        )}
 
       </div>
 
@@ -2357,13 +2694,20 @@ function orderHTML(order){
         <button
           class="btn"
           type="button"
-          onclick="trackCustomerOrder('${escapeHTML(String(order.id))}')"
+          onclick="trackCustomerOrder(
+            '${escapeHTML(
+              orderId
+            )}'
+          )"
         >
           🚚 TRACK ORDER
         </button>
 
+
         <div
-          id="tracking-${escapeHTML(String(order.id))}"
+          id="tracking-${escapeHTML(
+            orderId
+          )}"
           class="track-result"
           style="display:none"
         ></div>
@@ -2372,7 +2716,8 @@ function orderHTML(order){
         `
         <div class="track-result">
 
-          📦 Tracking will appear here after your order is shipped.
+          📦 Tracking will appear here
+          after your order is shipped.
 
         </div>
         `
@@ -2385,9 +2730,9 @@ function orderHTML(order){
 }
 
 
-/* -------------------------
+/* =========================
    TRACK CUSTOMER ORDER
-------------------------- */
+========================= */
 
 async function trackCustomerOrder(
   orderId
@@ -2395,7 +2740,8 @@ async function trackCustomerOrder(
 
   const box =
     document.getElementById(
-      "tracking-" + orderId
+      "tracking-" +
+      orderId
     );
 
 
@@ -2404,17 +2750,26 @@ async function trackCustomerOrder(
   }
 
 
-  const token =
-    getCustomerToken();
+  const mobile =
+    String(
+      document.getElementById(
+        "customerMobile"
+      ).value || ""
+    )
+    .replace(
+      /\D/g,
+      ""
+    )
+    .slice(-10);
 
 
-  if(!token){
+  if(mobile.length !== 10){
 
     box.style.display =
       "block";
 
     box.innerHTML =
-      "Customer access token not found.";
+      "Please enter the same mobile number used for the order.";
 
     return;
 
@@ -2425,17 +2780,29 @@ async function trackCustomerOrder(
     "block";
 
   box.innerHTML =
-    `<span class="track-loading">Loading live tracking...</span>`;
+    `
+    <span class="track-loading">
+      Loading live tracking...
+    </span>
+    `;
 
 
   try{
 
+    const url =
+      "/api/customer-tracking?mobile=" +
+      encodeURIComponent(
+        mobile
+      ) +
+      "&orderId=" +
+      encodeURIComponent(
+        orderId
+      );
+
+
     const response =
       await fetch(
-        "/api/customer-tracking?token=" +
-        encodeURIComponent(token) +
-        "&orderId=" +
-        encodeURIComponent(orderId),
+        url,
         {
           method:"GET",
           cache:"no-store"
@@ -2458,7 +2825,8 @@ async function trackCustomerOrder(
 
 
     if(
-      data.trackingAvailable === false
+      data.trackingAvailable ===
+      false
     ){
 
       box.innerHTML =
@@ -2476,26 +2844,31 @@ async function trackCustomerOrder(
 
 
     const tracking =
-      data.tracking || {};
+      data.tracking ||
+      {};
+
 
     const trackingData =
       tracking.tracking_data ||
       {};
+
 
     const tracks =
       Array.isArray(
         trackingData.shipment_track
       )
       ?
-      trackingData.shipment_track
+        trackingData.shipment_track
       :
-      [];
+        [];
 
 
     const latest =
       tracks.length
-      ? tracks[0]
-      : null;
+      ?
+        tracks[0]
+      :
+        null;
 
 
     const currentStatus =
@@ -2521,6 +2894,7 @@ async function trackCustomerOrder(
       latest?.origin ||
       "";
 
+
     const destination =
       latest?.destination ||
       "";
@@ -2529,14 +2903,20 @@ async function trackCustomerOrder(
     box.innerHTML =
       `
 
-      <b>🚚 Current Status:</b>
+      <b>
+        🚚 Current Status:
+      </b>
+
       ${escapeHTML(
         currentStatus
       )}
 
       <br>
 
-      <b>Courier:</b>
+      <b>
+        Courier:
+      </b>
+
       ${escapeHTML(
         courier
       )}
@@ -2546,44 +2926,70 @@ async function trackCustomerOrder(
         ?
         `
         <br>
-        <b>AWB:</b>
-        ${escapeHTML(awb)}
+
+        <b>
+          AWB:
+        </b>
+
+        ${escapeHTML(
+          awb
+        )}
         `
         :
         ""
       }
+
 
       ${
         origin
         ?
         `
         <br>
-        <b>From:</b>
-        ${escapeHTML(origin)}
+
+        <b>
+          From:
+        </b>
+
+        ${escapeHTML(
+          origin
+        )}
         `
         :
         ""
       }
+
 
       ${
         destination
         ?
         `
         <br>
-        <b>To:</b>
-        ${escapeHTML(destination)}
+
+        <b>
+          To:
+        </b>
+
+        ${escapeHTML(
+          destination
+        )}
         `
         :
         ""
       }
+
 
       ${
         tracks.length
         ?
         `
         <br><br>
-        <b>Latest shipment update:</b>
+
+        <b>
+          Latest shipment update:
+        </b>
+
         <br>
+
         ${escapeHTML(
           latest.current_status ||
           currentStatus
@@ -2603,9 +3009,11 @@ async function trackCustomerOrder(
       error
     );
 
+
     box.innerHTML =
       `
       ❌
+
       ${escapeHTML(
         error.message ||
         "Unable to load tracking."
@@ -2617,9 +3025,9 @@ async function trackCustomerOrder(
 }
 
 
-/* -------------------------
+/* =========================
    HASH
-------------------------- */
+========================= */
 
 window.addEventListener(
   "hashchange",
@@ -2668,9 +3076,9 @@ if(
 }
 
 
-/* -------------------------
+/* =========================
    CATEGORY BUTTONS
-------------------------- */
+========================= */
 
 document
   .querySelectorAll(".cat")
@@ -2700,27 +3108,36 @@ document
   );
 
 
-/* -------------------------
+/* =========================
    IMAGE MODAL
-------------------------- */
+========================= */
 
 const modal =
   document.getElementById(
     "imageModal"
   );
 
+
 const modalImage =
   document.getElementById(
     "modalImage"
   );
 
-let modalProductId = null;
 
-let modalIndex = 0;
+let modalProductId =
+  null;
 
-let modalImages = [];
 
-let zoom = 1;
+let modalIndex =
+  0;
+
+
+let modalImages =
+  [];
+
+
+let zoom =
+  1;
 
 
 function openProductGallery(
@@ -2730,17 +3147,24 @@ function openProductGallery(
 
   const p =
     products.find(
-      x => Number(x.id) === Number(id)
+      x =>
+        Number(x.id) ===
+        Number(id)
     );
 
-  if(!p)return;
+
+  if(!p){
+    return;
+  }
 
 
   modalProductId =
     Number(id);
 
+
   modalImages =
     getProductImages(p);
+
 
   modalIndex =
     Math.max(
@@ -2752,11 +3176,14 @@ function openProductGallery(
     );
 
 
-  zoom = 1;
+  zoom =
+    1;
+
 
   modal.classList.add(
     "show"
   );
+
 
   document.body.style.overflow =
     "hidden";
@@ -2769,14 +3196,21 @@ function openProductGallery(
 
 function updateModalImage(){
 
-  if(!modalImages.length)return;
+  if(!modalImages.length){
+    return;
+  }
 
 
   modalImage.src =
-    modalImages[modalIndex];
+    modalImages[
+      modalIndex
+    ];
+
 
   modalImage.style.transform =
-    "scale(" + zoom + ")";
+    "scale(" +
+    zoom +
+    ")";
 
 }
 
@@ -2787,8 +3221,10 @@ function closeModal(){
     "show"
   );
 
+
   document.body.style.overflow =
     "";
+
 
   setTimeout(
     () => {
@@ -2814,7 +3250,10 @@ function closeModal(){
 
 function nextImage(){
 
-  if(!modalImages.length)return;
+  if(!modalImages.length){
+    return;
+  }
+
 
   modalIndex =
     (
@@ -2822,7 +3261,10 @@ function nextImage(){
     ) %
     modalImages.length;
 
-  zoom = 1;
+
+  zoom =
+    1;
+
 
   updateModalImage();
 
@@ -2831,7 +3273,10 @@ function nextImage(){
 
 function previousImage(){
 
-  if(!modalImages.length)return;
+  if(!modalImages.length){
+    return;
+  }
+
 
   modalIndex =
     (
@@ -2841,7 +3286,10 @@ function previousImage(){
     ) %
     modalImages.length;
 
-  zoom = 1;
+
+  zoom =
+    1;
+
 
   updateModalImage();
 
@@ -2926,7 +3374,8 @@ document
     "click",
     () => {
 
-      zoom = 1;
+      zoom =
+        1;
 
       updateModalImage();
 
@@ -2939,7 +3388,8 @@ modal.addEventListener(
   event => {
 
     if(
-      event.target === modal
+      event.target ===
+      modal
     ){
 
       closeModal();
@@ -2950,7 +3400,9 @@ modal.addEventListener(
 );
 
 
-/* Keyboard */
+/* =========================
+   KEYBOARD
+========================= */
 
 document.addEventListener(
   "keydown",
@@ -2960,22 +3412,35 @@ document.addEventListener(
       !modal.classList.contains(
         "show"
       )
-    )return;
+    ){
+      return;
+    }
 
 
-    if(event.key === "Escape"){
+    if(
+      event.key ===
+      "Escape"
+    ){
 
       closeModal();
 
     }
 
-    if(event.key === "ArrowRight"){
+
+    if(
+      event.key ===
+      "ArrowRight"
+    ){
 
       nextImage();
 
     }
 
-    if(event.key === "ArrowLeft"){
+
+    if(
+      event.key ===
+      "ArrowLeft"
+    ){
 
       previousImage();
 
@@ -2985,13 +3450,15 @@ document.addEventListener(
 );
 
 
-/* -------------------------
+/* =========================
    MOBILE SWIPE
-------------------------- */
+========================= */
 
-let touchStartX = 0;
+let touchStartX =
+  0;
 
-let touchStartY = 0;
+let touchStartY =
+  0;
 
 
 modal.addEventListener(
@@ -3021,9 +3488,11 @@ modal.addEventListener(
     const touch =
       event.changedTouches[0];
 
+
     const diffX =
       touch.clientX -
       touchStartX;
+
 
     const diffY =
       touch.clientY -
@@ -3032,9 +3501,9 @@ modal.addEventListener(
 
     if(
       Math.abs(diffX) >
-      60 &&
+        60 &&
       Math.abs(diffX) >
-      Math.abs(diffY)
+        Math.abs(diffY)
     ){
 
       if(diffX < 0){
@@ -3056,9 +3525,9 @@ modal.addEventListener(
 );
 
 
-/* -------------------------
+/* =========================
    PAYMENT / ORDER
-------------------------- */
+========================= */
 
 document
   .getElementById(
@@ -3089,38 +3558,44 @@ document
 
 
       const itemData =
-        cart.map(item => {
+        cart.map(
+          item => {
 
-          const p =
-            products.find(
-              x =>
-                Number(x.id) ===
-                Number(item.id)
-            );
+            const p =
+              products.find(
+                x =>
+                  Number(x.id) ===
+                  Number(item.id)
+              );
 
 
-          return {
+            return {
 
-            id:
-              p ? p.id : item.id,
+              id:
+                p
+                ? p.id
+                : item.id,
 
-            name:
-              p ? p.name : "",
+              name:
+                p
+                ? p.name
+                : "",
 
-            price:
-              p
-              ? Number(p.price)
-              : 0,
+              price:
+                p
+                ? Number(p.price)
+                : 0,
 
-            qty:
-              Number(item.qty),
+              qty:
+                Number(item.qty),
 
-            size:
-              item.size || ""
+              size:
+                item.size || ""
 
-          };
+            };
 
-        });
+          }
+        );
 
 
       if(
@@ -3140,31 +3615,14 @@ document
       }
 
 
-      const productTotal =
-        itemData.reduce(
-          (
-            sum,
-            item
-          ) =>
-            sum +
-            item.price *
-            item.qty,
-          0
-        );
-
-
-      const grandTotal =
-        productTotal +
-        SHIPPING_CHARGE;
-
-
       const btn =
         event.target.querySelector(
           'button[type="submit"]'
         );
 
 
-      btn.disabled = true;
+      btn.disabled =
+        true;
 
       btn.textContent =
         "Please wait…";
@@ -3176,9 +3634,9 @@ document
         );
 
 
-      /* -------------------------
+      /* =========================
          COD
-      ------------------------- */
+      ========================= */
 
       if(
         paymentMethod ===
@@ -3192,10 +3650,12 @@ document
               "/api/create-order",
               {
                 method:"POST",
+
                 headers:{
                   "Content-Type":
                     "application/json"
                 },
+
                 body:
                   JSON.stringify({
 
@@ -3206,10 +3666,14 @@ document
                     customer:{
 
                       name:
-                        data.get("name"),
+                        data.get(
+                          "name"
+                        ),
 
                       mobile:
-                        data.get("mobile")
+                        data.get(
+                          "mobile"
+                        )
 
                     },
 
@@ -3217,10 +3681,14 @@ document
                       itemData,
 
                     address:
-                      data.get("address"),
+                      data.get(
+                        "address"
+                      ),
 
                     pin:
-                      data.get("pin"),
+                      data.get(
+                        "pin"
+                      ),
 
                     paymentMethod:
                       "COD"
@@ -3245,12 +3713,6 @@ document
           }
 
 
-          /*
-            Save customer access token.
-            This makes the order visible
-            in My Orders on this device.
-          */
-
           if(
             order.customerAccessToken
           ){
@@ -3268,7 +3730,7 @@ document
             order.id +
             "\n\n" +
             "Payment: Cash on Delivery\n\n" +
-            "You can check your order in MY ORDERS."
+            "Use this Order ID with your mobile number in MY ORDERS."
           );
 
 
@@ -3280,8 +3742,38 @@ document
 
           event.target.reset();
 
+
+          /*
+            Automatically fill MY ORDERS
+            with the newly created order.
+          */
+
+          document.getElementById(
+            "customerMobile"
+          ).value =
+            String(
+              data.get(
+                "mobile"
+              ) || ""
+            );
+
+
+          document.getElementById(
+            "customerOrderId"
+          ).value =
+            String(
+              order.id || ""
+            );
+
+
           location.hash =
             "orders";
+
+
+          setTimeout(
+            findCustomerOrder,
+            150
+          );
 
 
         }catch(error){
@@ -3293,7 +3785,8 @@ document
 
         }finally{
 
-          btn.disabled = false;
+          btn.disabled =
+            false;
 
           btn.textContent =
             "BUY NOW & PAY";
@@ -3306,9 +3799,9 @@ document
       }
 
 
-      /* -------------------------
+      /* =========================
          ONLINE PAYMENT
-      ------------------------- */
+      ========================= */
 
       try{
 
@@ -3317,10 +3810,12 @@ document
             "/api/create-order",
             {
               method:"POST",
+
               headers:{
                 "Content-Type":
                   "application/json"
               },
+
               body:
                 JSON.stringify({
 
@@ -3331,10 +3826,14 @@ document
                   customer:{
 
                     name:
-                      data.get("name"),
+                      data.get(
+                        "name"
+                      ),
 
                     mobile:
-                      data.get("mobile")
+                      data.get(
+                        "mobile"
+                      )
 
                   },
 
@@ -3342,10 +3841,14 @@ document
                     itemData,
 
                   address:
-                    data.get("address"),
+                    data.get(
+                      "address"
+                    ),
 
                   pin:
-                    data.get("pin"),
+                    data.get(
+                      "pin"
+                    ),
 
                   paymentMethod:
                     "ONLINE"
@@ -3369,11 +3872,6 @@ document
 
         }
 
-
-        /*
-          Save token immediately after
-          Razorpay order is created.
-        */
 
         if(
           order.customerAccessToken
@@ -3403,11 +3901,13 @@ document
 
             description:
               itemData
-              .map(
-                item =>
-                  `${item.name} x ${item.qty}${item.size ? " - Size " + item.size : ""}`
-              )
-              .join(", "),
+                .map(
+                  item =>
+                    `${item.name} x ${item.qty}${item.size ? " - Size " + item.size : ""}`
+                )
+                .join(
+                  ", "
+                ),
 
             order_id:
               order.id,
@@ -3415,20 +3915,28 @@ document
             prefill:{
 
               name:
-                data.get("name"),
+                data.get(
+                  "name"
+                ),
 
               contact:
-                data.get("mobile")
+                data.get(
+                  "mobile"
+                )
 
             },
 
             notes:{
 
               address:
-                data.get("address"),
+                data.get(
+                  "address"
+                ),
 
               pin:
-                data.get("pin"),
+                data.get(
+                  "pin"
+                ),
 
               shipping_charge:
                 String(
@@ -3453,10 +3961,12 @@ document
                       "/api/payment-status",
                       {
                         method:"POST",
+
                         headers:{
                           "Content-Type":
                             "application/json"
                         },
+
                         body:
                           JSON.stringify({
 
@@ -3497,7 +4007,7 @@ document
                     "Order ID: " +
                     order.id +
                     "\n\n" +
-                    "You can check your order in MY ORDERS."
+                    "Use this Order ID with your mobile number in MY ORDERS."
                   );
 
 
@@ -3509,8 +4019,33 @@ document
 
                   event.target.reset();
 
+
+                  document.getElementById(
+                    "customerMobile"
+                  ).value =
+                    String(
+                      data.get(
+                        "mobile"
+                      ) || ""
+                    );
+
+
+                  document.getElementById(
+                    "customerOrderId"
+                  ).value =
+                    String(
+                      order.id || ""
+                    );
+
+
                   location.hash =
                     "orders";
+
+
+                  setTimeout(
+                    findCustomerOrder,
+                    150
+                  );
 
 
                 }catch(error){
@@ -3522,7 +4057,8 @@ document
 
                 }finally{
 
-                  btn.disabled = false;
+                  btn.disabled =
+                    false;
 
                   btn.textContent =
                     "BUY NOW & PAY";
@@ -3596,22 +4132,11 @@ document
   );
 
 
-/* -------------------------
+/* =========================
    START
-------------------------- */
+========================= */
 
 loadProducts();
-
-/*
-  Load customer orders quietly
-  if this device already has a token.
-*/
-
-if(getCustomerToken()){
-
-  loadCustomerOrders();
-
-}
 
 </script>
 
