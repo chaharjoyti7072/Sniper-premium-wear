@@ -95,6 +95,13 @@ nav a{
   border-radius:6px;
 }
 
+.cart-nav{
+  background:#fff;
+  color:#111!important;
+  padding:8px 10px;
+  border-radius:6px;
+}
+
 .hero{
   min-height:430px;
   padding:70px 7%;
@@ -140,6 +147,11 @@ nav a{
 .btn:disabled{
   opacity:.55;
   cursor:not-allowed;
+}
+
+.btn-dark{
+  background:#171a14;
+  color:#fff;
 }
 
 section{
@@ -212,7 +224,7 @@ section{
   box-shadow:0 4px 14px rgba(0,0,0,.06);
   contain:layout paint style;
   content-visibility:auto;
-  contain-intrinsic-size:420px;
+  contain-intrinsic-size:480px;
 }
 
 .product-main-image{
@@ -250,7 +262,7 @@ section{
   font-size:14px;
 }
 
-.product button{
+.product .info .btn{
   width:100%;
   margin-top:8px;
 }
@@ -330,21 +342,68 @@ textarea{
   justify-content:space-between;
   align-items:center;
   gap:10px;
-  padding:10px 0;
+  padding:12px 0;
   border-bottom:1px solid #3d4236;
+}
+
+.cart-product-info{
+  flex:1;
+  min-width:0;
+}
+
+.cart-product-name{
+  font-weight:900;
+  margin-bottom:4px;
+}
+
+.cart-size{
+  color:#d9dccb;
+  font-size:13px;
 }
 
 .qty{
   display:flex;
   align-items:center;
   gap:7px;
+  flex:0 0 auto;
 }
 
 .qty button{
-  padding:4px 10px;
+  width:34px;
+  height:34px;
+  padding:0;
   border:0;
   border-radius:5px;
   cursor:pointer;
+  font-size:20px;
+  font-weight:900;
+}
+
+.qty-number{
+  min-width:25px;
+  text-align:center;
+  font-weight:900;
+}
+
+.cart-checkout{
+  width:100%;
+  margin-top:18px;
+  background:var(--accent);
+  color:#111;
+}
+
+.cart-count{
+  display:inline-flex;
+  min-width:20px;
+  height:20px;
+  padding:0 5px;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#596442;
+  color:#fff;
+  font-size:11px;
+  margin-left:3px;
 }
 
 .summary{
@@ -433,6 +492,17 @@ textarea{
   padding:5px 9px;
   border-radius:20px;
   font-size:12px;
+}
+
+.added-message{
+  margin-top:8px;
+  padding:9px;
+  background:#e7ecd7;
+  color:#303820;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:700;
+  display:none;
 }
 
 .image-modal{
@@ -657,19 +727,20 @@ footer{
   }
 
   nav{
-    gap:6px;
+    gap:5px;
   }
 
   nav a{
-    font-size:11px;
+    font-size:10px;
   }
 
-  .orders-nav{
-    padding:7px 8px;
+  .orders-nav,
+  .cart-nav{
+    padding:7px 7px;
   }
 
   .logo{
-    font-size:14px;
+    font-size:13px;
   }
 
   .logo small{
@@ -714,14 +785,12 @@ footer{
     flex-direction:column;
   }
 
-}
+  .cart-row{
+    align-items:flex-start;
+  }
 
-@media(prefers-reduced-motion:reduce){
-
-  *{
-    scroll-behavior:auto!important;
-    animation:none!important;
-    transition:none!important;
+  .qty{
+    margin-top:3px;
   }
 
 }
@@ -740,7 +809,10 @@ footer{
   <nav>
     <a href="#home">HOME</a>
     <a href="#shop">SHOP</a>
-    <a href="#checkout">CHECKOUT</a>
+    <a href="#cart" class="cart-nav">
+      🛒 CART
+      <span id="headerCartCount" class="cart-count">0</span>
+    </a>
     <a href="#orders" class="orders-nav">MY ORDERS</a>
   </nav>
 
@@ -833,7 +905,7 @@ footer{
     </h2>
 
     <p>
-      Select a product, choose your size and buy online
+      Select a product, choose your size and add it to cart
     </p>
 
     <button
@@ -855,89 +927,28 @@ footer{
 </section>
 
 
-<!-- CUSTOMER ORDERS -->
+<!-- CART -->
 
-<section id="orders">
-
-  <div class="title">
-
-    <h2>
-      MY ORDERS
-    </h2>
-
-    <p>
-      Check all your orders using your Mobile Number
-    </p>
-
-  </div>
-
-
-  <div class="orders-box">
-
-    <div class="order-card">
-
-      <label>
-        Mobile Number
-      </label>
-
-      <input
-        id="customerMobile"
-        type="tel"
-        inputmode="numeric"
-        maxlength="10"
-        placeholder="10-digit mobile number"
-        autocomplete="tel"
-      >
-
-
-      <button
-        class="btn"
-        type="button"
-        onclick="findCustomerOrder()"
-      >
-        VIEW MY ORDERS
-      </button>
-
-
-      <div
-        id="ordersMessage"
-        class="empty"
-        style="margin-top:15px"
-      >
-        Enter the mobile number used while placing your order.
-      </div>
-
-    </div>
-
-
-    <div id="ordersList"></div>
-
-  </div>
-
-</section>
-
-
-<section id="checkout">
+<section id="cart">
 
   <div class="title">
 
     <h2>
-      CHECKOUT
+      🛒 YOUR CART
     </h2>
 
     <p>
-      Enter delivery details and place your order
+      Add multiple products and checkout together
     </p>
 
   </div>
 
+  <div class="checkout" style="max-width:750px">
 
-  <div class="checkout">
-
-    <div class="cart">
+    <div class="cart" id="cartBox">
 
       <h3>
-        Your Cart
+        Selected Products
       </h3>
 
       <div id="cartItems"></div>
@@ -957,6 +968,69 @@ footer{
         <div class="summary-row summary-total">
           <span>Grand Total</span>
           <strong id="total">₹0</strong>
+        </div>
+
+      </div>
+
+      <button
+        id="proceedCheckoutBtn"
+        class="btn cart-checkout"
+        type="button"
+        onclick="goToCheckout()"
+        disabled
+      >
+        PROCEED TO CHECKOUT
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CHECKOUT -->
+
+<section id="checkout">
+
+  <div class="title">
+
+    <h2>
+      CHECKOUT
+    </h2>
+
+    <p>
+      Your selected products are shown above. Enter delivery details below.
+    </p>
+
+  </div>
+
+
+  <div class="checkout">
+
+    <div class="cart">
+
+      <h3>
+        Order Summary
+      </h3>
+
+      <div id="checkoutCartItems"></div>
+
+      <div class="summary">
+
+        <div class="summary-row">
+          <span>Product Price</span>
+          <strong id="checkoutProductTotal">₹0</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Shipping Charge</span>
+          <strong>₹49</strong>
+        </div>
+
+        <div class="summary-row summary-total">
+          <span>Grand Total</span>
+          <strong id="checkoutTotal">₹0</strong>
         </div>
 
       </div>
@@ -1073,6 +1147,68 @@ footer{
 
 </section>
 
+
+<!-- CUSTOMER ORDERS -->
+
+<section id="orders">
+
+  <div class="title">
+
+    <h2>
+      MY ORDERS
+    </h2>
+
+    <p>
+      Check all your orders using your Mobile Number
+    </p>
+
+  </div>
+
+
+  <div class="orders-box">
+
+    <div class="order-card">
+
+      <label>
+        Mobile Number
+      </label>
+
+      <input
+        id="customerMobile"
+        type="tel"
+        inputmode="numeric"
+        maxlength="10"
+        placeholder="10-digit mobile number"
+        autocomplete="tel"
+      >
+
+
+      <button
+        class="btn"
+        type="button"
+        onclick="findCustomerOrder()"
+      >
+        VIEW MY ORDERS
+      </button>
+
+
+      <div
+        id="ordersMessage"
+        class="empty"
+        style="margin-top:15px"
+      >
+        Enter the mobile number used while placing your order.
+      </div>
+
+    </div>
+
+
+    <div id="ordersList"></div>
+
+  </div>
+
+</section>
+
 </main>
 
 
@@ -1161,6 +1297,8 @@ footer{
 let products = [];
 
 const SHIPPING_CHARGE = 49;
+
+const MAX_QTY = 10;
 
 let cart = JSON.parse(
   localStorage.getItem("sniperCart") || "[]"
@@ -1698,10 +1836,17 @@ function renderProducts(){
             <button
               class="btn"
               type="button"
-              onclick="buyNow(${id})"
+              onclick="addProductToCart(${id})"
             >
-              BUY NOW
+              🛒 ADD TO CART
             </button>
+
+            <div
+              class="added-message"
+              id="added-${id}"
+            >
+              ✓ Added to cart
+            </div>
 
           </div>
 
@@ -1713,6 +1858,141 @@ function renderProducts(){
 
 
   attachGalleryEvents();
+
+}
+
+
+/* =========================
+   ADD PRODUCT TO CART
+========================= */
+
+function addProductToCart(id){
+
+  const p =
+    products.find(
+      x =>
+        Number(x.id) ===
+        Number(id)
+    );
+
+  if(!p){
+    return;
+  }
+
+
+  const sizes =
+    getSizes(p);
+
+  let size = "";
+
+
+  if(sizes.length){
+
+    const select =
+      document.getElementById(
+        "size-" +
+        Number(id)
+      );
+
+    size =
+      select
+      ? select.value
+      : "";
+
+
+    if(!size){
+
+      alert(
+        "Please select a size first."
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  const existing =
+    cart.find(
+      item =>
+        Number(item.id) ===
+          Number(id) &&
+        String(item.size || "") ===
+          String(size || "")
+    );
+
+
+  if(existing){
+
+    if(
+      Number(existing.qty || 0) >=
+      MAX_QTY
+    ){
+
+      alert(
+        "Maximum 10 quantity allowed for one product/size."
+      );
+
+      return;
+
+    }
+
+    existing.qty =
+      Math.min(
+        MAX_QTY,
+        Number(existing.qty || 0) + 1
+      );
+
+  }else{
+
+    cart.push({
+
+      id:
+        Number(id),
+
+      qty:
+        1,
+
+      size:
+        size
+
+    });
+
+  }
+
+
+  save();
+
+  renderCart();
+
+
+  const added =
+    document.getElementById(
+      "added-" +
+      Number(id)
+    );
+
+
+  if(added){
+
+    added.style.display =
+      "block";
+
+    setTimeout(
+      () => {
+
+        added.style.display =
+          "none";
+
+      },
+      1800
+    );
+
+  }
+
+
+  updateCartCount();
 
 }
 
@@ -1872,82 +2152,19 @@ function changeCardImage(
 
 
 /* =========================
-   BUY NOW
+   OLD BUY NOW
+   NOW ADDS TO CART
 ========================= */
 
 function buyNow(id){
 
-  const p =
-    products.find(
-      x =>
-        Number(x.id) ===
-        Number(id)
-    );
-
-  if(!p){
-    return;
-  }
-
-
-  const sizes =
-    getSizes(p);
-
-  let size = "";
-
-
-  if(sizes.length){
-
-    const select =
-      document.getElementById(
-        "size-" +
-        Number(id)
-      );
-
-    size =
-      select
-      ? select.value
-      : "";
-
-
-    if(!size){
-
-      alert(
-        "Please select a size first."
-      );
-
-      return;
-
-    }
-
-  }
-
-
-  cart = [
-    {
-      id:
-        Number(id),
-
-      qty:
-        1,
-
-      size:
-        size
-    }
-  ];
-
-
-  save();
-
-  renderCart();
-
-  location.hash =
-    "checkout";
+  addProductToCart(id);
 
 }
 
 
 /* =========================
-   ADD TO CART
+   ADD
 ========================= */
 
 function add(
@@ -1970,6 +2187,19 @@ function add(
 
 
   if(existing){
+
+    if(
+      Number(existing.qty || 0) >=
+      MAX_QTY
+    ){
+
+      alert(
+        "Maximum 10 quantity allowed."
+      );
+
+      return;
+
+    }
 
     existing.qty++;
 
@@ -1994,9 +2224,6 @@ function add(
   save();
 
   renderCart();
-
-  location.hash =
-    "checkout";
 
 }
 
@@ -2029,10 +2256,25 @@ function change(
   }
 
 
-  item.qty += d;
+  const currentQty =
+    Number(
+      item.qty || 0
+    );
 
 
-  if(item.qty <= 0){
+  let newQty =
+    currentQty + d;
+
+
+  if(newQty > MAX_QTY){
+
+    newQty =
+      MAX_QTY;
+
+  }
+
+
+  if(newQty <= 0){
 
     cart =
       cart.filter(
@@ -2049,12 +2291,60 @@ function change(
           )
       );
 
+  }else{
+
+    item.qty =
+      newQty;
+
   }
 
 
   save();
 
   renderCart();
+
+  renderCheckoutCart();
+
+}
+
+
+/* =========================
+   CART COUNT
+========================= */
+
+function updateCartCount(){
+
+  const totalQty =
+    cart.reduce(
+      (
+        total,
+        item
+      ) =>
+        total +
+        Math.min(
+          MAX_QTY,
+          Number(
+            item.qty || 0
+          )
+        ),
+      0
+    );
+
+
+  const count =
+    document.getElementById(
+      "headerCartCount"
+    );
+
+
+  if(count){
+
+    count.textContent =
+      String(
+        totalQty
+      );
+
+  }
 
 }
 
@@ -2074,7 +2364,11 @@ function renderCart(){
   if(!cart.length){
 
     el.innerHTML =
-      "<p>Your cart is empty.</p>";
+      `
+      <p>
+        Your cart is empty.
+      </p>
+      `;
 
     document.getElementById(
       "productTotal"
@@ -2083,6 +2377,227 @@ function renderCart(){
 
     document.getElementById(
       "total"
+    ).textContent =
+      "₹0";
+
+
+    const checkoutBtn =
+      document.getElementById(
+        "proceedCheckoutBtn"
+      );
+
+    if(checkoutBtn){
+
+      checkoutBtn.disabled =
+        true;
+
+    }
+
+
+    updateCartCount();
+
+    renderCheckoutCart();
+
+    return;
+
+  }
+
+
+  let productTotal = 0;
+
+
+  el.innerHTML =
+    cart
+      .map(item => {
+
+        const p =
+          products.find(
+            x =>
+              Number(x.id) ===
+              Number(item.id)
+          );
+
+
+        if(!p){
+          return "";
+        }
+
+
+        const price =
+          Number(
+            p.price || 0
+          );
+
+
+        const qty =
+          Math.min(
+            MAX_QTY,
+            Number(
+              item.qty || 0
+            )
+          );
+
+
+        const subtotal =
+          price *
+          qty;
+
+
+        productTotal +=
+          subtotal;
+
+
+        return `
+
+          <div class="cart-row">
+
+            <div class="cart-product-info">
+
+              <div class="cart-product-name">
+                ${escapeHTML(
+                  p.name
+                )}
+              </div>
+
+              <div>
+                ₹${price.toLocaleString(
+                  "en-IN"
+                )}
+                × ${qty}
+              </div>
+
+              ${
+                item.size
+                ?
+                `
+                <div class="cart-size">
+                  Size: ${escapeHTML(
+                    item.size
+                  )}
+                </div>
+                `
+                :
+                ""
+              }
+
+            </div>
+
+
+            <div class="qty">
+
+              <button
+                type="button"
+                onclick="change(
+                  ${Number(item.id)},
+                  -1,
+                  '${escapeHTML(
+                    item.size || ""
+                  )}'
+                )"
+              >
+                −
+              </button>
+
+              <span class="qty-number">
+                ${qty}
+              </span>
+
+              <button
+                type="button"
+                onclick="change(
+                  ${Number(item.id)},
+                  1,
+                  '${escapeHTML(
+                    item.size || ""
+                  )}'
+                )"
+              >
+                +
+              </button>
+
+            </div>
+
+          </div>
+
+        `;
+
+      })
+      .join("");
+
+
+  const grandTotal =
+    productTotal +
+    SHIPPING_CHARGE;
+
+
+  document.getElementById(
+    "productTotal"
+  ).textContent =
+    "₹" +
+    productTotal.toLocaleString(
+      "en-IN"
+    );
+
+
+  document.getElementById(
+    "total"
+  ).textContent =
+    "₹" +
+    grandTotal.toLocaleString(
+      "en-IN"
+    );
+
+
+  const checkoutBtn =
+    document.getElementById(
+      "proceedCheckoutBtn"
+    );
+
+
+  if(checkoutBtn){
+
+    checkoutBtn.disabled =
+      false;
+
+  }
+
+
+  updateCartCount();
+
+  renderCheckoutCart();
+
+}
+
+
+/* =========================
+   CHECKOUT CART
+========================= */
+
+function renderCheckoutCart(){
+
+  const el =
+    document.getElementById(
+      "checkoutCartItems"
+    );
+
+
+  if(!el){
+    return;
+  }
+
+
+  if(!cart.length){
+
+    el.innerHTML =
+      "<p>Your cart is empty.</p>";
+
+    document.getElementById(
+      "checkoutProductTotal"
+    ).textContent =
+      "₹0";
+
+    document.getElementById(
+      "checkoutTotal"
     ).textContent =
       "₹0";
 
@@ -2116,81 +2631,57 @@ function renderCart(){
             p.price || 0
           );
 
-        const subtotal =
-          price *
-          Number(
-            item.qty || 0
+
+        const qty =
+          Math.min(
+            MAX_QTY,
+            Number(
+              item.qty || 0
+            )
           );
 
 
         productTotal +=
-          subtotal;
+          price * qty;
 
 
         return `
 
-          <div class="cart-row">
+          <div
+            class="cart-row"
+            style="padding:9px 0"
+          >
 
-            <span>
+            <div class="cart-product-info">
 
-              <b>
+              <div class="cart-product-name">
                 ${escapeHTML(
                   p.name
                 )}
-              </b>
+              </div>
 
-              <br>
+              <div>
+                Qty: ${qty}
+                ${
+                  item.size
+                  ?
+                  ` • Size: ${escapeHTML(
+                    item.size
+                  )}`
+                  :
+                  ""
+                }
+              </div>
 
-              ₹${price.toLocaleString(
+            </div>
+
+            <strong>
+              ₹${(
+                price * qty
+              ).toLocaleString(
                 "en-IN"
               )}
-
-              × ${item.qty}
-
-              ${
-                item.size
-                ?
-                ` • Size ${escapeHTML(
-                  item.size
-                )}`
-                :
-                ""
-              }
-
-            </span>
-
-
-            <span class="qty">
-
-              <button
-                type="button"
-                onclick="change(
-                  ${Number(item.id)},
-                  -1,
-                  '${escapeHTML(
-                    item.size || ""
-                  )}'
-                )"
-              >
-                −
-              </button>
-
-              ${item.qty}
-
-              <button
-                type="button"
-                onclick="change(
-                  ${Number(item.id)},
-                  1,
-                  '${escapeHTML(
-                    item.size || ""
-                  )}'
-                )"
-              >
-                +
-              </button>
-
-            </span>
+            </strong>
 
           </div>
 
@@ -2206,7 +2697,7 @@ function renderCart(){
 
 
   document.getElementById(
-    "productTotal"
+    "checkoutProductTotal"
   ).textContent =
     "₹" +
     productTotal.toLocaleString(
@@ -2215,12 +2706,59 @@ function renderCart(){
 
 
   document.getElementById(
-    "total"
+    "checkoutTotal"
   ).textContent =
     "₹" +
     grandTotal.toLocaleString(
       "en-IN"
     );
+
+}
+
+
+/* =========================
+   GO TO CHECKOUT
+========================= */
+
+function goToCheckout(){
+
+  if(!cart.length){
+
+    alert(
+      "Please add at least one product to cart."
+    );
+
+    return;
+
+  }
+
+
+  renderCheckoutCart();
+
+  location.hash =
+    "checkout";
+
+
+  setTimeout(
+    () => {
+
+      const checkout =
+        document.getElementById(
+          "checkout"
+        );
+
+      if(checkout){
+
+        checkout.scrollIntoView({
+          behavior:"auto",
+          block:"start"
+        });
+
+      }
+
+    },
+    50
+  );
 
 }
 
@@ -2235,6 +2773,8 @@ function showCheckout(){
     "checkout"
   ).style.display =
     "block";
+
+  renderCheckoutCart();
 
 }
 
@@ -3003,6 +3543,21 @@ window.addEventListener(
 
     if(
       location.hash ===
+      "#cart"
+    ){
+
+      document.getElementById(
+        "cart"
+      ).scrollIntoView({
+        behavior:"auto",
+        block:"start"
+      });
+
+    }
+
+
+    if(
+      location.hash ===
       "#orders"
     ){
 
@@ -3030,6 +3585,28 @@ if(
 ){
 
   showOrders();
+
+}
+
+
+if(
+  location.hash ===
+  "#cart"
+){
+
+  setTimeout(
+    () => {
+
+      document.getElementById(
+        "cart"
+      ).scrollIntoView({
+        behavior:"auto",
+        block:"start"
+      });
+
+    },
+    50
+  );
 
 }
 
@@ -3501,8 +4078,11 @@ document
       if(!cart.length){
 
         alert(
-          "Please select a product first."
+          "Please add a product to cart first."
         );
+
+        location.hash =
+          "cart";
 
         return;
 
@@ -3545,7 +4125,10 @@ document
                 : 0,
 
               qty:
-                Number(item.qty),
+                Math.min(
+                  MAX_QTY,
+                  Number(item.qty)
+                ),
 
               size:
                 item.size || ""
@@ -3688,7 +4271,7 @@ document
             order.id +
             "\n\n" +
             "Payment: Cash on Delivery\n\n" +
-            "You can now check your orders using your mobile number in MY ORDERS."
+            "You can check all your orders using your mobile number in MY ORDERS."
           );
 
 
@@ -3698,13 +4281,10 @@ document
 
           renderCart();
 
+          renderCheckoutCart();
+
           event.target.reset();
 
-
-          /*
-            Automatically fill MY ORDERS
-            with mobile number only.
-          */
 
           document.getElementById(
             "customerMobile"
@@ -3957,7 +4537,7 @@ document
                     "Order ID: " +
                     order.id +
                     "\n\n" +
-                    "You can now check your orders using your mobile number in MY ORDERS."
+                    "You can check all your orders using your mobile number in MY ORDERS."
                   );
 
 
@@ -3967,13 +4547,10 @@ document
 
                   renderCart();
 
+                  renderCheckoutCart();
+
                   event.target.reset();
 
-
-                  /*
-                    Automatically fill MY ORDERS
-                    with mobile number only.
-                  */
 
                   document.getElementById(
                     "customerMobile"
@@ -4084,6 +4661,10 @@ document
 ========================= */
 
 loadProducts();
+
+renderCart();
+
+updateCartCount();
 
 </script>
 
