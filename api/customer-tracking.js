@@ -1,5 +1,11 @@
 const { getJSON } = require("../_store");
 
+function normalizeMobile(value) {
+  return String(value || "")
+    .replace(/\D/g, "")
+    .slice(-10);
+}
+
 module.exports = async (req, res) => {
   try {
     if (req.method !== "GET") {
@@ -12,19 +18,23 @@ module.exports = async (req, res) => {
       req.query.token || ""
     ).trim();
 
+    const mobile = normalizeMobile(
+      req.query.mobile || ""
+    );
+
     const orderId = String(
       req.query.orderId || ""
     ).trim();
 
-    if (!token) {
-      return res.status(400).json({
-        error: "Customer token is required"
-      });
-    }
-
     if (!orderId) {
       return res.status(400).json({
         error: "Order ID is required"
+      });
+    }
+
+    if (!token && !mobile) {
+      return res.status(400).json({
+        error: "Mobile number is required"
       });
     }
 
@@ -34,17 +44,49 @@ module.exports = async (req, res) => {
     );
 
     const order = orders.find(item => {
-      return (
-        item &&
-        String(item.id || "") === orderId &&
+
+      if (!item) {
+        return false;
+      }
+
+      if (
+        String(item.id || "").trim() !==
+        orderId
+      ) {
+        return false;
+      }
+
+      // Existing secure token system
+      if (
+        token &&
         item.customerAccessToken &&
         item.customerAccessToken === token
-      );
+      ) {
+        return true;
+      }
+
+      // New Mobile + Order ID system
+      if (mobile) {
+
+        const savedMobile =
+          normalizeMobile(
+            item.customer?.mobile ||
+            item.mobile ||
+            ""
+          );
+
+        return (
+          savedMobile === mobile
+        );
+      }
+
+      return false;
     });
 
     if (!order) {
       return res.status(404).json({
-        error: "Order not found"
+        error:
+          "Order not found. Please check your Mobile Number and Order ID."
       });
     }
 
@@ -56,14 +98,23 @@ module.exports = async (req, res) => {
       order.awb || ""
     ).trim();
 
+    /*
+      Shipment has not been created yet.
+    */
+
     if (!shipmentId && !awb) {
+
       return res.status(200).json({
         ok: true,
         trackingAvailable: false,
+
         message:
-          "Tracking will be available after the order is shipped.",
+          "Tracking will be available after your order is shipped.",
+
         order: {
-          id: order.id,
+          id:
+            order.id,
+
           status:
             order.status ||
             "Order Confirmed"
@@ -78,24 +129,34 @@ module.exports = async (req, res) => {
       process.env.SHIPROCKET_PASSWORD;
 
     if (!email || !password) {
+
       return res.status(500).json({
         error:
           "Shiprocket credentials are not configured in Vercel"
       });
     }
 
+    /*
+      Login to Shiprocket
+    */
+
     const loginResponse =
       await fetch(
         "https://apiv2.shiprocket.in/v1/external/auth/login",
         {
           method: "POST",
+
           headers: {
             "Content-Type":
               "application/json"
           },
+
           body: JSON.stringify({
-            email: email,
-            password: password
+            email:
+              email,
+
+            password:
+              password
           })
         }
       );
@@ -103,7 +164,11 @@ module.exports = async (req, res) => {
     const loginData =
       await loginResponse.json();
 
-    if (!loginResponse.ok || !loginData.token) {
+    if (
+      !loginResponse.ok ||
+      !loginData.token
+    ) {
+
       return res.status(500).json({
         error:
           "Unable to connect to Shiprocket"
@@ -112,49 +177,90 @@ module.exports = async (req, res) => {
 
     let trackingUrl = "";
 
+    /*
+      Prefer Shipment ID.
+    */
+
     if (shipmentId) {
+
       trackingUrl =
         "https://apiv2.shiprocket.in/v1/external/courier/track/shipment/" +
-        encodeURIComponent(shipmentId);
+        encodeURIComponent(
+          shipmentId
+        );
+
     } else {
+
       trackingUrl =
         "https://apiv2.shiprocket.in/v1/external/courier/track/awb/" +
-        encodeURIComponent(awb);
+        encodeURIComponent(
+          awb
+        );
+
     }
+
+    /*
+      Get live tracking
+    */
 
     const trackingResponse =
       await fetch(
         trackingUrl,
         {
           method: "GET",
+
           headers: {
             Authorization:
               `Bearer ${loginData.token}`,
+
             "Content-Type":
               "application/json"
           }
         }
       );
 
-    const trackingData =
-      await trackingResponse.json();
+    const trackingText =
+      await trackingResponse.text();
+
+    let trackingData = {};
+
+    try {
+      trackingData =
+        JSON.parse(
+          trackingText
+        );
+    } catch (error) {
+
+      return res.status(500).json({
+        error:
+          "Invalid tracking response from Shiprocket"
+      });
+    }
 
     if (!trackingResponse.ok) {
+
       return res.status(
         trackingResponse.status
       ).json({
         error:
           trackingData.message ||
+          trackingData.error ||
           "Unable to load tracking"
       });
     }
 
     return res.status(200).json({
+
       ok: true,
-      trackingAvailable: true,
+
+      trackingAvailable:
+        true,
 
       order: {
-        id: order.id,
+
+        id:
+          order.id,
+
         status:
           order.status ||
           "Order Confirmed",
@@ -176,6 +282,7 @@ module.exports = async (req, res) => {
 
       tracking:
         trackingData
+
     });
 
   } catch (error) {
