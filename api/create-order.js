@@ -1,6 +1,6 @@
 const { putJSON, getJSON } = require("../_store");
 
-const SHIPPING_CHARGE = 49;
+const SHIPPING_CHARGE = 49;module.exports
 
 module.exports = async (req, res) => {
   try {
