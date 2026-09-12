@@ -247,10 +247,6 @@ button:disabled{
   font-size:13px;
 }
 
-/* =========================
-   ADMIN NAVIGATION
-========================= */
-
 .admin-nav{
   display:grid;
   grid-template-columns:
@@ -277,10 +273,6 @@ button:disabled{
   margin-bottom:4px;
 }
 
-/* =========================
-   SECTION HEADERS
-========================= */
-
 .section-head{
   display:flex;
   justify-content:space-between;
@@ -293,10 +285,6 @@ button:disabled{
 .section-head h2{
   margin:0;
 }
-
-/* =========================
-   PRODUCT CATEGORY TABS
-========================= */
 
 .category-tabs{
   display:grid;
@@ -317,10 +305,6 @@ button:disabled{
   color:#fff;
 }
 
-/* =========================
-   PRODUCT COUNT
-========================= */
-
 .count-box{
   background:#f1f1e8;
   border:1px solid #ddd;
@@ -329,10 +313,6 @@ button:disabled{
   margin-bottom:15px;
   font-weight:bold;
 }
-
-/* =========================
-   ORDER ITEMS
-========================= */
 
 .order-items{
   margin:10px 0;
@@ -345,9 +325,13 @@ button:disabled{
   padding:6px 0;
 }
 
-/* =========================
-   MOBILE
-========================= */
+.delete-order{
+  background:#8b3d35;
+}
+
+.delete-order:hover{
+  background:#702e28;
+}
 
 @media(max-width:700px){
 
@@ -402,10 +386,6 @@ button:disabled{
 <div class="wrap">
 
 
-<!-- =========================
-     TOP
-========================= -->
-
 <div class="top">
 
   <div>
@@ -430,9 +410,7 @@ button:disabled{
 </div>
 
 
-<!-- =========================
-     LOGIN
-========================= -->
+<!-- LOGIN -->
 
 <div
   id="login"
@@ -458,9 +436,7 @@ button:disabled{
 </div>
 
 
-<!-- =========================
-     APP
-========================= -->
+<!-- APP -->
 
 <div
   id="app"
@@ -468,9 +444,7 @@ button:disabled{
 >
 
 
-<!-- =========================
-     MAIN ADMIN NAV
-========================= -->
+<!-- ADMIN NAV -->
 
 <div class="admin-nav">
 
@@ -505,18 +479,12 @@ button:disabled{
 </div>
 
 
-<!-- =====================================================
-     PRODUCTS SECTION
-===================================================== -->
+<!-- PRODUCTS -->
 
 <div
   id="productsSection"
 >
 
-
-<!-- =========================
-     PRODUCT LIST
-========================= -->
 
 <div class="panel">
 
@@ -543,8 +511,6 @@ button:disabled{
 
   </div>
 
-
-  <!-- CATEGORY TABS -->
 
   <div class="category-tabs">
 
@@ -607,9 +573,7 @@ button:disabled{
 </div>
 
 
-<!-- =========================
-     ADD / EDIT PRODUCT
-========================= -->
+<!-- ADD / EDIT PRODUCT -->
 
 <div
   id="productFormSection"
@@ -947,9 +911,7 @@ button:disabled{
 </div>
 
 
-<!-- =====================================================
-     ORDERS SECTION
-===================================================== -->
+<!-- ORDERS -->
 
 <div
   id="ordersSection"
@@ -1140,22 +1102,6 @@ function showProductForm(){
     .classList.remove(
       "hide"
     );
-
-  setTimeout(
-    function(){
-
-      document
-        .getElementById(
-          "productFormSection"
-        )
-        .scrollIntoView({
-          behavior:"smooth",
-          block:"start"
-        });
-
-    },
-    50
-  );
 
 }
 
@@ -3033,8 +2979,6 @@ async function loadOrders(
                 </div>
 
 
-                <!-- ORDER ITEMS -->
-
                 <div class="order-items">
 
                   <b>
@@ -3243,6 +3187,20 @@ async function loadOrders(
                     "
                   >
                     SEND TO SHIPROCKET
+                  </button>
+
+
+                  <!-- DELETE ORDER -->
+
+                  <button
+                    class="delete-order"
+                    onclick="
+                      deleteOrder(
+                        '${jsSafe(id)}'
+                      )
+                    "
+                  >
+                    🗑️ DELETE ORDER
                   </button>
 
 
@@ -3545,6 +3503,117 @@ async function statusUpdate(
     alert(
       error.message ||
       "Status update failed."
+    );
+
+  }
+
+}
+
+
+/* =========================
+   DELETE ORDER
+========================= */
+
+async function deleteOrder(
+  id
+){
+
+  const confirmed =
+    confirm(
+      "⚠️ DELETE ORDER?\n\n" +
+      "Order ID: " +
+      id +
+      "\n\n" +
+      "This order will be permanently removed.\n" +
+      "This action cannot be undone."
+    );
+
+
+  if(!confirmed){
+
+    return;
+
+  }
+
+
+  try{
+
+    const r =
+      await api(
+        "/api/orders",
+        {
+          method:"DELETE",
+
+          body:
+            JSON.stringify({
+              id:id
+            })
+        }
+      );
+
+
+    const text =
+      await r.text();
+
+
+    let d = {};
+
+
+    try{
+
+      d =
+        JSON.parse(
+          text
+        );
+
+    }catch(error){
+
+      throw new Error(
+        "Server response is not valid JSON."
+      );
+
+    }
+
+
+    if(!r.ok){
+
+      alert(
+        "❌ Delete failed:\n\n" +
+        (
+          d.error ||
+          "Unable to delete order."
+        )
+      );
+
+      return;
+
+    }
+
+
+    alert(
+      "✅ Order deleted successfully."
+    );
+
+
+    await loadOrders(
+      false
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Delete order error:",
+      error
+    );
+
+
+    alert(
+      "❌ Delete order failed:\n\n" +
+      (
+        error.message ||
+        "Unknown error"
+      )
     );
 
   }
