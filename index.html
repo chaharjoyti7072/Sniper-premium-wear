@@ -20,7 +20,9 @@
   --border:#dedccc;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 html{
   scroll-behavior:auto;
@@ -36,7 +38,9 @@ body{
   overscroll-behavior-x:none;
 }
 
-img{max-width:100%}
+img{
+  max-width:100%;
+}
 
 button,input,textarea,select{
   font:inherit;
@@ -151,6 +155,15 @@ section{
   padding:45px 6%;
   max-width:1250px;
   margin:auto;
+}
+
+/* SHOP BY CATEGORY KO SCROLL KARTE TIME HEADER SE CHIPKNE NAHI DENGE */
+#categories{
+  scroll-margin-top:85px;
+}
+
+#shop{
+  scroll-margin-top:85px;
 }
 
 .title{
@@ -676,9 +689,11 @@ footer{
 }
 
 @media(max-width:1000px){
+
   .categories{
     grid-template-columns:repeat(3,1fr);
   }
+
 }
 
 @media(max-width:800px){
@@ -717,6 +732,7 @@ footer{
   section{
     padding:35px 5%;
   }
+
 }
 
 @media(max-width:520px){
@@ -791,6 +807,7 @@ footer{
   .qty{
     margin-top:3px;
   }
+
 }
 </style>
 </head>
@@ -805,8 +822,15 @@ footer{
   </div>
 
   <nav>
-    <a href="#home">HOME</a>
-    <a href="#shop">SHOP</a>
+
+    <a href="#home">
+      HOME
+    </a>
+
+    <!-- SHOP AB CATEGORY SECTION PAR JAYEGA -->
+    <a href="#categories">
+      SHOP
+    </a>
 
     <a href="#cart" class="cart-nav">
       🛒 CART
@@ -816,6 +840,7 @@ footer{
     <a href="#orders" class="orders-nav">
       MY ORDERS
     </a>
+
   </nav>
 
 </header>
@@ -837,7 +862,8 @@ footer{
       a clean army-inspired fashion collection for everyday style.
     </p>
 
-    <a class="btn" href="#shop">
+    <!-- SHOP NOW AB CATEGORY PAR JAYEGA -->
+    <a class="btn" href="#categories">
       SHOP NOW
     </a>
 
@@ -846,7 +872,11 @@ footer{
 </section>
 
 
-<section>
+<!-- =================================
+     SHOP BY CATEGORY
+================================= -->
+
+<section id="categories">
 
   <div class="title">
 
@@ -867,8 +897,15 @@ footer{
       class="cat"
       data-category="T-Shirts"
     >
-      <b>T-Shirts</b>
-      <span>Premium everyday wear</span>
+
+      <b>
+        T-Shirts
+      </b>
+
+      <span>
+        Premium everyday wear
+      </span>
+
     </button>
 
 
@@ -876,8 +913,15 @@ footer{
       class="cat"
       data-category="Trousers"
     >
-      <b>Trousers</b>
-      <span>Comfort & utility style</span>
+
+      <b>
+        Trousers
+      </b>
+
+      <span>
+        Comfort & utility style
+      </span>
+
     </button>
 
 
@@ -885,8 +929,15 @@ footer{
       class="cat"
       data-category="Shorts"
     >
-      <b>Shorts</b>
-      <span>Easy casual fit</span>
+
+      <b>
+        Shorts
+      </b>
+
+      <span>
+        Easy casual fit
+      </span>
+
     </button>
 
 
@@ -894,25 +945,41 @@ footer{
       class="cat"
       data-category="Footwear"
     >
-      <b>Footwear</b>
-      <span>Complete the look</span>
+
+      <b>
+        Footwear
+      </b>
+
+      <span>
+        Complete the look
+      </span>
+
     </button>
 
-
-    <!-- NEW FEATURED CATEGORY -->
 
     <button
       class="cat"
       data-category="Featured"
     >
-      <b>Featured</b>
-      <span>Our top picks</span>
+
+      <b>
+        Featured
+      </b>
+
+      <span>
+        Our top picks
+      </span>
+
     </button>
 
   </div>
 
 </section>
 
+
+<!-- =================================
+     PRODUCTS
+================================= -->
 
 <section id="shop">
 
@@ -942,6 +1009,10 @@ footer{
 
 </section>
 
+
+<!-- =================================
+     CART
+================================= -->
 
 <section id="cart">
 
@@ -1036,6 +1107,10 @@ footer{
 
 </section>
 
+
+<!-- =================================
+     CHECKOUT
+================================= -->
 
 <section id="checkout">
 
@@ -1207,6 +1282,10 @@ footer{
 </section>
 
 
+<!-- =================================
+     MY ORDERS
+================================= -->
+
 <section id="orders">
 
   <div class="title">
@@ -1273,6 +1352,10 @@ footer{
   © 2026 JOYTI • SNIPER PREMIUM WEAR • PREMIUM FASHION STORE
 </footer>
 
+
+<!-- =================================
+     IMAGE MODAL
+================================= -->
 
 <div
   class="image-modal"
@@ -1558,7 +1641,6 @@ async function loadProducts(){
 
 /* =================================
    CATEGORY SYSTEM
-   FEATURED IS NOW A CATEGORY
 ================================= */
 
 let selectedCategory = "";
@@ -1572,8 +1654,6 @@ function categoryMatch(p){
 
   }
 
-
-  /* FEATURED CATEGORY */
 
   if(
     selectedCategory
@@ -1597,8 +1677,6 @@ function categoryMatch(p){
 
   }
 
-
-  /* NORMAL CATEGORIES */
 
   return String(
     p.category || ""
@@ -1832,8 +1910,6 @@ function renderProducts(){
     );
 
 
-  /* NO CATEGORY SELECTED */
-
   if(!selectedCategory){
 
     el.innerHTML =
@@ -1847,8 +1923,6 @@ function renderProducts(){
 
   }
 
-
-  /* CATEGORY HAS NO PRODUCTS */
 
   if(!list.length){
 
@@ -4293,7 +4367,6 @@ modal.addEventListener(
 
 /* =================================
    ONLINE PAYMENT ONLY
-   COD REMOVED
 ================================= */
 
 document
