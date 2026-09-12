@@ -927,8 +927,6 @@ footer{
 </section>
 
 
-<!-- CART -->
-
 <section id="cart">
 
   <div class="title">
@@ -988,8 +986,6 @@ footer{
 
 </section>
 
-
-<!-- CHECKOUT -->
 
 <section id="checkout">
 
@@ -1110,19 +1106,6 @@ footer{
 
         </label>
 
-
-        <label>
-
-          <input
-            type="radio"
-            name="payment"
-            value="COD"
-          >
-
-          Cash on Delivery
-
-        </label>
-
       </div>
 
 
@@ -1147,8 +1130,6 @@ footer{
 
 </section>
 
-
-<!-- CUSTOMER ORDERS -->
 
 <section id="orders">
 
@@ -1218,8 +1199,6 @@ footer{
 
 </footer>
 
-
-<!-- FULLSCREEN IMAGE MODAL -->
 
 <div
   class="image-modal"
@@ -1305,10 +1284,6 @@ let cart = JSON.parse(
 );
 
 
-/* =========================
-   CUSTOMER ACCESS TOKEN
-========================= */
-
 const CUSTOMER_TOKEN_KEY =
   "sniperCustomerAccessToken";
 
@@ -1338,10 +1313,6 @@ function getCustomerToken(){
 }
 
 
-/* =========================
-   STORAGE
-========================= */
-
 function save(){
 
   localStorage.setItem(
@@ -1351,10 +1322,6 @@ function save(){
 
 }
 
-
-/* =========================
-   PRODUCT IMAGES
-========================= */
 
 function getProductImages(p){
 
@@ -1394,10 +1361,6 @@ function getProductImages(p){
 }
 
 
-/* =========================
-   SIZES
-========================= */
-
 function getSizes(p){
 
   return String(
@@ -1409,10 +1372,6 @@ function getSizes(p){
 
 }
 
-
-/* =========================
-   LOAD PRODUCTS
-========================= */
 
 async function loadProducts(){
 
@@ -1466,10 +1425,6 @@ async function loadProducts(){
 
 }
 
-
-/* =========================
-   CATEGORY FILTER
-========================= */
 
 let selectedCategory = "";
 
@@ -1565,10 +1520,6 @@ function showAllProducts(){
 }
 
 
-/* =========================
-   GALLERY
-========================= */
-
 function galleryHTML(p){
 
   const images =
@@ -1658,10 +1609,6 @@ function galleryHTML(p){
 }
 
 
-/* =========================
-   HTML ESCAPE
-========================= */
-
 function escapeHTML(value){
 
   return String(
@@ -1690,10 +1637,6 @@ function escapeHTML(value){
 
 }
 
-
-/* =========================
-   RENDER PRODUCTS
-========================= */
 
 function renderProducts(){
 
@@ -1862,10 +1805,6 @@ function renderProducts(){
 }
 
 
-/* =========================
-   ADD PRODUCT TO CART
-========================= */
-
 function addProductToCart(id){
 
   const p =
@@ -1997,10 +1936,6 @@ function addProductToCart(id){
 }
 
 
-/* =========================
-   GALLERY EVENTS
-========================= */
-
 function attachGalleryEvents(){
 
   document
@@ -2067,10 +2002,6 @@ function attachGalleryEvents(){
 
 }
 
-
-/* =========================
-   CHANGE CARD IMAGE
-========================= */
 
 function changeCardImage(
   id,
@@ -2151,21 +2082,12 @@ function changeCardImage(
 }
 
 
-/* =========================
-   OLD BUY NOW
-   NOW ADDS TO CART
-========================= */
-
 function buyNow(id){
 
   addProductToCart(id);
 
 }
 
-
-/* =========================
-   ADD
-========================= */
 
 function add(
   id,
@@ -2227,10 +2149,6 @@ function add(
 
 }
 
-
-/* =========================
-   CHANGE QUANTITY
-========================= */
 
 function change(
   id,
@@ -2308,10 +2226,6 @@ function change(
 }
 
 
-/* =========================
-   CART COUNT
-========================= */
-
 function updateCartCount(){
 
   const totalQty =
@@ -2348,10 +2262,6 @@ function updateCartCount(){
 
 }
 
-
-/* =========================
-   CART
-========================= */
 
 function renderCart(){
 
@@ -2569,10 +2479,6 @@ function renderCart(){
 }
 
 
-/* =========================
-   CHECKOUT CART
-========================= */
-
 function renderCheckoutCart(){
 
   const el =
@@ -2716,10 +2622,6 @@ function renderCheckoutCart(){
 }
 
 
-/* =========================
-   GO TO CHECKOUT
-========================= */
-
 function goToCheckout(){
 
   if(!cart.length){
@@ -2727,6 +2629,9 @@ function goToCheckout(){
     alert(
       "Please add at least one product to cart."
     );
+
+    location.hash =
+      "cart";
 
     return;
 
@@ -2763,10 +2668,6 @@ function goToCheckout(){
 }
 
 
-/* =========================
-   CHECKOUT
-========================= */
-
 function showCheckout(){
 
   document.getElementById(
@@ -2778,10 +2679,6 @@ function showCheckout(){
 
 }
 
-
-/* =========================
-   ORDERS SECTION
-========================= */
 
 function showOrders(){
 
@@ -2801,11 +2698,6 @@ function showOrders(){
 
 }
 
-
-/* =========================
-   FIND CUSTOMER ORDERS
-   MOBILE ONLY
-========================= */
 
 async function findCustomerOrder(){
 
@@ -2968,10 +2860,6 @@ async function findCustomerOrder(){
 
 }
 
-
-/* =========================
-   ORDER HTML
-========================= */
 
 function orderHTML(
   order
@@ -3227,10 +3115,6 @@ function orderHTML(
 
 }
 
-
-/* =========================
-   TRACK CUSTOMER ORDER
-========================= */
 
 async function trackCustomerOrder(
   orderId
@@ -3523,10 +3407,6 @@ async function trackCustomerOrder(
 }
 
 
-/* =========================
-   HASH
-========================= */
-
 window.addEventListener(
   "hashchange",
   () => {
@@ -3611,10 +3491,6 @@ if(
 }
 
 
-/* =========================
-   CATEGORY BUTTONS
-========================= */
-
 document
   .querySelectorAll(".cat")
   .forEach(btn => {
@@ -3642,10 +3518,6 @@ document
     showAllProducts
   );
 
-
-/* =========================
-   IMAGE MODAL
-========================= */
 
 const modal =
   document.getElementById(
@@ -3935,10 +3807,6 @@ modal.addEventListener(
 );
 
 
-/* =========================
-   KEYBOARD
-========================= */
-
 document.addEventListener(
   "keydown",
   event => {
@@ -3984,10 +3852,6 @@ document.addEventListener(
   }
 );
 
-
-/* =========================
-   MOBILE SWIPE
-========================= */
 
 let touchStartX =
   0;
@@ -4061,7 +3925,7 @@ modal.addEventListener(
 
 
 /* =========================
-   PAYMENT / ORDER
+   ONLINE PAYMENT ONLY
 ========================= */
 
 document
@@ -4168,170 +4032,6 @@ document
       btn.textContent =
         "Please wait…";
 
-
-      const paymentMethod =
-        data.get(
-          "payment"
-        );
-
-
-      /* =========================
-         COD
-      ========================= */
-
-      if(
-        paymentMethod ===
-        "COD"
-      ){
-
-        try{
-
-          const orderRes =
-            await fetch(
-              "/api/create-order",
-              {
-                method:"POST",
-
-                headers:{
-                  "Content-Type":
-                    "application/json"
-                },
-
-                body:
-                  JSON.stringify({
-
-                    receipt:
-                      "COD-" +
-                      Date.now(),
-
-                    customer:{
-
-                      name:
-                        data.get(
-                          "name"
-                        ),
-
-                      mobile:
-                        data.get(
-                          "mobile"
-                        )
-
-                    },
-
-                    items:
-                      itemData,
-
-                    address:
-                      data.get(
-                        "address"
-                      ),
-
-                    pin:
-                      data.get(
-                        "pin"
-                      ),
-
-                    paymentMethod:
-                      "COD"
-
-                  })
-
-              }
-            );
-
-
-          const order =
-            await orderRes.json();
-
-
-          if(!orderRes.ok){
-
-            throw new Error(
-              order.error ||
-              "Could not place COD order"
-            );
-
-          }
-
-
-          if(
-            order.customerAccessToken
-          ){
-
-            saveCustomerToken(
-              order.customerAccessToken
-            );
-
-          }
-
-
-          alert(
-            "Order confirmed successfully!\n\n" +
-            "Order ID: " +
-            order.id +
-            "\n\n" +
-            "Payment: Cash on Delivery\n\n" +
-            "You can check all your orders using your mobile number in MY ORDERS."
-          );
-
-
-          cart = [];
-
-          save();
-
-          renderCart();
-
-          renderCheckoutCart();
-
-          event.target.reset();
-
-
-          document.getElementById(
-            "customerMobile"
-          ).value =
-            String(
-              data.get(
-                "mobile"
-              ) || ""
-            );
-
-
-          location.hash =
-            "orders";
-
-
-          setTimeout(
-            findCustomerOrder,
-            150
-          );
-
-
-        }catch(error){
-
-          alert(
-            error.message ||
-            "Unable to place COD order."
-          );
-
-        }finally{
-
-          btn.disabled =
-            false;
-
-          btn.textContent =
-            "BUY NOW & PAY";
-
-        }
-
-
-        return;
-
-      }
-
-
-      /* =========================
-         ONLINE PAYMENT
-      ========================= */
 
       try{
 
