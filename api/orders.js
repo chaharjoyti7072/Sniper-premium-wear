@@ -2,8 +2,12 @@ const { getJSON, putJSON } = require("../_store");
 
 module.exports = async (req, res) => {
   try {
-    // Allow only GET and PATCH
-    if (req.method !== "GET" && req.method !== "PATCH") {
+    // Allow only GET, PATCH and DELETE
+    if (
+      req.method !== "GET" &&
+      req.method !== "PATCH" &&
+      req.method !== "DELETE"
+    ) {
       return res.status(405).json({
         error: "Method not allowed"
       });
@@ -90,6 +94,51 @@ module.exports = async (req, res) => {
       return res.status(200).json({
         ok: true,
         orders: updatedOrders
+      });
+    }
+
+    // =========================
+    // DELETE ORDER
+    // =========================
+    if (req.method === "DELETE") {
+      const body = req.body || {};
+
+      const id = String(
+        body.id ||
+        req.query.id ||
+        ""
+      ).trim();
+
+      if (!id) {
+        return res.status(400).json({
+          error: "Order ID is required"
+        });
+      }
+
+      const exists = orders.some(
+        order => String(order.id || "") === id
+      );
+
+      if (!exists) {
+        return res.status(404).json({
+          error: "Order not found"
+        });
+      }
+
+      const remainingOrders = orders.filter(
+        order => String(order.id || "") !== id
+      );
+
+      await putJSON(
+        "orders",
+        remainingOrders
+      );
+
+      return res.status(200).json({
+        ok: true,
+        message: "Order deleted successfully",
+        orderId: id,
+        orders: remainingOrders
       });
     }
 
