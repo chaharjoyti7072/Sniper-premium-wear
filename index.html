@@ -20,9 +20,7 @@
   --border:#dedccc;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 html{
   scroll-behavior:auto;
@@ -38,14 +36,9 @@ body{
   overscroll-behavior-x:none;
 }
 
-img{
-  max-width:100%;
-}
+img{max-width:100%}
 
-button,
-input,
-textarea,
-select{
+button,input,textarea,select{
   font:inherit;
 }
 
@@ -176,7 +169,7 @@ section{
 
 .categories{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(5,1fr);
   gap:14px;
 }
 
@@ -682,6 +675,12 @@ footer{
   margin-top:30px;
 }
 
+@media(max-width:1000px){
+  .categories{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
 @media(max-width:800px){
 
   .categories{
@@ -792,7 +791,6 @@ footer{
   .qty{
     margin-top:3px;
   }
-
 }
 </style>
 </head>
@@ -809,14 +807,19 @@ footer{
   <nav>
     <a href="#home">HOME</a>
     <a href="#shop">SHOP</a>
+
     <a href="#cart" class="cart-nav">
       🛒 CART
       <span id="headerCartCount" class="cart-count">0</span>
     </a>
-    <a href="#orders" class="orders-nav">MY ORDERS</a>
+
+    <a href="#orders" class="orders-nav">
+      MY ORDERS
+    </a>
   </nav>
 
 </header>
+
 
 <main>
 
@@ -857,6 +860,7 @@ footer{
 
   </div>
 
+
   <div class="categories">
 
     <button
@@ -867,6 +871,7 @@ footer{
       <span>Premium everyday wear</span>
     </button>
 
+
     <button
       class="cat"
       data-category="Trousers"
@@ -874,6 +879,7 @@ footer{
       <b>Trousers</b>
       <span>Comfort & utility style</span>
     </button>
+
 
     <button
       class="cat"
@@ -883,12 +889,24 @@ footer{
       <span>Easy casual fit</span>
     </button>
 
+
     <button
       class="cat"
       data-category="Footwear"
     >
       <b>Footwear</b>
       <span>Complete the look</span>
+    </button>
+
+
+    <!-- NEW FEATURED CATEGORY -->
+
+    <button
+      class="cat"
+      data-category="Featured"
+    >
+      <b>Featured</b>
+      <span>Our top picks</span>
     </button>
 
   </div>
@@ -901,28 +919,26 @@ footer{
   <div class="title">
 
     <h2 id="shopTitle">
-      FEATURED PRODUCTS
+      SELECT A CATEGORY
     </h2>
 
     <p>
-      Select a product, choose your size and add it to cart
+      Select a category to view products
     </p>
 
-    <button
-      id="showAllBtn"
-      class="btn"
-      type="button"
-      style="display:none;margin-top:8px"
-    >
-      SHOW ALL PRODUCTS
-    </button>
-
   </div>
+
 
   <div
     class="products"
     id="products"
-  ></div>
+  >
+
+    <div class="empty">
+      Please select a category above.
+    </div>
+
+  </div>
 
 </section>
 
@@ -941,9 +957,16 @@ footer{
 
   </div>
 
-  <div class="checkout" style="max-width:750px">
 
-    <div class="cart" id="cartBox">
+  <div
+    class="checkout"
+    style="max-width:750px"
+  >
+
+    <div
+      class="cart"
+      id="cartBox"
+    >
 
       <h3>
         Selected Products
@@ -951,24 +974,51 @@ footer{
 
       <div id="cartItems"></div>
 
+
       <div class="summary">
 
         <div class="summary-row">
-          <span>Product Price</span>
-          <strong id="productTotal">₹0</strong>
+
+          <span>
+            Product Price
+          </span>
+
+          <strong id="productTotal">
+            ₹0
+          </strong>
+
         </div>
+
 
         <div class="summary-row">
-          <span>Shipping Charge</span>
-          <strong>₹49</strong>
+
+          <span>
+            Shipping Charge
+          </span>
+
+          <strong>
+            ₹49
+          </strong>
+
         </div>
 
-        <div class="summary-row summary-total">
-          <span>Grand Total</span>
-          <strong id="total">₹0</strong>
+
+        <div
+          class="summary-row summary-total"
+        >
+
+          <span>
+            Grand Total
+          </span>
+
+          <strong id="total">
+            ₹0
+          </strong>
+
         </div>
 
       </div>
+
 
       <button
         id="proceedCheckoutBtn"
@@ -996,7 +1046,8 @@ footer{
     </h2>
 
     <p>
-      Your selected products are shown above. Enter delivery details below.
+      Your selected products are shown above.
+      Enter delivery details below.
     </p>
 
   </div>
@@ -1012,21 +1063,45 @@ footer{
 
       <div id="checkoutCartItems"></div>
 
+
       <div class="summary">
 
         <div class="summary-row">
-          <span>Product Price</span>
-          <strong id="checkoutProductTotal">₹0</strong>
+
+          <span>
+            Product Price
+          </span>
+
+          <strong id="checkoutProductTotal">
+            ₹0
+          </strong>
+
         </div>
+
 
         <div class="summary-row">
-          <span>Shipping Charge</span>
-          <strong>₹49</strong>
+
+          <span>
+            Shipping Charge
+          </span>
+
+          <strong>
+            ₹49
+          </strong>
+
         </div>
 
+
         <div class="summary-row summary-total">
-          <span>Grand Total</span>
-          <strong id="checkoutTotal">₹0</strong>
+
+          <span>
+            Grand Total
+          </span>
+
+          <strong id="checkoutTotal">
+            ₹0
+          </strong>
+
         </div>
 
       </div>
@@ -1090,6 +1165,7 @@ footer{
       <label>
         Payment Method
       </label>
+
 
       <div class="pay">
 
@@ -1194,9 +1270,7 @@ footer{
 
 
 <footer>
-
   © 2026 JOYTI • SNIPER PREMIUM WEAR • PREMIUM FASHION STORE
-
 </footer>
 
 
@@ -1213,6 +1287,7 @@ footer{
     ×
   </button>
 
+
   <button
     class="modal-left"
     id="modalLeft"
@@ -1220,6 +1295,7 @@ footer{
   >
     ‹
   </button>
+
 
   <div class="modal-image-wrap">
 
@@ -1231,6 +1307,7 @@ footer{
     >
 
   </div>
+
 
   <button
     class="modal-right"
@@ -1280,7 +1357,9 @@ const SHIPPING_CHARGE = 49;
 const MAX_QTY = 10;
 
 let cart = JSON.parse(
-  localStorage.getItem("sniperCart") || "[]"
+  localStorage.getItem(
+    "sniperCart"
+  ) || "[]"
 );
 
 
@@ -1327,32 +1406,43 @@ function getProductImages(p){
 
   let images = [];
 
+
   if(Array.isArray(p.images)){
 
-    images = images.concat(
-      p.images.filter(Boolean)
-    );
+    images =
+      images.concat(
+        p.images.filter(Boolean)
+      );
 
   }
+
 
   if(Array.isArray(p.photos)){
 
-    images = images.concat(
-      p.photos.filter(Boolean)
+    images =
+      images.concat(
+        p.photos.filter(Boolean)
+      );
+
+  }
+
+
+  if(p.img){
+
+    images.unshift(
+      p.img
     );
 
   }
 
-  if(p.img){
-
-    images.unshift(p.img);
-
-  }
 
   images =
     images
-      .map(x => String(x).trim())
+      .map(
+        x => String(x).trim()
+      )
       .filter(Boolean);
+
 
   return [
     ...new Set(images)
@@ -1369,242 +1459,6 @@ function getSizes(p){
   .trim()
   .split(/\s+/)
   .filter(Boolean);
-
-}
-
-
-async function loadProducts(){
-
-  const el =
-    document.getElementById(
-      "products"
-    );
-
-  try{
-
-    const r =
-      await fetch(
-        "/api/products",
-        {
-          cache:"no-store"
-        }
-      );
-
-    if(!r.ok){
-
-      throw new Error(
-        "Could not load products"
-      );
-
-    }
-
-    const d =
-      await r.json();
-
-    products =
-      Array.isArray(d.products)
-      ? d.products
-      : [];
-
-    renderProducts();
-
-    renderCart();
-
-  }catch(error){
-
-    console.error(error);
-
-    el.innerHTML =
-      `
-      <div class="empty">
-        Products are temporarily unavailable.
-      </div>
-      `;
-
-  }
-
-}
-
-
-let selectedCategory = "";
-
-
-function categoryMatch(p){
-
-  if(!selectedCategory){
-    return true;
-  }
-
-  return String(
-    p.category || ""
-  )
-  .trim()
-  .toLowerCase()
-  ===
-  selectedCategory
-    .trim()
-    .toLowerCase();
-
-}
-
-
-function showCategory(category){
-
-  selectedCategory =
-    category;
-
-  document
-    .querySelectorAll(".cat")
-    .forEach(btn => {
-
-      btn.classList.toggle(
-        "active",
-        btn.dataset.category ===
-        category
-      );
-
-    });
-
-  document.getElementById(
-    "shopTitle"
-  ).textContent =
-    category + " PRODUCTS";
-
-  document.getElementById(
-    "showAllBtn"
-  ).style.display =
-    "inline-block";
-
-  renderProducts();
-
-  const shop =
-    document.getElementById(
-      "shop"
-    );
-
-  window.scrollTo({
-    top:
-      shop.offsetTop - 60,
-    behavior:"auto"
-  });
-
-}
-
-
-function showAllProducts(){
-
-  selectedCategory = "";
-
-  document
-    .querySelectorAll(".cat")
-    .forEach(btn => {
-
-      btn.classList.remove(
-        "active"
-      );
-
-    });
-
-  document.getElementById(
-    "shopTitle"
-  ).textContent =
-    "FEATURED PRODUCTS";
-
-  document.getElementById(
-    "showAllBtn"
-  ).style.display =
-    "none";
-
-  renderProducts();
-
-}
-
-
-function galleryHTML(p){
-
-  const images =
-    getProductImages(p);
-
-  if(!images.length){
-
-    return `
-      <div class="gallery-main">
-        <span class="muted">
-          No image
-        </span>
-      </div>
-    `;
-
-  }
-
-  const first =
-    images[0];
-
-  return `
-
-    <div class="gallery">
-
-      <div
-        class="gallery-main"
-        data-gallery-id="${Number(p.id)}"
-        data-image-index="0"
-      >
-
-        <img
-          class="product-main-image"
-          src="${escapeHTML(first)}"
-          alt="${escapeHTML(
-            p.name || "Product"
-          )}"
-          loading="lazy"
-          decoding="async"
-          fetchpriority="low"
-          draggable="false"
-        >
-
-        <span class="gallery-count">
-          ${images.length}
-          photo${images.length > 1 ? "s" : ""}
-        </span>
-
-      </div>
-
-      ${
-        images.length > 1
-        ?
-        `
-        <div class="gallery-thumbs">
-
-          ${
-            images.map(
-              (src,i) => `
-                <img
-                  src="${escapeHTML(src)}"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                  class="${
-                    i===0
-                    ? "active"
-                    : ""
-                  }"
-                  data-gallery-thumb="${Number(p.id)}"
-                  data-index="${i}"
-                  draggable="false"
-                >
-              `
-            ).join("")
-          }
-
-        </div>
-        `
-        :
-        ""
-      }
-
-    </div>
-
-  `;
 
 }
 
@@ -1638,6 +1492,332 @@ function escapeHTML(value){
 }
 
 
+async function loadProducts(){
+
+  const el =
+    document.getElementById(
+      "products"
+    );
+
+
+  try{
+
+    const r =
+      await fetch(
+        "/api/products",
+        {
+          cache:"no-store"
+        }
+      );
+
+
+    if(!r.ok){
+
+      throw new Error(
+        "Could not load products"
+      );
+
+    }
+
+
+    const d =
+      await r.json();
+
+
+    products =
+      Array.isArray(
+        d.products
+      )
+      ?
+      d.products
+      :
+      [];
+
+
+    renderProducts();
+
+    renderCart();
+
+
+  }catch(error){
+
+    console.error(error);
+
+
+    el.innerHTML =
+      `
+      <div class="empty">
+        Products are temporarily unavailable.
+      </div>
+      `;
+
+  }
+
+}
+
+
+/* =================================
+   CATEGORY SYSTEM
+   FEATURED IS NOW A CATEGORY
+================================= */
+
+let selectedCategory = "";
+
+
+function categoryMatch(p){
+
+  if(!selectedCategory){
+
+    return false;
+
+  }
+
+
+  /* FEATURED CATEGORY */
+
+  if(
+    selectedCategory
+      .trim()
+      .toLowerCase()
+      ===
+      "featured"
+  ){
+
+    return (
+      p.featured === true ||
+      String(
+        p.featured
+      ).toLowerCase()
+      ===
+      "true" ||
+      Number(
+        p.featured
+      ) === 1
+    );
+
+  }
+
+
+  /* NORMAL CATEGORIES */
+
+  return String(
+    p.category || ""
+  )
+  .trim()
+  .toLowerCase()
+  ===
+  selectedCategory
+    .trim()
+    .toLowerCase();
+
+}
+
+
+function showCategory(category){
+
+  selectedCategory =
+    category;
+
+
+  document
+    .querySelectorAll(
+      ".cat"
+    )
+    .forEach(
+      btn => {
+
+        btn.classList.toggle(
+          "active",
+          btn.dataset.category
+          ===
+          category
+        );
+
+      }
+    );
+
+
+  document.getElementById(
+    "shopTitle"
+  ).textContent =
+    category +
+    " PRODUCTS";
+
+
+  renderProducts();
+
+
+  const shop =
+    document.getElementById(
+      "shop"
+    );
+
+
+  window.scrollTo({
+
+    top:
+      shop.offsetTop - 60,
+
+    behavior:
+      "auto"
+
+  });
+
+}
+
+
+function showAllProducts(){
+
+  selectedCategory =
+    "";
+
+
+  document
+    .querySelectorAll(
+      ".cat"
+    )
+    .forEach(
+      btn =>
+        btn.classList.remove(
+          "active"
+        )
+    );
+
+
+  document.getElementById(
+    "shopTitle"
+  ).textContent =
+    "SELECT A CATEGORY";
+
+
+  document.getElementById(
+    "products"
+  ).innerHTML =
+    `
+    <div class="empty">
+      Please select a category above.
+    </div>
+    `;
+
+}
+
+
+function galleryHTML(p){
+
+  const images =
+    getProductImages(p);
+
+
+  if(!images.length){
+
+    return `
+      <div class="gallery-main">
+        <span class="muted">
+          No image
+        </span>
+      </div>
+    `;
+
+  }
+
+
+  const first =
+    images[0];
+
+
+  return `
+
+    <div class="gallery">
+
+      <div
+        class="gallery-main"
+        data-gallery-id="${Number(
+          p.id
+        )}"
+        data-image-index="0"
+      >
+
+        <img
+          class="product-main-image"
+          src="${escapeHTML(
+            first
+          )}"
+          alt="${escapeHTML(
+            p.name ||
+            "Product"
+          )}"
+          loading="lazy"
+          decoding="async"
+          fetchpriority="low"
+          draggable="false"
+        >
+
+
+        <span class="gallery-count">
+
+          ${images.length}
+
+          photo${
+            images.length > 1
+            ? "s"
+            : ""
+          }
+
+        </span>
+
+      </div>
+
+
+      ${
+        images.length > 1
+        ?
+        `
+        <div class="gallery-thumbs">
+
+          ${
+            images
+              .map(
+                (src,i) => `
+
+                  <img
+                    src="${escapeHTML(
+                      src
+                    )}"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="${
+                      i===0
+                      ?
+                      "active"
+                      :
+                      ""
+                    }"
+                    data-gallery-thumb="${Number(
+                      p.id
+                    )}"
+                    data-index="${i}"
+                    draggable="false"
+                  >
+
+                `
+              )
+              .join("")
+          }
+
+        </div>
+        `
+        :
+        ""
+      }
+
+    </div>
+
+  `;
+
+}
+
+
 function renderProducts(){
 
   const el =
@@ -1645,22 +1825,30 @@ function renderProducts(){
       "products"
     );
 
-  let list =
+
+  const list =
     products.filter(
       categoryMatch
     );
 
 
+  /* NO CATEGORY SELECTED */
+
   if(!selectedCategory){
 
-    list =
-      products.filter(
-        p =>
-          p.featured === true
-      );
+    el.innerHTML =
+      `
+      <div class="empty">
+        Please select a category above.
+      </div>
+      `;
+
+    return;
 
   }
 
+
+  /* CATEGORY HAS NO PRODUCTS */
 
   if(!list.length){
 
@@ -1677,127 +1865,162 @@ function renderProducts(){
 
 
   el.innerHTML =
-    list.map(p => {
+    list
+      .map(
+        p => {
 
-      const id =
-        Number(p.id);
-
-      const sizes =
-        getSizes(p);
-
-
-      const sizeHTML =
-        sizes.length
-        ?
-        `
-        <div class="details">
-
-          <label
-            style="margin:0 0 6px"
-          >
-            Select Size
-          </label>
-
-          <select
-            class="size-select"
-            id="size-${id}"
-          >
-
-            <option value="">
-              Choose Size
-            </option>
-
-            ${
-              sizes
-                .map(
-                  s => `
-                    <option
-                      value="${escapeHTML(s)}"
-                    >
-                      ${escapeHTML(s)}
-                    </option>
-                  `
-                )
-                .join("")
-            }
-
-          </select>
-
-        </div>
-        `
-        :
-        "";
+          const id =
+            Number(
+              p.id
+            );
 
 
-      return `
+          const sizes =
+            getSizes(p);
 
-        <div
-          class="card product"
-          data-product-id="${id}"
-        >
 
-          ${galleryHTML(p)}
+          const sizeHTML =
+            sizes.length
+            ?
+            `
+            <div class="details">
 
-          <div class="info">
+              <label
+                style="margin:0 0 6px"
+              >
+                Select Size
+              </label>
 
-            <h3>
-              ${escapeHTML(p.name)}
-            </h3>
 
-            <div class="muted">
-              ${escapeHTML(
-                p.description ||
-                "Premium quality"
-              )}
+              <select
+                class="size-select"
+                id="size-${id}"
+              >
+
+                <option value="">
+                  Choose Size
+                </option>
+
+
+                ${
+                  sizes
+                    .map(
+                      s => `
+                        <option
+                          value="${escapeHTML(
+                            s
+                          )}"
+                        >
+                          ${escapeHTML(
+                            s
+                          )}
+                        </option>
+                      `
+                    )
+                    .join("")
+                }
+
+              </select>
+
             </div>
+            `
+            :
+            "";
 
-            ${
-              p.fabric
-              ?
-              `
-              <div class="details">
-                <b>Fabric:</b>
-                ${escapeHTML(
-                  p.fabric
-                )}
-              </div>
-              `
-              :
-              ""
-            }
 
-            ${sizeHTML}
-
-            <div class="price">
-              ₹${Number(
-                p.price || 0
-              ).toLocaleString(
-                "en-IN"
-              )}
-            </div>
-
-            <button
-              class="btn"
-              type="button"
-              onclick="addProductToCart(${id})"
-            >
-              🛒 ADD TO CART
-            </button>
+          return `
 
             <div
-              class="added-message"
-              id="added-${id}"
+              class="product"
+              data-product-id="${id}"
             >
-              ✓ Added to cart
+
+              ${galleryHTML(p)}
+
+
+              <div class="info">
+
+                <h3>
+                  ${escapeHTML(
+                    p.name
+                  )}
+                </h3>
+
+
+                <div class="muted">
+
+                  ${escapeHTML(
+                    p.description ||
+                    "Premium quality"
+                  )}
+
+                </div>
+
+
+                ${
+                  p.fabric
+                  ?
+                  `
+                  <div class="details">
+
+                    <b>
+                      Fabric:
+                    </b>
+
+                    ${escapeHTML(
+                      p.fabric
+                    )}
+
+                  </div>
+                  `
+                  :
+                  ""
+                }
+
+
+                ${sizeHTML}
+
+
+                <div class="price">
+
+                  ₹${Number(
+                    p.price || 0
+                  ).toLocaleString(
+                    "en-IN"
+                  )}
+
+                </div>
+
+
+                <button
+                  class="btn"
+                  type="button"
+                  onclick="addProductToCart(${id})"
+                >
+
+                  🛒 ADD TO CART
+
+                </button>
+
+
+                <div
+                  class="added-message"
+                  id="added-${id}"
+                >
+
+                  ✓ Added to cart
+
+                </div>
+
+              </div>
+
             </div>
 
-          </div>
+          `;
 
-        </div>
-
-      `;
-
-    }).join("");
+        }
+      )
+      .join("");
 
 
   attachGalleryEvents();
@@ -1814,13 +2037,17 @@ function addProductToCart(id){
         Number(id)
     );
 
+
   if(!p){
+
     return;
+
   }
 
 
   const sizes =
     getSizes(p);
+
 
   let size = "";
 
@@ -1833,10 +2060,13 @@ function addProductToCart(id){
         Number(id)
       );
 
+
     size =
       select
-      ? select.value
-      : "";
+      ?
+      select.value
+      :
+      "";
 
 
     if(!size){
@@ -1856,16 +2086,23 @@ function addProductToCart(id){
     cart.find(
       item =>
         Number(item.id) ===
-          Number(id) &&
-        String(item.size || "") ===
-          String(size || "")
+          Number(id)
+        &&
+        String(
+          item.size || ""
+        ) ===
+          String(
+            size || ""
+          )
     );
 
 
   if(existing){
 
     if(
-      Number(existing.qty || 0) >=
+      Number(
+        existing.qty || 0
+      ) >=
       MAX_QTY
     ){
 
@@ -1877,10 +2114,13 @@ function addProductToCart(id){
 
     }
 
+
     existing.qty =
       Math.min(
         MAX_QTY,
-        Number(existing.qty || 0) + 1
+        Number(
+          existing.qty || 0
+        ) + 1
       );
 
   }else{
@@ -1918,6 +2158,7 @@ function addProductToCart(id){
     added.style.display =
       "block";
 
+
     setTimeout(
       () => {
 
@@ -1942,63 +2183,61 @@ function attachGalleryEvents(){
     .querySelectorAll(
       ".gallery-main"
     )
-    .forEach(main => {
+    .forEach(
+      main => {
 
-      main.addEventListener(
-        "click",
-        function(){
+        main.addEventListener(
+          "click",
+          function(){
 
-          const id =
-            Number(
-              this.dataset.galleryId
+            openProductGallery(
+
+              Number(
+                this.dataset.galleryId
+              ),
+
+              Number(
+                this.dataset.imageIndex ||
+                0
+              )
+
             );
 
-          const index =
-            Number(
-              this.dataset.imageIndex ||
-              0
-            );
+          }
+        );
 
-          openProductGallery(
-            id,
-            index
-          );
-
-        }
-      );
-
-    });
+      }
+    );
 
 
   document
     .querySelectorAll(
       "[data-gallery-thumb]"
     )
-    .forEach(thumb => {
+    .forEach(
+      thumb => {
 
-      thumb.addEventListener(
-        "click",
-        function(){
+        thumb.addEventListener(
+          "click",
+          function(){
 
-          const id =
-            Number(
-              this.dataset.galleryThumb
+            changeCardImage(
+
+              Number(
+                this.dataset.galleryThumb
+              ),
+
+              Number(
+                this.dataset.index
+              )
+
             );
 
-          const index =
-            Number(
-              this.dataset.index
-            );
+          }
+        );
 
-          changeCardImage(
-            id,
-            index
-          );
-
-        }
-      );
-
-    });
+      }
+    );
 
 }
 
@@ -2015,26 +2254,37 @@ function changeCardImage(
         Number(id)
     );
 
+
   if(!p){
+
     return;
+
   }
 
 
   const images =
     getProductImages(p);
 
+
   if(!images[index]){
+
     return;
+
   }
 
 
   const card =
     document.querySelector(
-      `[data-product-id="${Number(id)}"]`
+      `[data-product-id="${Number(
+        id
+      )}"]`
     );
 
+
   if(!card){
+
     return;
+
   }
 
 
@@ -2042,6 +2292,7 @@ function changeCardImage(
     card.querySelector(
       ".gallery-main img"
     );
+
 
   if(main){
 
@@ -2055,6 +2306,7 @@ function changeCardImage(
     card.querySelector(
       ".gallery-main"
     );
+
 
   if(mainBox){
 
@@ -2098,7 +2350,8 @@ function add(
     cart.find(
       i =>
         i.id ===
-          Number(id) &&
+          Number(id)
+        &&
         String(
           i.size || ""
         ) ===
@@ -2111,7 +2364,9 @@ function add(
   if(existing){
 
     if(
-      Number(existing.qty || 0) >=
+      Number(
+        existing.qty || 0
+      ) >=
       MAX_QTY
     ){
 
@@ -2122,6 +2377,7 @@ function add(
       return;
 
     }
+
 
     existing.qty++;
 
@@ -2160,7 +2416,8 @@ function change(
     cart.find(
       i =>
         i.id ===
-          Number(id) &&
+          Number(id)
+        &&
         String(
           i.size || ""
         ) ===
@@ -2169,22 +2426,24 @@ function change(
           )
     );
 
+
   if(!item){
+
     return;
+
   }
 
 
-  const currentQty =
+  let newQty =
     Number(
       item.qty || 0
-    );
+    ) + d;
 
 
-  let newQty =
-    currentQty + d;
-
-
-  if(newQty > MAX_QTY){
+  if(
+    newQty >
+    MAX_QTY
+  ){
 
     newQty =
       MAX_QTY;
@@ -2192,14 +2451,17 @@ function change(
   }
 
 
-  if(newQty <= 0){
+  if(
+    newQty <= 0
+  ){
 
     cart =
       cart.filter(
         i =>
           !(
             i.id ===
-              Number(id) &&
+              Number(id)
+            &&
             String(
               i.size || ""
             ) ===
@@ -2280,10 +2542,12 @@ function renderCart(){
       </p>
       `;
 
+
     document.getElementById(
       "productTotal"
     ).textContent =
       "₹0";
+
 
     document.getElementById(
       "total"
@@ -2295,6 +2559,7 @@ function renderCart(){
       document.getElementById(
         "proceedCheckoutBtn"
       );
+
 
     if(checkoutBtn){
 
@@ -2313,125 +2578,142 @@ function renderCart(){
   }
 
 
-  let productTotal = 0;
+  let productTotal =
+    0;
 
 
   el.innerHTML =
     cart
-      .map(item => {
+      .map(
+        item => {
 
-        const p =
-          products.find(
-            x =>
-              Number(x.id) ===
-              Number(item.id)
-          );
-
-
-        if(!p){
-          return "";
-        }
+          const p =
+            products.find(
+              x =>
+                Number(x.id) ===
+                Number(item.id)
+            );
 
 
-        const price =
-          Number(
-            p.price || 0
-          );
+          if(!p){
+
+            return "";
+
+          }
 
 
-        const qty =
-          Math.min(
-            MAX_QTY,
+          const price =
             Number(
-              item.qty || 0
-            )
-          );
+              p.price || 0
+            );
 
 
-        const subtotal =
-          price *
-          qty;
+          const qty =
+            Math.min(
+              MAX_QTY,
+              Number(
+                item.qty || 0
+              )
+            );
 
 
-        productTotal +=
-          subtotal;
+          const subtotal =
+            price *
+            qty;
 
 
-        return `
+          productTotal +=
+            subtotal;
 
-          <div class="cart-row">
 
-            <div class="cart-product-info">
+          return `
 
-              <div class="cart-product-name">
-                ${escapeHTML(
-                  p.name
-                )}
-              </div>
+            <div class="cart-row">
 
-              <div>
-                ₹${price.toLocaleString(
-                  "en-IN"
-                )}
-                × ${qty}
-              </div>
+              <div class="cart-product-info">
 
-              ${
-                item.size
-                ?
-                `
-                <div class="cart-size">
-                  Size: ${escapeHTML(
-                    item.size
+                <div class="cart-product-name">
+
+                  ${escapeHTML(
+                    p.name
                   )}
+
                 </div>
-                `
-                :
-                ""
-              }
+
+
+                <div>
+
+                  ₹${price.toLocaleString(
+                    "en-IN"
+                  )}
+
+                  × ${qty}
+
+                </div>
+
+
+                ${
+                  item.size
+                  ?
+                  `
+                  <div class="cart-size">
+
+                    Size:
+                    ${escapeHTML(
+                      item.size
+                    )}
+
+                  </div>
+                  `
+                  :
+                  ""
+                }
+
+              </div>
+
+
+              <div class="qty">
+
+                <button
+                  type="button"
+                  onclick="change(
+                    ${Number(item.id)},
+                    -1,
+                    '${escapeHTML(
+                      item.size || ""
+                    )}'
+                  )"
+                >
+                  −
+                </button>
+
+
+                <span class="qty-number">
+                  ${qty}
+                </span>
+
+
+                <button
+                  type="button"
+                  onclick="change(
+                    ${Number(item.id)},
+                    1,
+                    '${escapeHTML(
+                      item.size || ""
+                    )}'
+                  )"
+                >
+                  +
+                </button>
+
+              </div>
 
             </div>
 
+          `;
 
-            <div class="qty">
-
-              <button
-                type="button"
-                onclick="change(
-                  ${Number(item.id)},
-                  -1,
-                  '${escapeHTML(
-                    item.size || ""
-                  )}'
-                )"
-              >
-                −
-              </button>
-
-              <span class="qty-number">
-                ${qty}
-              </span>
-
-              <button
-                type="button"
-                onclick="change(
-                  ${Number(item.id)},
-                  1,
-                  '${escapeHTML(
-                    item.size || ""
-                  )}'
-                )"
-              >
-                +
-              </button>
-
-            </div>
-
-          </div>
-
-        `;
-
-      })
+        }
+      )
       .join("");
 
 
@@ -2488,112 +2770,139 @@ function renderCheckoutCart(){
 
 
   if(!el){
+
     return;
+
   }
 
 
   if(!cart.length){
 
     el.innerHTML =
-      "<p>Your cart is empty.</p>";
+      `
+      <p>
+        Your cart is empty.
+      </p>
+      `;
+
 
     document.getElementById(
       "checkoutProductTotal"
     ).textContent =
       "₹0";
 
+
     document.getElementById(
       "checkoutTotal"
     ).textContent =
       "₹0";
+
 
     return;
 
   }
 
 
-  let productTotal = 0;
+  let productTotal =
+    0;
 
 
   el.innerHTML =
     cart
-      .map(item => {
+      .map(
+        item => {
 
-        const p =
-          products.find(
-            x =>
-              Number(x.id) ===
-              Number(item.id)
-          );
-
-
-        if(!p){
-          return "";
-        }
+          const p =
+            products.find(
+              x =>
+                Number(x.id) ===
+                Number(item.id)
+            );
 
 
-        const price =
-          Number(
-            p.price || 0
-          );
+          if(!p){
+
+            return "";
+
+          }
 
 
-        const qty =
-          Math.min(
-            MAX_QTY,
+          const price =
             Number(
-              item.qty || 0
-            )
-          );
+              p.price || 0
+            );
 
 
-        productTotal +=
-          price * qty;
+          const qty =
+            Math.min(
+              MAX_QTY,
+              Number(
+                item.qty || 0
+              )
+            );
 
 
-        return `
+          productTotal +=
+            price *
+            qty;
 
-          <div
-            class="cart-row"
-            style="padding:9px 0"
-          >
 
-            <div class="cart-product-info">
+          return `
 
-              <div class="cart-product-name">
-                ${escapeHTML(
-                  p.name
-                )}
-              </div>
+            <div
+              class="cart-row"
+              style="padding:9px 0"
+            >
 
-              <div>
-                Qty: ${qty}
-                ${
-                  item.size
-                  ?
-                  ` • Size: ${escapeHTML(
+              <div class="cart-product-info">
+
+                <div class="cart-product-name">
+
+                  ${escapeHTML(
+                    p.name
+                  )}
+
+                </div>
+
+
+                <div>
+
+                  Qty:
+                  ${qty}
+
+                  ${
                     item.size
-                  )}`
-                  :
-                  ""
-                }
+                    ?
+                    ` • Size:
+                      ${escapeHTML(
+                        item.size
+                      )}`
+                    :
+                    ""
+                  }
+
+                </div>
+
               </div>
+
+
+              <strong>
+
+                ₹${(
+                  price *
+                  qty
+                ).toLocaleString(
+                  "en-IN"
+                )}
+
+              </strong>
 
             </div>
 
-            <strong>
-              ₹${(
-                price * qty
-              ).toLocaleString(
-                "en-IN"
-              )}
-            </strong>
+          `;
 
-          </div>
-
-        `;
-
-      })
+        }
+      )
       .join("");
 
 
@@ -2652,6 +2961,7 @@ function goToCheckout(){
           "checkout"
         );
 
+
       if(checkout){
 
         checkout.scrollIntoView({
@@ -2687,9 +2997,13 @@ function showOrders(){
       "orders"
     );
 
+
   if(!section){
+
     return;
+
   }
+
 
   section.scrollIntoView({
     behavior:"auto",
@@ -2699,12 +3013,17 @@ function showOrders(){
 }
 
 
+/* =================================
+   MY ORDERS
+================================= */
+
 async function findCustomerOrder(){
 
   const message =
     document.getElementById(
       "ordersMessage"
     );
+
 
   const list =
     document.getElementById(
@@ -2725,10 +3044,14 @@ async function findCustomerOrder(){
     .slice(-10);
 
 
-  if(mobile.length !== 10){
+  if(
+    mobile.length !==
+    10
+  ){
 
     message.style.display =
       "block";
+
 
     message.innerHTML =
       `
@@ -2738,8 +3061,10 @@ async function findCustomerOrder(){
       </b>
       `;
 
+
     list.innerHTML =
       "";
+
 
     return;
 
@@ -2749,8 +3074,10 @@ async function findCustomerOrder(){
   message.style.display =
     "block";
 
+
   message.textContent =
     "Loading your orders...";
+
 
   list.innerHTML =
     "";
@@ -2811,8 +3138,9 @@ async function findCustomerOrder(){
 
         Please check that you entered
         the same mobile number used
-        while placing the order.
+        while placing your order.
         `;
+
 
       return;
 
@@ -2894,47 +3222,49 @@ function orderHTML(
       [];
 
 
+  const orderId =
+    String(
+      order.id || ""
+    );
+
+
   const itemHTML =
     items.length
     ?
       items
         .map(
-          item => {
+          item => `
 
-            return `
-              <div class="order-item">
+            <div class="order-item">
 
-                <b>
-                  ${escapeHTML(
-                    item.name ||
-                    "Product"
-                  )}
-                </b>
-
-                <br>
-
-                Qty:
-                ${Number(
-                  item.qty || 0
+              <b>
+                ${escapeHTML(
+                  item.name ||
+                  "Product"
                 )}
+              </b>
 
-                ${
-                  item.size
-                  ?
-                  `
-                  • Size
+              <br>
+
+              Qty:
+              ${Number(
+                item.qty || 0
+              )}
+
+              ${
+                item.size
+                ?
+                ` • Size
                   ${escapeHTML(
                     item.size
-                  )}
-                  `
-                  :
-                  ""
-                }
+                  )}`
+                :
+                ""
+              }
 
-              </div>
-            `;
+            </div>
 
-          }
+          `
         )
         .join("")
     :
@@ -2949,12 +3279,6 @@ function orderHTML(
     !!(
       order.shiprocketShipmentId ||
       order.awb
-    );
-
-
-  const orderId =
-    String(
-      order.id || ""
     );
 
 
@@ -2979,6 +3303,7 @@ function orderHTML(
             )}
 
           </div>
+
 
           <div class="order-meta">
 
@@ -3013,6 +3338,7 @@ function orderHTML(
       <div class="order-meta">
 
         Payment:
+
         <b>
           ${escapeHTML(
             order.paymentMethod ||
@@ -3028,6 +3354,7 @@ function orderHTML(
           <br>
 
           AWB:
+
           <b>
             ${escapeHTML(
               order.awb
@@ -3046,6 +3373,7 @@ function orderHTML(
           <br>
 
           Courier:
+
           <b>
             ${escapeHTML(
               order.courier
@@ -3062,6 +3390,7 @@ function orderHTML(
       <div class="order-total">
 
         Total:
+
         ₹${Number(
           order.total ||
           order.amount ||
@@ -3116,6 +3445,10 @@ function orderHTML(
 }
 
 
+/* =================================
+   TRACKING
+================================= */
+
 async function trackCustomerOrder(
   orderId
 ){
@@ -3128,7 +3461,9 @@ async function trackCustomerOrder(
 
 
   if(!box){
+
     return;
+
   }
 
 
@@ -3145,13 +3480,18 @@ async function trackCustomerOrder(
     .slice(-10);
 
 
-  if(mobile.length !== 10){
+  if(
+    mobile.length !==
+    10
+  ){
 
     box.style.display =
       "block";
 
+
     box.innerHTML =
       "Please enter the same mobile number used for the order.";
+
 
     return;
 
@@ -3160,6 +3500,7 @@ async function trackCustomerOrder(
 
   box.style.display =
     "block";
+
 
   box.innerHTML =
     `
@@ -3212,13 +3553,12 @@ async function trackCustomerOrder(
     ){
 
       box.innerHTML =
-        `
-        📦
-        ${escapeHTML(
+        "📦 " +
+        escapeHTML(
           data.message ||
           "Tracking is not available yet."
-        )}
-        `;
+        );
+
 
       return;
 
@@ -3240,17 +3580,17 @@ async function trackCustomerOrder(
         trackingData.shipment_track
       )
       ?
-        trackingData.shipment_track
+      trackingData.shipment_track
       :
-        [];
+      [];
 
 
     const latest =
       tracks.length
       ?
-        tracks[0]
+      tracks[0]
       :
-        null;
+      null;
 
 
     const currentStatus =
@@ -3302,6 +3642,7 @@ async function trackCustomerOrder(
       ${escapeHTML(
         courier
       )}
+
 
       ${
         awb
@@ -3393,19 +3734,20 @@ async function trackCustomerOrder(
 
 
     box.innerHTML =
-      `
-      ❌
-
-      ${escapeHTML(
+      "❌ " +
+      escapeHTML(
         error.message ||
         "Unable to load tracking."
-      )}
-      `;
+      );
 
   }
 
 }
 
+
+/* =================================
+   HASH NAVIGATION
+================================= */
 
 window.addEventListener(
   "hashchange",
@@ -3426,12 +3768,14 @@ window.addEventListener(
       "#cart"
     ){
 
-      document.getElementById(
-        "cart"
-      ).scrollIntoView({
-        behavior:"auto",
-        block:"start"
-      });
+      document
+        .getElementById(
+          "cart"
+        )
+        .scrollIntoView({
+          behavior:"auto",
+          block:"start"
+        });
 
     }
 
@@ -3477,12 +3821,14 @@ if(
   setTimeout(
     () => {
 
-      document.getElementById(
-        "cart"
-      ).scrollIntoView({
-        behavior:"auto",
-        block:"start"
-      });
+      document
+        .getElementById(
+          "cart"
+        )
+        .scrollIntoView({
+          behavior:"auto",
+          block:"start"
+        });
 
     },
     50
@@ -3491,33 +3837,35 @@ if(
 }
 
 
-document
-  .querySelectorAll(".cat")
-  .forEach(btn => {
-
-    btn.addEventListener(
-      "click",
-      () => {
-
-        showCategory(
-          btn.dataset.category
-        );
-
-      }
-    );
-
-  });
-
+/* =================================
+   CATEGORY BUTTONS
+================================= */
 
 document
-  .getElementById(
-    "showAllBtn"
+  .querySelectorAll(
+    ".cat"
   )
-  .addEventListener(
-    "click",
-    showAllProducts
+  .forEach(
+    btn => {
+
+      btn.addEventListener(
+        "click",
+        () => {
+
+          showCategory(
+            btn.dataset.category
+          );
+
+        }
+      );
+
+    }
   );
 
+
+/* =================================
+   IMAGE MODAL
+================================= */
 
 const modal =
   document.getElementById(
@@ -3561,7 +3909,9 @@ function openProductGallery(
 
 
   if(!p){
+
     return;
+
   }
 
 
@@ -3604,7 +3954,9 @@ function openProductGallery(
 function updateModalImage(){
 
   if(!modalImages.length){
+
     return;
+
   }
 
 
@@ -3658,7 +4010,9 @@ function closeModal(){
 function nextImage(){
 
   if(!modalImages.length){
+
     return;
+
   }
 
 
@@ -3681,7 +4035,9 @@ function nextImage(){
 function previousImage(){
 
   if(!modalImages.length){
+
     return;
+
   }
 
 
@@ -3816,7 +4172,9 @@ document.addEventListener(
         "show"
       )
     ){
+
       return;
+
     }
 
 
@@ -3853,6 +4211,10 @@ document.addEventListener(
 );
 
 
+/* =================================
+   MOBILE SWIPE
+================================= */
+
 let touchStartX =
   0;
 
@@ -3867,8 +4229,10 @@ modal.addEventListener(
     const touch =
       event.touches[0];
 
+
     touchStartX =
       touch.clientX;
+
 
     touchStartY =
       touch.clientY;
@@ -3900,12 +4264,15 @@ modal.addEventListener(
 
     if(
       Math.abs(diffX) >
-        60 &&
+      60
+      &&
       Math.abs(diffX) >
-        Math.abs(diffY)
+      Math.abs(diffY)
     ){
 
-      if(diffX < 0){
+      if(
+        diffX < 0
+      ){
 
         nextImage();
 
@@ -3924,9 +4291,10 @@ modal.addEventListener(
 );
 
 
-/* =========================
+/* =================================
    ONLINE PAYMENT ONLY
-========================= */
+   COD REMOVED
+================================= */
 
 document
   .getElementById(
@@ -3945,8 +4313,10 @@ document
           "Please add a product to cart first."
         );
 
+
         location.hash =
           "cart";
+
 
         return;
 
@@ -3975,27 +4345,38 @@ document
 
               id:
                 p
-                ? p.id
-                : item.id,
+                ?
+                p.id
+                :
+                item.id,
 
               name:
                 p
-                ? p.name
-                : "",
+                ?
+                p.name
+                :
+                "",
 
               price:
                 p
-                ? Number(p.price)
-                : 0,
+                ?
+                Number(
+                  p.price
+                )
+                :
+                0,
 
               qty:
                 Math.min(
                   MAX_QTY,
-                  Number(item.qty)
+                  Number(
+                    item.qty
+                  )
                 ),
 
               size:
-                item.size || ""
+                item.size ||
+                ""
 
             };
 
@@ -4015,6 +4396,7 @@ document
           "Product information is unavailable. Please refresh and try again."
         );
 
+
         return;
 
       }
@@ -4029,6 +4411,7 @@ document
       btn.disabled =
         true;
 
+
       btn.textContent =
         "Please wait…";
 
@@ -4039,7 +4422,9 @@ document
           await fetch(
             "/api/create-order",
             {
-              method:"POST",
+
+              method:
+                "POST",
 
               headers:{
                 "Content-Type":
@@ -4093,7 +4478,9 @@ document
           await orderRes.json();
 
 
-        if(!orderRes.ok){
+        if(
+          !orderRes.ok
+        ){
 
           throw new Error(
             order.error ||
@@ -4133,7 +4520,14 @@ document
               itemData
                 .map(
                   item =>
-                    `${item.name} x ${item.qty}${item.size ? " - Size " + item.size : ""}`
+                    `${item.name} x ${item.qty}${
+                      item.size
+                      ?
+                      " - Size " +
+                      item.size
+                      :
+                      ""
+                    }`
                 )
                 .join(
                   ", "
@@ -4190,7 +4584,9 @@ document
                     await fetch(
                       "/api/payment-status",
                       {
-                        method:"POST",
+
+                        method:
+                          "POST",
 
                         headers:{
                           "Content-Type":
@@ -4204,10 +4600,12 @@ document
                               order.id,
 
                             paymentId:
-                              response.razorpay_payment_id,
+                              response
+                                .razorpay_payment_id,
 
                             signature:
-                              response.razorpay_signature
+                              response
+                                .razorpay_signature
 
                           })
 
@@ -4221,7 +4619,8 @@ document
 
                   if(
                     !v.ok ||
-                    result.verified === false
+                    result.verified ===
+                    false
                   ){
 
                     throw new Error(
@@ -4241,13 +4640,16 @@ document
                   );
 
 
-                  cart = [];
+                  cart =
+                    [];
+
 
                   save();
 
                   renderCart();
 
                   renderCheckoutCart();
+
 
                   event.target.reset();
 
@@ -4284,6 +4686,7 @@ document
                   btn.disabled =
                     false;
 
+
                   btn.textContent =
                     "BUY NOW & PAY";
 
@@ -4299,6 +4702,7 @@ document
 
                   btn.disabled =
                     false;
+
 
                   btn.textContent =
                     "BUY NOW & PAY";
@@ -4326,6 +4730,7 @@ document
             btn.disabled =
               false;
 
+
             btn.textContent =
               "BUY NOW & PAY";
 
@@ -4347,6 +4752,7 @@ document
         btn.disabled =
           false;
 
+
         btn.textContent =
           "BUY NOW & PAY";
 
@@ -4356,9 +4762,9 @@ document
   );
 
 
-/* =========================
+/* =================================
    START
-========================= */
+================================= */
 
 loadProducts();
 
