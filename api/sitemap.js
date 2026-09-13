@@ -1,36 +1,36 @@
+const { getJSON } = require("../_store");
+
 module.exports = async (req, res) => {
   try {
-    const protocol =
-      req.headers["x-forwarded-proto"] || "https";
+    const products = await getJSON("products", []);
 
-    const host = req.headers.host;
-    const baseUrl = `${protocol}://${host}`;
-
-    const response = await fetch(`${baseUrl}/api/products`);
-
-    if (!response.ok) {
-      throw new Error("Unable to load products");
-    }
-
-    const data = await response.json();
-
-    const products = Array.isArray(data)
-      ? data
-      : Array.isArray(data.products)
-        ? data.products
+    const list = Array.isArray(products)
+      ? products
+      : Array.isArray(products.products)
+        ? products.products
         : [];
 
+    const baseUrl = "https://www.sniperpremiumwear.com";
+
     const urls = [
-      `${baseUrl}/`
+      {
+        loc: `${baseUrl}/`,
+        priority: "1.0"
+      }
     ];
 
-    products.forEach((product) => {
-      if (product && product.id !== undefined && product.id !== null) {
-        urls.push(
-          `${baseUrl}/product/${encodeURIComponent(
+    list.forEach((product) => {
+      if (
+        product &&
+        product.id !== undefined &&
+        product.id !== null
+      ) {
+        urls.push({
+          loc: `${baseUrl}/product/${encodeURIComponent(
             String(product.id)
-          )}`
-        );
+          )}`,
+          priority: "0.8"
+        });
       }
     });
 
@@ -38,8 +38,10 @@ module.exports = async (req, res) => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls
   .map(
-    (url) => `  <url>
-    <loc>${escapeXml(url)}</loc>
+    (item) => `  <url>
+    <loc>${escapeXml(item.loc)}</loc>
+    <changefreq>daily</changefreq>
+    <priority>${item.priority}</priority>
   </url>`
   )
   .join("\n")}
@@ -58,7 +60,7 @@ ${urls
     return res.status(200).send(xml);
 
   } catch (error) {
-    console.error(error);
+    console.error("Sitemap error:", error);
 
     return res.status(500).send(
       `<?xml version="1.0" encoding="UTF-8"?>
