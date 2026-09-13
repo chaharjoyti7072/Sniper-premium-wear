@@ -7,9 +7,7 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-<title>
-Army T Shirts, Tactical Trousers & Cargo Wear | Sniper Premium Wear
-</title>
+<title>Army T Shirts, Tactical Trousers & Cargo Wear | Sniper Premium Wear</title>
 
 <meta name="application-name"
       content="JOYTI - SNIPER PREMIUM WEAR">
@@ -35,32 +33,25 @@ Army T Shirts, Tactical Trousers & Cargo Wear | Sniper Premium Wear
 <meta property="og:type"
       content="website">
 
-
-<!-- GOOGLE WEBSITE STRUCTURED DATA -->
-
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Sniper Premium Wear",
-  "alternateName": "JOYTI - SNIPER PREMIUM WEAR",
-  "url": "https://www.sniperpremiumwear.com/"
+  "@context":"https://schema.org",
+  "@type":"WebSite",
+  "name":"Sniper Premium Wear",
+  "alternateName":"JOYTI - SNIPER PREMIUM WEAR",
+  "url":"https://www.sniperpremiumwear.com/"
 }
 </script>
 
-
-<!-- GOOGLE ORGANIZATION STRUCTURED DATA -->
-
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Sniper Premium Wear",
-  "alternateName": "JOYTI",
-  "url": "https://www.sniperpremiumwear.com/"
+  "@context":"https://schema.org",
+  "@type":"Organization",
+  "name":"Sniper Premium Wear",
+  "alternateName":"JOYTI",
+  "url":"https://www.sniperpremiumwear.com/"
 }
 </script>
-
 
 <style>
 
@@ -214,11 +205,11 @@ section{
   margin:auto;
 }
 
-#categories{
-  scroll-margin-top:85px;
-}
-
-#shop{
+#categories,
+#shop,
+#cart,
+#checkout,
+#orders{
   scroll-margin-top:85px;
 }
 
@@ -286,7 +277,7 @@ section{
   box-shadow:0 4px 14px rgba(0,0,0,.06);
   contain:layout paint style;
   content-visibility:auto;
-  contain-intrinsic-size:480px;
+  contain-intrinsic-size:520px;
 }
 
 .product-main-image{
@@ -305,6 +296,15 @@ section{
 .product h3{
   margin:0 0 7px;
   font-size:20px;
+}
+
+.product-title-link{
+  color:inherit;
+  text-decoration:none;
+}
+
+.product-title-link:hover{
+  text-decoration:underline;
 }
 
 .price{
@@ -874,25 +874,15 @@ footer{
 <header>
 
   <div class="logo">
-
     JOYTI • SNIPER PREMIUM WEAR
-
-    <small>
-      PREMIUM WEAR • BUILT FOR YOUR STYLE
-    </small>
-
+    <small>PREMIUM WEAR • BUILT FOR YOUR STYLE</small>
   </div>
-
 
   <nav>
 
-    <a href="#home">
-      HOME
-    </a>
+    <a href="#home">HOME</a>
 
-    <a href="#categories">
-      SHOP
-    </a>
+    <a href="#categories">SHOP</a>
 
     <a href="#cart" class="cart-nav">
       🛒 CART
@@ -906,7 +896,6 @@ footer{
   </nav>
 
 </header>
-
 
 <main>
 
@@ -933,21 +922,15 @@ footer{
 
 </section>
 
-
 <section id="categories">
 
   <div class="title">
 
-    <h2>
-      SHOP BY CATEGORY
-    </h2>
+    <h2>SHOP BY CATEGORY</h2>
 
-    <p>
-      Choose your style
-    </p>
+    <p>Choose your style</p>
 
   </div>
-
 
   <div class="categories">
 
@@ -956,89 +939,49 @@ footer{
       data-category="T-Shirts"
       type="button"
     >
-
-      <b>
-        T-Shirts
-      </b>
-
-      <span>
-        Premium everyday wear
-      </span>
-
+      <b>T-Shirts</b>
+      <span>Premium everyday wear</span>
     </button>
-
 
     <button
       class="cat"
       data-category="Trousers"
       type="button"
     >
-
-      <b>
-        Trousers
-      </b>
-
-      <span>
-        Tactical & utility style
-      </span>
-
+      <b>Trousers</b>
+      <span>Tactical & utility style</span>
     </button>
-
 
     <button
       class="cat"
       data-category="Shorts"
       type="button"
     >
-
-      <b>
-        Shorts
-      </b>
-
-      <span>
-        Easy casual fit
-      </span>
-
+      <b>Shorts</b>
+      <span>Easy casual fit</span>
     </button>
-
 
     <button
       class="cat"
       data-category="Footwear"
       type="button"
     >
-
-      <b>
-        Footwear
-      </b>
-
-      <span>
-        Complete the look
-      </span>
-
+      <b>Footwear</b>
+      <span>Complete the look</span>
     </button>
-
 
     <button
       class="cat"
       data-category="Featured"
       type="button"
     >
-
-      <b>
-        Featured
-      </b>
-
-      <span>
-        Our top picks
-      </span>
-
+      <b>Featured</b>
+      <span>Our top picks</span>
     </button>
 
   </div>
 
 </section>
-
 
 <section id="shop">
 
@@ -1054,7 +997,6 @@ footer{
 
   </div>
 
-
   <div
     class="products"
     id="products"
@@ -1068,21 +1010,17 @@ footer{
 
 </section>
 
-
 <section id="cart">
 
   <div class="title">
 
-    <h2>
-      🛒 YOUR CART
-    </h2>
+    <h2>🛒 YOUR CART</h2>
 
     <p>
       Add multiple products and checkout together
     </p>
 
   </div>
-
 
   <div
     class="checkout"
@@ -1094,55 +1032,28 @@ footer{
       id="cartBox"
     >
 
-      <h3>
-        Selected Products
-      </h3>
+      <h3>Selected Products</h3>
 
       <div id="cartItems"></div>
-
 
       <div class="summary">
 
         <div class="summary-row">
-
-          <span>
-            Product Price
-          </span>
-
-          <strong id="productTotal">
-            ₹0
-          </strong>
-
+          <span>Product Price</span>
+          <strong id="productTotal">₹0</strong>
         </div>
-
 
         <div class="summary-row">
-
-          <span>
-            Shipping Charge
-          </span>
-
-          <strong>
-            ₹49
-          </strong>
-
+          <span>Shipping Charge</span>
+          <strong>₹49</strong>
         </div>
 
-
         <div class="summary-row summary-total">
-
-          <span>
-            Grand Total
-          </span>
-
-          <strong id="total">
-            ₹0
-          </strong>
-
+          <span>Grand Total</span>
+          <strong id="total">₹0</strong>
         </div>
 
       </div>
-
 
       <button
         id="proceedCheckoutBtn"
@@ -1160,14 +1071,11 @@ footer{
 
 </section>
 
-
 <section id="checkout">
 
   <div class="title">
 
-    <h2>
-      CHECKOUT
-    </h2>
+    <h2>CHECKOUT</h2>
 
     <p>
       Your selected products are shown above.
@@ -1176,68 +1084,38 @@ footer{
 
   </div>
 
-
   <div class="checkout">
 
     <div class="cart">
 
-      <h3>
-        Order Summary
-      </h3>
+      <h3>Order Summary</h3>
 
       <div id="checkoutCartItems"></div>
-
 
       <div class="summary">
 
         <div class="summary-row">
-
-          <span>
-            Product Price
-          </span>
-
-          <strong id="checkoutProductTotal">
-            ₹0
-          </strong>
-
+          <span>Product Price</span>
+          <strong id="checkoutProductTotal">₹0</strong>
         </div>
-
 
         <div class="summary-row">
-
-          <span>
-            Shipping Charge
-          </span>
-
-          <strong>
-            ₹49
-          </strong>
-
+          <span>Shipping Charge</span>
+          <strong>₹49</strong>
         </div>
 
-
         <div class="summary-row summary-total">
-
-          <span>
-            Grand Total
-          </span>
-
-          <strong id="checkoutTotal">
-            ₹0
-          </strong>
-
+          <span>Grand Total</span>
+          <strong id="checkoutTotal">₹0</strong>
         </div>
 
       </div>
 
     </div>
 
-
     <form id="orderForm">
 
-      <label>
-        Full Name
-      </label>
+      <label>Full Name</label>
 
       <input
         required
@@ -1245,10 +1123,7 @@ footer{
         autocomplete="name"
       >
 
-
-      <label>
-        Mobile Number
-      </label>
+      <label>Mobile Number</label>
 
       <input
         required
@@ -1260,10 +1135,7 @@ footer{
         autocomplete="tel"
       >
 
-
-      <label>
-        Full Address
-      </label>
+      <label>Full Address</label>
 
       <textarea
         required
@@ -1271,10 +1143,7 @@ footer{
         autocomplete="street-address"
       ></textarea>
 
-
-      <label>
-        PIN Code
-      </label>
+      <label>PIN Code</label>
 
       <input
         required
@@ -1285,11 +1154,7 @@ footer{
         autocomplete="postal-code"
       >
 
-
-      <label>
-        Payment Method
-      </label>
-
+      <label>Payment Method</label>
 
       <div class="pay">
 
@@ -1308,7 +1173,6 @@ footer{
 
       </div>
 
-
       <button
         class="btn"
         type="submit"
@@ -1317,7 +1181,6 @@ footer{
       </button>
 
     </form>
-
 
     <p
       class="muted"
@@ -1330,14 +1193,11 @@ footer{
 
 </section>
 
-
 <section id="orders">
 
   <div class="title">
 
-    <h2>
-      MY ORDERS
-    </h2>
+    <h2>MY ORDERS</h2>
 
     <p>
       Check all your orders using your Mobile Number
@@ -1345,14 +1205,11 @@ footer{
 
   </div>
 
-
   <div class="orders-box">
 
     <div class="order-card">
 
-      <label>
-        Mobile Number
-      </label>
+      <label>Mobile Number</label>
 
       <input
         id="customerMobile"
@@ -1363,7 +1220,6 @@ footer{
         autocomplete="tel"
       >
 
-
       <button
         class="btn"
         type="button"
@@ -1371,7 +1227,6 @@ footer{
       >
         VIEW MY ORDERS
       </button>
-
 
       <div
         id="ordersMessage"
@@ -1383,7 +1238,6 @@ footer{
 
     </div>
 
-
     <div id="ordersList"></div>
 
   </div>
@@ -1392,13 +1246,11 @@ footer{
 
 </main>
 
-
 <footer>
 
   © 2026 JOYTI • SNIPER PREMIUM WEAR • PREMIUM FASHION STORE
 
 </footer>
-
 
 <div
   class="image-modal"
@@ -1413,7 +1265,6 @@ footer{
     ×
   </button>
 
-
   <button
     class="modal-left"
     id="modalLeft"
@@ -1421,7 +1272,6 @@ footer{
   >
     ‹
   </button>
-
 
   <div class="modal-image-wrap">
 
@@ -1434,7 +1284,6 @@ footer{
 
   </div>
 
-
   <button
     class="modal-right"
     id="modalRight"
@@ -1442,7 +1291,6 @@ footer{
   >
     ›
   </button>
-
 
   <div class="zoom-controls">
 
@@ -1471,9 +1319,7 @@ footer{
 
 </div>
 
-
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
 
 <script>
 
@@ -1594,6 +1440,22 @@ function escapeHTML(value){
 
 
 /* =================================
+   PRODUCT SEO LINKS
+================================= */
+
+function getProductURL(id){
+
+  return (
+    "/product/" +
+    encodeURIComponent(
+      String(id)
+    )
+  );
+
+}
+
+
+/* =================================
    GOOGLE PRODUCT INDEX DATA
 ================================= */
 
@@ -1628,9 +1490,9 @@ function updateGoogleProductData(){
               p.name || "Product"
             ),
             "url":
-              "https://www.sniperpremiumwear.com/#product-" +
-              encodeURIComponent(
-                String(p.id || index + 1)
+              "https://www.sniperpremiumwear.com" +
+              getProductURL(
+                p.id || index + 1
               )
           };
 
@@ -1920,7 +1782,6 @@ function galleryHTML(p){
 
       </div>
 
-
       ${
         images.length > 1
         ?
@@ -2067,6 +1928,9 @@ function renderProducts(){
             :
             "";
 
+          const productURL =
+            getProductURL(id);
+
           return `
 
             <div
@@ -2080,9 +1944,14 @@ function renderProducts(){
               <div class="info">
 
                 <h3>
-                  ${escapeHTML(
-                    p.name
-                  )}
+                  <a
+                    class="product-title-link"
+                    href="${productURL}"
+                  >
+                    ${escapeHTML(
+                      p.name
+                    )}
+                  </a>
                 </h3>
 
                 <div class="muted">
@@ -2126,14 +1995,21 @@ function renderProducts(){
 
                 </div>
 
-                <button
+                <a
                   class="btn"
+                  href="${productURL}"
+                  style="width:100%;text-align:center;margin-top:8px"
+                >
+                  VIEW PRODUCT
+                </a>
+
+                <button
+                  class="btn btn-dark"
                   type="button"
                   onclick="addProductToCart(${id})"
+                  style="width:100%;margin-top:8px"
                 >
-
                   🛒 ADD TO CART
-
                 </button>
 
                 <div
@@ -2548,9 +2424,9 @@ function change(
             String(
               i.size || ""
             ) ===
-            String(
-              size || ""
-            )
+              String(
+                size || ""
+              )
           )
       );
 
@@ -3320,13 +3196,11 @@ function orderHTML(order){
 
       </div>
 
-
       <div class="order-items">
 
         ${itemHTML}
 
       </div>
-
 
       <div class="order-meta">
 
@@ -3338,7 +3212,6 @@ function orderHTML(order){
             "ONLINE"
           )}
         </b>
-
 
         ${
           order.awb
@@ -3357,7 +3230,6 @@ function orderHTML(order){
           :
           ""
         }
-
 
         ${
           order.courier
@@ -3379,7 +3251,6 @@ function orderHTML(order){
 
       </div>
 
-
       <div class="order-total">
 
         Total:
@@ -3394,7 +3265,6 @@ function orderHTML(order){
 
       </div>
 
-
       ${
         hasShipment
         ?
@@ -3408,7 +3278,6 @@ function orderHTML(order){
         >
           🚚 TRACK ORDER
         </button>
-
 
         <div
           id="tracking-${escapeHTML(orderId)}"
@@ -3605,7 +3474,6 @@ async function trackCustomerOrder(orderId){
         courier
       )}
 
-
       ${
         awb
         ?
@@ -3623,7 +3491,6 @@ async function trackCustomerOrder(orderId){
         :
         ""
       }
-
 
       ${
         origin
@@ -3643,7 +3510,6 @@ async function trackCustomerOrder(orderId){
         ""
       }
 
-
       ${
         destination
         ?
@@ -3661,7 +3527,6 @@ async function trackCustomerOrder(orderId){
         :
         ""
       }
-
 
       ${
         tracks.length
