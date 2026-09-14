@@ -12,6 +12,10 @@
   box-sizing:border-box;
 }
 
+html{
+  scroll-behavior:auto;
+}
+
 body{
   margin:0;
   font-family:Arial,sans-serif;
@@ -59,6 +63,7 @@ select{
   margin:5px 0 10px;
   border:1px solid #bbb;
   border-radius:7px;
+  font-size:15px;
 }
 
 button{
@@ -335,6 +340,27 @@ button:disabled{
 
 .delete-order:hover{
   background:#702e28;
+}
+
+/* FORM OPEN HIGHLIGHT */
+
+#productFormSection{
+  scroll-margin-top:15px;
+}
+
+#productFormSection:not(.hide){
+  animation:formOpen .25s ease;
+}
+
+@keyframes formOpen{
+  from{
+    opacity:.6;
+    transform:translateY(8px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
 @media(max-width:700px){
@@ -1144,17 +1170,84 @@ function showAdminSection(section){
 
 /* =========================
    PRODUCT FORM
+   AUTO SCROLL FIX
 ========================= */
 
 function showProductForm(){
 
-  document
-    .getElementById(
+  const form =
+    document.getElementById(
       "productFormSection"
-    )
-    .classList.remove(
-      "hide"
     );
+
+  if(!form){
+    return;
+  }
+
+
+  /* Form open */
+
+  form.classList.remove(
+    "hide"
+  );
+
+
+  /*
+    Browser ko thoda time dete hain
+    taaki form visible hone ke baad
+    uski exact position mil sake.
+  */
+
+  setTimeout(
+    function(){
+
+      const formTop =
+        form.getBoundingClientRect().top +
+        window.pageYOffset;
+
+
+      /*
+        Form ko screen ke top ke
+        paas le aao.
+      */
+
+      window.scrollTo({
+        top:
+          Math.max(
+            0,
+            formTop - 12
+          ),
+
+        behavior:
+          "auto"
+      });
+
+
+      /*
+        Product Name par cursor.
+      */
+
+      setTimeout(
+        function(){
+
+          const nameInput =
+            document.getElementById(
+              "name"
+            );
+
+          if(nameInput){
+
+            nameInput.focus();
+
+          }
+
+        },
+        100
+      );
+
+    },
+    50
+  );
 
 }
 
@@ -1548,6 +1641,10 @@ function renderProducts(){
               "outofstock" ||
             stockValue ===
               "out_of_stock" ||
+            stockValue ===
+              "false" ||
+            stockValue ===
+              "0" ||
             p.inStock === false;
 
 
@@ -1557,6 +1654,23 @@ function renderProducts(){
                 "OUT OF STOCK"
               :
                 "IN STOCK";
+
+
+          const featuredOn =
+            p.featured === true ||
+            String(
+              p.featured
+            ).toLowerCase() ===
+              "true" ||
+            p.featured === 1;
+
+
+          const colour =
+            p.colour ||
+            p.color ||
+            p.colours ||
+            p.colors ||
+            "";
 
 
           return `
@@ -1589,7 +1703,7 @@ function renderProducts(){
                 class="featured-badge"
               >
                 ${
-                  p.featured === true
+                  featuredOn
                   ?
                     "⭐ FEATURED ON"
                   :
@@ -1615,14 +1729,14 @@ function renderProducts(){
 
 
               ${
-                p.colour
+                colour
                 ?
                   `
                   <span
                     class="colour-badge"
                   >
                     🎨 ${safe(
-                      p.colour
+                      colour
                     )}
                   </span>
                   `
@@ -1851,6 +1965,8 @@ function editProductById(
     .value =
       p.colour ||
       p.color ||
+      p.colours ||
+      p.colors ||
       "";
 
 
@@ -1883,16 +1999,19 @@ function editProductById(
           "In Stock";
 
 
+  const featuredOn =
+    p.featured === true ||
+    String(
+      p.featured
+    ).toLowerCase() ===
+      "true" ||
+    p.featured === 1;
+
+
   document
     .getElementById("featured")
     .value =
-      (
-        p.featured === true ||
-        String(
-          p.featured
-        ).toLowerCase() ===
-          "true"
-      )
+      featuredOn
       ?
         "true"
       :
@@ -2253,7 +2372,7 @@ function previewPhoto(
 
 
 /* =========================
-   COMPRESS IMAGE - FIXED
+   COMPRESS IMAGE
 ========================= */
 
 async function compressImage(
@@ -3419,6 +3538,19 @@ async function loadOrders(
                                   " — Size: " +
                                   safe(
                                     i.size
+                                  )
+                                :
+                                  ""
+                              }
+
+                              ${
+                                i.colour ||
+                                i.color
+                                ?
+                                  " — Colour: " +
+                                  safe(
+                                    i.colour ||
+                                    i.color
                                   )
                                 :
                                   ""
