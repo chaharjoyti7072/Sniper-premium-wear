@@ -186,6 +186,12 @@ section{
   margin:auto;
 }
 
+/* SHOP SCROLL FIX */
+
+#shop{
+  scroll-margin-top:0;
+}
+
 .title{
   text-align:center;
   margin-bottom:28px;
@@ -920,7 +926,12 @@ footer{
       HOME
     </a>
 
-    <a href="#shop">
+    <!-- SHOP CLICK FIX -->
+
+    <a
+      href="#shop"
+      onclick="goToShop(event)"
+    >
       SHOP
     </a>
 
@@ -966,10 +977,12 @@ footer{
       premium army-inspired fashion and performance wear.
     </p>
 
+    <!-- SHOP NOW CLICK FIX -->
+
     <a
       class="btn"
       href="#shop"
-      onclick="goToShop(); return false;"
+      onclick="goToShop(event)"
     >
       SHOP NOW
     </a>
@@ -1888,10 +1901,15 @@ function categoryMatch(p){
 
 
 /* =========================
-   GO TO SHOP
+   GO TO SHOP — FIXED
 ========================= */
 
-function goToShop(){
+function goToShop(event){
+
+  if(event){
+    event.preventDefault();
+  }
+
 
   const shop=
     document.getElementById(
@@ -1904,6 +1922,11 @@ function goToShop(){
   }
 
 
+  /*
+    Hash ko manually set kar rahe hain.
+    Browser ka default anchor jump nahi hoga.
+  */
+
   history.replaceState(
     null,
     "",
@@ -1911,31 +1934,65 @@ function goToShop(){
   );
 
 
-  const header=
-    document.querySelector(
-      "header"
-    );
+  function scrollShop(){
+
+    const header=
+      document.querySelector(
+        "header"
+      );
 
 
-  const headerHeight=
-    header
-      ?
-        header.offsetHeight
-      :
-        0;
+    const headerHeight=
+      header
+        ?
+          header.getBoundingClientRect().height
+        :
+          0;
 
 
-  window.scrollTo({
+    /*
+      getBoundingClientRect + current page
+      position se exact shop section nikala ja raha hai.
+    */
 
-    top:
+    const target=
       shop.getBoundingClientRect().top +
       window.pageYOffset -
-      headerHeight -
-      8,
+      headerHeight;
 
-    behavior:"auto"
 
-  });
+    window.scrollTo({
+      top:Math.max(0,target),
+      behavior:"auto"
+    });
+
+  }
+
+
+  /*
+    First scroll
+  */
+
+  scrollShop();
+
+
+  /*
+    Layout/images settle hone ke baad
+    dobara exact position set.
+  */
+
+  requestAnimationFrame(
+    () => {
+
+      scrollShop();
+
+      setTimeout(
+        scrollShop,
+        100
+      );
+
+    }
+  );
 
 }
 
@@ -1998,37 +2055,57 @@ function showCategory(
   }
 
 
-  setTimeout(
+  function scrollCategory(){
+
+    const header=
+      document.querySelector(
+        "header"
+      );
+
+
+    const headerHeight=
+      header
+        ?
+          header.getBoundingClientRect().height
+        :
+          0;
+
+
+    const target=
+      shop.getBoundingClientRect().top +
+      window.pageYOffset -
+      headerHeight;
+
+
+    window.scrollTo({
+      top:Math.max(0,target),
+      behavior:"auto"
+    });
+
+  }
+
+
+  history.replaceState(
+    null,
+    "",
+    "#shop"
+  );
+
+
+  scrollCategory();
+
+
+  requestAnimationFrame(
     () => {
 
-      const header=
-        document.querySelector(
-          "header"
-        );
+      scrollCategory();
 
+      setTimeout(
+        scrollCategory,
+        100
+      );
 
-      const headerHeight=
-        header
-          ?
-            header.offsetHeight
-          :
-            0;
-
-
-      window.scrollTo({
-
-        top:
-          shop.getBoundingClientRect().top +
-          window.pageYOffset -
-          headerHeight -
-          8,
-
-        behavior:"auto"
-
-      });
-
-    },
-    0
+    }
   );
 
 }
@@ -2068,7 +2145,6 @@ function showAllProducts(){
 
 
   renderProducts();
-
 
 }
 
@@ -4922,737 +4998,3 @@ function previousImage(){
 
 document
   .getElementById(
-    "modalClose"
-  )
-  .addEventListener(
-    "click",
-    closeModal
-  );
-
-
-document
-  .getElementById(
-    "modalLeft"
-  )
-  .addEventListener(
-    "click",
-    previousImage
-  );
-
-
-document
-  .getElementById(
-    "modalRight"
-  )
-  .addEventListener(
-    "click",
-    nextImage
-  );
-
-
-document
-  .getElementById(
-    "zoomIn"
-  )
-  .addEventListener(
-    "click",
-    () => {
-
-      zoom=
-        Math.min(
-          2.5,
-          zoom + .25
-        );
-
-
-      updateModalImage();
-
-    }
-  );
-
-
-document
-  .getElementById(
-    "zoomOut"
-  )
-  .addEventListener(
-    "click",
-    () => {
-
-      zoom=
-        Math.max(
-          1,
-          zoom - .25
-        );
-
-
-      updateModalImage();
-
-    }
-  );
-
-
-document
-  .getElementById(
-    "zoomReset"
-  )
-  .addEventListener(
-    "click",
-    () => {
-
-      zoom=
-        1;
-
-
-      updateModalImage();
-
-    }
-  );
-
-
-modal.addEventListener(
-  "click",
-  event => {
-
-    if(
-      event.target ===
-      modal
-    ){
-
-      closeModal();
-
-    }
-
-  }
-);
-
-
-document.addEventListener(
-  "keydown",
-  event => {
-
-    if(
-      !modal.classList.contains(
-        "show"
-      )
-    ){
-
-      return;
-
-    }
-
-
-    if(
-      event.key ===
-      "Escape"
-    ){
-
-      closeModal();
-
-    }
-
-
-    if(
-      event.key ===
-      "ArrowRight"
-    ){
-
-      nextImage();
-
-    }
-
-
-    if(
-      event.key ===
-      "ArrowLeft"
-    ){
-
-      previousImage();
-
-    }
-
-  }
-);
-
-
-/* =========================
-   MOBILE SWIPE
-========================= */
-
-let touchStartX=
-  0;
-
-
-let touchStartY=
-  0;
-
-
-modal.addEventListener(
-  "touchstart",
-  event => {
-
-    const touch=
-      event.touches[0];
-
-
-    touchStartX=
-      touch.clientX;
-
-
-    touchStartY=
-      touch.clientY;
-
-  },
-  {
-    passive:true
-  }
-);
-
-
-modal.addEventListener(
-  "touchend",
-  event => {
-
-    const touch=
-      event.changedTouches[0];
-
-
-    const diffX=
-      touch.clientX -
-      touchStartX;
-
-
-    const diffY=
-      touch.clientY -
-      touchStartY;
-
-
-    if(
-      Math.abs(diffX) > 60 &&
-      Math.abs(diffX) >
-      Math.abs(diffY)
-    ){
-
-      if(
-        diffX < 0
-      ){
-
-        nextImage();
-
-      }else{
-
-        previousImage();
-
-      }
-
-    }
-
-  },
-  {
-    passive:true
-  }
-);
-
-
-/* =========================
-   ONLINE PAYMENT ONLY
-========================= */
-
-document
-  .getElementById(
-    "orderForm"
-  )
-  .addEventListener(
-    "submit",
-    async event => {
-
-      event.preventDefault();
-
-
-      if(!cart.length){
-
-        alert(
-          "Please add a product to cart first."
-        );
-
-
-        location.hash=
-          "cart";
-
-
-        return;
-
-      }
-
-
-      if(
-        cartHasOutOfStock()
-      ){
-
-        alert(
-          "Your cart contains an out-of-stock product. Please remove it before payment."
-        );
-
-
-        location.hash=
-          "cart";
-
-
-        return;
-
-      }
-
-
-      const data=
-        new FormData(
-          event.target
-        );
-
-
-      const itemData=
-        cart.map(
-          item => {
-
-            const p=
-              products.find(
-                x =>
-                  Number(x.id)
-                  ===
-                  Number(item.id)
-              );
-
-
-            return {
-
-              id:
-                p
-                ?
-                  p.id
-                :
-                  item.id,
-
-              name:
-                p
-                ?
-                  p.name
-                :
-                  "",
-
-              price:
-                p
-                ?
-                  Number(
-                    p.price
-                  )
-                :
-                  0,
-
-              qty:
-                Math.min(
-                  MAX_QTY,
-                  Number(
-                    item.qty
-                  )
-                ),
-
-              size:
-                item.size ||
-                "",
-
-              colour:
-                p
-                ?
-                  (
-                    p.colour ||
-                    p.color ||
-                    ""
-                  )
-                :
-                  ""
-
-            };
-
-          }
-        );
-
-
-      if(
-        itemData.some(
-          item =>
-            !item.name ||
-            item.price <= 0
-        )
-      ){
-
-        alert(
-          "Product information is unavailable. Please refresh and try again."
-        );
-
-        return;
-
-      }
-
-
-      const btn=
-        event.target.querySelector(
-          'button[type="submit"]'
-        );
-
-
-      btn.disabled=
-        true;
-
-
-      btn.textContent=
-        "Please wait…";
-
-
-      try{
-
-        const orderRes=
-          await fetch(
-            "/api/create-order",
-            {
-              method:"POST",
-
-              headers:{
-                "Content-Type":
-                  "application/json"
-              },
-
-              body:
-                JSON.stringify({
-
-                  receipt:
-                    "SPW-" +
-                    Date.now(),
-
-                  customer:{
-
-                    name:
-                      data.get(
-                        "name"
-                      ),
-
-                    mobile:
-                      data.get(
-                        "mobile"
-                      )
-
-                  },
-
-                  items:
-                    itemData,
-
-                  address:
-                    data.get(
-                      "address"
-                    ),
-
-                  pin:
-                    data.get(
-                      "pin"
-                    ),
-
-                  paymentMethod:
-                    "ONLINE"
-
-                })
-
-            }
-          );
-
-
-        const order=
-          await orderRes.json();
-
-
-        if(!orderRes.ok){
-
-          throw new Error(
-            order.error ||
-            "Could not create payment order"
-          );
-
-        }
-
-
-        if(
-          order.customerAccessToken
-        ){
-
-          saveCustomerToken(
-            order.customerAccessToken
-          );
-
-        }
-
-
-        const rzp=
-          new Razorpay({
-
-            key:
-              order.key_id,
-
-            amount:
-              order.amount,
-
-            currency:
-              "INR",
-
-            name:
-              "JOYTI - SNIPER PREMIUM WEAR",
-
-            description:
-              itemData
-                .map(
-                  item =>
-                    `${item.name} x ${item.qty}${item.size ? " - Size " + item.size : ""}${item.colour ? " - Colour " + item.colour : ""}`
-                )
-                .join(
-                  ", "
-                ),
-
-            order_id:
-              order.id,
-
-            prefill:{
-
-              name:
-                data.get(
-                  "name"
-                ),
-
-              contact:
-                data.get(
-                  "mobile"
-                )
-
-            },
-
-            notes:{
-
-              address:
-                data.get(
-                  "address"
-                ),
-
-              pin:
-                data.get(
-                  "pin"
-                ),
-
-              shipping_charge:
-                String(
-                  SHIPPING_CHARGE
-                )
-
-            },
-
-            theme:{
-
-              color:
-                "#596442"
-
-            },
-
-
-            handler:
-              async response => {
-
-                try{
-
-                  const v=
-                    await fetch(
-                      "/api/payment-status",
-                      {
-                        method:"POST",
-
-                        headers:{
-                          "Content-Type":
-                            "application/json"
-                        },
-
-                        body:
-                          JSON.stringify({
-
-                            orderId:
-                              order.id,
-
-                            paymentId:
-                              response.razorpay_payment_id,
-
-                            signature:
-                              response.razorpay_signature
-
-                          })
-
-                      }
-                    );
-
-
-                  const result=
-                    await v.json();
-
-
-                  if(
-                    !v.ok ||
-                    result.verified === false
-                  ){
-
-                    throw new Error(
-                      result.error ||
-                      "Payment verification failed"
-                    );
-
-                  }
-
-
-                  alert(
-                    "Payment successful!\n\n" +
-                    "Order ID: " +
-                    order.id +
-                    "\n\n" +
-                    "You can check all your orders using your mobile number in MY ORDERS."
-                  );
-
-
-                  cart=[];
-
-                  save();
-
-                  renderCart();
-
-                  renderCheckoutCart();
-
-
-                  event.target.reset();
-
-
-                  document
-                    .getElementById(
-                      "customerMobile"
-                    )
-                    .value=
-                      String(
-                        data.get(
-                          "mobile"
-                        ) || ""
-                      );
-
-
-                  location.hash=
-                    "orders";
-
-
-                  setTimeout(
-                    findCustomerOrder,
-                    150
-                  );
-
-
-                }catch(error){
-
-                  alert(
-                    error.message ||
-                    "Payment verification failed."
-                  );
-
-                }finally{
-
-                  btn.disabled=
-                    false;
-
-
-                  btn.textContent=
-                    "BUY NOW & PAY";
-
-                }
-
-              },
-
-
-            modal:{
-
-              ondismiss:
-                () => {
-
-                  btn.disabled=
-                    false;
-
-
-                  btn.textContent=
-                    "BUY NOW & PAY";
-
-                }
-
-            }
-
-          });
-
-
-        rzp.on(
-          "payment.failed",
-          response => {
-
-            alert(
-              "Payment failed: " +
-              (
-                response
-                  .error
-                  ?.description ||
-                "Please try again."
-              )
-            );
-
-
-            btn.disabled=
-              false;
-
-
-            btn.textContent=
-              "BUY NOW & PAY";
-
-          }
-        );
-
-
-        rzp.open();
-
-
-      }catch(error){
-
-        alert(
-          error.message ||
-          "Unable to start payment."
-        );
-
-
-        btn.disabled=
-          false;
-
-
-        btn.textContent=
-          "BUY NOW & PAY";
-
-      }
-
-    }
-  );
-
-
-/* =========================
-   START
-========================= */
-
-loadProducts();
-
-renderCart();
-
-updateCartCount();
-
-</script>
-
-
-</body>
-</html>
