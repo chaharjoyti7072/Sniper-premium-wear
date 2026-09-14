@@ -4,54 +4,27 @@
 
 <meta charset="utf-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, viewport-fit=cover"
+>
 
-<title>Army T Shirts, Sports T Shirts, Tactical Trousers & Cargo Wear | Sniper Premium Wear</title>
+<title>JOYTI | SNIPER PREMIUM WEAR</title>
 
-<meta name="application-name"
-      content="JOYTI - SNIPER PREMIUM WEAR">
+<meta
+  name="application-name"
+  content="JOYTI - SNIPER PREMIUM WEAR"
+>
 
-<meta name="description"
-      content="Shop army-inspired T-shirts, sports T-shirts, tactical trousers, cargo trousers, shorts and footwear online at Sniper Premium Wear. Explore premium everyday and utility wear.">
+<meta
+  name="description"
+  content="JOYTI - SNIPER PREMIUM WEAR online store. Premium fashion, army-inspired wear, sports T-shirts, trousers, shorts and footwear."
+>
 
-<meta name="keywords"
-      content="army t shirt, army t shirts, sports t shirt, sports t shirts, sports wear, tactical t shirt, tactical trousers, army trousers, cargo trousers, army shorts, tactical wear, army inspired clothing, sniper premium wear">
-
-<link rel="canonical"
-      href="https://www.sniperpremiumwear.com/">
-
-<meta property="og:title"
-      content="Sniper Premium Wear | Army T Shirts, Sports T Shirts & Tactical Wear">
-
-<meta property="og:description"
-      content="Shop premium army-inspired T-shirts, sports T-shirts, trousers, shorts and footwear online.">
-
-<meta property="og:url"
-      content="https://www.sniperpremiumwear.com/">
-
-<meta property="og:type"
-      content="website">
-
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"WebSite",
-  "name":"Sniper Premium Wear",
-  "alternateName":"JOYTI - SNIPER PREMIUM WEAR",
-  "url":"https://www.sniperpremiumwear.com/"
-}
-</script>
-
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"Organization",
-  "name":"Sniper Premium Wear",
-  "alternateName":"JOYTI",
-  "url":"https://www.sniperpremiumwear.com/"
-}
-</script>
+<meta
+  name="keywords"
+  content="army t shirts, sports t shirts, tactical trousers, army inspired clothing, premium wear, sniper premium wear"
+>
 
 <style>
 
@@ -63,6 +36,8 @@
   --accent:#9aa66d;
   --white:#fff;
   --border:#dedccc;
+  --stock:#3d7048;
+  --out:#8b3d35;
 }
 
 *{
@@ -173,7 +148,7 @@ nav a{
 .hero p{
   font-size:17px;
   color:#e4e1cf;
-  max-width:650px;
+  max-width:700px;
 }
 
 .btn{
@@ -199,18 +174,16 @@ nav a{
   color:#fff;
 }
 
+.btn-out{
+  background:#8b3d35;
+  color:#fff;
+  cursor:not-allowed;
+}
+
 section{
   padding:45px 6%;
   max-width:1250px;
   margin:auto;
-}
-
-#categories,
-#shop,
-#cart,
-#checkout,
-#orders{
-  scroll-margin-top:85px;
 }
 
 .title{
@@ -227,61 +200,53 @@ section{
   color:#666;
 }
 
-/* =================================
-   CATEGORY LAYOUT
-================================= */
-
 .categories{
   display:grid;
-  grid-template-columns:repeat(6,1fr);
+  grid-template-columns:
+    repeat(3,1fr);
   gap:14px;
 }
 
 .cat{
   border:0;
   min-height:130px;
-  padding:20px;
+  padding:25px;
   border-radius:10px;
-  background:linear-gradient(135deg,#24291e,#596442);
+  background:
+    linear-gradient(
+      135deg,
+      #24291e,
+      #596442
+    );
   color:#fff;
   display:flex;
   flex-direction:column;
   justify-content:end;
   text-align:left;
   cursor:pointer;
-  box-shadow:0 4px 12px rgba(0,0,0,.08);
+  box-shadow:
+    0 4px 12px rgba(0,0,0,.08);
   contain:layout paint;
   touch-action:manipulation;
 }
 
 .cat b{
-  font-size:20px;
+  font-size:22px;
 }
 
 .cat span{
   opacity:.8;
   margin-top:5px;
-  font-size:12px;
 }
 
 .cat.active{
   outline:3px solid var(--accent);
 }
 
-/* SPORTS T-SHIRTS CATEGORY */
-
-.cat.sports-category{
-  background:
-    linear-gradient(
-      135deg,
-      #20251b,
-      #596442
-    );
-}
-
 .products{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
   gap:18px;
 }
 
@@ -290,10 +255,11 @@ section{
   border:1px solid var(--border);
   border-radius:10px;
   overflow:hidden;
-  box-shadow:0 4px 14px rgba(0,0,0,.06);
+  box-shadow:
+    0 4px 14px rgba(0,0,0,.06);
   contain:layout paint style;
   content-visibility:auto;
-  contain-intrinsic-size:520px;
+  contain-intrinsic-size:480px;
 }
 
 .product-main-image{
@@ -312,15 +278,6 @@ section{
 .product h3{
   margin:0 0 7px;
   font-size:20px;
-}
-
-.product-title-link{
-  color:inherit;
-  text-decoration:none;
-}
-
-.product-title-link:hover{
-  text-decoration:underline;
 }
 
 .price{
@@ -343,6 +300,43 @@ section{
 .product .info .btn{
   width:100%;
   margin-top:8px;
+}
+
+.stock-badge,
+.colour-badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:5px;
+  font-size:12px;
+  font-weight:900;
+  margin:5px 5px 3px 0;
+}
+
+.stock-badge{
+  color:#fff;
+}
+
+.stock-in{
+  background:var(--stock);
+}
+
+.stock-out{
+  background:var(--out);
+}
+
+.colour-badge{
+  background:#4f5963;
+  color:#fff;
+}
+
+.stock-note{
+  margin-top:8px;
+  padding:8px;
+  border-radius:6px;
+  background:#f2e5e3;
+  color:#702e28;
+  font-size:12px;
+  font-weight:900;
 }
 
 .size-select{
@@ -437,6 +431,18 @@ textarea{
 .cart-size{
   color:#d9dccb;
   font-size:13px;
+}
+
+.cart-colour{
+  color:#d9dccb;
+  font-size:13px;
+}
+
+.cart-stock-out{
+  color:#ffb5ad;
+  font-size:12px;
+  font-weight:900;
+  margin-top:5px;
 }
 
 .qty{
@@ -687,7 +693,8 @@ textarea{
   border-radius:12px;
   padding:18px;
   margin-bottom:15px;
-  box-shadow:0 4px 12px rgba(0,0,0,.05);
+  box-shadow:
+    0 4px 12px rgba(0,0,0,.05);
 }
 
 .order-top{
@@ -760,10 +767,11 @@ footer{
   margin-top:30px;
 }
 
-@media(max-width:1100px){
+@media(max-width:900px){
 
   .categories{
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:
+      repeat(3,1fr);
   }
 
 }
@@ -771,11 +779,13 @@ footer{
 @media(max-width:800px){
 
   .categories{
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:
+      repeat(2,1fr);
   }
 
   .products{
-    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
     gap:10px;
   }
 
@@ -835,7 +845,8 @@ footer{
   }
 
   .categories{
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:
+      repeat(2,1fr);
     gap:9px;
   }
 
@@ -883,26 +894,44 @@ footer{
 }
 
 </style>
+
 </head>
 
+
 <body>
+
 
 <header>
 
   <div class="logo">
+
     JOYTI • SNIPER PREMIUM WEAR
-    <small>PREMIUM WEAR • BUILT FOR YOUR STYLE</small>
+
+    <small>
+      PREMIUM WEAR • BUILT FOR YOUR STYLE
+    </small>
+
   </div>
+
 
   <nav>
 
-    <a href="#home">HOME</a>
+    <a href="#home">
+      HOME
+    </a>
 
-    <a href="#categories">SHOP</a>
+    <a href="#shop">
+      SHOP
+    </a>
 
     <a href="#cart" class="cart-nav">
       🛒 CART
-      <span id="headerCartCount" class="cart-count">0</span>
+      <span
+        id="headerCartCount"
+        class="cart-count"
+      >
+        0
+      </span>
     </a>
 
     <a href="#orders" class="orders-nav">
@@ -913,25 +942,34 @@ footer{
 
 </header>
 
+
 <main>
 
-<section class="hero" id="home">
+
+<!-- HERO -->
+
+<section
+  class="hero"
+  id="home"
+>
 
   <div>
 
     <h1>
-      ARMY INSPIRED.<br>
+      ARMY INSPIRED.
+      <br>
       PREMIUM STYLE.
     </h1>
 
     <p>
-      Army-inspired T-shirts, sports T-shirts,
-      tactical trousers, cargo trousers,
-      shorts and footwear —
-      premium everyday and utility wear.
+      T-shirts, sports T-shirts, trousers, shorts and footwear —
+      premium army-inspired fashion and performance wear.
     </p>
 
-    <a class="btn" href="#categories">
+    <a
+      class="btn"
+      href="#shop"
+    >
       SHOP NOW
     </a>
 
@@ -939,77 +977,135 @@ footer{
 
 </section>
 
-<section id="categories">
+
+<!-- CATEGORIES -->
+
+<section>
 
   <div class="title">
 
-    <h2>SHOP BY CATEGORY</h2>
+    <h2>
+      SHOP BY CATEGORY
+    </h2>
 
-    <p>Choose your style</p>
+    <p>
+      Choose your style
+    </p>
 
   </div>
 
+
   <div class="categories">
+
 
     <button
       class="cat"
       data-category="T-Shirts"
       type="button"
     >
-      <b>T-Shirts</b>
-      <span>Premium everyday wear</span>
+
+      <b>
+        👕 T-Shirts
+      </b>
+
+      <span>
+        Premium everyday wear
+      </span>
+
     </button>
 
-    <!-- NEW SPORTS T-SHIRTS CATEGORY -->
 
     <button
-      class="cat sports-category"
+      class="cat"
       data-category="Sports T-Shirts"
       type="button"
     >
-      <b>Sports T-Shirts</b>
-      <span>Sports & performance wear</span>
+
+      <b>
+        🏃 Sports T-Shirts
+      </b>
+
+      <span>
+        Sports & performance wear
+      </span>
+
     </button>
+
 
     <button
       class="cat"
       data-category="Trousers"
       type="button"
     >
-      <b>Trousers</b>
-      <span>Tactical & utility style</span>
+
+      <b>
+        👖 Trousers
+      </b>
+
+      <span>
+        Comfort & utility style
+      </span>
+
     </button>
+
 
     <button
       class="cat"
       data-category="Shorts"
       type="button"
     >
-      <b>Shorts</b>
-      <span>Easy casual fit</span>
+
+      <b>
+        🩳 Shorts
+      </b>
+
+      <span>
+        Easy casual fit
+      </span>
+
     </button>
+
 
     <button
       class="cat"
       data-category="Footwear"
       type="button"
     >
-      <b>Footwear</b>
-      <span>Complete the look</span>
+
+      <b>
+        👟 Footwear
+      </b>
+
+      <span>
+        Complete the look
+      </span>
+
     </button>
+
 
     <button
       class="cat"
       data-category="Featured"
       type="button"
     >
-      <b>Featured</b>
-      <span>Our top picks</span>
+
+      <b>
+        ⭐ Featured
+      </b>
+
+      <span>
+        Our top picks
+      </span>
+
     </button>
+
 
   </div>
 
 </section>
+
+
+<!-- SHOP -->
 
 <section id="shop">
 
@@ -1023,32 +1119,45 @@ footer{
       Select a category to view products
     </p>
 
+    <button
+      id="showAllBtn"
+      class="btn"
+      type="button"
+      style="
+        display:none;
+        margin-top:8px
+      "
+    >
+      SHOW ALL PRODUCTS
+    </button>
+
   </div>
+
 
   <div
     class="products"
     id="products"
-  >
-
-    <div class="empty">
-      Please select a category above.
-    </div>
-
-  </div>
+  ></div>
 
 </section>
+
+
+<!-- CART -->
 
 <section id="cart">
 
   <div class="title">
 
-    <h2>🛒 YOUR CART</h2>
+    <h2>
+      🛒 YOUR CART
+    </h2>
 
     <p>
       Add multiple products and checkout together
     </p>
 
   </div>
+
 
   <div
     class="checkout"
@@ -1060,28 +1169,57 @@ footer{
       id="cartBox"
     >
 
-      <h3>Selected Products</h3>
+      <h3>
+        Selected Products
+      </h3>
 
       <div id="cartItems"></div>
+
 
       <div class="summary">
 
         <div class="summary-row">
-          <span>Product Price</span>
-          <strong id="productTotal">₹0</strong>
+
+          <span>
+            Product Price
+          </span>
+
+          <strong id="productTotal">
+            ₹0
+          </strong>
+
         </div>
+
 
         <div class="summary-row">
-          <span>Shipping Charge</span>
-          <strong>₹49</strong>
+
+          <span>
+            Shipping Charge
+          </span>
+
+          <strong>
+            ₹49
+          </strong>
+
         </div>
 
-        <div class="summary-row summary-total">
-          <span>Grand Total</span>
-          <strong id="total">₹0</strong>
+
+        <div
+          class="summary-row summary-total"
+        >
+
+          <span>
+            Grand Total
+          </span>
+
+          <strong id="total">
+            ₹0
+          </strong>
+
         </div>
 
       </div>
+
 
       <button
         id="proceedCheckoutBtn"
@@ -1099,11 +1237,16 @@ footer{
 
 </section>
 
+
+<!-- CHECKOUT -->
+
 <section id="checkout">
 
   <div class="title">
 
-    <h2>CHECKOUT</h2>
+    <h2>
+      CHECKOUT
+    </h2>
 
     <p>
       Your selected products are shown above.
@@ -1112,38 +1255,72 @@ footer{
 
   </div>
 
+
   <div class="checkout">
+
 
     <div class="cart">
 
-      <h3>Order Summary</h3>
+      <h3>
+        Order Summary
+      </h3>
 
       <div id="checkoutCartItems"></div>
+
 
       <div class="summary">
 
         <div class="summary-row">
-          <span>Product Price</span>
-          <strong id="checkoutProductTotal">₹0</strong>
+
+          <span>
+            Product Price
+          </span>
+
+          <strong id="checkoutProductTotal">
+            ₹0
+          </strong>
+
         </div>
+
 
         <div class="summary-row">
-          <span>Shipping Charge</span>
-          <strong>₹49</strong>
+
+          <span>
+            Shipping Charge
+          </span>
+
+          <strong>
+            ₹49
+          </strong>
+
         </div>
 
-        <div class="summary-row summary-total">
-          <span>Grand Total</span>
-          <strong id="checkoutTotal">₹0</strong>
+
+        <div
+          class="summary-row summary-total"
+        >
+
+          <span>
+            Grand Total
+          </span>
+
+          <strong id="checkoutTotal">
+            ₹0
+          </strong>
+
         </div>
 
       </div>
 
     </div>
 
+
     <form id="orderForm">
 
-      <label>Full Name</label>
+
+      <label>
+        Full Name
+      </label>
 
       <input
         required
@@ -1151,7 +1328,10 @@ footer{
         autocomplete="name"
       >
 
-      <label>Mobile Number</label>
+
+      <label>
+        Mobile Number
+      </label>
 
       <input
         required
@@ -1163,7 +1343,10 @@ footer{
         autocomplete="tel"
       >
 
-      <label>Full Address</label>
+
+      <label>
+        Full Address
+      </label>
 
       <textarea
         required
@@ -1171,7 +1354,10 @@ footer{
         autocomplete="street-address"
       ></textarea>
 
-      <label>PIN Code</label>
+
+      <label>
+        PIN Code
+      </label>
 
       <input
         required
@@ -1182,7 +1368,11 @@ footer{
         autocomplete="postal-code"
       >
 
-      <label>Payment Method</label>
+
+      <label>
+        Payment Method
+      </label>
+
 
       <div class="pay">
 
@@ -1201,6 +1391,7 @@ footer{
 
       </div>
 
+
       <button
         class="btn"
         type="submit"
@@ -1208,7 +1399,9 @@ footer{
         BUY NOW & PAY
       </button>
 
+
     </form>
+
 
     <p
       class="muted"
@@ -1217,15 +1410,21 @@ footer{
       Secure online payment powered by Razorpay.
     </p>
 
+
   </div>
 
 </section>
+
+
+<!-- MY ORDERS -->
 
 <section id="orders">
 
   <div class="title">
 
-    <h2>MY ORDERS</h2>
+    <h2>
+      MY ORDERS
+    </h2>
 
     <p>
       Check all your orders using your Mobile Number
@@ -1233,11 +1432,15 @@ footer{
 
   </div>
 
+
   <div class="orders-box">
+
 
     <div class="order-card">
 
-      <label>Mobile Number</label>
+      <label>
+        Mobile Number
+      </label>
 
       <input
         id="customerMobile"
@@ -1248,6 +1451,7 @@ footer{
         autocomplete="tel"
       >
 
+
       <button
         class="btn"
         type="button"
@@ -1255,6 +1459,7 @@ footer{
       >
         VIEW MY ORDERS
       </button>
+
 
       <div
         id="ordersMessage"
@@ -1266,19 +1471,25 @@ footer{
 
     </div>
 
+
     <div id="ordersList"></div>
 
   </div>
 
 </section>
 
+
 </main>
+
 
 <footer>
 
   © 2026 JOYTI • SNIPER PREMIUM WEAR • PREMIUM FASHION STORE
 
 </footer>
+
+
+<!-- IMAGE MODAL -->
 
 <div
   class="image-modal"
@@ -1293,6 +1504,7 @@ footer{
     ×
   </button>
 
+
   <button
     class="modal-left"
     id="modalLeft"
@@ -1300,6 +1512,7 @@ footer{
   >
     ‹
   </button>
+
 
   <div class="modal-image-wrap">
 
@@ -1312,6 +1525,7 @@ footer{
 
   </div>
 
+
   <button
     class="modal-right"
     id="modalRight"
@@ -1319,6 +1533,7 @@ footer{
   >
     ›
   </button>
+
 
   <div class="zoom-controls">
 
@@ -1347,25 +1562,38 @@ footer{
 
 </div>
 
+
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 
 <script>
 
-let products = [];
 
-const SHIPPING_CHARGE = 49;
+/* =========================
+   STORE DATA
+========================= */
 
-const MAX_QTY = 10;
+let products=[];
 
-let cart = JSON.parse(
-  localStorage.getItem("sniperCart") || "[]"
-);
+const SHIPPING_CHARGE=49;
 
-const CUSTOMER_TOKEN_KEY =
+const MAX_QTY=10;
+
+let cart=
+  JSON.parse(
+    localStorage.getItem(
+      "sniperCart"
+    ) || "[]"
+  );
+
+
+const CUSTOMER_TOKEN_KEY=
   "sniperCustomerAccessToken";
 
 
-function saveCustomerToken(token){
+function saveCustomerToken(
+  token
+){
 
   if(!token){
     return;
@@ -1400,25 +1628,100 @@ function save(){
 }
 
 
+/* =========================
+   STOCK HELPERS
+========================= */
+
+function isOutOfStock(p){
+
+  if(!p){
+    return false;
+  }
+
+
+  const status=
+    String(
+      p.stockStatus ||
+      p.stock ||
+      ""
+    )
+    .trim()
+    .toLowerCase();
+
+
+  if(
+    status === "out of stock" ||
+    status === "outofstock" ||
+    status === "out_of_stock" ||
+    status === "out"
+  ){
+
+    return true;
+
+  }
+
+
+  if(
+    p.inStock === false
+  ){
+
+    return true;
+
+  }
+
+
+  return false;
+
+}
+
+
+function getStockText(p){
+
+  return isOutOfStock(p)
+    ?
+      "OUT OF STOCK"
+    :
+      "IN STOCK";
+
+}
+
+
+/* =========================
+   PRODUCT IMAGES
+========================= */
+
 function getProductImages(p){
 
-  let images = [];
+  let images=[];
 
-  if(Array.isArray(p.images)){
 
-    images = images.concat(
-      p.images.filter(Boolean)
-    );
+  if(
+    Array.isArray(
+      p.images
+    )
+  ){
+
+    images=
+      images.concat(
+        p.images.filter(Boolean)
+      );
+
+  }
+
+
+  if(
+    Array.isArray(
+      p.photos
+    )
+  ){
+
+    images=
+      images.concat(
+        p.photos.filter(Boolean)
+      );
 
   }
 
-  if(Array.isArray(p.photos)){
-
-    images = images.concat(
-      p.photos.filter(Boolean)
-    );
-
-  }
 
   if(p.img){
 
@@ -1428,15 +1731,24 @@ function getProductImages(p){
 
   }
 
-  images = images
-    .map(
-      x => String(x).trim()
-    )
-    .filter(Boolean);
+
+  images=
+    images
+      .map(
+        x =>
+          String(x).trim()
+      )
+      .filter(Boolean);
+
 
   return [
-    ...new Set(images)
-  ].slice(0,5);
+    ...new Set(
+      images
+    )
+  ].slice(
+    0,
+    5
+  );
 
 }
 
@@ -1453,135 +1765,28 @@ function getSizes(p){
 }
 
 
-function escapeHTML(value){
-
-  return String(
-    value || ""
-  )
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
-
-}
-
-
-/* =================================
-   PRODUCT SEO LINKS
-================================= */
-
-function getProductURL(id){
-
-  return (
-    "/product/" +
-    encodeURIComponent(
-      String(id)
-    )
-  );
-
-}
-
-
-/* =================================
-   GOOGLE PRODUCT INDEX DATA
-================================= */
-
-function updateGoogleProductData(){
-
-  const old =
-    document.getElementById(
-      "googleProductList"
-    );
-
-  if(old){
-    old.remove();
-  }
-
-  if(!Array.isArray(products) || !products.length){
-    return;
-  }
-
-  const items =
-    products
-      .slice(0,100)
-      .map(
-        (p,index) => {
-
-          const images =
-            getProductImages(p);
-
-          const item = {
-            "@type":"ListItem",
-            "position":index + 1,
-            "name":String(
-              p.name || "Product"
-            ),
-            "url":
-              "https://www.sniperpremiumwear.com" +
-              getProductURL(
-                p.id || index + 1
-              )
-          };
-
-          if(images.length){
-            item.image =
-              images[0];
-          }
-
-          return item;
-
-        }
-      );
-
-  const script =
-    document.createElement(
-      "script"
-    );
-
-  script.id =
-    "googleProductList";
-
-  script.type =
-    "application/ld+json";
-
-  script.textContent =
-    JSON.stringify({
-      "@context":"https://schema.org",
-      "@type":"ItemList",
-      "name":
-        "Sniper Premium Wear Products",
-      "itemListElement":
-        items
-    });
-
-  document.head.appendChild(
-    script
-  );
-
-}
-
-
-/* =================================
+/* =========================
    LOAD PRODUCTS
-================================= */
+========================= */
 
 async function loadProducts(){
 
-  const el =
+  const el=
     document.getElementById(
       "products"
     );
 
+
   try{
 
-    const r =
+    const r=
       await fetch(
         "/api/products",
         {
           cache:"no-store"
         }
       );
+
 
     if(!r.ok){
 
@@ -1591,29 +1796,34 @@ async function loadProducts(){
 
     }
 
-    const d =
+
+    const d=
       await r.json();
 
-    products =
+
+    products=
       Array.isArray(
         d.products
       )
       ?
-      d.products
+        d.products
       :
-      [];
+        [];
 
-    updateGoogleProductData();
 
     renderProducts();
 
     renderCart();
 
+
   }catch(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
-    el.innerHTML =
+
+    el.innerHTML=
       `
       <div class="empty">
         Products are temporarily unavailable.
@@ -1625,11 +1835,11 @@ async function loadProducts(){
 }
 
 
-/* =================================
-   CATEGORY SYSTEM
-================================= */
+/* =========================
+   CATEGORY
+========================= */
 
-let selectedCategory = "";
+let selectedCategory="";
 
 
 function categoryMatch(p){
@@ -1640,11 +1850,12 @@ function categoryMatch(p){
 
   }
 
+
   if(
     selectedCategory
       .trim()
       .toLowerCase()
-    ===
+      ===
     "featured"
   ){
 
@@ -1653,67 +1864,83 @@ function categoryMatch(p){
       String(
         p.featured
       ).toLowerCase()
-      ===
+        ===
       "true" ||
-      Number(
-        p.featured
-      ) === 1
+      p.featured === 1
     );
 
   }
 
-  return String(
-    p.category || ""
-  )
-  .trim()
-  .toLowerCase()
-  ===
-  selectedCategory
+
+  return (
+    String(
+      p.category || ""
+    )
     .trim()
-    .toLowerCase();
+    .toLowerCase()
+    ===
+    selectedCategory
+      .trim()
+      .toLowerCase()
+  );
 
 }
 
 
-function showCategory(category){
+function showCategory(
+  category
+){
 
-  selectedCategory =
+  selectedCategory=
     category;
 
-  document
-    .querySelectorAll(".cat")
-    .forEach(
-      btn => {
 
+  document
+    .querySelectorAll(
+      ".cat"
+    )
+    .forEach(
+      btn =>
         btn.classList.toggle(
           "active",
-          btn.dataset.category ===
+          btn.dataset.category
+            ===
           category
-        );
-
-      }
+        )
     );
 
-  document.getElementById(
-    "shopTitle"
-  ).textContent =
-    category +
-    " PRODUCTS";
+
+  document
+    .getElementById(
+      "shopTitle"
+    )
+    .textContent=
+      category +
+      " PRODUCTS";
+
+
+  document
+    .getElementById(
+      "showAllBtn"
+    )
+    .style.display=
+      "none";
+
 
   renderProducts();
 
-  const shop =
+
+  const shop=
     document.getElementById(
       "shop"
     );
 
+
   window.scrollTo({
-
     top:
-      shop.offsetTop - 60,
-
+      shop.offsetTop -
+      60,
     behavior:"auto"
-
   });
 
 }
@@ -1721,10 +1948,13 @@ function showCategory(category){
 
 function showAllProducts(){
 
-  selectedCategory = "";
+  selectedCategory="";
+
 
   document
-    .querySelectorAll(".cat")
+    .querySelectorAll(
+      ".cat"
+    )
     .forEach(
       btn =>
         btn.classList.remove(
@@ -1732,31 +1962,37 @@ function showAllProducts(){
         )
     );
 
-  document.getElementById(
-    "shopTitle"
-  ).textContent =
-    "SELECT A CATEGORY";
 
-  document.getElementById(
-    "products"
-  ).innerHTML =
-    `
-    <div class="empty">
-      Please select a category above.
-    </div>
-    `;
+  document
+    .getElementById(
+      "shopTitle"
+    )
+    .textContent=
+      "SELECT A CATEGORY";
+
+
+  document
+    .getElementById(
+      "showAllBtn"
+    )
+    .style.display=
+      "none";
+
+
+  renderProducts();
 
 }
 
 
-/* =================================
-   PRODUCT GALLERY
-================================= */
+/* =========================
+   GALLERY HTML
+========================= */
 
 function galleryHTML(p){
 
-  const images =
+  const images=
     getProductImages(p);
+
 
   if(!images.length){
 
@@ -1770,8 +2006,10 @@ function galleryHTML(p){
 
   }
 
-  const first =
+
+  const first=
     images[0];
+
 
   return `
 
@@ -1786,10 +2024,7 @@ function galleryHTML(p){
         <img
           class="product-main-image"
           src="${escapeHTML(first)}"
-          alt="${escapeHTML(
-            p.name ||
-            "Army inspired clothing product"
-          )}"
+          alt="${escapeHTML(p.name || "Product")}"
           loading="lazy"
           decoding="async"
           fetchpriority="low"
@@ -1799,59 +2034,51 @@ function galleryHTML(p){
         <span class="gallery-count">
 
           ${images.length}
-
-          photo${
-            images.length > 1
-            ? "s"
-            : ""
-          }
+          photo${images.length>1?"s":""}
 
         </span>
 
       </div>
 
+
       ${
-        images.length > 1
+        images.length>1
         ?
-        `
-        <div class="gallery-thumbs">
+          `
+          <div class="gallery-thumbs">
 
-          ${
-            images
-              .map(
-                (src,i) => `
+            ${
+              images
+                .map(
+                  (src,i) =>
+                    `
 
-                  <img
-                    src="${escapeHTML(src)}"
-                    alt="${escapeHTML(
-                      p.name ||
-                      "Product"
-                    )} image ${i+1}"
-                    loading="lazy"
-                    decoding="async"
-                    class="${
-                      i === 0
-                      ?
-                      "active"
-                      :
-                      ""
-                    }"
-                    data-gallery-thumb="${Number(
-                      p.id
-                    )}"
-                    data-index="${i}"
-                    draggable="false"
-                  >
+                    <img
+                      src="${escapeHTML(src)}"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      class="${
+                        i===0
+                          ?
+                            "active"
+                          :
+                            ""
+                      }"
+                      data-gallery-thumb="${Number(p.id)}"
+                      data-index="${i}"
+                      draggable="false"
+                    >
 
-                `
-              )
-              .join("")
-          }
+                    `
+                )
+                .join("")
+            }
 
-        </div>
-        `
+          </div>
+          `
         :
-        ""
+          ""
       }
 
     </div>
@@ -1861,25 +2088,62 @@ function galleryHTML(p){
 }
 
 
-/* =================================
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(
+  value
+){
+
+  return String(
+    value || ""
+  )
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+  .replace(
+    /</g,
+    "&lt;"
+  )
+  .replace(
+    />/g,
+    "&gt;"
+  )
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+  .replace(
+    /'/g,
+    "&#039;"
+  );
+
+}
+
+
+/* =========================
    RENDER PRODUCTS
-================================= */
+========================= */
 
 function renderProducts(){
 
-  const el =
+  const el=
     document.getElementById(
       "products"
     );
 
-  const list =
+
+  let list=
     products.filter(
       categoryMatch
     );
 
+
   if(!selectedCategory){
 
-    el.innerHTML =
+    el.innerHTML=
       `
       <div class="empty">
         Please select a category above.
@@ -1890,9 +2154,10 @@ function renderProducts(){
 
   }
 
+
   if(!list.length){
 
-    el.innerHTML =
+    el.innerHTML=
       `
       <div class="empty">
         No products available yet.
@@ -1903,97 +2168,168 @@ function renderProducts(){
 
   }
 
-  el.innerHTML =
+
+  el.innerHTML=
     list
       .map(
         p => {
 
-          const id =
+          const id=
             Number(p.id);
 
-          const sizes =
+
+          const sizes=
             getSizes(p);
 
-          const sizeHTML =
+
+          const outOfStock=
+            isOutOfStock(p);
+
+
+          const colour=
+            String(
+              p.colour ||
+              p.color ||
+              ""
+            ).trim();
+
+
+          const stockText=
+            getStockText(p);
+
+
+          const sizeHTML=
             sizes.length
             ?
-            `
-            <div class="details">
+              `
+              <div class="details">
 
-              <label
-                style="margin:0 0 6px"
-              >
-                Select Size
-              </label>
+                <label
+                  style="
+                    margin:0 0 6px
+                  "
+                >
+                  Select Size
+                </label>
 
-              <select
-                class="size-select"
-                id="size-${id}"
-              >
 
-                <option value="">
-                  Choose Size
-                </option>
+                <select
+                  class="size-select"
+                  id="size-${id}"
+                >
 
-                ${
-                  sizes
-                    .map(
-                      s => `
-                        <option
-                          value="${escapeHTML(s)}"
-                        >
-                          ${escapeHTML(s)}
-                        </option>
-                      `
-                    )
-                    .join("")
-                }
+                  <option value="">
+                    Choose Size
+                  </option>
 
-              </select>
 
-            </div>
-            `
+                  ${
+                    sizes
+                      .map(
+                        s =>
+                          `
+                          <option
+                            value="${escapeHTML(s)}"
+                          >
+                            ${escapeHTML(s)}
+                          </option>
+                          `
+                      )
+                      .join("")
+                  }
+
+                </select>
+
+              </div>
+              `
             :
-            "";
+              "";
 
-          const productURL =
-            getProductURL(id);
 
           return `
 
-            <div
-              class="product"
-              data-product-id="${id}"
-              id="product-${id}"
-            >
+          <div
+            class="card product"
+            data-product-id="${id}"
+          >
 
-              ${galleryHTML(p)}
 
-              <div class="info">
+            ${galleryHTML(p)}
 
-                <h3>
-                  <a
-                    class="product-title-link"
-                    href="${productURL}"
-                  >
-                    ${escapeHTML(
-                      p.name
-                    )}
-                  </a>
-                </h3>
 
-                <div class="muted">
+            <div class="info">
 
-                  ${escapeHTML(
-                    p.description ||
-                    "Premium quality army-inspired wear."
-                  )}
 
-                </div>
+              <h3>
+                ${escapeHTML(
+                  p.name
+                )}
+              </h3>
 
-                ${
-                  p.fabric
-                  ?
+
+              <div class="muted">
+
+                ${escapeHTML(
+                  p.description ||
+                  "Premium quality"
+                )}
+
+              </div>
+
+
+              ${
+                colour
+                ?
+                  `
+                  <div>
+
+                    <span
+                      class="colour-badge"
+                    >
+                      🎨 Colour:
+                      ${escapeHTML(
+                        colour
+                      )}
+                    </span>
+
+                  </div>
+                  `
+                :
+                  ""
+              }
+
+
+              <div>
+
+                <span
+                  class="
+                    stock-badge
+                    ${
+                      outOfStock
+                        ?
+                          "stock-out"
+                        :
+                          "stock-in"
+                    }
+                  "
+                >
+
+                  ${
+                    outOfStock
+                      ?
+                        "OUT OF STOCK"
+                      :
+                        "IN STOCK"
+                  }
+
+                </span>
+
+              </div>
+
+
+              ${
+                p.fabric
+                ?
                   `
                   <div class="details">
 
@@ -2007,51 +2343,67 @@ function renderProducts(){
 
                   </div>
                   `
-                  :
+                :
                   ""
-                }
+              }
 
-                ${sizeHTML}
 
-                <div class="price">
+              ${sizeHTML}
 
-                  ₹${Number(
-                    p.price || 0
-                  ).toLocaleString(
-                    "en-IN"
-                  )}
 
-                </div>
+              <div class="price">
 
-                <a
-                  class="btn"
-                  href="${productURL}"
-                  style="width:100%;text-align:center;margin-top:8px"
-                >
-                  VIEW PRODUCT
-                </a>
-
-                <button
-                  class="btn btn-dark"
-                  type="button"
-                  onclick="addProductToCart(${id})"
-                  style="width:100%;margin-top:8px"
-                >
-                  🛒 ADD TO CART
-                </button>
-
-                <div
-                  class="added-message"
-                  id="added-${id}"
-                >
-
-                  ✓ Added to cart
-
-                </div>
+                ₹${Number(
+                  p.price || 0
+                ).toLocaleString(
+                  "en-IN"
+                )}
 
               </div>
 
+
+              ${
+                outOfStock
+                ?
+                  `
+                  <div class="stock-note">
+                    ❌ This product is currently out of stock.
+                  </div>
+
+                  <button
+                    class="btn btn-out"
+                    type="button"
+                    disabled
+                  >
+                    OUT OF STOCK
+                  </button>
+                  `
+                :
+                  `
+                  <button
+                    class="btn"
+                    type="button"
+                    onclick="
+                      addProductToCart(${id})
+                    "
+                  >
+                    🛒 ADD TO CART
+                  </button>
+                  `
+              }
+
+
+              <div
+                class="added-message"
+                id="added-${id}"
+              >
+                ✓ Added to cart
+              </div>
+
+
             </div>
+
+          </div>
 
           `;
 
@@ -2059,47 +2411,72 @@ function renderProducts(){
       )
       .join("");
 
+
   attachGalleryEvents();
 
 }
 
 
-/* =================================
-   ADD PRODUCT
-================================= */
+/* =========================
+   ADD PRODUCT TO CART
+========================= */
 
-function addProductToCart(id){
+function addProductToCart(
+  id
+){
 
-  const p =
+  const p=
     products.find(
       x =>
-        Number(x.id) ===
+        Number(x.id)
+        ===
         Number(id)
     );
 
+
   if(!p){
+
     return;
+
   }
 
-  const sizes =
+
+  if(
+    isOutOfStock(p)
+  ){
+
+    alert(
+      "This product is currently out of stock."
+    );
+
+    return;
+
+  }
+
+
+  const sizes=
     getSizes(p);
 
-  let size = "";
+
+  let size="";
+
 
   if(sizes.length){
 
-    const select =
+    const select=
       document.getElementById(
         "size-" +
         Number(id)
       );
 
-    size =
+
+    size=
       select
       ?
-      select.value
+        select.value
       :
-      "";
+        "";
+
 
     if(!size){
 
@@ -2113,26 +2490,32 @@ function addProductToCart(id){
 
   }
 
-  const existing =
+
+  const existing=
     cart.find(
       item =>
-        Number(item.id) ===
-          Number(id)
+        Number(item.id)
+        ===
+        Number(id)
         &&
         String(
           item.size || ""
-        ) ===
-          String(
-            size || ""
-          )
+        )
+        ===
+        String(
+          size || ""
+        )
     );
+
 
   if(existing){
 
     if(
       Number(
         existing.qty || 0
-      ) >= MAX_QTY
+      )
+      >=
+      MAX_QTY
     ){
 
       alert(
@@ -2143,7 +2526,8 @@ function addProductToCart(id){
 
     }
 
-    existing.qty =
+
+    existing.qty=
       Math.min(
         MAX_QTY,
         Number(
@@ -2155,35 +2539,42 @@ function addProductToCart(id){
 
     cart.push({
 
-      id:Number(id),
+      id:
+        Number(id),
 
-      qty:1,
+      qty:
+        1,
 
-      size:size
+      size:
+        size
 
     });
 
   }
 
+
   save();
 
   renderCart();
 
-  const added =
+
+  const added=
     document.getElementById(
       "added-" +
       Number(id)
     );
 
+
   if(added){
 
-    added.style.display =
+    added.style.display=
       "block";
+
 
     setTimeout(
       () => {
 
-        added.style.display =
+        added.style.display=
           "none";
 
       },
@@ -2192,14 +2583,15 @@ function addProductToCart(id){
 
   }
 
+
   updateCartCount();
 
 }
 
 
-/* =================================
+/* =========================
    GALLERY EVENTS
-================================= */
+========================= */
 
 function attachGalleryEvents(){
 
@@ -2215,16 +2607,13 @@ function attachGalleryEvents(){
           function(){
 
             openProductGallery(
-
               Number(
                 this.dataset.galleryId
               ),
-
               Number(
                 this.dataset.imageIndex ||
                 0
               )
-
             );
 
           }
@@ -2232,6 +2621,7 @@ function attachGalleryEvents(){
 
       }
     );
+
 
   document
     .querySelectorAll(
@@ -2245,15 +2635,12 @@ function attachGalleryEvents(){
           function(){
 
             changeCardImage(
-
               Number(
                 this.dataset.galleryThumb
               ),
-
               Number(
                 this.dataset.index
               )
-
             );
 
           }
@@ -2265,73 +2652,93 @@ function attachGalleryEvents(){
 }
 
 
+/* =========================
+   CHANGE CARD IMAGE
+========================= */
+
 function changeCardImage(
   id,
   index
 ){
 
-  const p =
+  const p=
     products.find(
       x =>
-        Number(x.id) ===
+        Number(x.id)
+        ===
         Number(id)
     );
 
+
   if(!p){
+
     return;
+
   }
 
-  const images =
+
+  const images=
     getProductImages(p);
 
+
   if(!images[index]){
+
     return;
+
   }
 
-  const card =
+
+  const card=
     document.querySelector(
       `[data-product-id="${Number(id)}"]`
     );
 
+
   if(!card){
+
     return;
+
   }
 
-  const main =
+
+  const main=
     card.querySelector(
       ".gallery-main img"
     );
 
+
   if(main){
-    main.src =
+
+    main.src=
       images[index];
+
   }
 
-  const mainBox =
+
+  const mainBox=
     card.querySelector(
       ".gallery-main"
     );
 
+
   if(mainBox){
 
-    mainBox.dataset.imageIndex =
+    mainBox.dataset.imageIndex=
       index;
 
   }
+
 
   card
     .querySelectorAll(
       "[data-gallery-thumb]"
     )
     .forEach(
-      (thumb,i) => {
-
+      (thumb,i) =>
         thumb.classList.toggle(
           "active",
           i === index
-        );
-
-      }
+        )
     );
 
 }
@@ -2349,25 +2756,52 @@ function add(
   size=""
 ){
 
-  const existing =
+  const p=
+    products.find(
+      x =>
+        Number(x.id)
+        ===
+        Number(id)
+    );
+
+
+  if(
+    p &&
+    isOutOfStock(p)
+  ){
+
+    alert(
+      "This product is currently out of stock."
+    );
+
+    return;
+
+  }
+
+
+  const existing=
     cart.find(
       i =>
         i.id === Number(id)
         &&
         String(
           i.size || ""
-        ) ===
+        )
+        ===
         String(
           size || ""
         )
     );
+
 
   if(existing){
 
     if(
       Number(
         existing.qty || 0
-      ) >= MAX_QTY
+      )
+      >=
+      MAX_QTY
     ){
 
       alert(
@@ -2378,21 +2812,26 @@ function add(
 
     }
 
+
     existing.qty++;
 
   }else{
 
     cart.push({
 
-      id:Number(id),
+      id:
+        Number(id),
 
-      qty:1,
+      qty:
+        1,
 
-      size:size
+      size:
+        size
 
     });
 
   }
+
 
   save();
 
@@ -2407,43 +2846,76 @@ function change(
   size=""
 ){
 
-  const item =
+  const item=
     cart.find(
       i =>
         i.id === Number(id)
         &&
         String(
           i.size || ""
-        ) ===
+        )
+        ===
         String(
           size || ""
         )
     );
 
+
   if(!item){
+
     return;
+
   }
 
-  let newQty =
+
+  const p=
+    products.find(
+      x =>
+        Number(x.id)
+        ===
+        Number(id)
+    );
+
+
+  if(
+    d > 0 &&
+    p &&
+    isOutOfStock(p)
+  ){
+
+    alert(
+      "This product is now out of stock."
+    );
+
+    renderCart();
+
+    return;
+
+  }
+
+
+  let newQty=
     Number(
       item.qty || 0
     ) + d;
+
 
   if(
     newQty >
     MAX_QTY
   ){
 
-    newQty =
+    newQty=
       MAX_QTY;
 
   }
+
 
   if(
     newQty <= 0
   ){
 
-    cart =
+    cart=
       cart.filter(
         i =>
           !(
@@ -2451,19 +2923,21 @@ function change(
             &&
             String(
               i.size || ""
-            ) ===
-              String(
-                size || ""
-              )
+            )
+            ===
+            String(
+              size || ""
+            )
           )
       );
 
   }else{
 
-    item.qty =
+    item.qty=
       newQty;
 
   }
+
 
   save();
 
@@ -2474,13 +2948,13 @@ function change(
 }
 
 
-/* =================================
-   CART
-================================= */
+/* =========================
+   CART COUNT
+========================= */
 
 function updateCartCount(){
 
-  const totalQty =
+  const totalQty=
     cart.reduce(
       (
         total,
@@ -2496,58 +2970,101 @@ function updateCartCount(){
       0
     );
 
-  const count =
+
+  const count=
     document.getElementById(
       "headerCartCount"
     );
 
+
   if(count){
 
-    count.textContent =
-      String(totalQty);
+    count.textContent=
+      String(
+        totalQty
+      );
 
   }
 
 }
 
 
+/* =========================
+   CART HAS OUT OF STOCK
+========================= */
+
+function cartHasOutOfStock(){
+
+  return cart.some(
+    item => {
+
+      const p=
+        products.find(
+          x =>
+            Number(x.id)
+            ===
+            Number(item.id)
+        );
+
+
+      return (
+        !p ||
+        isOutOfStock(p)
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================
+   RENDER CART
+========================= */
+
 function renderCart(){
 
-  const el =
+  const el=
     document.getElementById(
       "cartItems"
     );
 
+
   if(!cart.length){
 
-    el.innerHTML =
-      `
-      <p>
-        Your cart is empty.
-      </p>
-      `;
+    el.innerHTML=
+      "<p>Your cart is empty.</p>";
 
-    document.getElementById(
-      "productTotal"
-    ).textContent =
-      "₹0";
 
-    document.getElementById(
-      "total"
-    ).textContent =
-      "₹0";
+    document
+      .getElementById(
+        "productTotal"
+      )
+      .textContent=
+        "₹0";
 
-    const checkoutBtn =
+
+    document
+      .getElementById(
+        "total"
+      )
+      .textContent=
+        "₹0";
+
+
+    const checkoutBtn=
       document.getElementById(
         "proceedCheckoutBtn"
       );
 
+
     if(checkoutBtn){
 
-      checkoutBtn.disabled =
+      checkoutBtn.disabled=
         true;
 
     }
+
 
     updateCartCount();
 
@@ -2557,31 +3074,38 @@ function renderCart(){
 
   }
 
-  let productTotal =
-    0;
 
-  el.innerHTML =
+  let productTotal=0;
+
+
+  el.innerHTML=
     cart
       .map(
         item => {
 
-          const p =
+          const p=
             products.find(
               x =>
-                Number(x.id) ===
+                Number(x.id)
+                ===
                 Number(item.id)
             );
 
+
           if(!p){
+
             return "";
+
           }
 
-          const price =
+
+          const price=
             Number(
               p.price || 0
             );
 
-          const qty =
+
+          const qty=
             Math.min(
               MAX_QTY,
               Number(
@@ -2589,91 +3113,154 @@ function renderCart(){
               )
             );
 
-          const subtotal =
+
+          const subtotal=
             price *
             qty;
 
-          productTotal +=
+
+          productTotal+=
             subtotal;
+
+
+          const outOfStock=
+            isOutOfStock(p);
+
+
+          const colour=
+            String(
+              p.colour ||
+              p.color ||
+              ""
+            ).trim();
+
 
           return `
 
-            <div class="cart-row">
+          <div class="cart-row">
 
-              <div class="cart-product-info">
 
-                <div class="cart-product-name">
+            <div class="cart-product-info">
 
-                  ${escapeHTML(
-                    p.name
-                  )}
+              <div class="cart-product-name">
 
-                </div>
+                ${escapeHTML(
+                  p.name
+                )}
 
-                <div>
+              </div>
 
-                  ₹${price.toLocaleString(
-                    "en-IN"
-                  )}
 
-                  × ${qty}
+              <div>
 
-                </div>
+                ₹${price.toLocaleString(
+                  "en-IN"
+                )}
+                ×
+                ${qty}
 
-                ${
-                  item.size
-                  ?
+              </div>
+
+
+              ${
+                item.size
+                ?
                   `
                   <div class="cart-size">
-
                     Size:
                     ${escapeHTML(
                       item.size
                     )}
-
                   </div>
                   `
-                  :
+                :
                   ""
-                }
+              }
 
-              </div>
 
-              <div class="qty">
+              ${
+                colour
+                ?
+                  `
+                  <div class="cart-colour">
+                    🎨 Colour:
+                    ${escapeHTML(
+                      colour
+                    )}
+                  </div>
+                  `
+                :
+                  ""
+              }
 
-                <button
-                  type="button"
-                  onclick="change(
+
+              ${
+                outOfStock
+                ?
+                  `
+                  <div class="cart-stock-out">
+                    ❌ OUT OF STOCK
+                  </div>
+                  `
+                :
+                  ""
+              }
+
+            </div>
+
+
+            <div class="qty">
+
+
+              <button
+                type="button"
+                onclick="
+                  change(
                     ${Number(item.id)},
                     -1,
                     '${escapeHTML(
                       item.size || ""
                     )}'
-                  )"
-                >
-                  −
-                </button>
+                  )
+                "
+              >
+                −
+              </button>
 
-                <span class="qty-number">
-                  ${qty}
-                </span>
 
-                <button
-                  type="button"
-                  onclick="change(
+              <span class="qty-number">
+
+                ${qty}
+
+              </span>
+
+
+              <button
+                type="button"
+                ${
+                  outOfStock
+                    ?
+                      "disabled"
+                    :
+                      ""
+                }
+                onclick="
+                  change(
                     ${Number(item.id)},
                     1,
                     '${escapeHTML(
                       item.size || ""
                     )}'
-                  )"
-                >
-                  +
-                </button>
+                  )
+                "
+              >
+                +
+              </button>
 
-              </div>
 
             </div>
+
+          </div>
 
           `;
 
@@ -2681,37 +3268,47 @@ function renderCart(){
       )
       .join("");
 
-  const grandTotal =
+
+  const grandTotal=
     productTotal +
     SHIPPING_CHARGE;
 
-  document.getElementById(
-    "productTotal"
-  ).textContent =
-    "₹" +
-    productTotal.toLocaleString(
-      "en-IN"
-    );
 
-  document.getElementById(
-    "total"
-  ).textContent =
-    "₹" +
-    grandTotal.toLocaleString(
-      "en-IN"
-    );
+  document
+    .getElementById(
+      "productTotal"
+    )
+    .textContent=
+      "₹" +
+      productTotal.toLocaleString(
+        "en-IN"
+      );
 
-  const checkoutBtn =
+
+  document
+    .getElementById(
+      "total"
+    )
+    .textContent=
+      "₹" +
+      grandTotal.toLocaleString(
+        "en-IN"
+      );
+
+
+  const checkoutBtn=
     document.getElementById(
       "proceedCheckoutBtn"
     );
 
+
   if(checkoutBtn){
 
-    checkoutBtn.disabled =
-      false;
+    checkoutBtn.disabled=
+      cartHasOutOfStock();
 
   }
+
 
   updateCartCount();
 
@@ -2720,69 +3317,83 @@ function renderCart(){
 }
 
 
-/* =================================
-   CHECKOUT CART
-================================= */
+/* =========================
+   RENDER CHECKOUT CART
+========================= */
 
 function renderCheckoutCart(){
 
-  const el =
+  const el=
     document.getElementById(
       "checkoutCartItems"
     );
 
+
   if(!el){
+
     return;
+
   }
+
 
   if(!cart.length){
 
-    el.innerHTML =
-      `
-      <p>
-        Your cart is empty.
-      </p>
-      `;
+    el.innerHTML=
+      "<p>Your cart is empty.</p>";
 
-    document.getElementById(
-      "checkoutProductTotal"
-    ).textContent =
-      "₹0";
 
-    document.getElementById(
-      "checkoutTotal"
-    ).textContent =
-      "₹0";
+    document
+      .getElementById(
+        "checkoutProductTotal"
+      )
+      .textContent=
+        "₹0";
+
+
+    document
+      .getElementById(
+        "checkoutTotal"
+      )
+      .textContent=
+        "₹0";
+
 
     return;
 
   }
 
-  let productTotal =
-    0;
 
-  el.innerHTML =
+  let productTotal=0;
+
+
+  el.innerHTML=
     cart
       .map(
         item => {
 
-          const p =
+          const p=
             products.find(
               x =>
-                Number(x.id) ===
+                Number(x.id)
+                ===
                 Number(item.id)
             );
 
+
           if(!p){
+
             return "";
+
           }
 
-          const price =
+
+          const price=
             Number(
               p.price || 0
             );
 
-          const qty =
+
+          const qty=
             Math.min(
               MAX_QTY,
               Number(
@@ -2790,59 +3401,108 @@ function renderCheckoutCart(){
               )
             );
 
-          productTotal +=
+
+          productTotal+=
             price *
             qty;
 
+
+          const colour=
+            String(
+              p.colour ||
+              p.color ||
+              ""
+            ).trim();
+
+
+          const outOfStock=
+            isOutOfStock(p);
+
+
           return `
 
-            <div
-              class="cart-row"
-              style="padding:9px 0"
-            >
+          <div
+            class="cart-row"
+            style="padding:9px 0"
+          >
 
-              <div class="cart-product-info">
+            <div class="cart-product-info">
 
-                <div class="cart-product-name">
+              <div class="cart-product-name">
 
-                  ${escapeHTML(
-                    p.name
-                  )}
-
-                </div>
-
-                <div>
-
-                  Qty:
-                  ${qty}
-
-                  ${
-                    item.size
-                    ?
-                    ` • Size:
-                      ${escapeHTML(
-                        item.size
-                      )}`
-                    :
-                    ""
-                  }
-
-                </div>
+                ${escapeHTML(
+                  p.name
+                )}
 
               </div>
 
-              <strong>
 
-                ₹${(
-                  price *
-                  qty
-                ).toLocaleString(
-                  "en-IN"
-                )}
+              <div>
 
-              </strong>
+                Qty:
+                ${qty}
+
+                ${
+                  item.size
+                  ?
+                    " • Size: " +
+                    escapeHTML(
+                      item.size
+                    )
+                  :
+                    ""
+                }
+
+              </div>
+
+
+              ${
+                colour
+                ?
+                  `
+                  <div class="cart-size">
+
+                    🎨 Colour:
+                    ${escapeHTML(
+                      colour
+                    )}
+
+                  </div>
+                  `
+                :
+                  ""
+              }
+
+
+              ${
+                outOfStock
+                ?
+                  `
+                  <div
+                    class="cart-stock-out"
+                  >
+                    ❌ OUT OF STOCK
+                  </div>
+                  `
+                :
+                  ""
+              }
 
             </div>
+
+
+            <strong>
+
+              ₹${(
+                price *
+                qty
+              ).toLocaleString(
+                "en-IN"
+              )}
+
+            </strong>
+
+          </div>
 
           `;
 
@@ -2850,28 +3510,58 @@ function renderCheckoutCart(){
       )
       .join("");
 
-  const grandTotal =
+
+  if(cartHasOutOfStock()){
+
+    el.innerHTML+=
+      `
+      <div
+        class="stock-note"
+        style="
+          margin-top:12px;
+        "
+      >
+        ❌ One or more products in your cart
+        are out of stock. Please remove them
+        before checkout.
+      </div>
+      `;
+
+  }
+
+
+  const grandTotal=
     productTotal +
     SHIPPING_CHARGE;
 
-  document.getElementById(
-    "checkoutProductTotal"
-  ).textContent =
-    "₹" +
-    productTotal.toLocaleString(
-      "en-IN"
-    );
 
-  document.getElementById(
-    "checkoutTotal"
-  ).textContent =
-    "₹" +
-    grandTotal.toLocaleString(
-      "en-IN"
-    );
+  document
+    .getElementById(
+      "checkoutProductTotal"
+    )
+    .textContent=
+      "₹" +
+      productTotal.toLocaleString(
+        "en-IN"
+      );
+
+
+  document
+    .getElementById(
+      "checkoutTotal"
+    )
+    .textContent=
+      "₹" +
+      grandTotal.toLocaleString(
+        "en-IN"
+      );
 
 }
 
+
+/* =========================
+   CHECKOUT
+========================= */
 
 function goToCheckout(){
 
@@ -2881,25 +3571,44 @@ function goToCheckout(){
       "Please add at least one product to cart."
     );
 
-    location.hash =
+    location.hash=
       "cart";
 
     return;
 
   }
 
+
+  if(
+    cartHasOutOfStock()
+  ){
+
+    alert(
+      "Your cart contains an out-of-stock product. Please remove it before checkout."
+    );
+
+    location.hash=
+      "cart";
+
+    return;
+
+  }
+
+
   renderCheckoutCart();
 
-  location.hash =
+  location.hash=
     "checkout";
+
 
   setTimeout(
     () => {
 
-      const checkout =
+      const checkout=
         document.getElementById(
           "checkout"
         );
+
 
       if(checkout){
 
@@ -2919,10 +3628,13 @@ function goToCheckout(){
 
 function showCheckout(){
 
-  document.getElementById(
-    "checkout"
-  ).style.display =
-    "block";
+  document
+    .getElementById(
+      "checkout"
+    )
+    .style.display=
+      "block";
+
 
   renderCheckoutCart();
 
@@ -2931,14 +3643,18 @@ function showCheckout(){
 
 function showOrders(){
 
-  const section =
+  const section=
     document.getElementById(
       "orders"
     );
 
+
   if(!section){
+
     return;
+
   }
+
 
   section.scrollIntoView({
     behavior:"auto",
@@ -2948,23 +3664,25 @@ function showOrders(){
 }
 
 
-/* =================================
-   MY ORDERS
-================================= */
+/* =========================
+   CUSTOMER ORDERS
+========================= */
 
 async function findCustomerOrder(){
 
-  const message =
+  const message=
     document.getElementById(
       "ordersMessage"
     );
 
-  const list =
+
+  const list=
     document.getElementById(
       "ordersList"
     );
 
-  const mobile =
+
+  const mobile=
     String(
       document.getElementById(
         "customerMobile"
@@ -2974,49 +3692,51 @@ async function findCustomerOrder(){
       /\D/g,
       ""
     )
-    .slice(-10);
+    .slice(
+      -10
+    );
+
 
   if(
-    mobile.length !==
-    10
+    mobile.length !== 10
   ){
 
-    message.style.display =
+    message.style.display=
       "block";
 
-    message.innerHTML =
-      `
-      <b>
-        Please enter a valid
-        10-digit mobile number.
-      </b>
-      `;
 
-    list.innerHTML =
-      "";
+    message.innerHTML=
+      "<b>Please enter a valid 10-digit mobile number.</b>";
+
+
+    list.innerHTML="";
 
     return;
 
   }
 
-  message.style.display =
+
+  message.style.display=
     "block";
 
-  message.textContent =
+
+  message.textContent=
     "Loading your orders...";
 
-  list.innerHTML =
-    "";
+
+  list.innerHTML="";
+
 
   try{
 
-    const url =
+    const url=
       "/api/customer-orders?mobile=" +
       encodeURIComponent(
         mobile
       );
 
-    const response =
+
+    const response=
       await fetch(
         url,
         {
@@ -3025,8 +3745,10 @@ async function findCustomerOrder(){
         }
       );
 
-    const data =
+
+    const data=
       await response.json();
+
 
     if(!response.ok){
 
@@ -3037,18 +3759,20 @@ async function findCustomerOrder(){
 
     }
 
-    const orders =
+
+    const orders=
       Array.isArray(
         data.orders
       )
       ?
-      data.orders
+        data.orders
       :
-      [];
+        [];
+
 
     if(!orders.length){
 
-      message.innerHTML =
+      message.innerHTML=
         `
         <b>
           No orders found.
@@ -3065,18 +3789,19 @@ async function findCustomerOrder(){
 
     }
 
-    message.style.display =
+
+    message.style.display=
       "none";
 
-    list.innerHTML =
+
+    list.innerHTML=
       orders
         .map(
           order =>
-            orderHTML(
-              order
-            )
+            orderHTML(order)
         )
         .join("");
+
 
   }catch(error){
 
@@ -3085,7 +3810,8 @@ async function findCustomerOrder(){
       error
     );
 
-    message.innerHTML =
+
+    message.innerHTML=
       `
       <b>
         Unable to find orders.
@@ -3104,9 +3830,15 @@ async function findCustomerOrder(){
 }
 
 
-function orderHTML(order){
+/* =========================
+   ORDER HTML
+========================= */
 
-  const created =
+function orderHTML(
+  order
+){
+
+  const created=
     order.createdAt
     ?
       new Date(
@@ -3121,7 +3853,8 @@ function orderHTML(order){
     :
       "";
 
-  const items =
+
+  const items=
     Array.isArray(
       order.items
     )
@@ -3130,17 +3863,29 @@ function orderHTML(order){
     :
       [];
 
-  const orderId =
+
+  const orderId=
     String(
       order.id || ""
     );
 
-  const itemHTML =
+
+  const itemHTML=
     items.length
     ?
       items
         .map(
-          item => `
+          item => {
+
+            const colour=
+              String(
+                item.colour ||
+                item.color ||
+                ""
+              ).trim();
+
+
+            return `
 
             <div class="order-item">
 
@@ -3161,17 +3906,34 @@ function orderHTML(order){
               ${
                 item.size
                 ?
-                ` • Size
-                  ${escapeHTML(
+                  " • Size " +
+                  escapeHTML(
                     item.size
-                  )}`
+                  )
                 :
-                ""
+                  ""
+              }
+
+
+              ${
+                colour
+                ?
+                  `
+                  <br>
+                  🎨 Colour:
+                  ${escapeHTML(
+                    colour
+                  )}
+                  `
+                :
+                  ""
               }
 
             </div>
 
-          `
+            `;
+
+          }
         )
         .join("")
     :
@@ -3181,139 +3943,157 @@ function orderHTML(order){
       </div>
       `;
 
-  const hasShipment =
+
+  const hasShipment=
     !!(
       order.shiprocketShipmentId ||
       order.awb
     );
 
+
   return `
 
-    <div
-      class="order-card"
-      id="order-${escapeHTML(orderId)}"
-    >
+  <div
+    class="order-card"
+    id="order-${escapeHTML(
+      orderId
+    )}"
+  >
 
-      <div class="order-top">
 
-        <div>
+    <div class="order-top">
 
-          <div class="order-id">
+      <div>
 
-            Order ID:
-            ${escapeHTML(orderId)}
+        <div class="order-id">
 
-          </div>
-
-          <div class="order-meta">
-
-            ${escapeHTML(created)}
-
-          </div>
+          Order ID:
+          ${escapeHTML(
+            orderId
+          )}
 
         </div>
 
-        <div class="order-status">
+
+        <div class="order-meta">
 
           ${escapeHTML(
-            order.status ||
-            "Order Confirmed"
+            created
           )}
 
         </div>
 
       </div>
 
-      <div class="order-items">
 
-        ${itemHTML}
+      <div class="order-status">
+
+        ${escapeHTML(
+          order.status ||
+          "Order Confirmed"
+        )}
 
       </div>
 
-      <div class="order-meta">
+    </div>
 
-        Payment:
 
-        <b>
-          ${escapeHTML(
-            order.paymentMethod ||
-            "ONLINE"
-          )}
-        </b>
+    <div class="order-items">
 
-        ${
-          order.awb
-          ?
+      ${itemHTML}
+
+    </div>
+
+
+    <div class="order-meta">
+
+      Payment:
+      <b>
+        ${escapeHTML(
+          order.paymentMethod ||
+          "ONLINE"
+        )}
+      </b>
+
+
+      ${
+        order.awb
+        ?
           `
           <br>
-
           AWB:
-
           <b>
             ${escapeHTML(
               order.awb
             )}
           </b>
           `
-          :
+        :
           ""
-        }
+      }
 
-        ${
-          order.courier
-          ?
+
+      ${
+        order.courier
+        ?
           `
           <br>
-
           Courier:
-
           <b>
             ${escapeHTML(
               order.courier
             )}
           </b>
           `
-          :
+        :
           ""
-        }
+      }
 
-      </div>
+    </div>
 
-      <div class="order-total">
 
-        Total:
+    <div class="order-total">
 
-        ₹${Number(
-          order.total ||
-          order.amount ||
-          0
-        ).toLocaleString(
-          "en-IN"
-        )}
+      Total:
+      ₹${Number(
+        order.total ||
+        order.amount ||
+        0
+      ).toLocaleString(
+        "en-IN"
+      )}
 
-      </div>
+    </div>
 
-      ${
-        hasShipment
-        ?
+
+    ${
+      hasShipment
+      ?
         `
         <button
           class="btn"
           type="button"
-          onclick="trackCustomerOrder(
-            '${escapeHTML(orderId)}'
-          )"
+          onclick="
+            trackCustomerOrder(
+              '${escapeHTML(
+                orderId
+              )}'
+            )
+          "
         >
           🚚 TRACK ORDER
         </button>
 
+
         <div
-          id="tracking-${escapeHTML(orderId)}"
+          id="tracking-${escapeHTML(
+            orderId
+          )}"
           class="track-result"
           style="display:none"
         ></div>
         `
-        :
+      :
         `
         <div class="track-result">
 
@@ -3322,32 +4102,39 @@ function orderHTML(order){
 
         </div>
         `
-      }
+    }
 
-    </div>
+
+  </div>
 
   `;
 
 }
 
 
-/* =================================
-   TRACKING
-================================= */
+/* =========================
+   CUSTOMER TRACKING
+========================= */
 
-async function trackCustomerOrder(orderId){
+async function trackCustomerOrder(
+  orderId
+){
 
-  const box =
+  const box=
     document.getElementById(
       "tracking-" +
       orderId
     );
 
+
   if(!box){
+
     return;
+
   }
 
-  const mobile =
+
+  const mobile=
     String(
       document.getElementById(
         "customerMobile"
@@ -3357,36 +4144,38 @@ async function trackCustomerOrder(orderId){
       /\D/g,
       ""
     )
-    .slice(-10);
+    .slice(
+      -10
+    );
+
 
   if(
-    mobile.length !==
-    10
+    mobile.length !== 10
   ){
 
-    box.style.display =
+    box.style.display=
       "block";
 
-    box.innerHTML =
+
+    box.innerHTML=
       "Please enter the same mobile number used for the order.";
 
     return;
 
   }
 
-  box.style.display =
+
+  box.style.display=
     "block";
 
-  box.innerHTML =
-    `
-    <span class="track-loading">
-      Loading live tracking...
-    </span>
-    `;
+
+  box.innerHTML=
+    '<span class="track-loading">Loading live tracking...</span>';
+
 
   try{
 
-    const url =
+    const url=
       "/api/customer-tracking?mobile=" +
       encodeURIComponent(
         mobile
@@ -3396,7 +4185,8 @@ async function trackCustomerOrder(orderId){
         orderId
       );
 
-    const response =
+
+    const response=
       await fetch(
         url,
         {
@@ -3405,8 +4195,10 @@ async function trackCustomerOrder(orderId){
         }
       );
 
-    const data =
+
+    const data=
       await response.json();
+
 
     if(!response.ok){
 
@@ -3417,12 +4209,12 @@ async function trackCustomerOrder(orderId){
 
     }
 
+
     if(
-      data.trackingAvailable ===
-      false
+      data.trackingAvailable === false
     ){
 
-      box.innerHTML =
+      box.innerHTML=
         "📦 " +
         escapeHTML(
           data.message ||
@@ -3433,57 +4225,67 @@ async function trackCustomerOrder(orderId){
 
     }
 
-    const tracking =
+
+    const tracking=
       data.tracking ||
       {};
 
-    const trackingData =
+
+    const trackingData=
       tracking.tracking_data ||
       {};
 
-    const tracks =
+
+    const tracks=
       Array.isArray(
         trackingData.shipment_track
       )
       ?
-      trackingData.shipment_track
+        trackingData.shipment_track
       :
-      [];
+        [];
 
-    const latest =
+
+    const latest=
       tracks.length
       ?
-      tracks[0]
+        tracks[0]
       :
-      null;
+        null;
 
-    const currentStatus =
+
+    const currentStatus=
       latest?.current_status ||
       trackingData.shipment_status ||
       data.order?.status ||
       "Shipment in process";
 
-    const courier =
+
+    const courier=
       latest?.courier_name ||
       data.order?.courier ||
       "Courier";
 
-    const awb =
+
+    const awb=
       latest?.awb_code ||
       data.order?.awb ||
       "";
 
-    const origin =
+
+    const origin=
       latest?.origin ||
       "";
 
-    const destination =
+
+    const destination=
       latest?.destination ||
       "";
 
-    box.innerHTML =
-      `
 
+    box.innerHTML=
+
+      `
       <b>
         🚚 Current Status:
       </b>
@@ -3492,7 +4294,9 @@ async function trackCustomerOrder(orderId){
         currentStatus
       )}
 
+
       <br>
+
 
       <b>
         Courier:
@@ -3502,82 +4306,87 @@ async function trackCustomerOrder(orderId){
         courier
       )}
 
+
       ${
         awb
         ?
-        `
-        <br>
+          `
+          <br>
 
-        <b>
-          AWB:
-        </b>
+          <b>
+            AWB:
+          </b>
 
-        ${escapeHTML(
-          awb
-        )}
-        `
+          ${escapeHTML(
+            awb
+          )}
+          `
         :
-        ""
+          ""
       }
+
 
       ${
         origin
         ?
-        `
-        <br>
+          `
+          <br>
 
-        <b>
-          From:
-        </b>
+          <b>
+            From:
+          </b>
 
-        ${escapeHTML(
-          origin
-        )}
-        `
+          ${escapeHTML(
+            origin
+          )}
+          `
         :
-        ""
+          ""
       }
+
 
       ${
         destination
         ?
-        `
-        <br>
+          `
+          <br>
 
-        <b>
-          To:
-        </b>
+          <b>
+            To:
+          </b>
 
-        ${escapeHTML(
-          destination
-        )}
-        `
+          ${escapeHTML(
+            destination
+          )}
+          `
         :
-        ""
+          ""
       }
+
 
       ${
         tracks.length
         ?
-        `
-        <br><br>
+          `
+          <br><br>
 
-        <b>
-          Latest shipment update:
-        </b>
+          <b>
+            Latest shipment update:
+          </b>
 
-        <br>
+          <br>
 
-        ${escapeHTML(
-          latest.current_status ||
-          currentStatus
-        )}
-        `
+          ${escapeHTML(
+            latest.current_status ||
+            currentStatus
+          )}
+          `
         :
-        ""
+          ""
       }
 
       `;
+
 
   }catch(error){
 
@@ -3586,7 +4395,8 @@ async function trackCustomerOrder(orderId){
       error
     );
 
-    box.innerHTML =
+
+    box.innerHTML=
       "❌ " +
       escapeHTML(
         error.message ||
@@ -3598,9 +4408,9 @@ async function trackCustomerOrder(orderId){
 }
 
 
-/* =================================
+/* =========================
    HASH NAVIGATION
-================================= */
+========================= */
 
 window.addEventListener(
   "hashchange",
@@ -3614,6 +4424,7 @@ window.addEventListener(
       showCheckout();
 
     }
+
 
     if(
       location.hash ===
@@ -3630,6 +4441,7 @@ window.addEventListener(
         });
 
     }
+
 
     if(
       location.hash ===
@@ -3688,56 +4500,65 @@ if(
 }
 
 
-/* =================================
-   CATEGORY BUTTONS
-================================= */
+/* =========================
+   CATEGORY EVENTS
+========================= */
 
 document
   .querySelectorAll(
     ".cat"
   )
   .forEach(
-    btn => {
-
+    btn =>
       btn.addEventListener(
         "click",
-        () => {
-
+        () =>
           showCategory(
             btn.dataset.category
-          );
-
-        }
-      );
-
-    }
+          )
+      )
   );
 
 
-/* =================================
-   IMAGE MODAL
-================================= */
+document
+  .getElementById(
+    "showAllBtn"
+  )
+  .addEventListener(
+    "click",
+    showAllProducts
+  );
 
-const modal =
+
+/* =========================
+   IMAGE MODAL
+========================= */
+
+const modal=
   document.getElementById(
     "imageModal"
   );
 
-const modalImage =
+
+const modalImage=
   document.getElementById(
     "modalImage"
   );
 
-let modalProductId =
+
+let modalProductId=
   null;
 
-let modalIndex =
+
+let modalIndex=
   0;
 
-let modalImages =
+
+let modalImages=
   [];
 
-let zoom =
+
+let zoom=
   1;
 
 
@@ -3746,24 +4567,31 @@ function openProductGallery(
   index=0
 ){
 
-  const p =
+  const p=
     products.find(
       x =>
-        Number(x.id) ===
+        Number(x.id)
+        ===
         Number(id)
     );
 
+
   if(!p){
+
     return;
+
   }
 
-  modalProductId =
+
+  modalProductId=
     Number(id);
 
-  modalImages =
+
+  modalImages=
     getProductImages(p);
 
-  modalIndex =
+
+  modalIndex=
     Math.max(
       0,
       Math.min(
@@ -3772,15 +4600,19 @@ function openProductGallery(
       )
     );
 
-  zoom =
+
+  zoom=
     1;
+
 
   modal.classList.add(
     "show"
   );
 
-  document.body.style.overflow =
+
+  document.body.style.overflow=
     "hidden";
+
 
   updateModalImage();
 
@@ -3789,16 +4621,22 @@ function openProductGallery(
 
 function updateModalImage(){
 
-  if(!modalImages.length){
+  if(
+    !modalImages.length
+  ){
+
     return;
+
   }
 
-  modalImage.src =
+
+  modalImage.src=
     modalImages[
       modalIndex
     ];
 
-  modalImage.style.transform =
+
+  modalImage.style.transform=
     "scale(" +
     zoom +
     ")";
@@ -3812,8 +4650,10 @@ function closeModal(){
     "show"
   );
 
-  document.body.style.overflow =
+
+  document.body.style.overflow=
     "";
+
 
   setTimeout(
     () => {
@@ -3839,18 +4679,26 @@ function closeModal(){
 
 function nextImage(){
 
-  if(!modalImages.length){
+  if(
+    !modalImages.length
+  ){
+
     return;
+
   }
 
-  modalIndex =
+
+  modalIndex=
     (
       modalIndex + 1
-    ) %
+    )
+    %
     modalImages.length;
 
-  zoom =
+
+  zoom=
     1;
+
 
   updateModalImage();
 
@@ -3859,20 +4707,28 @@ function nextImage(){
 
 function previousImage(){
 
-  if(!modalImages.length){
+  if(
+    !modalImages.length
+  ){
+
     return;
+
   }
 
-  modalIndex =
+
+  modalIndex=
     (
       modalIndex -
       1 +
       modalImages.length
-    ) %
+    )
+    %
     modalImages.length;
 
-  zoom =
+
+  zoom=
     1;
+
 
   updateModalImage();
 
@@ -3917,11 +4773,12 @@ document
     "click",
     () => {
 
-      zoom =
+      zoom=
         Math.min(
           2.5,
           zoom + .25
         );
+
 
       updateModalImage();
 
@@ -3937,11 +4794,12 @@ document
     "click",
     () => {
 
-      zoom =
+      zoom=
         Math.max(
           1,
           zoom - .25
         );
+
 
       updateModalImage();
 
@@ -3957,8 +4815,9 @@ document
     "click",
     () => {
 
-      zoom =
+      zoom=
         1;
+
 
       updateModalImage();
 
@@ -3997,6 +4856,7 @@ document.addEventListener(
 
     }
 
+
     if(
       event.key ===
       "Escape"
@@ -4006,6 +4866,7 @@ document.addEventListener(
 
     }
 
+
     if(
       event.key ===
       "ArrowRight"
@@ -4014,6 +4875,7 @@ document.addEventListener(
       nextImage();
 
     }
+
 
     if(
       event.key ===
@@ -4028,14 +4890,15 @@ document.addEventListener(
 );
 
 
-/* =================================
+/* =========================
    MOBILE SWIPE
-================================= */
+========================= */
 
-let touchStartX =
+let touchStartX=
   0;
 
-let touchStartY =
+
+let touchStartY=
   0;
 
 
@@ -4043,13 +4906,15 @@ modal.addEventListener(
   "touchstart",
   event => {
 
-    const touch =
+    const touch=
       event.touches[0];
 
-    touchStartX =
+
+    touchStartX=
       touch.clientX;
 
-    touchStartY =
+
+    touchStartY=
       touch.clientY;
 
   },
@@ -4063,21 +4928,22 @@ modal.addEventListener(
   "touchend",
   event => {
 
-    const touch =
+    const touch=
       event.changedTouches[0];
 
-    const diffX =
+
+    const diffX=
       touch.clientX -
       touchStartX;
 
-    const diffY =
+
+    const diffY=
       touch.clientY -
       touchStartY;
 
+
     if(
-      Math.abs(diffX) >
-      60
-      &&
+      Math.abs(diffX) > 60 &&
       Math.abs(diffX) >
       Math.abs(diffY)
     ){
@@ -4103,9 +4969,9 @@ modal.addEventListener(
 );
 
 
-/* =================================
+/* =========================
    ONLINE PAYMENT ONLY
-================================= */
+========================= */
 
 document
   .getElementById(
@@ -4117,59 +4983,84 @@ document
 
       event.preventDefault();
 
+
       if(!cart.length){
 
         alert(
           "Please add a product to cart first."
         );
 
-        location.hash =
+
+        location.hash=
           "cart";
+
 
         return;
 
       }
 
-      const data =
+
+      if(
+        cartHasOutOfStock()
+      ){
+
+        alert(
+          "Your cart contains an out-of-stock product. Please remove it before payment."
+        );
+
+
+        location.hash=
+          "cart";
+
+
+        return;
+
+      }
+
+
+      const data=
         new FormData(
           event.target
         );
 
-      const itemData =
+
+      const itemData=
         cart.map(
           item => {
 
-            const p =
+            const p=
               products.find(
                 x =>
-                  Number(x.id) ===
+                  Number(x.id)
+                  ===
                   Number(item.id)
               );
+
 
             return {
 
               id:
                 p
                 ?
-                p.id
+                  p.id
                 :
-                item.id,
+                  item.id,
 
               name:
                 p
                 ?
-                p.name
+                  p.name
                 :
-                "",
+                  "",
 
               price:
                 p
                 ?
-                Number(
-                  p.price
-                )
+                  Number(
+                    p.price
+                  )
                 :
-                0,
+                  0,
 
               qty:
                 Math.min(
@@ -4181,7 +5072,18 @@ document
 
               size:
                 item.size ||
-                ""
+                "",
+
+              colour:
+                p
+                ?
+                  (
+                    p.colour ||
+                    p.color ||
+                    ""
+                  )
+                :
+                  ""
 
             };
 
@@ -4206,25 +5108,26 @@ document
       }
 
 
-      const btn =
+      const btn=
         event.target.querySelector(
           'button[type="submit"]'
         );
 
-      btn.disabled =
+
+      btn.disabled=
         true;
 
-      btn.textContent =
+
+      btn.textContent=
         "Please wait…";
 
 
       try{
 
-        const orderRes =
+        const orderRes=
           await fetch(
             "/api/create-order",
             {
-
               method:"POST",
 
               headers:{
@@ -4275,13 +5178,11 @@ document
           );
 
 
-        const order =
+        const order=
           await orderRes.json();
 
 
-        if(
-          !orderRes.ok
-        ){
+        if(!orderRes.ok){
 
           throw new Error(
             order.error ||
@@ -4302,7 +5203,7 @@ document
         }
 
 
-        const rzp =
+        const rzp=
           new Razorpay({
 
             key:
@@ -4321,14 +5222,7 @@ document
               itemData
                 .map(
                   item =>
-                    `${item.name} x ${item.qty}${
-                      item.size
-                      ?
-                      " - Size " +
-                      item.size
-                      :
-                      ""
-                    }`
+                    `${item.name} x ${item.qty}${item.size ? " - Size " + item.size : ""}${item.colour ? " - Colour " + item.colour : ""}`
                 )
                 .join(
                   ", "
@@ -4371,8 +5265,10 @@ document
             },
 
             theme:{
+
               color:
                 "#596442"
+
             },
 
 
@@ -4381,11 +5277,10 @@ document
 
                 try{
 
-                  const v =
+                  const v=
                     await fetch(
                       "/api/payment-status",
                       {
-
                         method:"POST",
 
                         headers:{
@@ -4400,12 +5295,10 @@ document
                               order.id,
 
                             paymentId:
-                              response
-                                .razorpay_payment_id,
+                              response.razorpay_payment_id,
 
                             signature:
-                              response
-                                .razorpay_signature
+                              response.razorpay_signature
 
                           })
 
@@ -4413,14 +5306,13 @@ document
                     );
 
 
-                  const result =
+                  const result=
                     await v.json();
 
 
                   if(
                     !v.ok ||
-                    result.verified ===
-                    false
+                    result.verified === false
                   ){
 
                     throw new Error(
@@ -4440,8 +5332,7 @@ document
                   );
 
 
-                  cart =
-                    [];
+                  cart=[];
 
                   save();
 
@@ -4449,19 +5340,25 @@ document
 
                   renderCheckoutCart();
 
+
                   event.target.reset();
 
-                  document.getElementById(
-                    "customerMobile"
-                  ).value =
-                    String(
-                      data.get(
-                        "mobile"
-                      ) || ""
-                    );
 
-                  location.hash =
+                  document
+                    .getElementById(
+                      "customerMobile"
+                    )
+                    .value=
+                      String(
+                        data.get(
+                          "mobile"
+                        ) || ""
+                      );
+
+
+                  location.hash=
                     "orders";
+
 
                   setTimeout(
                     findCustomerOrder,
@@ -4478,10 +5375,11 @@ document
 
                 }finally{
 
-                  btn.disabled =
+                  btn.disabled=
                     false;
 
-                  btn.textContent =
+
+                  btn.textContent=
                     "BUY NOW & PAY";
 
                 }
@@ -4494,10 +5392,11 @@ document
               ondismiss:
                 () => {
 
-                  btn.disabled =
+                  btn.disabled=
                     false;
 
-                  btn.textContent =
+
+                  btn.textContent=
                     "BUY NOW & PAY";
 
                 }
@@ -4514,15 +5413,19 @@ document
             alert(
               "Payment failed: " +
               (
-                response.error?.description ||
+                response
+                  .error
+                  ?.description ||
                 "Please try again."
               )
             );
 
-            btn.disabled =
+
+            btn.disabled=
               false;
 
-            btn.textContent =
+
+            btn.textContent=
               "BUY NOW & PAY";
 
           }
@@ -4539,10 +5442,12 @@ document
           "Unable to start payment."
         );
 
-        btn.disabled =
+
+        btn.disabled=
           false;
 
-        btn.textContent =
+
+        btn.textContent=
           "BUY NOW & PAY";
 
       }
@@ -4551,9 +5456,9 @@ document
   );
 
 
-/* =================================
+/* =========================
    START
-================================= */
+========================= */
 
 loadProducts();
 
@@ -4562,6 +5467,7 @@ renderCart();
 updateCartCount();
 
 </script>
+
 
 </body>
 </html>
