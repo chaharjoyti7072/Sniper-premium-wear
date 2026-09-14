@@ -7,25 +7,25 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-<title>Army T Shirts, Tactical Trousers & Cargo Wear | Sniper Premium Wear</title>
+<title>Army T Shirts, Sports T Shirts, Tactical Trousers & Cargo Wear | Sniper Premium Wear</title>
 
 <meta name="application-name"
       content="JOYTI - SNIPER PREMIUM WEAR">
 
 <meta name="description"
-      content="Shop army-inspired T-shirts, tactical trousers, cargo trousers, shorts and footwear online at Sniper Premium Wear. Explore premium everyday and utility wear.">
+      content="Shop army-inspired T-shirts, sports T-shirts, tactical trousers, cargo trousers, shorts and footwear online at Sniper Premium Wear. Explore premium everyday and utility wear.">
 
 <meta name="keywords"
-      content="army t shirt, army t shirts, tactical t shirt, tactical trousers, army trousers, cargo trousers, army shorts, tactical wear, army inspired clothing, sniper premium wear">
+      content="army t shirt, army t shirts, sports t shirt, sports t shirts, sports wear, tactical t shirt, tactical trousers, army trousers, cargo trousers, army shorts, tactical wear, army inspired clothing, sniper premium wear">
 
 <link rel="canonical"
       href="https://www.sniperpremiumwear.com/">
 
 <meta property="og:title"
-      content="Sniper Premium Wear | Army T Shirts & Tactical Wear">
+      content="Sniper Premium Wear | Army T Shirts, Sports T Shirts & Tactical Wear">
 
 <meta property="og:description"
-      content="Shop premium army-inspired T-shirts, trousers, shorts and footwear online.">
+      content="Shop premium army-inspired T-shirts, sports T-shirts, trousers, shorts and footwear online.">
 
 <meta property="og:url"
       content="https://www.sniperpremiumwear.com/">
@@ -227,16 +227,20 @@ section{
   color:#666;
 }
 
+/* =================================
+   CATEGORY LAYOUT
+================================= */
+
 .categories{
   display:grid;
-  grid-template-columns:repeat(5,1fr);
+  grid-template-columns:repeat(6,1fr);
   gap:14px;
 }
 
 .cat{
   border:0;
   min-height:130px;
-  padding:25px;
+  padding:20px;
   border-radius:10px;
   background:linear-gradient(135deg,#24291e,#596442);
   color:#fff;
@@ -251,16 +255,28 @@ section{
 }
 
 .cat b{
-  font-size:22px;
+  font-size:20px;
 }
 
 .cat span{
   opacity:.8;
   margin-top:5px;
+  font-size:12px;
 }
 
 .cat.active{
   outline:3px solid var(--accent);
+}
+
+/* SPORTS T-SHIRTS CATEGORY */
+
+.cat.sports-category{
+  background:
+    linear-gradient(
+      135deg,
+      #20251b,
+      #596442
+    );
 }
 
 .products{
@@ -744,7 +760,7 @@ footer{
   margin-top:30px;
 }
 
-@media(max-width:1000px){
+@media(max-width:1100px){
 
   .categories{
     grid-template-columns:repeat(3,1fr);
@@ -909,8 +925,9 @@ footer{
     </h1>
 
     <p>
-      Army-inspired T-shirts, tactical trousers,
-      cargo trousers, shorts and footwear —
+      Army-inspired T-shirts, sports T-shirts,
+      tactical trousers, cargo trousers,
+      shorts and footwear —
       premium everyday and utility wear.
     </p>
 
@@ -941,6 +958,17 @@ footer{
     >
       <b>T-Shirts</b>
       <span>Premium everyday wear</span>
+    </button>
+
+    <!-- NEW SPORTS T-SHIRTS CATEGORY -->
+
+    <button
+      class="cat sports-category"
+      data-category="Sports T-Shirts"
+      type="button"
+    >
+      <b>Sports T-Shirts</b>
+      <span>Sports & performance wear</span>
     </button>
 
     <button
