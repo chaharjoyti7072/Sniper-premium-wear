@@ -190,6 +190,22 @@ section{
   scroll-margin-top:90px;
 }
 
+#shop{
+  scroll-margin-top:90px;
+}
+
+#cart{
+  scroll-margin-top:90px;
+}
+
+#checkout{
+  scroll-margin-top:90px;
+}
+
+#orders{
+  scroll-margin-top:90px;
+}
+
 .title{
   text-align:center;
   margin-bottom:28px;
@@ -259,7 +275,7 @@ section{
   box-shadow:0 4px 14px rgba(0,0,0,.06);
   contain:layout paint style;
   content-visibility:auto;
-  contain-intrinsic-size:480px;
+  contain-intrinsic-size:550px;
 }
 
 .product-main-image{
@@ -339,12 +355,123 @@ section{
   font-weight:900;
 }
 
-.size-select{
+.size-select,
+.colour-select{
   width:100%;
   padding:12px;
   border:1px solid #bbb;
   border-radius:6px;
   background:#fff;
+}
+
+.colour-box{
+  margin-top:10px;
+}
+
+.colour-box label{
+  margin:0 0 6px;
+}
+
+.colour-select option{
+  padding:8px;
+}
+
+.product-colour-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:7px;
+}
+
+.product-colour-chip{
+  background:#eef0e7;
+  border:1px solid #c8ccb9;
+  color:#303820;
+  border-radius:5px;
+  padding:5px 8px;
+  font-size:11px;
+  font-weight:800;
+}
+
+.colour-qty-box{
+  margin-top:10px;
+  background:#f7f7f1;
+  border:1px solid #ddd;
+  border-radius:8px;
+  padding:10px;
+}
+
+.colour-qty-title{
+  font-weight:900;
+  font-size:13px;
+  margin-bottom:8px;
+}
+
+.colour-qty-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:6px 0;
+  border-bottom:1px solid #e5e5dc;
+}
+
+.colour-qty-row:last-child{
+  border-bottom:0;
+}
+
+.colour-qty-name{
+  font-weight:700;
+  font-size:13px;
+  flex:1;
+}
+
+.colour-qty-controls{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.colour-qty-controls button{
+  width:30px;
+  height:30px;
+  padding:0;
+  border:0;
+  border-radius:5px;
+  background:#596442;
+  color:#fff;
+  cursor:pointer;
+  font-weight:900;
+  font-size:18px;
+}
+
+.colour-qty-controls button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.colour-qty-number{
+  min-width:24px;
+  text-align:center;
+  font-weight:900;
+}
+
+.selected-colour-summary{
+  margin-top:7px;
+  font-size:12px;
+  color:#555;
+  line-height:1.5;
+}
+
+.added-message{
+  margin-top:8px;
+  padding:9px;
+  background:#e7ecd7;
+  color:#303820;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:700;
+  display:none;
 }
 
 #checkout{
@@ -410,16 +537,11 @@ textarea{
 }
 
 .cart-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  padding:12px 0;
+  padding:14px 0;
   border-bottom:1px solid #3d4236;
 }
 
 .cart-product-info{
-  flex:1;
   min-width:0;
 }
 
@@ -445,6 +567,32 @@ textarea{
   margin-top:5px;
 }
 
+.cart-colour-section{
+  margin-top:10px;
+  background:#24291e;
+  border-radius:7px;
+  padding:10px;
+}
+
+.cart-colour-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:6px 0;
+  border-bottom:1px solid #3d4236;
+}
+
+.cart-colour-row:last-child{
+  border-bottom:0;
+}
+
+.cart-colour-name{
+  font-size:13px;
+  font-weight:800;
+  flex:1;
+}
+
 .qty{
   display:flex;
   align-items:center;
@@ -453,13 +601,13 @@ textarea{
 }
 
 .qty button{
-  width:34px;
-  height:34px;
+  width:32px;
+  height:32px;
   padding:0;
   border:0;
   border-radius:5px;
   cursor:pointer;
-  font-size:20px;
+  font-size:19px;
   font-weight:900;
 }
 
@@ -467,6 +615,18 @@ textarea{
   min-width:25px;
   text-align:center;
   font-weight:900;
+}
+
+.cart-remove{
+  background:#8b3d35;
+  color:#fff;
+  margin-top:9px;
+  padding:7px 10px;
+  border:0;
+  border-radius:5px;
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
 }
 
 .cart-checkout{
@@ -576,17 +736,6 @@ textarea{
   padding:5px 9px;
   border-radius:20px;
   font-size:12px;
-}
-
-.added-message{
-  margin-top:8px;
-  padding:9px;
-  background:#e7ecd7;
-  color:#303820;
-  border-radius:6px;
-  font-size:12px;
-  font-weight:700;
-  display:none;
 }
 
 .image-modal{
@@ -726,6 +875,13 @@ textarea{
 .order-item{
   padding:8px 0;
   border-bottom:1px solid #eee;
+}
+
+.order-colours{
+  margin-top:6px;
+  color:#555;
+  font-size:13px;
+  line-height:1.6;
 }
 
 .order-meta{
@@ -878,14 +1034,6 @@ footer{
     flex-direction:column;
   }
 
-  .cart-row{
-    align-items:flex-start;
-  }
-
-  .qty{
-    margin-top:3px;
-  }
-
 }
 
 </style>
@@ -912,7 +1060,10 @@ footer{
       HOME
     </a>
 
-    <a href="#shop">
+    <a
+      href="#categorySection"
+      onclick="goToCategories();return false;"
+    >
       SHOP
     </a>
 
@@ -932,9 +1083,8 @@ footer{
 
 </header>
 
-<main>
 
-<!-- HERO -->
+<main>
 
 <section
   class="hero"
@@ -957,7 +1107,7 @@ footer{
     <a
       class="btn"
       href="#categorySection"
-      onclick="goToCategories(); return false;"
+      onclick="goToCategories();return false;"
     >
       SHOP NOW
     </a>
@@ -966,8 +1116,6 @@ footer{
 
 </section>
 
-
-<!-- CATEGORIES -->
 
 <section id="categorySection">
 
@@ -990,13 +1138,8 @@ footer{
       data-category="T-Shirts"
       type="button"
     >
-      <b>
-        👕 T-Shirts
-      </b>
-
-      <span>
-        Premium everyday wear
-      </span>
+      <b>👕 T-Shirts</b>
+      <span>Premium everyday wear</span>
     </button>
 
 
@@ -1005,13 +1148,8 @@ footer{
       data-category="Sports T-Shirts"
       type="button"
     >
-      <b>
-        🏃 Sports T-Shirts
-      </b>
-
-      <span>
-        Sports & performance wear
-      </span>
+      <b>🏃 Sports T-Shirts</b>
+      <span>Sports & performance wear</span>
     </button>
 
 
@@ -1020,13 +1158,8 @@ footer{
       data-category="Trousers"
       type="button"
     >
-      <b>
-        👖 Trousers
-      </b>
-
-      <span>
-        Comfort & utility style
-      </span>
+      <b>👖 Trousers</b>
+      <span>Comfort & utility style</span>
     </button>
 
 
@@ -1035,13 +1168,8 @@ footer{
       data-category="Shorts"
       type="button"
     >
-      <b>
-        🩳 Shorts
-      </b>
-
-      <span>
-        Easy casual fit
-      </span>
+      <b>🩳 Shorts</b>
+      <span>Easy casual fit</span>
     </button>
 
 
@@ -1050,13 +1178,8 @@ footer{
       data-category="Footwear"
       type="button"
     >
-      <b>
-        👟 Footwear
-      </b>
-
-      <span>
-        Complete the look
-      </span>
+      <b>👟 Footwear</b>
+      <span>Complete the look</span>
     </button>
 
 
@@ -1065,21 +1188,14 @@ footer{
       data-category="Featured"
       type="button"
     >
-      <b>
-        ⭐ Featured
-      </b>
-
-      <span>
-        Our top picks
-      </span>
+      <b>⭐ Featured</b>
+      <span>Our top picks</span>
     </button>
 
   </div>
 
 </section>
 
-
-<!-- SHOP -->
 
 <section id="shop">
 
@@ -1112,8 +1228,6 @@ footer{
 </section>
 
 
-<!-- CART -->
-
 <section id="cart">
 
   <div class="title">
@@ -1123,7 +1237,7 @@ footer{
     </h2>
 
     <p>
-      Add multiple products and checkout together
+      Add multiple colours of the same product in one cart item
     </p>
 
   </div>
@@ -1148,26 +1262,17 @@ footer{
 
         <div class="summary-row">
           <span>Product Price</span>
-
-          <strong id="productTotal">
-            ₹0
-          </strong>
+          <strong id="productTotal">₹0</strong>
         </div>
 
         <div class="summary-row">
           <span>Shipping Charge</span>
-
-          <strong>
-            ₹49
-          </strong>
+          <strong>₹49</strong>
         </div>
 
         <div class="summary-row summary-total">
           <span>Grand Total</span>
-
-          <strong id="total">
-            ₹0
-          </strong>
+          <strong id="total">₹0</strong>
         </div>
 
       </div>
@@ -1188,8 +1293,6 @@ footer{
 
 </section>
 
-
-<!-- CHECKOUT -->
 
 <section id="checkout">
 
@@ -1220,26 +1323,17 @@ footer{
 
         <div class="summary-row">
           <span>Product Price</span>
-
-          <strong id="checkoutProductTotal">
-            ₹0
-          </strong>
+          <strong id="checkoutProductTotal">₹0</strong>
         </div>
 
         <div class="summary-row">
           <span>Shipping Charge</span>
-
-          <strong>
-            ₹49
-          </strong>
+          <strong>₹49</strong>
         </div>
 
         <div class="summary-row summary-total">
           <span>Grand Total</span>
-
-          <strong id="checkoutTotal">
-            ₹0
-          </strong>
+          <strong id="checkoutTotal">₹0</strong>
         </div>
 
       </div>
@@ -1249,9 +1343,7 @@ footer{
 
     <form id="orderForm">
 
-      <label>
-        Full Name
-      </label>
+      <label>Full Name</label>
 
       <input
         required
@@ -1260,9 +1352,7 @@ footer{
       >
 
 
-      <label>
-        Mobile Number
-      </label>
+      <label>Mobile Number</label>
 
       <input
         required
@@ -1275,9 +1365,7 @@ footer{
       >
 
 
-      <label>
-        Full Address
-      </label>
+      <label>Full Address</label>
 
       <textarea
         required
@@ -1286,9 +1374,7 @@ footer{
       ></textarea>
 
 
-      <label>
-        PIN Code
-      </label>
+      <label>PIN Code</label>
 
       <input
         required
@@ -1300,9 +1386,7 @@ footer{
       >
 
 
-      <label>
-        Payment Method
-      </label>
+      <label>Payment Method</label>
 
       <div class="pay">
 
@@ -1344,8 +1428,6 @@ footer{
 </section>
 
 
-<!-- MY ORDERS -->
-
 <section id="orders">
 
   <div class="title">
@@ -1364,9 +1446,7 @@ footer{
 
     <div class="order-card">
 
-      <label>
-        Mobile Number
-      </label>
+      <label>Mobile Number</label>
 
       <input
         id="customerMobile"
@@ -1411,8 +1491,6 @@ footer{
 </footer>
 
 
-<!-- IMAGE MODAL -->
-
 <div
   class="image-modal"
   id="imageModal"
@@ -1455,26 +1533,11 @@ footer{
 
   <div class="zoom-controls">
 
-    <button
-      id="zoomOut"
-      type="button"
-    >
-      −
-    </button>
+    <button id="zoomOut" type="button">−</button>
 
-    <button
-      id="zoomReset"
-      type="button"
-    >
-      100%
-    </button>
+    <button id="zoomReset" type="button">100%</button>
 
-    <button
-      id="zoomIn"
-      type="button"
-    >
-      +
-    </button>
+    <button id="zoomIn" type="button">+</button>
 
   </div>
 
@@ -1485,9 +1548,9 @@ footer{
 
 <script>
 
-/* =========================
+/* =========================================================
    STORE DATA
-========================= */
+========================================================= */
 
 let products=[];
 
@@ -1495,16 +1558,72 @@ const SHIPPING_CHARGE=49;
 
 const MAX_QTY=10;
 
-let cart=
-  JSON.parse(
-    localStorage.getItem(
-      "sniperCart"
-    ) || "[]"
-  );
+const DEFAULT_COLOURS=[
+  "Black",
+  "Green",
+  "White",
+  "Navy",
+  "Beige"
+];
 
 const CUSTOMER_TOKEN_KEY=
   "sniperCustomerAccessToken";
 
+
+/*
+  New cart structure:
+
+  [
+    {
+      id:123,
+      selections:[
+        {
+          size:"L",
+          colour:"Black",
+          qty:2
+        },
+        {
+          size:"L",
+          colour:"Beige",
+          qty:1
+        }
+      ]
+    }
+  ]
+
+  Same product remains ONE cart item.
+*/
+
+
+let cart=[];
+
+
+/* =========================================================
+   LOAD OLD / NEW CART SAFELY
+========================================================= */
+
+try{
+
+  const saved=
+    JSON.parse(
+      localStorage.getItem("sniperCart") || "[]"
+    );
+
+  cart=
+    Array.isArray(saved)
+      ? saved
+      : [];
+
+}catch(error){
+
+  cart=[];
+
+}
+
+
+/* =========================================================
+   CUSTOMER TOKEN
+========================================================= */
 
 function saveCustomerToken(token){
 
@@ -1531,6 +1650,10 @@ function getCustomerToken(){
 }
 
 
+/* =========================================================
+   SAVE CART
+========================================================= */
+
 function save(){
 
   localStorage.setItem(
@@ -1541,9 +1664,9 @@ function save(){
 }
 
 
-/* =========================
+/* =========================================================
    STOCK
-========================= */
+========================================================= */
 
 function isOutOfStock(p){
 
@@ -1553,8 +1676,8 @@ function isOutOfStock(p){
 
   const status=
     String(
-      p.stockStatus ||
-      p.stock ||
+      p.stockStatus ??
+      p.stock ??
       ""
     )
     .trim()
@@ -1569,8 +1692,13 @@ function isOutOfStock(p){
     return true;
   }
 
+  if(p.inStock===false){
+    return true;
+  }
+
   if(
-    p.inStock===false
+    status==="false" ||
+    status==="0"
   ){
     return true;
   }
@@ -1580,35 +1708,22 @@ function isOutOfStock(p){
 }
 
 
-function getStockText(p){
-
-  return isOutOfStock(p)
-    ? "OUT OF STOCK"
-    : "IN STOCK";
-
-}
-
-
-/* =========================
+/* =========================================================
    IMAGES
-========================= */
+========================================================= */
 
 function getProductImages(p){
 
   let images=[];
 
-  if(
-    Array.isArray(p.images)
-  ){
+  if(Array.isArray(p.images)){
     images=
       images.concat(
         p.images.filter(Boolean)
       );
   }
 
-  if(
-    Array.isArray(p.photos)
-  ){
+  if(Array.isArray(p.photos)){
     images=
       images.concat(
         p.photos.filter(Boolean)
@@ -1621,7 +1736,9 @@ function getProductImages(p){
 
   images=
     images
-      .map(x=>String(x).trim())
+      .map(
+        x=>String(x).trim()
+      )
       .filter(Boolean);
 
   return [
@@ -1630,6 +1747,10 @@ function getProductImages(p){
 
 }
 
+
+/* =========================================================
+   SIZES
+========================================================= */
 
 function getSizes(p){
 
@@ -1643,9 +1764,139 @@ function getSizes(p){
 }
 
 
-/* =========================
+/* =========================================================
+   COLOURS
+========================================================= */
+
+function getProductColours(p){
+
+  let raw=[];
+
+  const fields=[
+    p?.colours,
+    p?.colour,
+    p?.colors,
+    p?.color
+  ];
+
+  for(const value of fields){
+
+    if(
+      Array.isArray(value)
+    ){
+
+      raw=
+        raw.concat(value);
+
+    }else if(
+      value!==undefined &&
+      value!==null &&
+      String(value).trim()
+    ){
+
+      raw.push(
+        String(value)
+      );
+
+    }
+
+  }
+
+  let colours=[];
+
+  raw.forEach(
+    value=>{
+
+      String(value)
+        .split(/[,|\/\n]+/)
+        .map(
+          x=>x.trim()
+        )
+        .filter(Boolean)
+        .forEach(
+          x=>colours.push(x)
+        );
+
+    }
+  );
+
+
+  /*
+    Agar admin mein koi colour diya gaya hai,
+    to usi ke saath Beige ko ensure karte hain.
+  */
+
+  if(colours.length){
+
+    const hasBeige=
+      colours.some(
+        c=>
+          c.toLowerCase()==="beige"
+      );
+
+    if(!hasBeige){
+      colours.push("Beige");
+    }
+
+    return [
+      ...new Map(
+        colours.map(
+          c=>[
+            c.toLowerCase(),
+            c
+          ]
+        )
+      ).values()
+    ];
+
+  }
+
+
+  /*
+    Agar admin ne colour field blank rakha hai,
+    tab customer ko standard colour options milenge.
+  */
+
+  return [...DEFAULT_COLOURS];
+
+}
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+function escapeHTML(value){
+
+  return String(
+    value ?? ""
+  )
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   SAFE JS STRING
+========================================================= */
+
+function jsString(value){
+
+  return JSON.stringify(
+    String(value ?? "")
+  )
+  .replace(/</g,"\\u003c");
+
+}
+
+
+/* =========================================================
    LOAD PRODUCTS
-========================= */
+========================================================= */
 
 async function loadProducts(){
 
@@ -1678,7 +1929,10 @@ async function loadProducts(){
         ? d.products
         : [];
 
+    normalizeCart();
+
     renderProducts();
+
     renderCart();
 
   }catch(error){
@@ -1697,9 +1951,9 @@ async function loadProducts(){
 }
 
 
-/* =========================
+/* =========================================================
    CATEGORY
-========================= */
+========================================================= */
 
 let selectedCategory="";
 
@@ -1716,17 +1970,16 @@ function categoryMatch(p){
       .toLowerCase()==="featured"
   ){
 
-    return (
+    return(
       p.featured===true ||
-      String(
-        p.featured
-      ).toLowerCase()==="true" ||
-      p.featured===1
+      String(p.featured).toLowerCase()==="true" ||
+      p.featured===1 ||
+      String(p.featured)==="1"
     );
 
   }
 
-  return (
+  return(
     String(
       p.category || ""
     )
@@ -1741,9 +1994,9 @@ function categoryMatch(p){
 }
 
 
-/* =========================
+/* =========================================================
    SHOP NOW
-========================= */
+========================================================= */
 
 function goToCategories(){
 
@@ -1763,9 +2016,7 @@ function goToCategories(){
   );
 
   const header=
-    document.querySelector(
-      "header"
-    );
+    document.querySelector("header");
 
   const headerHeight=
     header
@@ -1773,8 +2024,8 @@ function goToCategories(){
       : 0;
 
   const top=
-    section.getBoundingClientRect().top +
-    window.pageYOffset -
+    section.getBoundingClientRect().top+
+    window.pageYOffset-
     headerHeight;
 
   window.scrollTo({
@@ -1785,9 +2036,9 @@ function goToCategories(){
 }
 
 
-/* =========================
+/* =========================================================
    SHOW CATEGORY
-========================= */
+========================================================= */
 
 function showCategory(category){
 
@@ -1796,7 +2047,7 @@ function showCategory(category){
   document
     .querySelectorAll(".cat")
     .forEach(
-      btn =>
+      btn=>
         btn.classList.toggle(
           "active",
           btn.dataset.category===category
@@ -1814,15 +2065,16 @@ function showCategory(category){
 
   renderProducts();
 
-  const shop=
-    document.getElementById("shop");
-
-  if(!shop){
-    return;
-  }
-
   setTimeout(
     ()=>{
+
+      const shop=
+        document.getElementById("shop");
+
+      if(!shop){
+        return;
+      }
+
       const header=
         document.querySelector("header");
 
@@ -1833,15 +2085,15 @@ function showCategory(category){
 
       window.scrollTo({
         top:
-          shop.getBoundingClientRect().top +
-          window.pageYOffset -
-          headerHeight -
+          shop.getBoundingClientRect().top+
+          window.pageYOffset-
+          headerHeight-
           8,
         behavior:"auto"
       });
 
     },
-    0
+    20
   );
 
 }
@@ -1854,7 +2106,7 @@ function showAllProducts(){
   document
     .querySelectorAll(".cat")
     .forEach(
-      btn =>
+      btn=>
         btn.classList.remove("active")
     );
 
@@ -1872,27 +2124,9 @@ function showAllProducts(){
 }
 
 
-/* =========================
-   ESCAPE
-========================= */
-
-function escapeHTML(value){
-
-  return String(
-    value || ""
-  )
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================
+/* =========================================================
    GALLERY HTML
-========================= */
+========================================================= */
 
 function galleryHTML(p){
 
@@ -1901,7 +2135,7 @@ function galleryHTML(p){
 
   if(!images.length){
 
-    return `
+    return`
       <div class="gallery-main">
         <span class="muted">
           No image
@@ -1911,9 +2145,7 @@ function galleryHTML(p){
 
   }
 
-  const first=images[0];
-
-  return `
+  return`
 
     <div class="gallery">
 
@@ -1925,7 +2157,7 @@ function galleryHTML(p){
 
         <img
           class="product-main-image"
-          src="${escapeHTML(first)}"
+          src="${escapeHTML(images[0])}"
           alt="${escapeHTML(p.name || "Product")}"
           loading="lazy"
           decoding="async"
@@ -1979,9 +2211,326 @@ function galleryHTML(p){
 }
 
 
-/* =========================
+/* =========================================================
+   PRODUCT COLOUR CONTROLS
+========================================================= */
+
+function productColourHTML(p){
+
+  const colours=
+    getProductColours(p);
+
+  if(!colours.length){
+    return "";
+  }
+
+  const id=
+    Number(p.id);
+
+  return`
+
+    <div
+      class="colour-qty-box"
+      id="colourBox-${id}"
+    >
+
+      <div class="colour-qty-title">
+        🎨 Choose Colour & Quantity
+      </div>
+
+      ${
+        colours
+          .map(
+            (colour,index)=>
+              `
+              <div
+                class="colour-qty-row"
+                data-product-colour-row="${id}"
+                data-colour="${escapeHTML(colour)}"
+              >
+
+                <span class="colour-qty-name">
+                  ${escapeHTML(colour)}
+                </span>
+
+                <div class="colour-qty-controls">
+
+                  <button
+                    type="button"
+                    onclick="
+                      changeProductColourQty(
+                        ${id},
+                        ${jsString(colour)},
+                        -1
+                      )
+                    "
+                  >
+                    −
+                  </button>
+
+                  <span
+                    class="colour-qty-number"
+                    id="
+                      product-colour-qty-${id}-${index}
+                    "
+                  >
+                    0
+                  </span>
+
+                  <button
+                    type="button"
+                    onclick="
+                      changeProductColourQty(
+                        ${id},
+                        ${jsString(colour)},
+                        1
+                      )
+                    "
+                  >
+                    +
+                  </button>
+
+                </div>
+
+              </div>
+              `
+          )
+          .join("")
+      }
+
+      <div
+        class="selected-colour-summary"
+        id="colourSummary-${id}"
+      >
+        Select colour quantity above.
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   GET TEMP PRODUCT COLOUR SELECTION
+========================================================= */
+
+const productColourSelections={};
+
+
+function getProductSelectionKey(
+  id,
+  size
+){
+
+  return(
+    Number(id)+
+    "::"+
+    String(size || "")
+  );
+
+}
+
+
+function getTempSelection(
+  id,
+  size
+){
+
+  const key=
+    getProductSelectionKey(
+      id,
+      size
+    );
+
+  if(
+    !productColourSelections[key]
+  ){
+
+    productColourSelections[key]={};
+
+  }
+
+  return productColourSelections[key];
+
+}
+
+
+function changeProductColourQty(
+  id,
+  colour,
+  delta
+){
+
+  const p=
+    products.find(
+      x=>
+        Number(x.id)===Number(id)
+    );
+
+  if(!p || isOutOfStock(p)){
+    return;
+  }
+
+  const sizes=
+    getSizes(p);
+
+  let size="";
+
+  if(sizes.length){
+
+    const select=
+      document.getElementById(
+        "size-"+Number(id)
+      );
+
+    size=
+      select
+        ? select.value
+        : "";
+
+    if(!size){
+
+      alert(
+        "Please select a size first."
+      );
+
+      return;
+
+    }
+
+  }
+
+  const selection=
+    getTempSelection(
+      id,
+      size
+    );
+
+  const current=
+    Number(
+      selection[colour] || 0
+    );
+
+  let next=
+    current+delta;
+
+  next=
+    Math.max(
+      0,
+      Math.min(
+        MAX_QTY,
+        next
+      )
+    );
+
+  selection[colour]=next;
+
+  updateProductColourUI(
+    id,
+    size
+  );
+
+}
+
+
+function updateProductColourUI(
+  id,
+  size
+){
+
+  const selection=
+    getTempSelection(
+      id,
+      size
+    );
+
+  const box=
+    document.getElementById(
+      "colourBox-"+Number(id)
+    );
+
+  if(!box){
+    return;
+  }
+
+  const rows=
+    box.querySelectorAll(
+      "[data-product-colour-row]"
+    );
+
+  let total=0;
+
+  rows.forEach(
+    row=>{
+
+      const colour=
+        row.dataset.colour;
+
+      const qty=
+        Number(
+          selection[colour] || 0
+        );
+
+      total+=qty;
+
+      const number=
+        row.querySelector(
+          ".colour-qty-number"
+        );
+
+      if(number){
+        number.textContent=
+          String(qty);
+      }
+
+    }
+  );
+
+  const summary=
+    document.getElementById(
+      "colourSummary-"+Number(id)
+    );
+
+  if(!summary){
+    return;
+  }
+
+  const parts=
+    Object.entries(selection)
+      .filter(
+        ([colour,qty])=>
+          Number(qty)>0
+      )
+      .map(
+        ([colour,qty])=>
+          `${colour} × ${qty}`
+      );
+
+  if(!parts.length){
+
+    summary.textContent=
+      "Select colour quantity above.";
+
+  }else{
+
+    summary.innerHTML=
+      "<b>Selected:</b> "+
+      parts
+        .map(escapeHTML)
+        .join(" • ")+
+      " | Total Qty: "+
+      total;
+
+  }
+
+}
+
+
+/* =========================================================
    RENDER PRODUCTS
-========================= */
+========================================================= */
 
 function renderProducts(){
 
@@ -1990,7 +2539,7 @@ function renderProducts(){
       "products"
     );
 
-  let list=
+  const list=
     products.filter(
       categoryMatch
     );
@@ -2035,12 +2584,8 @@ function renderProducts(){
           const outOfStock=
             isOutOfStock(p);
 
-          const colour=
-            String(
-              p.colour ||
-              p.color ||
-              ""
-            ).trim();
+          const colours=
+            getProductColours(p);
 
           const sizeHTML=
             sizes.length
@@ -2048,15 +2593,16 @@ function renderProducts(){
             `
             <div class="details">
 
-              <label
-                style="margin:0 0 6px"
-              >
+              <label style="margin:0 0 6px">
                 Select Size
               </label>
 
               <select
                 class="size-select"
                 id="size-${id}"
+                onchange="
+                  resetProductColourSelection(${id})
+                "
               >
 
                 <option value="">
@@ -2085,10 +2631,10 @@ function renderProducts(){
             :
             "";
 
-          return `
+          return`
 
           <div
-            class="card product"
+            class="product"
             data-product-id="${id}"
           >
 
@@ -2108,14 +2654,24 @@ function renderProducts(){
               </div>
 
               ${
-                colour
+                colours.length
                 ?
                 `
-                <div>
-                  <span class="colour-badge">
-                    🎨 Colour:
-                    ${escapeHTML(colour)}
-                  </span>
+                <div class="product-colour-list">
+
+                  ${
+                    colours
+                      .map(
+                        colour=>
+                          `
+                          <span class="product-colour-chip">
+                            🎨 ${escapeHTML(colour)}
+                          </span>
+                          `
+                      )
+                      .join("")
+                  }
+
                 </div>
                 `
                 :
@@ -2157,6 +2713,14 @@ function renderProducts(){
               }
 
               ${sizeHTML}
+
+              ${
+                !outOfStock
+                ?
+                productColourHTML(p)
+                :
+                ""
+              }
 
               <div class="price">
                 ₹${Number(
@@ -2214,15 +2778,250 @@ function renderProducts(){
 }
 
 
-/* =========================
-   ADD TO CART
-========================= */
+/* =========================================================
+   RESET PRODUCT COLOUR SELECTION
+========================================================= */
+
+function resetProductColourSelection(id){
+
+  const p=
+    products.find(
+      x=>
+        Number(x.id)===Number(id)
+    );
+
+  if(!p){
+    return;
+  }
+
+  const sizes=
+    getSizes(p);
+
+  let size="";
+
+  if(sizes.length){
+
+    const select=
+      document.getElementById(
+        "size-"+Number(id)
+      );
+
+    size=
+      select
+        ? select.value
+        : "";
+
+  }
+
+  const key=
+    getProductSelectionKey(
+      id,
+      size
+    );
+
+  if(
+    !productColourSelections[key]
+  ){
+
+    productColourSelections[key]={};
+
+  }
+
+  updateProductColourUI(
+    id,
+    size
+  );
+
+}
+
+
+/* =========================================================
+   NORMALIZE OLD CART
+========================================================= */
+
+function normalizeCart(){
+
+  const newCart=[];
+
+  cart.forEach(
+    oldItem=>{
+
+      const p=
+        products.find(
+          x=>
+            Number(x.id)===
+            Number(oldItem.id)
+        );
+
+      if(!p){
+        return;
+      }
+
+      /*
+        New cart format already
+      */
+
+      if(
+        Array.isArray(
+          oldItem.selections
+        )
+      ){
+
+        let target=
+          newCart.find(
+            x=>
+              Number(x.id)===
+              Number(oldItem.id)
+          );
+
+        if(!target){
+
+          target={
+            id:Number(oldItem.id),
+            selections:[]
+          };
+
+          newCart.push(target);
+
+        }
+
+        oldItem.selections.forEach(
+          selection=>{
+
+            const qty=
+              Math.min(
+                MAX_QTY,
+                Math.max(
+                  0,
+                  Number(
+                    selection.qty || 0
+                  )
+                )
+              );
+
+            if(qty<=0){
+              return;
+            }
+
+            const colour=
+              String(
+                selection.colour ||
+                "Beige"
+              );
+
+            const size=
+              String(
+                selection.size || ""
+              );
+
+            const existing=
+              target.selections.find(
+                s=>
+                  String(s.size || "")===
+                    size &&
+                  String(s.colour || "")
+                    .toLowerCase()===
+                    colour.toLowerCase()
+              );
+
+            if(existing){
+
+              existing.qty=
+                Math.min(
+                  MAX_QTY,
+                  Number(existing.qty || 0)+qty
+                );
+
+            }else{
+
+              target.selections.push({
+                size,
+                colour,
+                qty
+              });
+
+            }
+
+          }
+        );
+
+        return;
+
+      }
+
+
+      /*
+        Old cart format:
+        {id, qty, size}
+
+        Convert it into one colour selection.
+      */
+
+      const qty=
+        Math.min(
+          MAX_QTY,
+          Math.max(
+            1,
+            Number(oldItem.qty || 1)
+          )
+        );
+
+      const colour=
+        String(
+          oldItem.colour ||
+          "Beige"
+        );
+
+      let target=
+        newCart.find(
+          x=>
+            Number(x.id)===
+            Number(oldItem.id)
+        );
+
+      if(!target){
+
+        target={
+          id:Number(oldItem.id),
+          selections:[]
+        };
+
+        newCart.push(target);
+
+      }
+
+      target.selections.push({
+        size:String(
+          oldItem.size || ""
+        ),
+        colour,
+        qty
+      });
+
+    }
+  );
+
+  cart=
+    newCart.filter(
+      item=>
+        item.selections &&
+        item.selections.length
+    );
+
+  save();
+
+}
+
+
+/* =========================================================
+   ADD PRODUCT TO CART
+========================================================= */
 
 function addProductToCart(id){
 
   const p=
     products.find(
-      x =>
+      x=>
         Number(x.id)===Number(id)
     );
 
@@ -2269,47 +3068,126 @@ function addProductToCart(id){
 
   }
 
-  const existing=
-    cart.find(
-      item =>
-        Number(item.id)===Number(id) &&
-        String(item.size || "")===
-        String(size || "")
+
+  const selection=
+    getTempSelection(
+      id,
+      size
     );
 
-  if(existing){
-
-    if(
-      Number(existing.qty || 0)>=MAX_QTY
-    ){
-
-      alert(
-        "Maximum 10 quantity allowed for one product/size."
+  const selectedColours=
+    Object.entries(selection)
+      .filter(
+        ([colour,qty])=>
+          Number(qty)>0
       );
 
-      return;
+
+  if(!selectedColours.length){
+
+    alert(
+      "Please select at least one colour quantity."
+    );
+
+    return;
+
+  }
+
+
+  let item=
+    cart.find(
+      x=>
+        Number(x.id)===Number(id)
+    );
+
+
+  if(!item){
+
+    item={
+      id:Number(id),
+      selections:[]
+    };
+
+    cart.push(item);
+
+  }
+
+
+  let totalExisting=0;
+
+  item.selections.forEach(
+    s=>{
+      totalExisting+=
+        Number(s.qty || 0);
+    }
+  );
+
+
+  for(
+    const [colour,qtyValue]
+    of selectedColours
+  ){
+
+    const qty=
+      Number(qtyValue || 0);
+
+    const existing=
+      item.selections.find(
+        s=>
+          String(s.size || "")===
+            String(size || "") &&
+          String(s.colour || "")
+            .toLowerCase()===
+            String(colour)
+              .toLowerCase()
+      );
+
+    if(existing){
+
+      existing.qty=
+        Math.min(
+          MAX_QTY,
+          Number(existing.qty || 0)+qty
+        );
+
+    }else{
+
+      item.selections.push({
+
+        size:size,
+
+        colour:colour,
+
+        qty:
+          Math.min(
+            MAX_QTY,
+            qty
+          )
+
+      });
 
     }
 
-    existing.qty=
-      Math.min(
-        MAX_QTY,
-        Number(existing.qty || 0)+1
-      );
-
-  }else{
-
-    cart.push({
-      id:Number(id),
-      qty:1,
-      size:size
-    });
-
   }
+
+
+  /*
+    Clear product selection after adding
+  */
+
+  const key=
+    getProductSelectionKey(
+      id,
+      size
+    );
+
+  productColourSelections[key]={};
+
 
   save();
 
   renderCart();
+
 
   const added=
     document.getElementById(
@@ -2329,211 +3207,51 @@ function addProductToCart(id){
 
   }
 
-  updateCartCount();
-
 }
 
 
-/* =========================
-   GALLERY EVENTS
-========================= */
+/* =========================================================
+   PRODUCT COLOUR SUMMARY
+========================================================= */
 
-function attachGalleryEvents(){
-
-  document
-    .querySelectorAll(".gallery-main")
-    .forEach(
-      main=>{
-
-        main.addEventListener(
-          "click",
-          function(){
-
-            openProductGallery(
-              Number(
-                this.dataset.galleryId
-              ),
-              Number(
-                this.dataset.imageIndex || 0
-              )
-            );
-
-          }
-        );
-
-      }
-    );
-
-  document
-    .querySelectorAll("[data-gallery-thumb]")
-    .forEach(
-      thumb=>{
-
-        thumb.addEventListener(
-          "click",
-          function(){
-
-            changeCardImage(
-              Number(
-                this.dataset.galleryThumb
-              ),
-              Number(
-                this.dataset.index
-              )
-            );
-
-          }
-        );
-
-      }
-    );
-
-}
-
-
-/* =========================
-   CHANGE IMAGE
-========================= */
-
-function changeCardImage(id,index){
-
-  const p=
-    products.find(
-      x =>
-        Number(x.id)===Number(id)
-    );
-
-  if(!p){
-    return;
-  }
-
-  const images=
-    getProductImages(p);
-
-  if(!images[index]){
-    return;
-  }
-
-  const card=
-    document.querySelector(
-      `[data-product-id="${Number(id)}"]`
-    );
-
-  if(!card){
-    return;
-  }
-
-  const main=
-    card.querySelector(
-      ".gallery-main img"
-    );
-
-  if(main){
-    main.src=images[index];
-  }
-
-  const mainBox=
-    card.querySelector(
-      ".gallery-main"
-    );
-
-  if(mainBox){
-    mainBox.dataset.imageIndex=index;
-  }
-
-  card
-    .querySelectorAll("[data-gallery-thumb]")
-    .forEach(
-      (thumb,i)=>
-        thumb.classList.toggle(
-          "active",
-          i===index
-        )
-    );
-
-}
-
-
-function buyNow(id){
-
-  addProductToCart(id);
-
-}
-
-
-function add(id,size=""){
-
-  const p=
-    products.find(
-      x =>
-        Number(x.id)===Number(id)
-    );
+function selectionTotal(item){
 
   if(
-    p &&
-    isOutOfStock(p)
+    !item ||
+    !Array.isArray(item.selections)
   ){
-
-    alert(
-      "This product is currently out of stock."
-    );
-
-    return;
-
+    return 0;
   }
 
-  const existing=
-    cart.find(
-      i =>
-        i.id===Number(id) &&
-        String(i.size || "")===
-        String(size || "")
-    );
-
-  if(existing){
-
-    if(
-      Number(existing.qty || 0)>=MAX_QTY
-    ){
-
-      alert(
-        "Maximum 10 quantity allowed."
-      );
-
-      return;
-
-    }
-
-    existing.qty++;
-
-  }else{
-
-    cart.push({
-      id:Number(id),
-      qty:1,
-      size:size
-    });
-
-  }
-
-  save();
-  renderCart();
+  return item.selections.reduce(
+    (sum,s)=>
+      sum+
+      Math.min(
+        MAX_QTY,
+        Number(s.qty || 0)
+      ),
+    0
+  );
 
 }
 
 
-/* =========================
-   CHANGE QTY
-========================= */
+/* =========================================================
+   CHANGE CART COLOUR QTY
+========================================================= */
 
-function change(id,d,size=""){
+function changeCartColourQty(
+  productId,
+  size,
+  colour,
+  delta
+){
 
   const item=
     cart.find(
-      i =>
-        i.id===Number(id) &&
-        String(i.size || "")===
-        String(size || "")
+      x=>
+        Number(x.id)===
+        Number(productId)
     );
 
   if(!item){
@@ -2542,14 +3260,17 @@ function change(id,d,size=""){
 
   const p=
     products.find(
-      x =>
-        Number(x.id)===Number(id)
+      x=>
+        Number(x.id)===
+        Number(productId)
     );
 
   if(
-    d>0 &&
-    p &&
-    isOutOfStock(p)
+    delta>0 &&
+    (
+      !p ||
+      isOutOfStock(p)
+    )
   ){
 
     alert(
@@ -2562,43 +3283,104 @@ function change(id,d,size=""){
 
   }
 
-  let newQty=
-    Number(item.qty || 0)+d;
 
-  if(newQty>MAX_QTY){
-    newQty=MAX_QTY;
-  }
+  const selection=
+    item.selections.find(
+      s=>
+        String(s.size || "")===
+          String(size || "") &&
+        String(s.colour || "")
+          .toLowerCase()===
+          String(colour || "")
+            .toLowerCase()
+    );
 
-  if(newQty<=0){
 
-    cart=
-      cart.filter(
-        i =>
-          !(
-            i.id===Number(id) &&
-            String(i.size || "")===
-            String(size || "")
-          )
-      );
+  if(!selection){
+
+    if(delta<=0){
+      return;
+    }
+
+    item.selections.push({
+
+      size:String(size || ""),
+
+      colour:String(colour || ""),
+
+      qty:1
+
+    });
 
   }else{
 
-    item.qty=newQty;
+    let next=
+      Number(selection.qty || 0)+
+      delta;
+
+    next=
+      Math.max(
+        0,
+        Math.min(
+          MAX_QTY,
+          next
+        )
+      );
+
+    selection.qty=next;
 
   }
+
+
+  item.selections=
+    item.selections.filter(
+      s=>
+        Number(s.qty || 0)>0
+    );
+
+
+  if(!item.selections.length){
+
+    cart=
+      cart.filter(
+        x=>
+          Number(x.id)!==
+          Number(productId)
+      );
+
+  }
+
 
   save();
 
   renderCart();
 
-  renderCheckoutCart();
+}
+
+
+/* =========================================================
+   REMOVE WHOLE PRODUCT
+========================================================= */
+
+function removeCartProduct(id){
+
+  cart=
+    cart.filter(
+      item=>
+        Number(item.id)!==
+        Number(id)
+    );
+
+  save();
+
+  renderCart();
 
 }
 
 
-/* =========================
+/* =========================================================
    CART COUNT
-========================= */
+========================================================= */
 
 function updateCartCount(){
 
@@ -2606,10 +3388,7 @@ function updateCartCount(){
     cart.reduce(
       (total,item)=>
         total+
-        Math.min(
-          MAX_QTY,
-          Number(item.qty || 0)
-        ),
+        selectionTotal(item),
       0
     );
 
@@ -2626,9 +3405,9 @@ function updateCartCount(){
 }
 
 
-/* =========================
-   OUT OF STOCK CART
-========================= */
+/* =========================================================
+   CART OUT OF STOCK
+========================================================= */
 
 function cartHasOutOfStock(){
 
@@ -2637,12 +3416,12 @@ function cartHasOutOfStock(){
 
       const p=
         products.find(
-          x =>
+          x=>
             Number(x.id)===
             Number(item.id)
         );
 
-      return (
+      return(
         !p ||
         isOutOfStock(p)
       );
@@ -2653,9 +3432,114 @@ function cartHasOutOfStock(){
 }
 
 
-/* =========================
+/* =========================================================
+   CART HTML
+========================================================= */
+
+function cartSelectionsHTML(
+  item,
+  dark=false
+){
+
+  const selections=
+    Array.isArray(item.selections)
+      ? item.selections
+      : [];
+
+  if(!selections.length){
+    return "";
+  }
+
+  const colours=
+    selections
+      .map(
+        selection=>
+          `
+          <div
+            class="${
+              dark
+                ? "cart-colour-row"
+                : "cart-colour-row"
+            }"
+          >
+
+            <span class="cart-colour-name">
+
+              🎨
+              ${escapeHTML(
+                selection.colour ||
+                "Beige"
+              )}
+
+              ${
+                selection.size
+                ?
+                `
+                <br>
+                <small>
+                  Size:
+                  ${escapeHTML(selection.size)}
+                </small>
+                `
+                :
+                ""
+              }
+
+            </span>
+
+            <div class="qty">
+
+              <button
+                type="button"
+                onclick="
+                  changeCartColourQty(
+                    ${Number(item.id)},
+                    ${jsString(selection.size || "")},
+                    ${jsString(selection.colour || "Beige")},
+                    -1
+                  )
+                "
+              >
+                −
+              </button>
+
+              <span class="qty-number">
+                ${Number(selection.qty || 0)}
+              </span>
+
+              <button
+                type="button"
+                onclick="
+                  changeCartColourQty(
+                    ${Number(item.id)},
+                    ${jsString(selection.size || "")},
+                    ${jsString(selection.colour || "Beige")},
+                    1
+                  )
+                "
+              >
+                +
+              </button>
+
+            </div>
+
+          </div>
+          `
+      )
+      .join("");
+
+  return`
+    <div class="cart-colour-section">
+      ${colours}
+    </div>
+  `;
+
+}
+
+
+/* =========================================================
    RENDER CART
-========================= */
+========================================================= */
 
 function renderCart(){
 
@@ -2663,6 +3547,10 @@ function renderCart(){
     document.getElementById(
       "cartItems"
     );
+
+  if(!el){
+    return;
+  }
 
   if(!cart.length){
 
@@ -2677,14 +3565,11 @@ function renderCart(){
       .getElementById("total")
       .textContent="₹0";
 
-    const checkoutBtn=
-      document.getElementById(
+    document
+      .getElementById(
         "proceedCheckoutBtn"
-      );
-
-    if(checkoutBtn){
-      checkoutBtn.disabled=true;
-    }
+      )
+      .disabled=true;
 
     updateCartCount();
 
@@ -2694,7 +3579,9 @@ function renderCart(){
 
   }
 
+
   let productTotal=0;
+
 
   el.innerHTML=
     cart
@@ -2703,7 +3590,7 @@ function renderCart(){
 
           const p=
             products.find(
-              x =>
+              x=>
                 Number(x.id)===
                 Number(item.id)
             );
@@ -2716,10 +3603,7 @@ function renderCart(){
             Number(p.price || 0);
 
           const qty=
-            Math.min(
-              MAX_QTY,
-              Number(item.qty || 0)
-            );
+            selectionTotal(item);
 
           const subtotal=
             price*qty;
@@ -2729,14 +3613,7 @@ function renderCart(){
           const outOfStock=
             isOutOfStock(p);
 
-          const colour=
-            String(
-              p.colour ||
-              p.color ||
-              ""
-            ).trim();
-
-          return `
+          return`
 
           <div class="cart-row">
 
@@ -2748,35 +3625,14 @@ function renderCart(){
 
               <div>
                 ₹${price.toLocaleString("en-IN")}
-                ×
-                ${qty}
+                × ${qty}
               </div>
 
-              ${
-                item.size
-                ?
-                `
-                <div class="cart-size">
-                  Size:
-                  ${escapeHTML(item.size)}
-                </div>
-                `
-                :
-                ""
-              }
+              <div class="cart-colour">
+                Same product — colour-wise quantity
+              </div>
 
-              ${
-                colour
-                ?
-                `
-                <div class="cart-colour">
-                  🎨 Colour:
-                  ${escapeHTML(colour)}
-                </div>
-                `
-                :
-                ""
-              }
+              ${cartSelectionsHTML(item,true)}
 
               ${
                 outOfStock
@@ -2790,43 +3646,12 @@ function renderCart(){
                 ""
               }
 
-            </div>
-
-            <div class="qty">
-
               <button
+                class="cart-remove"
                 type="button"
-                onclick="
-                  change(
-                    ${Number(item.id)},
-                    -1,
-                    '${escapeHTML(item.size || "")}'
-                  )
-                "
+                onclick="removeCartProduct(${Number(item.id)})"
               >
-                −
-              </button>
-
-              <span class="qty-number">
-                ${qty}
-              </span>
-
-              <button
-                type="button"
-                ${
-                  outOfStock
-                    ? "disabled"
-                    : ""
-                }
-                onclick="
-                  change(
-                    ${Number(item.id)},
-                    1,
-                    '${escapeHTML(item.size || "")}'
-                  )
-                "
-              >
-                +
+                REMOVE PRODUCT
               </button>
 
             </div>
@@ -2839,9 +3664,11 @@ function renderCart(){
       )
       .join("");
 
+
   const grandTotal=
     productTotal+
     SHIPPING_CHARGE;
+
 
   document
     .getElementById("productTotal")
@@ -2849,21 +3676,27 @@ function renderCart(){
       "₹"+
       productTotal.toLocaleString("en-IN");
 
+
   document
     .getElementById("total")
     .textContent=
       "₹"+
       grandTotal.toLocaleString("en-IN");
 
+
   const checkoutBtn=
     document.getElementById(
       "proceedCheckoutBtn"
     );
 
-  if(checkoutBtn){
-    checkoutBtn.disabled=
-      cartHasOutOfStock();
-  }
+  checkoutBtn.disabled=
+    !cart.length ||
+    cartHasOutOfStock() ||
+    cart.every(
+      item=>
+        selectionTotal(item)<=0
+    );
+
 
   updateCartCount();
 
@@ -2872,9 +3705,9 @@ function renderCart(){
 }
 
 
-/* =========================
+/* =========================================================
    CHECKOUT CART
-========================= */
+========================================================= */
 
 function renderCheckoutCart(){
 
@@ -2908,7 +3741,9 @@ function renderCheckoutCart(){
 
   }
 
+
   let productTotal=0;
+
 
   el.innerHTML=
     cart
@@ -2917,7 +3752,7 @@ function renderCheckoutCart(){
 
           const p=
             products.find(
-              x =>
+              x=>
                 Number(x.id)===
                 Number(item.id)
             );
@@ -2930,25 +3765,16 @@ function renderCheckoutCart(){
             Number(p.price || 0);
 
           const qty=
-            Math.min(
-              MAX_QTY,
-              Number(item.qty || 0)
-            );
+            selectionTotal(item);
 
           productTotal+=
             price*qty;
 
-          const colour=
-            String(
-              p.colour ||
-              p.color ||
-              ""
-            ).trim();
-
           const outOfStock=
             isOutOfStock(p);
 
-          return `
+
+          return`
 
           <div
             class="cart-row"
@@ -2962,33 +3788,10 @@ function renderCheckoutCart(){
               </div>
 
               <div>
-
-                Qty:
-                ${qty}
-
-                ${
-                  item.size
-                  ?
-                  " • Size "+
-                  escapeHTML(item.size)
-                  :
-                  ""
-                }
-
+                Total Qty: ${qty}
               </div>
 
-              ${
-                colour
-                ?
-                `
-                <div class="cart-size">
-                  🎨 Colour:
-                  ${escapeHTML(colour)}
-                </div>
-                `
-                :
-                ""
-              }
+              ${cartSelectionsHTML(item,true)}
 
               ${
                 outOfStock
@@ -3018,6 +3821,7 @@ function renderCheckoutCart(){
       )
       .join("");
 
+
   if(cartHasOutOfStock()){
 
     el.innerHTML+=
@@ -3034,9 +3838,11 @@ function renderCheckoutCart(){
 
   }
 
+
   const grandTotal=
     productTotal+
     SHIPPING_CHARGE;
+
 
   document
     .getElementById(
@@ -3045,6 +3851,7 @@ function renderCheckoutCart(){
     .textContent=
       "₹"+
       productTotal.toLocaleString("en-IN");
+
 
   document
     .getElementById(
@@ -3057,9 +3864,9 @@ function renderCheckoutCart(){
 }
 
 
-/* =========================
+/* =========================================================
    CHECKOUT
-========================= */
+========================================================= */
 
 function goToCheckout(){
 
@@ -3087,6 +3894,23 @@ function goToCheckout(){
 
   }
 
+  if(
+    !cart.some(
+      item=>
+        selectionTotal(item)>0
+    )
+  ){
+
+    alert(
+      "Please select at least one colour quantity."
+    );
+
+    location.hash="cart";
+
+    return;
+
+  }
+
   renderCheckoutCart();
 
   location.hash="checkout";
@@ -3102,9 +3926,7 @@ function goToCheckout(){
       if(checkout){
 
         const header=
-          document.querySelector(
-            "header"
-          );
+          document.querySelector("header");
 
         const headerHeight=
           header
@@ -3152,9 +3974,7 @@ function showOrders(){
   }
 
   const header=
-    document.querySelector(
-      "header"
-    );
+    document.querySelector("header");
 
   const headerHeight=
     header
@@ -3173,9 +3993,9 @@ function showOrders(){
 }
 
 
-/* =========================
+/* =========================================================
    CUSTOMER ORDERS
-========================= */
+========================================================= */
 
 async function findCustomerOrder(){
 
@@ -3198,6 +4018,7 @@ async function findCustomerOrder(){
     .replace(/\D/g,"")
     .slice(-10);
 
+
   if(mobile.length!==10){
 
     message.style.display="block";
@@ -3211,6 +4032,7 @@ async function findCustomerOrder(){
 
   }
 
+
   message.style.display="block";
 
   message.textContent=
@@ -3218,23 +4040,23 @@ async function findCustomerOrder(){
 
   list.innerHTML="";
 
-  try{
 
-    const url=
-      "/api/customer-orders?mobile="+
-      encodeURIComponent(mobile);
+  try{
 
     const response=
       await fetch(
-        url,
+        "/api/customer-orders?mobile="+
+        encodeURIComponent(mobile),
         {
           method:"GET",
           cache:"no-store"
         }
       );
 
+
     const data=
       await response.json();
+
 
     if(!response.ok){
 
@@ -3245,10 +4067,12 @@ async function findCustomerOrder(){
 
     }
 
+
     const orders=
       Array.isArray(data.orders)
         ? data.orders
         : [];
+
 
     if(!orders.length){
 
@@ -3267,15 +4091,17 @@ async function findCustomerOrder(){
 
     }
 
+
     message.style.display="none";
 
     list.innerHTML=
       orders
         .map(
-          order =>
+          order=>
             orderHTML(order)
         )
         .join("");
+
 
   }catch(error){
 
@@ -3303,9 +4129,72 @@ async function findCustomerOrder(){
 }
 
 
-/* =========================
+/* =========================================================
+   ORDER ITEM COLOURS
+========================================================= */
+
+function getOrderColourHTML(item){
+
+  /*
+    New format:
+    item.colours = [{colour, qty}]
+  */
+
+  if(
+    Array.isArray(item.colours) &&
+    item.colours.length
+  ){
+
+    return`
+      <div class="order-colours">
+        <b>🎨 Colours:</b>
+
+        ${
+          item.colours
+            .map(
+              x=>
+                `${escapeHTML(
+                  x.colour ||
+                  "Beige"
+                )} × ${Number(x.qty || 0)}`
+            )
+            .join(" • ")
+        }
+
+      </div>
+    `;
+
+  }
+
+
+  /*
+    Existing backend/order format
+  */
+
+  const colour=
+    String(
+      item.colour ||
+      item.color ||
+      ""
+    ).trim();
+
+  if(!colour){
+    return "";
+  }
+
+  return`
+    <div class="order-colours">
+      🎨 Colour:
+      ${escapeHTML(colour)}
+    </div>
+  `;
+
+}
+
+
+/* =========================================================
    ORDER HTML
-========================= */
+========================================================= */
 
 function orderHTML(order){
 
@@ -3324,30 +4213,24 @@ function orderHTML(order){
     :
       "";
 
+
   const items=
     Array.isArray(order.items)
       ? order.items
       : [];
 
+
   const orderId=
     String(order.id || "");
+
 
   const itemHTML=
     items.length
     ?
       items
         .map(
-          item=>{
-
-            const colour=
-              String(
-                item.colour ||
-                item.color ||
-                ""
-              ).trim();
-
-            return `
-
+          item=>
+            `
             <div class="order-item">
 
               <b>
@@ -3365,29 +4248,16 @@ function orderHTML(order){
               ${
                 item.size
                 ?
-                  " • Size "+
-                  escapeHTML(item.size)
-                :
-                  ""
-              }
-
-              ${
-                colour
-                ?
-                `
-                <br>
-                🎨 Colour:
-                ${escapeHTML(colour)}
-                `
+                " • Size "+
+                escapeHTML(item.size)
                 :
                 ""
               }
 
+              ${getOrderColourHTML(item)}
+
             </div>
-
-            `;
-
-          }
+            `
         )
         .join("")
     :
@@ -3397,13 +4267,15 @@ function orderHTML(order){
       </div>
       `;
 
+
   const hasShipment=
     !!(
       order.shiprocketShipmentId ||
       order.awb
     );
 
-  return `
+
+  return`
 
   <div
     class="order-card"
@@ -3498,7 +4370,7 @@ function orderHTML(order){
         type="button"
         onclick="
           trackCustomerOrder(
-            '${escapeHTML(orderId)}'
+            ${jsString(orderId)}
           )
         "
       >
@@ -3527,9 +4399,9 @@ function orderHTML(order){
 }
 
 
-/* =========================
+/* =========================================================
    TRACKING
-========================= */
+========================================================= */
 
 async function trackCustomerOrder(orderId){
 
@@ -3542,6 +4414,7 @@ async function trackCustomerOrder(orderId){
     return;
   }
 
+
   const mobile=
     String(
       document.getElementById(
@@ -3550,6 +4423,7 @@ async function trackCustomerOrder(orderId){
     )
     .replace(/\D/g,"")
     .slice(-10);
+
 
   if(mobile.length!==10){
 
@@ -3562,30 +4436,31 @@ async function trackCustomerOrder(orderId){
 
   }
 
+
   box.style.display="block";
 
   box.innerHTML=
     '<span class="track-loading">Loading live tracking...</span>';
 
-  try{
 
-    const url=
-      "/api/customer-tracking?mobile="+
-      encodeURIComponent(mobile)+
-      "&orderId="+
-      encodeURIComponent(orderId);
+  try{
 
     const response=
       await fetch(
-        url,
+        "/api/customer-tracking?mobile="+
+        encodeURIComponent(mobile)+
+        "&orderId="+
+        encodeURIComponent(orderId),
         {
           method:"GET",
           cache:"no-store"
         }
       );
 
+
     const data=
       await response.json();
+
 
     if(!response.ok){
 
@@ -3595,6 +4470,7 @@ async function trackCustomerOrder(orderId){
       );
 
     }
+
 
     if(
       data.trackingAvailable===false
@@ -3610,6 +4486,7 @@ async function trackCustomerOrder(orderId){
       return;
 
     }
+
 
     const tracking=
       data.tracking || {};
@@ -3631,42 +4508,43 @@ async function trackCustomerOrder(orderId){
         ? tracks[0]
         : null;
 
+
     const currentStatus=
       latest?.current_status ||
       trackingData.shipment_status ||
       data.order?.status ||
       "Shipment in process";
 
+
     const courier=
       latest?.courier_name ||
       data.order?.courier ||
       "Courier";
+
 
     const awb=
       latest?.awb_code ||
       data.order?.awb ||
       "";
 
+
     const origin=
-      latest?.origin || "";
+      latest?.origin ||
+      "";
 
     const destination=
-      latest?.destination || "";
+      latest?.destination ||
+      "";
+
 
     box.innerHTML=
       `
-      <b>
-        🚚 Current Status:
-      </b>
-
+      <b>🚚 Current Status:</b>
       ${escapeHTML(currentStatus)}
 
       <br>
 
-      <b>
-        Courier:
-      </b>
-
+      <b>Courier:</b>
       ${escapeHTML(courier)}
 
       ${
@@ -3674,11 +4552,7 @@ async function trackCustomerOrder(orderId){
         ?
         `
         <br>
-
-        <b>
-          AWB:
-        </b>
-
+        <b>AWB:</b>
         ${escapeHTML(awb)}
         `
         :
@@ -3690,11 +4564,7 @@ async function trackCustomerOrder(orderId){
         ?
         `
         <br>
-
-        <b>
-          From:
-        </b>
-
+        <b>From:</b>
         ${escapeHTML(origin)}
         `
         :
@@ -3706,11 +4576,7 @@ async function trackCustomerOrder(orderId){
         ?
         `
         <br>
-
-        <b>
-          To:
-        </b>
-
+        <b>To:</b>
         ${escapeHTML(destination)}
         `
         :
@@ -3722,13 +4588,8 @@ async function trackCustomerOrder(orderId){
         ?
         `
         <br><br>
-
-        <b>
-          Latest shipment update:
-        </b>
-
+        <b>Latest shipment update:</b>
         <br>
-
         ${escapeHTML(
           latest.current_status ||
           currentStatus
@@ -3739,6 +4600,7 @@ async function trackCustomerOrder(orderId){
       }
 
       `;
+
 
   }catch(error){
 
@@ -3759,9 +4621,9 @@ async function trackCustomerOrder(orderId){
 }
 
 
-/* =========================
+/* =========================================================
    HASH NAVIGATION
-========================= */
+========================================================= */
 
 window.addEventListener(
   "hashchange",
@@ -3817,73 +4679,17 @@ window.addEventListener(
 );
 
 
-if(
-  location.hash==="#checkout"
-){
-  showCheckout();
-}
-
-
-if(
-  location.hash==="#orders"
-){
-  showOrders();
-}
-
-
-if(
-  location.hash==="#cart"
-){
-
-  setTimeout(
-    ()=>{
-
-      const cartSection=
-        document.getElementById(
-          "cart"
-        );
-
-      if(cartSection){
-
-        const header=
-          document.querySelector(
-            "header"
-          );
-
-        const headerHeight=
-          header
-            ? header.offsetHeight
-            : 0;
-
-        window.scrollTo({
-          top:
-            cartSection.getBoundingClientRect().top+
-            window.pageYOffset-
-            headerHeight-
-            8,
-          behavior:"auto"
-        });
-
-      }
-
-    },
-    50
-  );
-
-}
-
-
-/* =========================
+/* =========================================================
    CATEGORY EVENTS
-========================= */
+========================================================= */
 
 document
   .querySelectorAll(".cat")
   .forEach(
-    btn =>
+    btn=>
       btn.addEventListener(
         "click",
-        () =>
+        ()=>
           showCategory(
             btn.dataset.category
           )
@@ -3899,9 +4705,9 @@ document
   );
 
 
-/* =========================
+/* =========================================================
    IMAGE MODAL
-========================= */
+========================================================= */
 
 const modal=
   document.getElementById(
@@ -3929,7 +4735,7 @@ function openProductGallery(
 
   const p=
     products.find(
-      x =>
+      x=>
         Number(x.id)===Number(id)
     );
 
@@ -3937,7 +4743,8 @@ function openProductGallery(
     return;
   }
 
-  modalProductId=Number(id);
+  modalProductId=
+    Number(id);
 
   modalImages=
     getProductImages(p);
@@ -4142,9 +4949,9 @@ document.addEventListener(
 );
 
 
-/* =========================
+/* =========================================================
    MOBILE SWIPE
-========================= */
+========================================================= */
 
 let touchStartX=0;
 
@@ -4204,9 +5011,132 @@ modal.addEventListener(
 );
 
 
-/* =========================
+/* =========================================================
+   MAKE ORDER ITEM DATA
+========================================================= */
+
+function makeOrderItemData(){
+
+  const result=[];
+
+
+  cart.forEach(
+    cartItem=>{
+
+      const p=
+        products.find(
+          x=>
+            Number(x.id)===
+            Number(cartItem.id)
+        );
+
+      if(!p){
+        return;
+      }
+
+
+      const selections=
+        Array.isArray(
+          cartItem.selections
+        )
+        ?
+        cartItem.selections
+        :
+        [];
+
+
+      const validSelections=
+        selections.filter(
+          s=>
+            Number(s.qty || 0)>0
+        );
+
+
+      if(!validSelections.length){
+        return;
+      }
+
+
+      const totalQty=
+        validSelections.reduce(
+          (sum,s)=>
+            sum+
+            Number(s.qty || 0),
+          0
+        );
+
+
+      /*
+        Main item stays one product.
+        Colours are stored separately.
+      */
+
+      result.push({
+
+        id:
+          p.id,
+
+        name:
+          p.name,
+
+        price:
+          Number(p.price || 0),
+
+        qty:
+          totalQty,
+
+        size:
+          validSelections.length===1
+            ? (
+                validSelections[0].size ||
+                ""
+              )
+            : "",
+
+        colour:
+          validSelections.length===1
+            ? (
+                validSelections[0].colour ||
+                ""
+              )
+            : "",
+
+        colours:
+          validSelections.map(
+            s=>({
+              colour:
+                String(
+                  s.colour ||
+                  "Beige"
+                ),
+
+              qty:
+                Number(
+                  s.qty || 0
+                ),
+
+              size:
+                String(
+                  s.size || ""
+                )
+
+            })
+          )
+
+      });
+
+    }
+  );
+
+
+  return result;
+
+}
+
+
+/* =========================================================
    ONLINE PAYMENT ONLY
-========================= */
+========================================================= */
 
 document
   .getElementById("orderForm")
@@ -4215,6 +5145,7 @@ document
     async event=>{
 
       event.preventDefault();
+
 
       if(!cart.length){
 
@@ -4228,6 +5159,7 @@ document
 
       }
 
+
       if(cartHasOutOfStock()){
 
         alert(
@@ -4240,66 +5172,27 @@ document
 
       }
 
-      const data=
-        new FormData(
-          event.target
-        );
 
       const itemData=
-        cart.map(
-          item=>{
+        makeOrderItemData();
 
-            const p=
-              products.find(
-                x =>
-                  Number(x.id)===
-                  Number(item.id)
-              );
 
-            return {
+      if(!itemData.length){
 
-              id:
-                p
-                  ? p.id
-                  : item.id,
-
-              name:
-                p
-                  ? p.name
-                  : "",
-
-              price:
-                p
-                  ? Number(p.price)
-                  : 0,
-
-              qty:
-                Math.min(
-                  MAX_QTY,
-                  Number(item.qty)
-                ),
-
-              size:
-                item.size || "",
-
-              colour:
-                p
-                  ? (
-                      p.colour ||
-                      p.color ||
-                      ""
-                    )
-                  : ""
-
-            };
-
-          }
+        alert(
+          "Please select at least one colour quantity."
         );
+
+        location.hash="cart";
+
+        return;
+
+      }
 
 
       if(
         itemData.some(
-          item =>
+          item=>
             !item.name ||
             item.price<=0
         )
@@ -4313,10 +5206,18 @@ document
 
       }
 
+
+      const data=
+        new FormData(
+          event.target
+        );
+
+
       const btn=
         event.target.querySelector(
           'button[type="submit"]'
         );
+
 
       btn.disabled=true;
 
@@ -4396,6 +5297,39 @@ document
         }
 
 
+        const description=
+          itemData
+            .map(
+              item=>{
+
+                const colours=
+                  Array.isArray(
+                    item.colours
+                  )
+                  ?
+                  item.colours
+                    .map(
+                      c=>
+                        `${c.colour} x ${c.qty}`
+                    )
+                    .join(", ")
+                  :
+                  item.colour || "";
+
+                return(
+                  `${item.name} x ${item.qty}`+
+                  (
+                    colours
+                      ? ` - ${colours}`
+                      : ""
+                  )
+                );
+
+              }
+            )
+            .join(" | ");
+
+
         const rzp=
           new Razorpay({
 
@@ -4412,12 +5346,7 @@ document
               "JOYTI - SNIPER PREMIUM WEAR",
 
             description:
-              itemData
-                .map(
-                  item =>
-                    `${item.name} x ${item.qty}${item.size ? " - Size "+item.size : ""}${item.colour ? " - Colour "+item.colour : ""}`
-                )
-                .join(", "),
+              description,
 
             order_id:
               order.id,
@@ -4453,6 +5382,7 @@ document
                 "#596442"
 
             },
+
 
             handler:
               async response=>{
@@ -4562,14 +5492,17 @@ document
 
               },
 
+
             modal:{
 
               ondismiss:
                 ()=>{
+
                   btn.disabled=false;
 
                   btn.textContent=
                     "BUY NOW & PAY";
+
                 }
 
             }
@@ -4603,6 +5536,8 @@ document
 
       }catch(error){
 
+        console.error(error);
+
         alert(
           error.message ||
           "Unable to start payment."
@@ -4619,15 +5554,85 @@ document
   );
 
 
-/* =========================
+/* =========================================================
    START
-========================= */
+========================================================= */
 
 loadProducts();
 
 renderCart();
 
 updateCartCount();
+
+
+/* =========================================================
+   HASH INITIALIZATION
+========================================================= */
+
+if(
+  location.hash==="#checkout"
+){
+
+  showCheckout();
+
+}
+
+
+if(
+  location.hash==="#orders"
+){
+
+  setTimeout(
+    showOrders,
+    50
+  );
+
+}
+
+
+if(
+  location.hash==="#cart"
+){
+
+  setTimeout(
+    ()=>{
+
+      const cartSection=
+        document.getElementById(
+          "cart"
+        );
+
+      if(cartSection){
+
+        const header=
+          document.querySelector(
+            "header"
+          );
+
+        const headerHeight=
+          header
+            ? header.offsetHeight
+            : 0;
+
+        window.scrollTo({
+
+          top:
+            cartSection.getBoundingClientRect().top+
+            window.pageYOffset-
+            headerHeight-
+            8,
+
+          behavior:"auto"
+
+        });
+
+      }
+
+    },
+    100
+  );
+
+}
 
 </script>
 
