@@ -286,10 +286,15 @@ button:disabled{
   margin:0;
 }
 
+
+/* =========================
+   CATEGORY TABS
+========================= */
+
 .category-tabs{
   display:grid;
   grid-template-columns:
-    repeat(5,minmax(0,1fr));
+    repeat(3,minmax(0,1fr));
   gap:8px;
   margin-bottom:18px;
 }
@@ -333,6 +338,11 @@ button:disabled{
   background:#702e28;
 }
 
+
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:700px){
 
   .wrap{
@@ -363,7 +373,7 @@ button:disabled{
   }
 
   .category-tabs button:last-child{
-    grid-column:span 2;
+    grid-column:auto;
   }
 
   .row button{
@@ -512,6 +522,8 @@ button:disabled{
   </div>
 
 
+  <!-- CATEGORY TABS -->
+
   <div class="category-tabs">
 
     <button
@@ -528,6 +540,14 @@ button:disabled{
       onclick="filterProducts('T-Shirts')"
     >
       👕 T-SHIRTS
+    </button>
+
+
+    <button
+      id="tab-Sports T-Shirts"
+      onclick="filterProducts('Sports T-Shirts')"
+    >
+      🏃 SPORTS T-SHIRTS
     </button>
 
 
@@ -633,6 +653,10 @@ button:disabled{
 
         <option value="T-Shirts">
           T-Shirts
+        </option>
+
+        <option value="Sports T-Shirts">
+          Sports T-Shirts
         </option>
 
         <option value="Trousers">
