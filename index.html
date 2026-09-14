@@ -969,6 +969,7 @@ footer{
     <a
       class="btn"
       href="#shop"
+      onclick="goToShop(); return false;"
     >
       SHOP NOW
     </a>
@@ -1568,7 +1569,6 @@ footer{
 
 <script>
 
-
 /* =========================
    STORE DATA
 ========================= */
@@ -1887,6 +1887,63 @@ function categoryMatch(p){
 }
 
 
+/* =========================
+   GO TO SHOP
+========================= */
+
+function goToShop(){
+
+  const shop=
+    document.getElementById(
+      "shop"
+    );
+
+
+  if(!shop){
+    return;
+  }
+
+
+  history.replaceState(
+    null,
+    "",
+    "#shop"
+  );
+
+
+  const header=
+    document.querySelector(
+      "header"
+    );
+
+
+  const headerHeight=
+    header
+      ?
+        header.offsetHeight
+      :
+        0;
+
+
+  window.scrollTo({
+
+    top:
+      shop.getBoundingClientRect().top +
+      window.pageYOffset -
+      headerHeight -
+      8,
+
+    behavior:"auto"
+
+  });
+
+}
+
+
+/* =========================
+   SHOW CATEGORY
+========================= */
+
 function showCategory(
   category
 ){
@@ -1936,12 +1993,43 @@ function showCategory(
     );
 
 
-  window.scrollTo({
-    top:
-      shop.offsetTop -
-      60,
-    behavior:"auto"
-  });
+  if(!shop){
+    return;
+  }
+
+
+  setTimeout(
+    () => {
+
+      const header=
+        document.querySelector(
+          "header"
+        );
+
+
+      const headerHeight=
+        header
+          ?
+            header.offsetHeight
+          :
+            0;
+
+
+      window.scrollTo({
+
+        top:
+          shop.getBoundingClientRect().top +
+          window.pageYOffset -
+          headerHeight -
+          8,
+
+        behavior:"auto"
+
+      });
+
+    },
+    0
+  );
 
 }
 
@@ -1980,6 +2068,7 @@ function showAllProducts(){
 
 
   renderProducts();
+
 
 }
 
@@ -3612,9 +3701,30 @@ function goToCheckout(){
 
       if(checkout){
 
-        checkout.scrollIntoView({
-          behavior:"auto",
-          block:"start"
+        const header=
+          document.querySelector(
+            "header"
+          );
+
+
+        const headerHeight=
+          header
+            ?
+              header.offsetHeight
+            :
+              0;
+
+
+        window.scrollTo({
+
+          top:
+            checkout.getBoundingClientRect().top +
+            window.pageYOffset -
+            headerHeight -
+            8,
+
+          behavior:"auto"
+
         });
 
       }
@@ -3656,9 +3766,30 @@ function showOrders(){
   }
 
 
-  section.scrollIntoView({
-    behavior:"auto",
-    block:"start"
+  const header=
+    document.querySelector(
+      "header"
+    );
+
+
+  const headerHeight=
+    header
+      ?
+        header.offsetHeight
+      :
+        0;
+
+
+  window.scrollTo({
+
+    top:
+      section.getBoundingClientRect().top +
+      window.pageYOffset -
+      headerHeight -
+      8,
+
+    behavior:"auto"
+
   });
 
 }
@@ -4431,14 +4562,41 @@ window.addEventListener(
       "#cart"
     ){
 
-      document
-        .getElementById(
+      const cartSection=
+        document.getElementById(
           "cart"
-        )
-        .scrollIntoView({
-          behavior:"auto",
-          block:"start"
+        );
+
+
+      if(cartSection){
+
+        const header=
+          document.querySelector(
+            "header"
+          );
+
+
+        const headerHeight=
+          header
+            ?
+              header.offsetHeight
+            :
+              0;
+
+
+        window.scrollTo({
+
+          top:
+            cartSection.getBoundingClientRect().top +
+            window.pageYOffset -
+            headerHeight -
+            8,
+
+          behavior:"auto"
+
         });
+
+      }
 
     }
 
@@ -4484,14 +4642,41 @@ if(
   setTimeout(
     () => {
 
-      document
-        .getElementById(
+      const cartSection=
+        document.getElementById(
           "cart"
-        )
-        .scrollIntoView({
-          behavior:"auto",
-          block:"start"
+        );
+
+
+      if(cartSection){
+
+        const header=
+          document.querySelector(
+            "header"
+          );
+
+
+        const headerHeight=
+          header
+            ?
+              header.offsetHeight
+            :
+              0;
+
+
+        window.scrollTo({
+
+          top:
+            cartSection.getBoundingClientRect().top +
+            window.pageYOffset -
+            headerHeight -
+            8,
+
+          behavior:"auto"
+
         });
+
+      }
 
     },
     50
