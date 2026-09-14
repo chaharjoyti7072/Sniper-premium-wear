@@ -127,16 +127,6 @@ button:disabled{
   line-height:1.5;
 }
 
-.preview{
-  width:100%;
-  max-width:180px;
-  height:150px;
-  object-fit:cover;
-  display:none;
-  margin:8px 0;
-  border-radius:8px;
-}
-
 .message{
   display:none;
   margin-top:12px;
@@ -150,14 +140,16 @@ button:disabled{
 }
 
 .category-badge,
-.featured-badge{
+.featured-badge,
+.stock-badge,
+.colour-badge{
   display:inline-block;
   color:#fff;
   padding:5px 9px;
   border-radius:5px;
   font-size:12px;
   font-weight:bold;
-  margin:7px 0;
+  margin:7px 4px 7px 0;
 }
 
 .category-badge{
@@ -166,6 +158,18 @@ button:disabled{
 
 .featured-badge{
   background:#171a14;
+}
+
+.stock-in{
+  background:#3d7048;
+}
+
+.stock-out{
+  background:#8b3d35;
+}
+
+.colour-badge{
+  background:#4f5963;
 }
 
 .photo-box{
@@ -286,11 +290,6 @@ button:disabled{
   margin:0;
 }
 
-
-/* =========================
-   CATEGORY TABS
-========================= */
-
 .category-tabs{
   display:grid;
   grid-template-columns:
@@ -337,11 +336,6 @@ button:disabled{
 .delete-order:hover{
   background:#702e28;
 }
-
-
-/* =========================
-   MOBILE
-========================= */
 
 @media(max-width:700px){
 
@@ -669,6 +663,41 @@ button:disabled{
 
         <option value="Footwear">
           Footwear
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div>
+
+      <label>
+        Colour
+      </label>
+
+      <input
+        id="colour"
+        placeholder="Black / Olive Green / Blue"
+      >
+
+    </div>
+
+
+    <div>
+
+      <label>
+        Stock Status
+      </label>
+
+      <select id="stockStatus">
+
+        <option value="In Stock">
+          In Stock
+        </option>
+
+        <option value="Out of Stock">
+          Out of Stock
         </option>
 
       </select>
@@ -1502,6 +1531,34 @@ function renderProducts(){
               "";
 
 
+          const stockValue =
+            String(
+              p.stockStatus ||
+              p.stock ||
+              "In Stock"
+            )
+            .trim()
+            .toLowerCase();
+
+
+          const isOutOfStock =
+            stockValue ===
+              "out of stock" ||
+            stockValue ===
+              "outofstock" ||
+            stockValue ===
+              "out_of_stock" ||
+            p.inStock === false;
+
+
+          const stockText =
+            isOutOfStock
+              ?
+                "OUT OF STOCK"
+              :
+                "IN STOCK";
+
+
           return `
 
           <div class="item">
@@ -1539,6 +1596,39 @@ function renderProducts(){
                     "FEATURED OFF"
                 }
               </span>
+
+
+              <span
+                class="
+                  stock-badge
+                  ${
+                    isOutOfStock
+                    ?
+                      "stock-out"
+                    :
+                      "stock-in"
+                  }
+                "
+              >
+                ${stockText}
+              </span>
+
+
+              ${
+                p.colour
+                ?
+                  `
+                  <span
+                    class="colour-badge"
+                  >
+                    🎨 ${safe(
+                      p.colour
+                    )}
+                  </span>
+                  `
+                :
+                  ""
+              }
 
             </div>
 
@@ -1757,9 +1847,52 @@ function editProductById(
 
 
   document
+    .getElementById("colour")
+    .value =
+      p.colour ||
+      p.color ||
+      "";
+
+
+  const currentStock =
+    String(
+      p.stockStatus ||
+      p.stock ||
+      (
+        p.inStock === false
+          ?
+            "Out of Stock"
+          :
+            "In Stock"
+      )
+    )
+    .trim();
+
+
+  document
+    .getElementById("stockStatus")
+    .value =
+      currentStock
+        .toLowerCase()
+        .includes(
+          "out"
+        )
+        ?
+          "Out of Stock"
+        :
+          "In Stock";
+
+
+  document
     .getElementById("featured")
     .value =
-      p.featured === true
+      (
+        p.featured === true ||
+        String(
+          p.featured
+        ).toLowerCase() ===
+          "true"
+      )
       ?
         "true"
       :
@@ -1917,6 +2050,18 @@ function clearForm(){
 
 
   document
+    .getElementById("colour")
+    .value =
+      "";
+
+
+  document
+    .getElementById("stockStatus")
+    .value =
+      "In Stock";
+
+
+  document
     .getElementById("featured")
     .value =
       "false";
@@ -2035,6 +2180,7 @@ function previewPhoto(
 
 
   if(
+    !file.type ||
     !file.type.startsWith(
       "image/"
     )
@@ -2058,24 +2204,329 @@ function previewPhoto(
   }
 
 
-  preview.src =
-    URL.createObjectURL(
-      file
+  try{
+
+    if(
+      preview.dataset.objectUrl
+    ){
+
+      URL.revokeObjectURL(
+        preview.dataset.objectUrl
+      );
+
+    }
+
+
+    const objectUrl =
+      URL.createObjectURL(
+        file
+      );
+
+
+    preview.dataset.objectUrl =
+      objectUrl;
+
+
+    preview.src =
+      objectUrl;
+
+
+    preview.style.display =
+      "block";
+
+  }catch(error){
+
+    console.error(
+      error
     );
 
+    preview.style.display =
+      "none";
 
-  preview.style.display =
-    "block";
+    alert(
+      "Photo preview failed."
+    );
+
+  }
 
 }
 
 
 /* =========================
-   COMPRESS IMAGE
+   COMPRESS IMAGE - FIXED
 ========================= */
 
 async function compressImage(
   file
+){
+
+  if(!file){
+
+    throw new Error(
+      "No photo selected"
+    );
+
+  }
+
+
+  if(
+    !file.type ||
+    !file.type.startsWith(
+      "image/"
+    )
+  ){
+
+    throw new Error(
+      "Please select a valid image file"
+    );
+
+  }
+
+
+  return new Promise(
+    function(
+      resolve,
+      reject
+    ){
+
+      const img =
+        new Image();
+
+
+      const objectUrl =
+        URL.createObjectURL(
+          file
+        );
+
+
+      let finished =
+        false;
+
+
+      function cleanup(){
+
+        try{
+
+          URL.revokeObjectURL(
+            objectUrl
+          );
+
+        }catch(error){}
+
+      }
+
+
+      function fail(
+        message
+      ){
+
+        if(finished){
+          return;
+        }
+
+
+        finished =
+          true;
+
+
+        cleanup();
+
+
+        reject(
+          new Error(
+            message
+          )
+        );
+
+      }
+
+
+      img.onload =
+        function(){
+
+          if(finished){
+            return;
+          }
+
+
+          try{
+
+            const MAX_SIZE =
+              1400;
+
+
+            let width =
+              img.naturalWidth ||
+              img.width;
+
+
+            let height =
+              img.naturalHeight ||
+              img.height;
+
+
+            if(
+              !width ||
+              !height
+            ){
+
+              fail(
+                "Photo dimensions could not be read"
+              );
+
+              return;
+
+            }
+
+
+            if(
+              width > MAX_SIZE ||
+              height > MAX_SIZE
+            ){
+
+              if(
+                width > height
+              ){
+
+                height =
+                  Math.round(
+                    height *
+                    MAX_SIZE /
+                    width
+                  );
+
+                width =
+                  MAX_SIZE;
+
+              }else{
+
+                width =
+                  Math.round(
+                    width *
+                    MAX_SIZE /
+                    height
+                  );
+
+                height =
+                  MAX_SIZE;
+
+              }
+
+            }
+
+
+            const canvas =
+              document.createElement(
+                "canvas"
+              );
+
+
+            canvas.width =
+              width;
+
+            canvas.height =
+              height;
+
+
+            const ctx =
+              canvas.getContext(
+                "2d"
+              );
+
+
+            if(!ctx){
+
+              fail(
+                "Image processing is not supported"
+              );
+
+              return;
+
+            }
+
+
+            ctx.drawImage(
+              img,
+              0,
+              0,
+              width,
+              height
+            );
+
+
+            canvas.toBlob(
+              function(blob){
+
+                if(finished){
+                  return;
+                }
+
+
+                if(!blob){
+
+                  fail(
+                    "Photo compression failed"
+                  );
+
+                  return;
+
+                }
+
+
+                finished =
+                  true;
+
+
+                cleanup();
+
+
+                resolve(
+                  blob
+                );
+
+              },
+              "image/webp",
+              0.78
+            );
+
+
+          }catch(error){
+
+            fail(
+              error.message ||
+              "Photo processing failed"
+            );
+
+          }
+
+        };
+
+
+      img.onerror =
+        function(){
+
+          fail(
+            "This photo format cannot be processed by the browser"
+          );
+
+        };
+
+
+      img.src =
+        objectUrl;
+
+    }
+  );
+
+}
+
+
+/* =========================
+   BLOB TO DATA URL
+========================= */
+
+async function blobToDataURL(
+  blob
 ){
 
   return new Promise(
@@ -2089,150 +2540,83 @@ async function compressImage(
 
 
       reader.onload =
-        function(event){
-
-          const img =
-            new Image();
-
-
-          img.onload =
-            function(){
-
-              const MAX_SIZE =
-                1400;
-
-
-              let width =
-                img.width;
-
-              let height =
-                img.height;
-
-
-              if(
-                width > MAX_SIZE ||
-                height > MAX_SIZE
-              ){
-
-                if(
-                  width > height
-                ){
-
-                  height =
-                    Math.round(
-                      height *
-                      MAX_SIZE /
-                      width
-                    );
-
-                  width =
-                    MAX_SIZE;
-
-                }else{
-
-                  width =
-                    Math.round(
-                      width *
-                      MAX_SIZE /
-                      height
-                    );
-
-                  height =
-                    MAX_SIZE;
-
-                }
-
-              }
-
-
-              const canvas =
-                document.createElement(
-                  "canvas"
-                );
-
-
-              canvas.width =
-                width;
-
-              canvas.height =
-                height;
-
-
-              const ctx =
-                canvas.getContext(
-                  "2d"
-                );
-
-
-              ctx.drawImage(
-                img,
-                0,
-                0,
-                width,
-                height
-              );
-
-
-              canvas.toBlob(
-                function(blob){
-
-                  if(!blob){
-
-                    reject(
-                      new Error(
-                        "Photo compression failed"
-                      )
-                    );
-
-                    return;
-
-                  }
-
-
-                  resolve(
-                    blob
-                  );
-
-                },
-                "image/webp",
-                0.78
-              );
-
-            };
-
-
-          img.onerror =
-            function(){
-
-              reject(
-                new Error(
-                  "Invalid image"
-                )
-              );
-
-            };
-
-
-          img.src =
-            event.target.result;
-
-        };
-
-
-      reader.onerror =
         function(){
 
-          reject(
-            new Error(
-              "Photo read failed"
-            )
+          resolve(
+            reader.result
           );
 
         };
 
 
+      reader.onerror =
+        async function(){
+
+          try{
+
+            const buffer =
+              await blob.arrayBuffer();
+
+
+            const bytes =
+              new Uint8Array(
+                buffer
+              );
+
+
+            let binary =
+              "";
+
+
+            const chunkSize =
+              0x8000;
+
+
+            for(
+              let i=0;
+              i<bytes.length;
+              i+=chunkSize
+            ){
+
+              const chunk =
+                bytes.subarray(
+                  i,
+                  Math.min(
+                    i + chunkSize,
+                    bytes.length
+                  )
+                );
+
+
+              binary +=
+                String.fromCharCode(
+                  ...chunk
+                );
+
+            }
+
+
+            resolve(
+              "data:image/webp;base64," +
+              btoa(binary)
+            );
+
+
+          }catch(error){
+
+            reject(
+              new Error(
+                "Compressed photo could not be prepared"
+              )
+            );
+
+          }
+
+        };
+
+
       reader.readAsDataURL(
-        file
+        blob
       );
 
     }
@@ -2250,7 +2634,9 @@ async function uploadPhotoFile(
 ){
 
   if(!file){
+
     return null;
+
   }
 
 
@@ -2261,43 +2647,8 @@ async function uploadPhotoFile(
 
 
   const dataUrl =
-    await new Promise(
-      function(
-        resolve,
-        reject
-      ){
-
-        const reader =
-          new FileReader();
-
-
-        reader.onload =
-          function(){
-
-            resolve(
-              reader.result
-            );
-
-          };
-
-
-        reader.onerror =
-          function(){
-
-            reject(
-              new Error(
-                "Compressed photo read failed"
-              )
-            );
-
-          };
-
-
-        reader.readAsDataURL(
-          compressed
-        );
-
-      }
+    await blobToDataURL(
+      compressed
     );
 
 
@@ -2339,9 +2690,7 @@ async function uploadPhotoFile(
   try{
 
     d =
-      JSON.parse(
-        text
-      );
+      JSON.parse(text);
 
   }catch(error){
 
@@ -2357,6 +2706,15 @@ async function uploadPhotoFile(
     throw new Error(
       d.error ||
       "Photo upload failed"
+    );
+
+  }
+
+
+  if(!d.pathname){
+
+    throw new Error(
+      "Upload succeeded but photo path was not returned"
     );
 
   }
@@ -2392,6 +2750,19 @@ async function saveProduct(){
         .getElementById("category")
         .value
         .trim();
+
+
+    const colour =
+      document
+        .getElementById("colour")
+        .value
+        .trim();
+
+
+    const stockStatus =
+      document
+        .getElementById("stockStatus")
+        .value;
 
 
     const price =
@@ -2554,6 +2925,16 @@ async function saveProduct(){
 
       category:
         category,
+
+      colour:
+        colour,
+
+      stockStatus:
+        stockStatus,
+
+      inStock:
+        stockStatus ===
+        "In Stock",
 
       featured:
         document
@@ -3214,8 +3595,6 @@ async function loadOrders(
                   </button>
 
 
-                  <!-- DELETE ORDER -->
-
                   <button
                     class="delete-order"
                     onclick="
@@ -3690,9 +4069,7 @@ async function ship(
     try{
 
       d =
-        JSON.parse(
-          text
-        );
+        JSON.parse(text);
 
     }catch(error){}
 
