@@ -186,10 +186,8 @@ section{
   margin:auto;
 }
 
-/* SHOP SCROLL FIX */
-
-#shop{
-  scroll-margin-top:0;
+#categorySection{
+  scroll-margin-top:90px;
 }
 
 .title{
@@ -208,8 +206,7 @@ section{
 
 .categories{
   display:grid;
-  grid-template-columns:
-    repeat(3,1fr);
+  grid-template-columns:repeat(3,1fr);
   gap:14px;
 }
 
@@ -230,8 +227,7 @@ section{
   justify-content:end;
   text-align:left;
   cursor:pointer;
-  box-shadow:
-    0 4px 12px rgba(0,0,0,.08);
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
   contain:layout paint;
   touch-action:manipulation;
 }
@@ -251,8 +247,7 @@ section{
 
 .products{
   display:grid;
-  grid-template-columns:
-    repeat(auto-fit,minmax(220px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:18px;
 }
 
@@ -261,8 +256,7 @@ section{
   border:1px solid var(--border);
   border-radius:10px;
   overflow:hidden;
-  box-shadow:
-    0 4px 14px rgba(0,0,0,.06);
+  box-shadow:0 4px 14px rgba(0,0,0,.06);
   contain:layout paint style;
   content-visibility:auto;
   contain-intrinsic-size:480px;
@@ -699,8 +693,7 @@ textarea{
   border-radius:12px;
   padding:18px;
   margin-bottom:15px;
-  box-shadow:
-    0 4px 12px rgba(0,0,0,.05);
+  box-shadow:0 4px 12px rgba(0,0,0,.05);
 }
 
 .order-top{
@@ -776,8 +769,7 @@ footer{
 @media(max-width:900px){
 
   .categories{
-    grid-template-columns:
-      repeat(3,1fr);
+    grid-template-columns:repeat(3,1fr);
   }
 
 }
@@ -785,13 +777,11 @@ footer{
 @media(max-width:800px){
 
   .categories{
-    grid-template-columns:
-      repeat(2,1fr);
+    grid-template-columns:repeat(2,1fr);
   }
 
   .products{
-    grid-template-columns:
-      repeat(2,minmax(0,1fr));
+    grid-template-columns:repeat(2,minmax(0,1fr));
     gap:10px;
   }
 
@@ -851,8 +841,7 @@ footer{
   }
 
   .categories{
-    grid-template-columns:
-      repeat(2,1fr);
+    grid-template-columns:repeat(2,1fr);
     gap:9px;
   }
 
@@ -903,9 +892,7 @@ footer{
 
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -919,19 +906,13 @@ footer{
 
   </div>
 
-
   <nav>
 
     <a href="#home">
       HOME
     </a>
 
-    <!-- SHOP CLICK FIX -->
-
-    <a
-      href="#shop"
-      onclick="goToShop(event)"
-    >
+    <a href="#shop">
       SHOP
     </a>
 
@@ -940,9 +921,7 @@ footer{
       <span
         id="headerCartCount"
         class="cart-count"
-      >
-        0
-      </span>
+      >0</span>
     </a>
 
     <a href="#orders" class="orders-nav">
@@ -953,9 +932,7 @@ footer{
 
 </header>
 
-
 <main>
-
 
 <!-- HERO -->
 
@@ -977,12 +954,10 @@ footer{
       premium army-inspired fashion and performance wear.
     </p>
 
-    <!-- SHOP NOW CLICK FIX -->
-
     <a
       class="btn"
-      href="#shop"
-      onclick="goToShop(event)"
+      href="#categorySection"
+      onclick="goToCategories(); return false;"
     >
       SHOP NOW
     </a>
@@ -994,7 +969,7 @@ footer{
 
 <!-- CATEGORIES -->
 
-<section>
+<section id="categorySection">
 
   <div class="title">
 
@@ -1008,16 +983,13 @@ footer{
 
   </div>
 
-
   <div class="categories">
-
 
     <button
       class="cat"
       data-category="T-Shirts"
       type="button"
     >
-
       <b>
         👕 T-Shirts
       </b>
@@ -1025,7 +997,6 @@ footer{
       <span>
         Premium everyday wear
       </span>
-
     </button>
 
 
@@ -1034,7 +1005,6 @@ footer{
       data-category="Sports T-Shirts"
       type="button"
     >
-
       <b>
         🏃 Sports T-Shirts
       </b>
@@ -1042,7 +1012,6 @@ footer{
       <span>
         Sports & performance wear
       </span>
-
     </button>
 
 
@@ -1051,7 +1020,6 @@ footer{
       data-category="Trousers"
       type="button"
     >
-
       <b>
         👖 Trousers
       </b>
@@ -1059,7 +1027,6 @@ footer{
       <span>
         Comfort & utility style
       </span>
-
     </button>
 
 
@@ -1068,7 +1035,6 @@ footer{
       data-category="Shorts"
       type="button"
     >
-
       <b>
         🩳 Shorts
       </b>
@@ -1076,7 +1042,6 @@ footer{
       <span>
         Easy casual fit
       </span>
-
     </button>
 
 
@@ -1085,7 +1050,6 @@ footer{
       data-category="Footwear"
       type="button"
     >
-
       <b>
         👟 Footwear
       </b>
@@ -1093,7 +1057,6 @@ footer{
       <span>
         Complete the look
       </span>
-
     </button>
 
 
@@ -1102,7 +1065,6 @@ footer{
       data-category="Featured"
       type="button"
     >
-
       <b>
         ⭐ Featured
       </b>
@@ -1110,9 +1072,7 @@ footer{
       <span>
         Our top picks
       </span>
-
     </button>
-
 
   </div>
 
@@ -1137,16 +1097,12 @@ footer{
       id="showAllBtn"
       class="btn"
       type="button"
-      style="
-        display:none;
-        margin-top:8px
-      "
+      style="display:none;margin-top:8px"
     >
       SHOW ALL PRODUCTS
     </button>
 
   </div>
-
 
   <div
     class="products"
@@ -1172,7 +1128,6 @@ footer{
 
   </div>
 
-
   <div
     class="checkout"
     style="max-width:750px"
@@ -1189,51 +1144,33 @@ footer{
 
       <div id="cartItems"></div>
 
-
       <div class="summary">
 
         <div class="summary-row">
-
-          <span>
-            Product Price
-          </span>
+          <span>Product Price</span>
 
           <strong id="productTotal">
             ₹0
           </strong>
-
         </div>
 
-
         <div class="summary-row">
-
-          <span>
-            Shipping Charge
-          </span>
+          <span>Shipping Charge</span>
 
           <strong>
             ₹49
           </strong>
-
         </div>
 
-
-        <div
-          class="summary-row summary-total"
-        >
-
-          <span>
-            Grand Total
-          </span>
+        <div class="summary-row summary-total">
+          <span>Grand Total</span>
 
           <strong id="total">
             ₹0
           </strong>
-
         </div>
 
       </div>
-
 
       <button
         id="proceedCheckoutBtn"
@@ -1269,9 +1206,7 @@ footer{
 
   </div>
 
-
   <div class="checkout">
-
 
     <div class="cart">
 
@@ -1281,47 +1216,30 @@ footer{
 
       <div id="checkoutCartItems"></div>
 
-
       <div class="summary">
 
         <div class="summary-row">
-
-          <span>
-            Product Price
-          </span>
+          <span>Product Price</span>
 
           <strong id="checkoutProductTotal">
             ₹0
           </strong>
-
         </div>
 
-
         <div class="summary-row">
-
-          <span>
-            Shipping Charge
-          </span>
+          <span>Shipping Charge</span>
 
           <strong>
             ₹49
           </strong>
-
         </div>
 
-
-        <div
-          class="summary-row summary-total"
-        >
-
-          <span>
-            Grand Total
-          </span>
+        <div class="summary-row summary-total">
+          <span>Grand Total</span>
 
           <strong id="checkoutTotal">
             ₹0
           </strong>
-
         </div>
 
       </div>
@@ -1330,7 +1248,6 @@ footer{
 
 
     <form id="orderForm">
-
 
       <label>
         Full Name
@@ -1387,7 +1304,6 @@ footer{
         Payment Method
       </label>
 
-
       <div class="pay">
 
         <label>
@@ -1413,7 +1329,6 @@ footer{
         BUY NOW & PAY
       </button>
 
-
     </form>
 
 
@@ -1423,7 +1338,6 @@ footer{
     >
       Secure online payment powered by Razorpay.
     </p>
-
 
   </div>
 
@@ -1446,9 +1360,7 @@ footer{
 
   </div>
 
-
   <div class="orders-box">
-
 
     <div class="order-card">
 
@@ -1465,7 +1377,6 @@ footer{
         autocomplete="tel"
       >
 
-
       <button
         class="btn"
         type="button"
@@ -1473,7 +1384,6 @@ footer{
       >
         VIEW MY ORDERS
       </button>
-
 
       <div
         id="ordersMessage"
@@ -1485,13 +1395,11 @@ footer{
 
     </div>
 
-
     <div id="ordersList"></div>
 
   </div>
 
 </section>
-
 
 </main>
 
@@ -1518,7 +1426,6 @@ footer{
     ×
   </button>
 
-
   <button
     class="modal-left"
     id="modalLeft"
@@ -1526,7 +1433,6 @@ footer{
   >
     ‹
   </button>
-
 
   <div class="modal-image-wrap">
 
@@ -1539,7 +1445,6 @@ footer{
 
   </div>
 
-
   <button
     class="modal-right"
     id="modalRight"
@@ -1547,7 +1452,6 @@ footer{
   >
     ›
   </button>
-
 
   <div class="zoom-controls">
 
@@ -1579,7 +1483,6 @@ footer{
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-
 <script>
 
 /* =========================
@@ -1599,14 +1502,11 @@ let cart=
     ) || "[]"
   );
 
-
 const CUSTOMER_TOKEN_KEY=
   "sniperCustomerAccessToken";
 
 
-function saveCustomerToken(
-  token
-){
+function saveCustomerToken(token){
 
   if(!token){
     return;
@@ -1642,7 +1542,7 @@ function save(){
 
 
 /* =========================
-   STOCK HELPERS
+   STOCK
 ========================= */
 
 function isOutOfStock(p){
@@ -1650,7 +1550,6 @@ function isOutOfStock(p){
   if(!p){
     return false;
   }
-
 
   const status=
     String(
@@ -1661,27 +1560,20 @@ function isOutOfStock(p){
     .trim()
     .toLowerCase();
 
-
   if(
-    status === "out of stock" ||
-    status === "outofstock" ||
-    status === "out_of_stock" ||
-    status === "out"
+    status==="out of stock" ||
+    status==="outofstock" ||
+    status==="out_of_stock" ||
+    status==="out"
   ){
-
     return true;
-
   }
 
-
   if(
-    p.inStock === false
+    p.inStock===false
   ){
-
     return true;
-
   }
-
 
   return false;
 
@@ -1691,77 +1583,50 @@ function isOutOfStock(p){
 function getStockText(p){
 
   return isOutOfStock(p)
-    ?
-      "OUT OF STOCK"
-    :
-      "IN STOCK";
+    ? "OUT OF STOCK"
+    : "IN STOCK";
 
 }
 
 
 /* =========================
-   PRODUCT IMAGES
+   IMAGES
 ========================= */
 
 function getProductImages(p){
 
   let images=[];
 
-
   if(
-    Array.isArray(
-      p.images
-    )
+    Array.isArray(p.images)
   ){
-
     images=
       images.concat(
         p.images.filter(Boolean)
       );
-
   }
 
-
   if(
-    Array.isArray(
-      p.photos
-    )
+    Array.isArray(p.photos)
   ){
-
     images=
       images.concat(
         p.photos.filter(Boolean)
       );
-
   }
-
 
   if(p.img){
-
-    images.unshift(
-      p.img
-    );
-
+    images.unshift(p.img);
   }
-
 
   images=
     images
-      .map(
-        x =>
-          String(x).trim()
-      )
+      .map(x=>String(x).trim())
       .filter(Boolean);
 
-
   return [
-    ...new Set(
-      images
-    )
-  ].slice(
-    0,
-    5
-  );
+    ...new Set(images)
+  ].slice(0,5);
 
 }
 
@@ -1789,7 +1654,6 @@ async function loadProducts(){
       "products"
     );
 
-
   try{
 
     const r=
@@ -1800,41 +1664,26 @@ async function loadProducts(){
         }
       );
 
-
     if(!r.ok){
-
       throw new Error(
         "Could not load products"
       );
-
     }
-
 
     const d=
       await r.json();
 
-
     products=
-      Array.isArray(
-        d.products
-      )
-      ?
-        d.products
-      :
-        [];
-
+      Array.isArray(d.products)
+        ? d.products
+        : [];
 
     renderProducts();
-
     renderCart();
-
 
   }catch(error){
 
-    console.error(
-      error
-    );
-
+    console.error(error);
 
     el.innerHTML=
       `
@@ -1858,32 +1707,24 @@ let selectedCategory="";
 function categoryMatch(p){
 
   if(!selectedCategory){
-
     return false;
-
   }
-
 
   if(
     selectedCategory
       .trim()
-      .toLowerCase()
-      ===
-    "featured"
+      .toLowerCase()==="featured"
   ){
 
     return (
-      p.featured === true ||
+      p.featured===true ||
       String(
         p.featured
-      ).toLowerCase()
-        ===
-      "true" ||
-      p.featured === 1
+      ).toLowerCase()==="true" ||
+      p.featured===1
     );
 
   }
-
 
   return (
     String(
@@ -1901,98 +1742,45 @@ function categoryMatch(p){
 
 
 /* =========================
-   GO TO SHOP — FIXED
+   SHOP NOW
 ========================= */
 
-function goToShop(event){
+function goToCategories(){
 
-  if(event){
-    event.preventDefault();
-  }
-
-
-  const shop=
+  const section=
     document.getElementById(
-      "shop"
+      "categorySection"
     );
 
-
-  if(!shop){
+  if(!section){
     return;
   }
-
-
-  /*
-    Hash ko manually set kar rahe hain.
-    Browser ka default anchor jump nahi hoga.
-  */
 
   history.replaceState(
     null,
     "",
-    "#shop"
+    "#categorySection"
   );
 
+  const header=
+    document.querySelector(
+      "header"
+    );
 
-  function scrollShop(){
+  const headerHeight=
+    header
+      ? header.offsetHeight
+      : 0;
 
-    const header=
-      document.querySelector(
-        "header"
-      );
+  const top=
+    section.getBoundingClientRect().top +
+    window.pageYOffset -
+    headerHeight;
 
-
-    const headerHeight=
-      header
-        ?
-          header.getBoundingClientRect().height
-        :
-          0;
-
-
-    /*
-      getBoundingClientRect + current page
-      position se exact shop section nikala ja raha hai.
-    */
-
-    const target=
-      shop.getBoundingClientRect().top +
-      window.pageYOffset -
-      headerHeight;
-
-
-    window.scrollTo({
-      top:Math.max(0,target),
-      behavior:"auto"
-    });
-
-  }
-
-
-  /*
-    First scroll
-  */
-
-  scrollShop();
-
-
-  /*
-    Layout/images settle hone ke baad
-    dobara exact position set.
-  */
-
-  requestAnimationFrame(
-    () => {
-
-      scrollShop();
-
-      setTimeout(
-        scrollShop,
-        100
-      );
-
-    }
-  );
+  window.scrollTo({
+    top:Math.max(0,top),
+    behavior:"auto"
+  });
 
 }
 
@@ -2001,111 +1789,59 @@ function goToShop(event){
    SHOW CATEGORY
 ========================= */
 
-function showCategory(
-  category
-){
+function showCategory(category){
 
-  selectedCategory=
-    category;
-
+  selectedCategory=category;
 
   document
-    .querySelectorAll(
-      ".cat"
-    )
+    .querySelectorAll(".cat")
     .forEach(
       btn =>
         btn.classList.toggle(
           "active",
-          btn.dataset.category
-            ===
-          category
+          btn.dataset.category===category
         )
     );
 
-
   document
-    .getElementById(
-      "shopTitle"
-    )
+    .getElementById("shopTitle")
     .textContent=
-      category +
-      " PRODUCTS";
-
+      category+" PRODUCTS";
 
   document
-    .getElementById(
-      "showAllBtn"
-    )
-    .style.display=
-      "none";
-
+    .getElementById("showAllBtn")
+    .style.display="none";
 
   renderProducts();
 
-
   const shop=
-    document.getElementById(
-      "shop"
-    );
-
+    document.getElementById("shop");
 
   if(!shop){
     return;
   }
 
+  setTimeout(
+    ()=>{
+      const header=
+        document.querySelector("header");
 
-  function scrollCategory(){
+      const headerHeight=
+        header
+          ? header.offsetHeight
+          : 0;
 
-    const header=
-      document.querySelector(
-        "header"
-      );
+      window.scrollTo({
+        top:
+          shop.getBoundingClientRect().top +
+          window.pageYOffset -
+          headerHeight -
+          8,
+        behavior:"auto"
+      });
 
-
-    const headerHeight=
-      header
-        ?
-          header.getBoundingClientRect().height
-        :
-          0;
-
-
-    const target=
-      shop.getBoundingClientRect().top +
-      window.pageYOffset -
-      headerHeight;
-
-
-    window.scrollTo({
-      top:Math.max(0,target),
-      behavior:"auto"
-    });
-
-  }
-
-
-  history.replaceState(
-    null,
-    "",
-    "#shop"
-  );
-
-
-  scrollCategory();
-
-
-  requestAnimationFrame(
-    () => {
-
-      scrollCategory();
-
-      setTimeout(
-        scrollCategory,
-        100
-      );
-
-    }
+    },
+    0
   );
 
 }
@@ -2115,36 +1851,41 @@ function showAllProducts(){
 
   selectedCategory="";
 
-
   document
-    .querySelectorAll(
-      ".cat"
-    )
+    .querySelectorAll(".cat")
     .forEach(
       btn =>
-        btn.classList.remove(
-          "active"
-        )
+        btn.classList.remove("active")
     );
 
-
   document
-    .getElementById(
-      "shopTitle"
-    )
+    .getElementById("shopTitle")
     .textContent=
       "SELECT A CATEGORY";
 
-
   document
-    .getElementById(
-      "showAllBtn"
-    )
-    .style.display=
-      "none";
-
+    .getElementById("showAllBtn")
+    .style.display="none";
 
   renderProducts();
+
+}
+
+
+/* =========================
+   ESCAPE
+========================= */
+
+function escapeHTML(value){
+
+  return String(
+    value || ""
+  )
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
 
 }
 
@@ -2158,7 +1899,6 @@ function galleryHTML(p){
   const images=
     getProductImages(p);
 
-
   if(!images.length){
 
     return `
@@ -2171,10 +1911,7 @@ function galleryHTML(p){
 
   }
 
-
-  const first=
-    images[0];
-
+  const first=images[0];
 
   return `
 
@@ -2197,93 +1934,47 @@ function galleryHTML(p){
         >
 
         <span class="gallery-count">
-
           ${images.length}
           photo${images.length>1?"s":""}
-
         </span>
 
       </div>
 
-
       ${
         images.length>1
         ?
-          `
-          <div class="gallery-thumbs">
+        `
+        <div class="gallery-thumbs">
 
-            ${
-              images
-                .map(
-                  (src,i) =>
-                    `
+          ${
+            images
+              .map(
+                (src,i)=>
+                  `
+                  <img
+                    src="${escapeHTML(src)}"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="${i===0?"active":""}"
+                    data-gallery-thumb="${Number(p.id)}"
+                    data-index="${i}"
+                    draggable="false"
+                  >
+                  `
+              )
+              .join("")
+          }
 
-                    <img
-                      src="${escapeHTML(src)}"
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                      class="${
-                        i===0
-                          ?
-                            "active"
-                          :
-                            ""
-                      }"
-                      data-gallery-thumb="${Number(p.id)}"
-                      data-index="${i}"
-                      draggable="false"
-                    >
-
-                    `
-                )
-                .join("")
-            }
-
-          </div>
-          `
+        </div>
+        `
         :
-          ""
+        ""
       }
 
     </div>
 
   `;
-
-}
-
-
-/* =========================
-   ESCAPE HTML
-========================= */
-
-function escapeHTML(
-  value
-){
-
-  return String(
-    value || ""
-  )
-  .replace(
-    /&/g,
-    "&amp;"
-  )
-  .replace(
-    /</g,
-    "&lt;"
-  )
-  .replace(
-    />/g,
-    "&gt;"
-  )
-  .replace(
-    /"/g,
-    "&quot;"
-  )
-  .replace(
-    /'/g,
-    "&#039;"
-  );
 
 }
 
@@ -2299,12 +1990,10 @@ function renderProducts(){
       "products"
     );
 
-
   let list=
     products.filter(
       categoryMatch
     );
-
 
   if(!selectedCategory){
 
@@ -2319,7 +2008,6 @@ function renderProducts(){
 
   }
 
-
   if(!list.length){
 
     el.innerHTML=
@@ -2333,23 +2021,19 @@ function renderProducts(){
 
   }
 
-
   el.innerHTML=
     list
       .map(
-        p => {
+        p=>{
 
           const id=
             Number(p.id);
 
-
           const sizes=
             getSizes(p);
 
-
           const outOfStock=
             isOutOfStock(p);
-
 
           const colour=
             String(
@@ -2358,58 +2042,48 @@ function renderProducts(){
               ""
             ).trim();
 
-
-          const stockText=
-            getStockText(p);
-
-
           const sizeHTML=
             sizes.length
             ?
-              `
-              <div class="details">
+            `
+            <div class="details">
 
-                <label
-                  style="
-                    margin:0 0 6px
-                  "
-                >
-                  Select Size
-                </label>
+              <label
+                style="margin:0 0 6px"
+              >
+                Select Size
+              </label>
 
+              <select
+                class="size-select"
+                id="size-${id}"
+              >
 
-                <select
-                  class="size-select"
-                  id="size-${id}"
-                >
+                <option value="">
+                  Choose Size
+                </option>
 
-                  <option value="">
-                    Choose Size
-                  </option>
+                ${
+                  sizes
+                    .map(
+                      s=>
+                        `
+                        <option
+                          value="${escapeHTML(s)}"
+                        >
+                          ${escapeHTML(s)}
+                        </option>
+                        `
+                    )
+                    .join("")
+                }
 
+              </select>
 
-                  ${
-                    sizes
-                      .map(
-                        s =>
-                          `
-                          <option
-                            value="${escapeHTML(s)}"
-                          >
-                            ${escapeHTML(s)}
-                          </option>
-                          `
-                      )
-                      .join("")
-                  }
-
-                </select>
-
-              </div>
-              `
+            </div>
+            `
             :
-              "";
-
+            "";
 
           return `
 
@@ -2418,51 +2092,35 @@ function renderProducts(){
             data-product-id="${id}"
           >
 
-
             ${galleryHTML(p)}
-
 
             <div class="info">
 
-
               <h3>
-                ${escapeHTML(
-                  p.name
-                )}
+                ${escapeHTML(p.name)}
               </h3>
 
-
               <div class="muted">
-
                 ${escapeHTML(
                   p.description ||
                   "Premium quality"
                 )}
-
               </div>
-
 
               ${
                 colour
                 ?
-                  `
-                  <div>
-
-                    <span
-                      class="colour-badge"
-                    >
-                      🎨 Colour:
-                      ${escapeHTML(
-                        colour
-                      )}
-                    </span>
-
-                  </div>
-                  `
+                `
+                <div>
+                  <span class="colour-badge">
+                    🎨 Colour:
+                    ${escapeHTML(colour)}
+                  </span>
+                </div>
+                `
                 :
-                  ""
+                ""
               }
-
 
               <div>
 
@@ -2471,92 +2129,68 @@ function renderProducts(){
                     stock-badge
                     ${
                       outOfStock
-                        ?
-                          "stock-out"
-                        :
-                          "stock-in"
+                        ? "stock-out"
+                        : "stock-in"
                     }
                   "
                 >
-
                   ${
                     outOfStock
-                      ?
-                        "OUT OF STOCK"
-                      :
-                        "IN STOCK"
+                      ? "OUT OF STOCK"
+                      : "IN STOCK"
                   }
-
                 </span>
 
               </div>
 
-
               ${
                 p.fabric
                 ?
-                  `
-                  <div class="details">
-
-                    <b>
-                      Fabric:
-                    </b>
-
-                    ${escapeHTML(
-                      p.fabric
-                    )}
-
-                  </div>
-                  `
+                `
+                <div class="details">
+                  <b>Fabric:</b>
+                  ${escapeHTML(p.fabric)}
+                </div>
+                `
                 :
-                  ""
+                ""
               }
-
 
               ${sizeHTML}
 
-
               <div class="price">
-
                 ₹${Number(
                   p.price || 0
-                ).toLocaleString(
-                  "en-IN"
-                )}
-
+                ).toLocaleString("en-IN")}
               </div>
-
 
               ${
                 outOfStock
                 ?
-                  `
-                  <div class="stock-note">
-                    ❌ This product is currently out of stock.
-                  </div>
+                `
+                <div class="stock-note">
+                  ❌ This product is currently out of stock.
+                </div>
 
-                  <button
-                    class="btn btn-out"
-                    type="button"
-                    disabled
-                  >
-                    OUT OF STOCK
-                  </button>
-                  `
+                <button
+                  class="btn btn-out"
+                  type="button"
+                  disabled
+                >
+                  OUT OF STOCK
+                </button>
+                `
                 :
-                  `
-                  <button
-                    class="btn"
-                    type="button"
-                    onclick="
-                      addProductToCart(${id})
-                    "
-                  >
-                    🛒 ADD TO CART
-                  </button>
-                  `
+                `
+                <button
+                  class="btn"
+                  type="button"
+                  onclick="addProductToCart(${id})"
+                >
+                  🛒 ADD TO CART
+                </button>
+                `
               }
-
 
               <div
                 class="added-message"
@@ -2564,7 +2198,6 @@ function renderProducts(){
               >
                 ✓ Added to cart
               </div>
-
 
             </div>
 
@@ -2576,39 +2209,28 @@ function renderProducts(){
       )
       .join("");
 
-
   attachGalleryEvents();
 
 }
 
 
 /* =========================
-   ADD PRODUCT TO CART
+   ADD TO CART
 ========================= */
 
-function addProductToCart(
-  id
-){
+function addProductToCart(id){
 
   const p=
     products.find(
       x =>
-        Number(x.id)
-        ===
-        Number(id)
+        Number(x.id)===Number(id)
     );
 
-
   if(!p){
-
     return;
-
   }
 
-
-  if(
-    isOutOfStock(p)
-  ){
+  if(isOutOfStock(p)){
 
     alert(
       "This product is currently out of stock."
@@ -2618,30 +2240,22 @@ function addProductToCart(
 
   }
 
-
   const sizes=
     getSizes(p);
 
-
   let size="";
-
 
   if(sizes.length){
 
     const select=
       document.getElementById(
-        "size-" +
-        Number(id)
+        "size-"+Number(id)
       );
-
 
     size=
       select
-      ?
-        select.value
-      :
-        "";
-
+        ? select.value
+        : "";
 
     if(!size){
 
@@ -2655,32 +2269,18 @@ function addProductToCart(
 
   }
 
-
   const existing=
     cart.find(
       item =>
-        Number(item.id)
-        ===
-        Number(id)
-        &&
-        String(
-          item.size || ""
-        )
-        ===
-        String(
-          size || ""
-        )
+        Number(item.id)===Number(id) &&
+        String(item.size || "")===
+        String(size || "")
     );
-
 
   if(existing){
 
     if(
-      Number(
-        existing.qty || 0
-      )
-      >=
-      MAX_QTY
+      Number(existing.qty || 0)>=MAX_QTY
     ){
 
       alert(
@@ -2691,63 +2291,43 @@ function addProductToCart(
 
     }
 
-
     existing.qty=
       Math.min(
         MAX_QTY,
-        Number(
-          existing.qty || 0
-        ) + 1
+        Number(existing.qty || 0)+1
       );
 
   }else{
 
     cart.push({
-
-      id:
-        Number(id),
-
-      qty:
-        1,
-
-      size:
-        size
-
+      id:Number(id),
+      qty:1,
+      size:size
     });
 
   }
-
 
   save();
 
   renderCart();
 
-
   const added=
     document.getElementById(
-      "added-" +
-      Number(id)
+      "added-"+Number(id)
     );
-
 
   if(added){
 
-    added.style.display=
-      "block";
-
+    added.style.display="block";
 
     setTimeout(
-      () => {
-
-        added.style.display=
-          "none";
-
+      ()=>{
+        added.style.display="none";
       },
       1800
     );
 
   }
-
 
   updateCartCount();
 
@@ -2761,11 +2341,9 @@ function addProductToCart(
 function attachGalleryEvents(){
 
   document
-    .querySelectorAll(
-      ".gallery-main"
-    )
+    .querySelectorAll(".gallery-main")
     .forEach(
-      main => {
+      main=>{
 
         main.addEventListener(
           "click",
@@ -2776,8 +2354,7 @@ function attachGalleryEvents(){
                 this.dataset.galleryId
               ),
               Number(
-                this.dataset.imageIndex ||
-                0
+                this.dataset.imageIndex || 0
               )
             );
 
@@ -2787,13 +2364,10 @@ function attachGalleryEvents(){
       }
     );
 
-
   document
-    .querySelectorAll(
-      "[data-gallery-thumb]"
-    )
+    .querySelectorAll("[data-gallery-thumb]")
     .forEach(
-      thumb => {
+      thumb=>{
 
         thumb.addEventListener(
           "click",
@@ -2818,91 +2392,62 @@ function attachGalleryEvents(){
 
 
 /* =========================
-   CHANGE CARD IMAGE
+   CHANGE IMAGE
 ========================= */
 
-function changeCardImage(
-  id,
-  index
-){
+function changeCardImage(id,index){
 
   const p=
     products.find(
       x =>
-        Number(x.id)
-        ===
-        Number(id)
+        Number(x.id)===Number(id)
     );
 
-
   if(!p){
-
     return;
-
   }
-
 
   const images=
     getProductImages(p);
 
-
   if(!images[index]){
-
     return;
-
   }
-
 
   const card=
     document.querySelector(
       `[data-product-id="${Number(id)}"]`
     );
 
-
   if(!card){
-
     return;
-
   }
-
 
   const main=
     card.querySelector(
       ".gallery-main img"
     );
 
-
   if(main){
-
-    main.src=
-      images[index];
-
+    main.src=images[index];
   }
-
 
   const mainBox=
     card.querySelector(
       ".gallery-main"
     );
 
-
   if(mainBox){
-
-    mainBox.dataset.imageIndex=
-      index;
-
+    mainBox.dataset.imageIndex=index;
   }
 
-
   card
-    .querySelectorAll(
-      "[data-gallery-thumb]"
-    )
+    .querySelectorAll("[data-gallery-thumb]")
     .forEach(
-      (thumb,i) =>
+      (thumb,i)=>
         thumb.classList.toggle(
           "active",
-          i === index
+          i===index
         )
     );
 
@@ -2916,19 +2461,13 @@ function buyNow(id){
 }
 
 
-function add(
-  id,
-  size=""
-){
+function add(id,size=""){
 
   const p=
     products.find(
       x =>
-        Number(x.id)
-        ===
-        Number(id)
+        Number(x.id)===Number(id)
     );
-
 
   if(
     p &&
@@ -2943,30 +2482,18 @@ function add(
 
   }
 
-
   const existing=
     cart.find(
       i =>
-        i.id === Number(id)
-        &&
-        String(
-          i.size || ""
-        )
-        ===
-        String(
-          size || ""
-        )
+        i.id===Number(id) &&
+        String(i.size || "")===
+        String(size || "")
     );
-
 
   if(existing){
 
     if(
-      Number(
-        existing.qty || 0
-      )
-      >=
-      MAX_QTY
+      Number(existing.qty || 0)>=MAX_QTY
     ){
 
       alert(
@@ -2977,73 +2504,50 @@ function add(
 
     }
 
-
     existing.qty++;
 
   }else{
 
     cart.push({
-
-      id:
-        Number(id),
-
-      qty:
-        1,
-
-      size:
-        size
-
+      id:Number(id),
+      qty:1,
+      size:size
     });
 
   }
 
-
   save();
-
   renderCart();
 
 }
 
 
-function change(
-  id,
-  d,
-  size=""
-){
+/* =========================
+   CHANGE QTY
+========================= */
+
+function change(id,d,size=""){
 
   const item=
     cart.find(
       i =>
-        i.id === Number(id)
-        &&
-        String(
-          i.size || ""
-        )
-        ===
-        String(
-          size || ""
-        )
+        i.id===Number(id) &&
+        String(i.size || "")===
+        String(size || "")
     );
 
-
   if(!item){
-
     return;
-
   }
-
 
   const p=
     products.find(
       x =>
-        Number(x.id)
-        ===
-        Number(id)
+        Number(x.id)===Number(id)
     );
 
-
   if(
-    d > 0 &&
+    d>0 &&
     p &&
     isOutOfStock(p)
   ){
@@ -3058,51 +2562,30 @@ function change(
 
   }
 
-
   let newQty=
-    Number(
-      item.qty || 0
-    ) + d;
+    Number(item.qty || 0)+d;
 
-
-  if(
-    newQty >
-    MAX_QTY
-  ){
-
-    newQty=
-      MAX_QTY;
-
+  if(newQty>MAX_QTY){
+    newQty=MAX_QTY;
   }
 
-
-  if(
-    newQty <= 0
-  ){
+  if(newQty<=0){
 
     cart=
       cart.filter(
         i =>
           !(
-            i.id === Number(id)
-            &&
-            String(
-              i.size || ""
-            )
-            ===
-            String(
-              size || ""
-            )
+            i.id===Number(id) &&
+            String(i.size || "")===
+            String(size || "")
           )
       );
 
   }else{
 
-    item.qty=
-      newQty;
+    item.qty=newQty;
 
   }
-
 
   save();
 
@@ -3121,56 +2604,43 @@ function updateCartCount(){
 
   const totalQty=
     cart.reduce(
-      (
-        total,
-        item
-      ) =>
-        total +
+      (total,item)=>
+        total+
         Math.min(
           MAX_QTY,
-          Number(
-            item.qty || 0
-          )
+          Number(item.qty || 0)
         ),
       0
     );
-
 
   const count=
     document.getElementById(
       "headerCartCount"
     );
 
-
   if(count){
-
     count.textContent=
-      String(
-        totalQty
-      );
-
+      String(totalQty);
   }
 
 }
 
 
 /* =========================
-   CART HAS OUT OF STOCK
+   OUT OF STOCK CART
 ========================= */
 
 function cartHasOutOfStock(){
 
   return cart.some(
-    item => {
+    item=>{
 
       const p=
         products.find(
           x =>
-            Number(x.id)
-            ===
+            Number(x.id)===
             Number(item.id)
         );
-
 
       return (
         !p ||
@@ -3194,42 +2664,27 @@ function renderCart(){
       "cartItems"
     );
 
-
   if(!cart.length){
 
     el.innerHTML=
       "<p>Your cart is empty.</p>";
 
+    document
+      .getElementById("productTotal")
+      .textContent="₹0";
 
     document
-      .getElementById(
-        "productTotal"
-      )
-      .textContent=
-        "₹0";
-
-
-    document
-      .getElementById(
-        "total"
-      )
-      .textContent=
-        "₹0";
-
+      .getElementById("total")
+      .textContent="₹0";
 
     const checkoutBtn=
       document.getElementById(
         "proceedCheckoutBtn"
       );
 
-
     if(checkoutBtn){
-
-      checkoutBtn.disabled=
-        true;
-
+      checkoutBtn.disabled=true;
     }
-
 
     updateCartCount();
 
@@ -3239,58 +2694,40 @@ function renderCart(){
 
   }
 
-
   let productTotal=0;
-
 
   el.innerHTML=
     cart
       .map(
-        item => {
+        item=>{
 
           const p=
             products.find(
               x =>
-                Number(x.id)
-                ===
+                Number(x.id)===
                 Number(item.id)
             );
 
-
           if(!p){
-
             return "";
-
           }
 
-
           const price=
-            Number(
-              p.price || 0
-            );
-
+            Number(p.price || 0);
 
           const qty=
             Math.min(
               MAX_QTY,
-              Number(
-                item.qty || 0
-              )
+              Number(item.qty || 0)
             );
 
-
           const subtotal=
-            price *
-            qty;
+            price*qty;
 
-
-          productTotal+=
-            subtotal;
-
+          productTotal+=subtotal;
 
           const outOfStock=
             isOutOfStock(p);
-
 
           const colour=
             String(
@@ -3299,83 +2736,63 @@ function renderCart(){
               ""
             ).trim();
 
-
           return `
 
           <div class="cart-row">
 
-
             <div class="cart-product-info">
 
               <div class="cart-product-name">
-
-                ${escapeHTML(
-                  p.name
-                )}
-
+                ${escapeHTML(p.name)}
               </div>
-
 
               <div>
-
-                ₹${price.toLocaleString(
-                  "en-IN"
-                )}
+                ₹${price.toLocaleString("en-IN")}
                 ×
                 ${qty}
-
               </div>
-
 
               ${
                 item.size
                 ?
-                  `
-                  <div class="cart-size">
-                    Size:
-                    ${escapeHTML(
-                      item.size
-                    )}
-                  </div>
-                  `
+                `
+                <div class="cart-size">
+                  Size:
+                  ${escapeHTML(item.size)}
+                </div>
+                `
                 :
-                  ""
+                ""
               }
-
 
               ${
                 colour
                 ?
-                  `
-                  <div class="cart-colour">
-                    🎨 Colour:
-                    ${escapeHTML(
-                      colour
-                    )}
-                  </div>
-                  `
+                `
+                <div class="cart-colour">
+                  🎨 Colour:
+                  ${escapeHTML(colour)}
+                </div>
+                `
                 :
-                  ""
+                ""
               }
-
 
               ${
                 outOfStock
                 ?
-                  `
-                  <div class="cart-stock-out">
-                    ❌ OUT OF STOCK
-                  </div>
-                  `
+                `
+                <div class="cart-stock-out">
+                  ❌ OUT OF STOCK
+                </div>
+                `
                 :
-                  ""
+                ""
               }
 
             </div>
 
-
             <div class="qty">
-
 
               <button
                 type="button"
@@ -3383,45 +2800,34 @@ function renderCart(){
                   change(
                     ${Number(item.id)},
                     -1,
-                    '${escapeHTML(
-                      item.size || ""
-                    )}'
+                    '${escapeHTML(item.size || "")}'
                   )
                 "
               >
                 −
               </button>
 
-
               <span class="qty-number">
-
                 ${qty}
-
               </span>
-
 
               <button
                 type="button"
                 ${
                   outOfStock
-                    ?
-                      "disabled"
-                    :
-                      ""
+                    ? "disabled"
+                    : ""
                 }
                 onclick="
                   change(
                     ${Number(item.id)},
                     1,
-                    '${escapeHTML(
-                      item.size || ""
-                    )}'
+                    '${escapeHTML(item.size || "")}'
                   )
                 "
               >
                 +
               </button>
-
 
             </div>
 
@@ -3433,47 +2839,31 @@ function renderCart(){
       )
       .join("");
 
-
   const grandTotal=
-    productTotal +
+    productTotal+
     SHIPPING_CHARGE;
 
+  document
+    .getElementById("productTotal")
+    .textContent=
+      "₹"+
+      productTotal.toLocaleString("en-IN");
 
   document
-    .getElementById(
-      "productTotal"
-    )
+    .getElementById("total")
     .textContent=
-      "₹" +
-      productTotal.toLocaleString(
-        "en-IN"
-      );
-
-
-  document
-    .getElementById(
-      "total"
-    )
-    .textContent=
-      "₹" +
-      grandTotal.toLocaleString(
-        "en-IN"
-      );
-
+      "₹"+
+      grandTotal.toLocaleString("en-IN");
 
   const checkoutBtn=
     document.getElementById(
       "proceedCheckoutBtn"
     );
 
-
   if(checkoutBtn){
-
     checkoutBtn.disabled=
       cartHasOutOfStock();
-
   }
-
 
   updateCartCount();
 
@@ -3483,7 +2873,7 @@ function renderCart(){
 
 
 /* =========================
-   RENDER CHECKOUT CART
+   CHECKOUT CART
 ========================= */
 
 function renderCheckoutCart(){
@@ -3493,84 +2883,60 @@ function renderCheckoutCart(){
       "checkoutCartItems"
     );
 
-
   if(!el){
-
     return;
-
   }
-
 
   if(!cart.length){
 
     el.innerHTML=
       "<p>Your cart is empty.</p>";
 
-
     document
       .getElementById(
         "checkoutProductTotal"
       )
-      .textContent=
-        "₹0";
-
+      .textContent="₹0";
 
     document
       .getElementById(
         "checkoutTotal"
       )
-      .textContent=
-        "₹0";
-
+      .textContent="₹0";
 
     return;
 
   }
 
-
   let productTotal=0;
-
 
   el.innerHTML=
     cart
       .map(
-        item => {
+        item=>{
 
           const p=
             products.find(
               x =>
-                Number(x.id)
-                ===
+                Number(x.id)===
                 Number(item.id)
             );
 
-
           if(!p){
-
             return "";
-
           }
 
-
           const price=
-            Number(
-              p.price || 0
-            );
-
+            Number(p.price || 0);
 
           const qty=
             Math.min(
               MAX_QTY,
-              Number(
-                item.qty || 0
-              )
+              Number(item.qty || 0)
             );
 
-
           productTotal+=
-            price *
-            qty;
-
+            price*qty;
 
           const colour=
             String(
@@ -3579,10 +2945,8 @@ function renderCheckoutCart(){
               ""
             ).trim();
 
-
           const outOfStock=
             isOutOfStock(p);
-
 
           return `
 
@@ -3594,13 +2958,8 @@ function renderCheckoutCart(){
             <div class="cart-product-info">
 
               <div class="cart-product-name">
-
-                ${escapeHTML(
-                  p.name
-                )}
-
+                ${escapeHTML(p.name)}
               </div>
-
 
               <div>
 
@@ -3610,61 +2969,45 @@ function renderCheckoutCart(){
                 ${
                   item.size
                   ?
-                    " • Size: " +
-                    escapeHTML(
-                      item.size
-                    )
+                  " • Size "+
+                  escapeHTML(item.size)
                   :
-                    ""
+                  ""
                 }
 
               </div>
 
-
               ${
                 colour
                 ?
-                  `
-                  <div class="cart-size">
-
-                    🎨 Colour:
-                    ${escapeHTML(
-                      colour
-                    )}
-
-                  </div>
-                  `
+                `
+                <div class="cart-size">
+                  🎨 Colour:
+                  ${escapeHTML(colour)}
+                </div>
+                `
                 :
-                  ""
+                ""
               }
-
 
               ${
                 outOfStock
                 ?
-                  `
-                  <div
-                    class="cart-stock-out"
-                  >
-                    ❌ OUT OF STOCK
-                  </div>
-                  `
+                `
+                <div class="cart-stock-out">
+                  ❌ OUT OF STOCK
+                </div>
+                `
                 :
-                  ""
+                ""
               }
 
             </div>
 
-
             <strong>
-
               ₹${(
-                price *
-                qty
-              ).toLocaleString(
-                "en-IN"
-              )}
-
+                price*qty
+              ).toLocaleString("en-IN")}
             </strong>
 
           </div>
@@ -3675,16 +3018,13 @@ function renderCheckoutCart(){
       )
       .join("");
 
-
   if(cartHasOutOfStock()){
 
     el.innerHTML+=
       `
       <div
         class="stock-note"
-        style="
-          margin-top:12px;
-        "
+        style="margin-top:12px"
       >
         ❌ One or more products in your cart
         are out of stock. Please remove them
@@ -3694,32 +3034,25 @@ function renderCheckoutCart(){
 
   }
 
-
   const grandTotal=
-    productTotal +
+    productTotal+
     SHIPPING_CHARGE;
-
 
   document
     .getElementById(
       "checkoutProductTotal"
     )
     .textContent=
-      "₹" +
-      productTotal.toLocaleString(
-        "en-IN"
-      );
-
+      "₹"+
+      productTotal.toLocaleString("en-IN");
 
   document
     .getElementById(
       "checkoutTotal"
     )
     .textContent=
-      "₹" +
-      grandTotal.toLocaleString(
-        "en-IN"
-      );
+      "₹"+
+      grandTotal.toLocaleString("en-IN");
 
 }
 
@@ -3736,44 +3069,35 @@ function goToCheckout(){
       "Please add at least one product to cart."
     );
 
-    location.hash=
-      "cart";
+    location.hash="cart";
 
     return;
 
   }
 
-
-  if(
-    cartHasOutOfStock()
-  ){
+  if(cartHasOutOfStock()){
 
     alert(
       "Your cart contains an out-of-stock product. Please remove it before checkout."
     );
 
-    location.hash=
-      "cart";
+    location.hash="cart";
 
     return;
 
   }
 
-
   renderCheckoutCart();
 
-  location.hash=
-    "checkout";
-
+  location.hash="checkout";
 
   setTimeout(
-    () => {
+    ()=>{
 
       const checkout=
         document.getElementById(
           "checkout"
         );
-
 
       if(checkout){
 
@@ -3782,25 +3106,18 @@ function goToCheckout(){
             "header"
           );
 
-
         const headerHeight=
           header
-            ?
-              header.offsetHeight
-            :
-              0;
-
+            ? header.offsetHeight
+            : 0;
 
         window.scrollTo({
-
           top:
-            checkout.getBoundingClientRect().top +
-            window.pageYOffset -
-            headerHeight -
+            checkout.getBoundingClientRect().top+
+            window.pageYOffset-
+            headerHeight-
             8,
-
           behavior:"auto"
-
         });
 
       }
@@ -3815,12 +3132,8 @@ function goToCheckout(){
 function showCheckout(){
 
   document
-    .getElementById(
-      "checkout"
-    )
-    .style.display=
-      "block";
-
+    .getElementById("checkout")
+    .style.display="block";
 
   renderCheckoutCart();
 
@@ -3834,38 +3147,27 @@ function showOrders(){
       "orders"
     );
 
-
   if(!section){
-
     return;
-
   }
-
 
   const header=
     document.querySelector(
       "header"
     );
 
-
   const headerHeight=
     header
-      ?
-        header.offsetHeight
-      :
-        0;
-
+      ? header.offsetHeight
+      : 0;
 
   window.scrollTo({
-
     top:
-      section.getBoundingClientRect().top +
-      window.pageYOffset -
-      headerHeight -
+      section.getBoundingClientRect().top+
+      window.pageYOffset-
+      headerHeight-
       8,
-
     behavior:"auto"
-
   });
 
 }
@@ -3882,12 +3184,10 @@ async function findCustomerOrder(){
       "ordersMessage"
     );
 
-
   const list=
     document.getElementById(
       "ordersList"
     );
-
 
   const mobile=
     String(
@@ -3895,26 +3195,15 @@ async function findCustomerOrder(){
         "customerMobile"
       ).value || ""
     )
-    .replace(
-      /\D/g,
-      ""
-    )
-    .slice(
-      -10
-    );
+    .replace(/\D/g,"")
+    .slice(-10);
 
+  if(mobile.length!==10){
 
-  if(
-    mobile.length !== 10
-  ){
-
-    message.style.display=
-      "block";
-
+    message.style.display="block";
 
     message.innerHTML=
       "<b>Please enter a valid 10-digit mobile number.</b>";
-
 
     list.innerHTML="";
 
@@ -3922,26 +3211,18 @@ async function findCustomerOrder(){
 
   }
 
-
-  message.style.display=
-    "block";
-
+  message.style.display="block";
 
   message.textContent=
     "Loading your orders...";
 
-
   list.innerHTML="";
-
 
   try{
 
     const url=
-      "/api/customer-orders?mobile=" +
-      encodeURIComponent(
-        mobile
-      );
-
+      "/api/customer-orders?mobile="+
+      encodeURIComponent(mobile);
 
     const response=
       await fetch(
@@ -3952,10 +3233,8 @@ async function findCustomerOrder(){
         }
       );
 
-
     const data=
       await response.json();
-
 
     if(!response.ok){
 
@@ -3966,24 +3245,16 @@ async function findCustomerOrder(){
 
     }
 
-
     const orders=
-      Array.isArray(
-        data.orders
-      )
-      ?
-        data.orders
-      :
-        [];
-
+      Array.isArray(data.orders)
+        ? data.orders
+        : [];
 
     if(!orders.length){
 
       message.innerHTML=
         `
-        <b>
-          No orders found.
-        </b>
+        <b>No orders found.</b>
 
         <br><br>
 
@@ -3996,10 +3267,7 @@ async function findCustomerOrder(){
 
     }
 
-
-    message.style.display=
-      "none";
-
+    message.style.display="none";
 
     list.innerHTML=
       orders
@@ -4009,14 +3277,12 @@ async function findCustomerOrder(){
         )
         .join("");
 
-
   }catch(error){
 
     console.error(
       "Find customer orders error:",
       error
     );
-
 
     message.innerHTML=
       `
@@ -4041,9 +3307,7 @@ async function findCustomerOrder(){
    ORDER HTML
 ========================= */
 
-function orderHTML(
-  order
-){
+function orderHTML(order){
 
   const created=
     order.createdAt
@@ -4060,29 +3324,20 @@ function orderHTML(
     :
       "";
 
-
   const items=
-    Array.isArray(
-      order.items
-    )
-    ?
-      order.items
-    :
-      [];
-
+    Array.isArray(order.items)
+      ? order.items
+      : [];
 
   const orderId=
-    String(
-      order.id || ""
-    );
-
+    String(order.id || "");
 
   const itemHTML=
     items.length
     ?
       items
         .map(
-          item => {
+          item=>{
 
             const colour=
               String(
@@ -4090,7 +3345,6 @@ function orderHTML(
                 item.color ||
                 ""
               ).trim();
-
 
             return `
 
@@ -4106,34 +3360,27 @@ function orderHTML(
               <br>
 
               Qty:
-              ${Number(
-                item.qty || 0
-              )}
+              ${Number(item.qty || 0)}
 
               ${
                 item.size
                 ?
-                  " • Size " +
-                  escapeHTML(
-                    item.size
-                  )
+                  " • Size "+
+                  escapeHTML(item.size)
                 :
                   ""
               }
 
-
               ${
                 colour
                 ?
-                  `
-                  <br>
-                  🎨 Colour:
-                  ${escapeHTML(
-                    colour
-                  )}
-                  `
+                `
+                <br>
+                🎨 Colour:
+                ${escapeHTML(colour)}
+                `
                 :
-                  ""
+                ""
               }
 
             </div>
@@ -4150,67 +3397,46 @@ function orderHTML(
       </div>
       `;
 
-
   const hasShipment=
     !!(
       order.shiprocketShipmentId ||
       order.awb
     );
 
-
   return `
 
   <div
     class="order-card"
-    id="order-${escapeHTML(
-      orderId
-    )}"
+    id="order-${escapeHTML(orderId)}"
   >
-
 
     <div class="order-top">
 
       <div>
 
         <div class="order-id">
-
           Order ID:
-          ${escapeHTML(
-            orderId
-          )}
-
+          ${escapeHTML(orderId)}
         </div>
 
-
         <div class="order-meta">
-
-          ${escapeHTML(
-            created
-          )}
-
+          ${escapeHTML(created)}
         </div>
 
       </div>
 
-
       <div class="order-status">
-
         ${escapeHTML(
           order.status ||
           "Order Confirmed"
         )}
-
       </div>
 
     </div>
 
-
     <div class="order-items">
-
       ${itemHTML}
-
     </div>
-
 
     <div class="order-meta">
 
@@ -4222,42 +3448,35 @@ function orderHTML(
         )}
       </b>
 
-
       ${
         order.awb
         ?
-          `
-          <br>
-          AWB:
-          <b>
-            ${escapeHTML(
-              order.awb
-            )}
-          </b>
-          `
+        `
+        <br>
+        AWB:
+        <b>
+          ${escapeHTML(order.awb)}
+        </b>
+        `
         :
-          ""
+        ""
       }
-
 
       ${
         order.courier
         ?
-          `
-          <br>
-          Courier:
-          <b>
-            ${escapeHTML(
-              order.courier
-            )}
-          </b>
-          `
+        `
+        <br>
+        Courier:
+        <b>
+          ${escapeHTML(order.courier)}
+        </b>
+        `
         :
-          ""
+        ""
       }
 
     </div>
-
 
     <div class="order-total">
 
@@ -4266,51 +3485,40 @@ function orderHTML(
         order.total ||
         order.amount ||
         0
-      ).toLocaleString(
-        "en-IN"
-      )}
+      ).toLocaleString("en-IN")}
 
     </div>
-
 
     ${
       hasShipment
       ?
-        `
-        <button
-          class="btn"
-          type="button"
-          onclick="
-            trackCustomerOrder(
-              '${escapeHTML(
-                orderId
-              )}'
-            )
-          "
-        >
-          🚚 TRACK ORDER
-        </button>
+      `
+      <button
+        class="btn"
+        type="button"
+        onclick="
+          trackCustomerOrder(
+            '${escapeHTML(orderId)}'
+          )
+        "
+      >
+        🚚 TRACK ORDER
+      </button>
 
-
-        <div
-          id="tracking-${escapeHTML(
-            orderId
-          )}"
-          class="track-result"
-          style="display:none"
-        ></div>
-        `
+      <div
+        id="tracking-${escapeHTML(orderId)}"
+        class="track-result"
+        style="display:none"
+      ></div>
+      `
       :
-        `
-        <div class="track-result">
-
-          📦 Tracking will appear here
-          after your order is shipped.
-
-        </div>
-        `
+      `
+      <div class="track-result">
+        📦 Tracking will appear here
+        after your order is shipped.
+      </div>
+      `
     }
-
 
   </div>
 
@@ -4320,26 +3528,19 @@ function orderHTML(
 
 
 /* =========================
-   CUSTOMER TRACKING
+   TRACKING
 ========================= */
 
-async function trackCustomerOrder(
-  orderId
-){
+async function trackCustomerOrder(orderId){
 
   const box=
     document.getElementById(
-      "tracking-" +
-      orderId
+      "tracking-"+orderId
     );
 
-
   if(!box){
-
     return;
-
   }
-
 
   const mobile=
     String(
@@ -4347,22 +3548,12 @@ async function trackCustomerOrder(
         "customerMobile"
       ).value || ""
     )
-    .replace(
-      /\D/g,
-      ""
-    )
-    .slice(
-      -10
-    );
+    .replace(/\D/g,"")
+    .slice(-10);
 
+  if(mobile.length!==10){
 
-  if(
-    mobile.length !== 10
-  ){
-
-    box.style.display=
-      "block";
-
+    box.style.display="block";
 
     box.innerHTML=
       "Please enter the same mobile number used for the order.";
@@ -4371,27 +3562,18 @@ async function trackCustomerOrder(
 
   }
 
-
-  box.style.display=
-    "block";
-
+  box.style.display="block";
 
   box.innerHTML=
     '<span class="track-loading">Loading live tracking...</span>';
 
-
   try{
 
     const url=
-      "/api/customer-tracking?mobile=" +
-      encodeURIComponent(
-        mobile
-      ) +
-      "&orderId=" +
-      encodeURIComponent(
-        orderId
-      );
-
+      "/api/customer-tracking?mobile="+
+      encodeURIComponent(mobile)+
+      "&orderId="+
+      encodeURIComponent(orderId);
 
     const response=
       await fetch(
@@ -4402,10 +3584,8 @@ async function trackCustomerOrder(
         }
       );
 
-
     const data=
       await response.json();
-
 
     if(!response.ok){
 
@@ -4416,13 +3596,12 @@ async function trackCustomerOrder(
 
     }
 
-
     if(
-      data.trackingAvailable === false
+      data.trackingAvailable===false
     ){
 
       box.innerHTML=
-        "📦 " +
+        "📦 "+
         escapeHTML(
           data.message ||
           "Tracking is not available yet."
@@ -4432,16 +3611,11 @@ async function trackCustomerOrder(
 
     }
 
-
     const tracking=
-      data.tracking ||
-      {};
-
+      data.tracking || {};
 
     const trackingData=
-      tracking.tracking_data ||
-      {};
-
+      tracking.tracking_data || {};
 
     const tracks=
       Array.isArray(
@@ -4452,14 +3626,10 @@ async function trackCustomerOrder(
       :
         [];
 
-
     const latest=
       tracks.length
-      ?
-        tracks[0]
-      :
-        null;
-
+        ? tracks[0]
+        : null;
 
     const currentStatus=
       latest?.current_status ||
@@ -4467,133 +3637,108 @@ async function trackCustomerOrder(
       data.order?.status ||
       "Shipment in process";
 
-
     const courier=
       latest?.courier_name ||
       data.order?.courier ||
       "Courier";
-
 
     const awb=
       latest?.awb_code ||
       data.order?.awb ||
       "";
 
-
     const origin=
-      latest?.origin ||
-      "";
-
+      latest?.origin || "";
 
     const destination=
-      latest?.destination ||
-      "";
-
+      latest?.destination || "";
 
     box.innerHTML=
-
       `
       <b>
         🚚 Current Status:
       </b>
 
-      ${escapeHTML(
-        currentStatus
-      )}
-
+      ${escapeHTML(currentStatus)}
 
       <br>
-
 
       <b>
         Courier:
       </b>
 
-      ${escapeHTML(
-        courier
-      )}
-
+      ${escapeHTML(courier)}
 
       ${
         awb
         ?
-          `
-          <br>
+        `
+        <br>
 
-          <b>
-            AWB:
-          </b>
+        <b>
+          AWB:
+        </b>
 
-          ${escapeHTML(
-            awb
-          )}
-          `
+        ${escapeHTML(awb)}
+        `
         :
-          ""
+        ""
       }
-
 
       ${
         origin
         ?
-          `
-          <br>
+        `
+        <br>
 
-          <b>
-            From:
-          </b>
+        <b>
+          From:
+        </b>
 
-          ${escapeHTML(
-            origin
-          )}
-          `
+        ${escapeHTML(origin)}
+        `
         :
-          ""
+        ""
       }
-
 
       ${
         destination
         ?
-          `
-          <br>
+        `
+        <br>
 
-          <b>
-            To:
-          </b>
+        <b>
+          To:
+        </b>
 
-          ${escapeHTML(
-            destination
-          )}
-          `
+        ${escapeHTML(destination)}
+        `
         :
-          ""
+        ""
       }
-
 
       ${
         tracks.length
         ?
-          `
-          <br><br>
+        `
+        <br><br>
 
-          <b>
-            Latest shipment update:
-          </b>
+        <b>
+          Latest shipment update:
+        </b>
 
-          <br>
+        <br>
 
-          ${escapeHTML(
-            latest.current_status ||
-            currentStatus
-          )}
-          `
+        ${escapeHTML(
+          latest.current_status ||
+          currentStatus
+        )}
+        `
         :
-          ""
+        ""
       }
 
       `;
-
 
   }catch(error){
 
@@ -4602,9 +3747,8 @@ async function trackCustomerOrder(
       error
     );
 
-
     box.innerHTML=
-      "❌ " +
+      "❌ "+
       escapeHTML(
         error.message ||
         "Unable to load tracking."
@@ -4621,28 +3765,22 @@ async function trackCustomerOrder(
 
 window.addEventListener(
   "hashchange",
-  () => {
+  ()=>{
 
     if(
-      location.hash ===
-      "#checkout"
+      location.hash==="#checkout"
     ){
-
       showCheckout();
-
     }
 
-
     if(
-      location.hash ===
-      "#cart"
+      location.hash==="#cart"
     ){
 
       const cartSection=
         document.getElementById(
           "cart"
         );
-
 
       if(cartSection){
 
@@ -4651,39 +3789,28 @@ window.addEventListener(
             "header"
           );
 
-
         const headerHeight=
           header
-            ?
-              header.offsetHeight
-            :
-              0;
-
+            ? header.offsetHeight
+            : 0;
 
         window.scrollTo({
-
           top:
-            cartSection.getBoundingClientRect().top +
-            window.pageYOffset -
-            headerHeight -
+            cartSection.getBoundingClientRect().top+
+            window.pageYOffset-
+            headerHeight-
             8,
-
           behavior:"auto"
-
         });
 
       }
 
     }
 
-
     if(
-      location.hash ===
-      "#orders"
+      location.hash==="#orders"
     ){
-
       showOrders();
-
     }
 
   }
@@ -4691,38 +3818,30 @@ window.addEventListener(
 
 
 if(
-  location.hash ===
-  "#checkout"
+  location.hash==="#checkout"
 ){
-
   showCheckout();
-
 }
 
 
 if(
-  location.hash ===
-  "#orders"
+  location.hash==="#orders"
 ){
-
   showOrders();
-
 }
 
 
 if(
-  location.hash ===
-  "#cart"
+  location.hash==="#cart"
 ){
 
   setTimeout(
-    () => {
+    ()=>{
 
       const cartSection=
         document.getElementById(
           "cart"
         );
-
 
       if(cartSection){
 
@@ -4731,25 +3850,18 @@ if(
             "header"
           );
 
-
         const headerHeight=
           header
-            ?
-              header.offsetHeight
-            :
-              0;
-
+            ? header.offsetHeight
+            : 0;
 
         window.scrollTo({
-
           top:
-            cartSection.getBoundingClientRect().top +
-            window.pageYOffset -
-            headerHeight -
+            cartSection.getBoundingClientRect().top+
+            window.pageYOffset-
+            headerHeight-
             8,
-
           behavior:"auto"
-
         });
 
       }
@@ -4766,9 +3878,7 @@ if(
 ========================= */
 
 document
-  .querySelectorAll(
-    ".cat"
-  )
+  .querySelectorAll(".cat")
   .forEach(
     btn =>
       btn.addEventListener(
@@ -4782,9 +3892,7 @@ document
 
 
 document
-  .getElementById(
-    "showAllBtn"
-  )
+  .getElementById("showAllBtn")
   .addEventListener(
     "click",
     showAllProducts
@@ -4800,27 +3908,18 @@ const modal=
     "imageModal"
   );
 
-
 const modalImage=
   document.getElementById(
     "modalImage"
   );
 
+let modalProductId=null;
 
-let modalProductId=
-  null;
+let modalIndex=0;
 
+let modalImages=[];
 
-let modalIndex=
-  0;
-
-
-let modalImages=
-  [];
-
-
-let zoom=
-  1;
+let zoom=1;
 
 
 function openProductGallery(
@@ -4831,49 +3930,32 @@ function openProductGallery(
   const p=
     products.find(
       x =>
-        Number(x.id)
-        ===
-        Number(id)
+        Number(x.id)===Number(id)
     );
 
-
   if(!p){
-
     return;
-
   }
 
-
-  modalProductId=
-    Number(id);
-
+  modalProductId=Number(id);
 
   modalImages=
     getProductImages(p);
-
 
   modalIndex=
     Math.max(
       0,
       Math.min(
         index,
-        modalImages.length - 1
+        modalImages.length-1
       )
     );
 
+  zoom=1;
 
-  zoom=
-    1;
+  modal.classList.add("show");
 
-
-  modal.classList.add(
-    "show"
-  );
-
-
-  document.body.style.overflow=
-    "hidden";
-
+  document.body.style.overflow="hidden";
 
   updateModalImage();
 
@@ -4882,55 +3964,32 @@ function openProductGallery(
 
 function updateModalImage(){
 
-  if(
-    !modalImages.length
-  ){
-
+  if(!modalImages.length){
     return;
-
   }
 
-
   modalImage.src=
-    modalImages[
-      modalIndex
-    ];
-
+    modalImages[modalIndex];
 
   modalImage.style.transform=
-    "scale(" +
-    zoom +
-    ")";
+    "scale("+zoom+")";
 
 }
 
 
 function closeModal(){
 
-  modal.classList.remove(
-    "show"
-  );
+  modal.classList.remove("show");
 
-
-  document.body.style.overflow=
-    "";
-
+  document.body.style.overflow="";
 
   setTimeout(
-    () => {
-
+    ()=>{
       if(
-        !modal.classList.contains(
-          "show"
-        )
+        !modal.classList.contains("show")
       ){
-
-        modalImage.removeAttribute(
-          "src"
-        );
-
+        modalImage.removeAttribute("src");
       }
-
     },
     150
   );
@@ -4940,26 +3999,15 @@ function closeModal(){
 
 function nextImage(){
 
-  if(
-    !modalImages.length
-  ){
-
+  if(!modalImages.length){
     return;
-
   }
 
-
   modalIndex=
-    (
-      modalIndex + 1
-    )
-    %
+    (modalIndex+1)%
     modalImages.length;
 
-
-  zoom=
-    1;
-
+  zoom=1;
 
   updateModalImage();
 
@@ -4968,28 +4016,19 @@ function nextImage(){
 
 function previousImage(){
 
-  if(
-    !modalImages.length
-  ){
-
+  if(!modalImages.length){
     return;
-
   }
-
 
   modalIndex=
     (
-      modalIndex -
-      1 +
+      modalIndex-
+      1+
       modalImages.length
-    )
-    %
+    )%
     modalImages.length;
 
-
-  zoom=
-    1;
-
+  zoom=1;
 
   updateModalImage();
 
@@ -4997,4 +4036,600 @@ function previousImage(){
 
 
 document
-  .getElementById(
+  .getElementById("modalClose")
+  .addEventListener(
+    "click",
+    closeModal
+  );
+
+
+document
+  .getElementById("modalLeft")
+  .addEventListener(
+    "click",
+    previousImage
+  );
+
+
+document
+  .getElementById("modalRight")
+  .addEventListener(
+    "click",
+    nextImage
+  );
+
+
+document
+  .getElementById("zoomIn")
+  .addEventListener(
+    "click",
+    ()=>{
+      zoom=
+        Math.min(
+          2.5,
+          zoom+.25
+        );
+
+      updateModalImage();
+    }
+  );
+
+
+document
+  .getElementById("zoomOut")
+  .addEventListener(
+    "click",
+    ()=>{
+      zoom=
+        Math.max(
+          1,
+          zoom-.25
+        );
+
+      updateModalImage();
+    }
+  );
+
+
+document
+  .getElementById("zoomReset")
+  .addEventListener(
+    "click",
+    ()=>{
+      zoom=1;
+      updateModalImage();
+    }
+  );
+
+
+modal.addEventListener(
+  "click",
+  event=>{
+
+    if(
+      event.target===modal
+    ){
+      closeModal();
+    }
+
+  }
+);
+
+
+document.addEventListener(
+  "keydown",
+  event=>{
+
+    if(
+      !modal.classList.contains("show")
+    ){
+      return;
+    }
+
+    if(event.key==="Escape"){
+      closeModal();
+    }
+
+    if(event.key==="ArrowRight"){
+      nextImage();
+    }
+
+    if(event.key==="ArrowLeft"){
+      previousImage();
+    }
+
+  }
+);
+
+
+/* =========================
+   MOBILE SWIPE
+========================= */
+
+let touchStartX=0;
+
+let touchStartY=0;
+
+
+modal.addEventListener(
+  "touchstart",
+  event=>{
+
+    const touch=
+      event.touches[0];
+
+    touchStartX=
+      touch.clientX;
+
+    touchStartY=
+      touch.clientY;
+
+  },
+  {
+    passive:true
+  }
+);
+
+
+modal.addEventListener(
+  "touchend",
+  event=>{
+
+    const touch=
+      event.changedTouches[0];
+
+    const diffX=
+      touch.clientX-touchStartX;
+
+    const diffY=
+      touch.clientY-touchStartY;
+
+    if(
+      Math.abs(diffX)>60 &&
+      Math.abs(diffX)>Math.abs(diffY)
+    ){
+
+      if(diffX<0){
+        nextImage();
+      }else{
+        previousImage();
+      }
+
+    }
+
+  },
+  {
+    passive:true
+  }
+);
+
+
+/* =========================
+   ONLINE PAYMENT ONLY
+========================= */
+
+document
+  .getElementById("orderForm")
+  .addEventListener(
+    "submit",
+    async event=>{
+
+      event.preventDefault();
+
+      if(!cart.length){
+
+        alert(
+          "Please add a product to cart first."
+        );
+
+        location.hash="cart";
+
+        return;
+
+      }
+
+      if(cartHasOutOfStock()){
+
+        alert(
+          "Your cart contains an out-of-stock product. Please remove it before payment."
+        );
+
+        location.hash="cart";
+
+        return;
+
+      }
+
+      const data=
+        new FormData(
+          event.target
+        );
+
+      const itemData=
+        cart.map(
+          item=>{
+
+            const p=
+              products.find(
+                x =>
+                  Number(x.id)===
+                  Number(item.id)
+              );
+
+            return {
+
+              id:
+                p
+                  ? p.id
+                  : item.id,
+
+              name:
+                p
+                  ? p.name
+                  : "",
+
+              price:
+                p
+                  ? Number(p.price)
+                  : 0,
+
+              qty:
+                Math.min(
+                  MAX_QTY,
+                  Number(item.qty)
+                ),
+
+              size:
+                item.size || "",
+
+              colour:
+                p
+                  ? (
+                      p.colour ||
+                      p.color ||
+                      ""
+                    )
+                  : ""
+
+            };
+
+          }
+        );
+
+
+      if(
+        itemData.some(
+          item =>
+            !item.name ||
+            item.price<=0
+        )
+      ){
+
+        alert(
+          "Product information is unavailable. Please refresh and try again."
+        );
+
+        return;
+
+      }
+
+      const btn=
+        event.target.querySelector(
+          'button[type="submit"]'
+        );
+
+      btn.disabled=true;
+
+      btn.textContent=
+        "Please wait…";
+
+
+      try{
+
+        const orderRes=
+          await fetch(
+            "/api/create-order",
+            {
+              method:"POST",
+
+              headers:{
+                "Content-Type":
+                  "application/json"
+              },
+
+              body:
+                JSON.stringify({
+
+                  receipt:
+                    "SPW-"+Date.now(),
+
+                  customer:{
+
+                    name:
+                      data.get("name"),
+
+                    mobile:
+                      data.get("mobile")
+
+                  },
+
+                  items:
+                    itemData,
+
+                  address:
+                    data.get("address"),
+
+                  pin:
+                    data.get("pin"),
+
+                  paymentMethod:
+                    "ONLINE"
+
+                })
+
+            }
+          );
+
+
+        const order=
+          await orderRes.json();
+
+
+        if(!orderRes.ok){
+
+          throw new Error(
+            order.error ||
+            "Could not create payment order"
+          );
+
+        }
+
+
+        if(
+          order.customerAccessToken
+        ){
+
+          saveCustomerToken(
+            order.customerAccessToken
+          );
+
+        }
+
+
+        const rzp=
+          new Razorpay({
+
+            key:
+              order.key_id,
+
+            amount:
+              order.amount,
+
+            currency:
+              "INR",
+
+            name:
+              "JOYTI - SNIPER PREMIUM WEAR",
+
+            description:
+              itemData
+                .map(
+                  item =>
+                    `${item.name} x ${item.qty}${item.size ? " - Size "+item.size : ""}${item.colour ? " - Colour "+item.colour : ""}`
+                )
+                .join(", "),
+
+            order_id:
+              order.id,
+
+            prefill:{
+
+              name:
+                data.get("name"),
+
+              contact:
+                data.get("mobile")
+
+            },
+
+            notes:{
+
+              address:
+                data.get("address"),
+
+              pin:
+                data.get("pin"),
+
+              shipping_charge:
+                String(
+                  SHIPPING_CHARGE
+                )
+
+            },
+
+            theme:{
+
+              color:
+                "#596442"
+
+            },
+
+            handler:
+              async response=>{
+
+                try{
+
+                  const v=
+                    await fetch(
+                      "/api/payment-status",
+                      {
+                        method:"POST",
+
+                        headers:{
+                          "Content-Type":
+                            "application/json"
+                        },
+
+                        body:
+                          JSON.stringify({
+
+                            orderId:
+                              order.id,
+
+                            paymentId:
+                              response.razorpay_payment_id,
+
+                            signature:
+                              response.razorpay_signature
+
+                          })
+
+                      }
+                    );
+
+
+                  const result=
+                    await v.json();
+
+
+                  if(
+                    !v.ok ||
+                    result.verified===false
+                  ){
+
+                    throw new Error(
+                      result.error ||
+                      "Payment verification failed"
+                    );
+
+                  }
+
+
+                  alert(
+                    "Payment successful!\n\n"+
+                    "Order ID: "+
+                    order.id+
+                    "\n\n"+
+                    "You can check all your orders using your mobile number in MY ORDERS."
+                  );
+
+
+                  cart=[];
+
+                  save();
+
+                  renderCart();
+
+                  renderCheckoutCart();
+
+                  event.target.reset();
+
+
+                  document
+                    .getElementById(
+                      "customerMobile"
+                    )
+                    .value=
+                      String(
+                        data.get("mobile") || ""
+                      );
+
+
+                  location.hash="orders";
+
+
+                  setTimeout(
+                    findCustomerOrder,
+                    150
+                  );
+
+
+                }catch(error){
+
+                  alert(
+                    error.message ||
+                    "Payment verification failed."
+                  );
+
+                }finally{
+
+                  btn.disabled=false;
+
+                  btn.textContent=
+                    "BUY NOW & PAY";
+
+                }
+
+              },
+
+            modal:{
+
+              ondismiss:
+                ()=>{
+                  btn.disabled=false;
+
+                  btn.textContent=
+                    "BUY NOW & PAY";
+                }
+
+            }
+
+          });
+
+
+        rzp.on(
+          "payment.failed",
+          response=>{
+
+            alert(
+              "Payment failed: "+
+              (
+                response.error?.description ||
+                "Please try again."
+              )
+            );
+
+            btn.disabled=false;
+
+            btn.textContent=
+              "BUY NOW & PAY";
+
+          }
+        );
+
+
+        rzp.open();
+
+
+      }catch(error){
+
+        alert(
+          error.message ||
+          "Unable to start payment."
+        );
+
+        btn.disabled=false;
+
+        btn.textContent=
+          "BUY NOW & PAY";
+
+      }
+
+    }
+  );
+
+
+/* =========================
+   START
+========================= */
+
+loadProducts();
+
+renderCart();
+
+updateCartCount();
+
+</script>
+
+</body>
+</html>
