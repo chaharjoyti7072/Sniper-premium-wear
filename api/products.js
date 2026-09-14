@@ -74,6 +74,51 @@ function getProductImages(product, baseUrl) {
   ].slice(0, 5);
 }
 
+
+/* =====================================================
+   STOCK HELPERS
+===================================================== */
+
+function normalizeStockStatus(value) {
+  const status =
+    String(value ?? "")
+      .trim()
+      .toLowerCase();
+
+  if (
+    status === "out of stock" ||
+    status === "outofstock" ||
+    status === "out_of_stock" ||
+    status === "out"
+  ) {
+    return "Out of Stock";
+  }
+
+  return "In Stock";
+}
+
+
+function isOutOfStock(product) {
+  if (!product) return false;
+
+  if (product.inStock === false) {
+    return true;
+  }
+
+  return (
+    normalizeStockStatus(
+      product.stockStatus ||
+      product.stock ||
+      "In Stock"
+    ) === "Out of Stock"
+  );
+}
+
+
+/* =====================================================
+   API
+===================================================== */
+
 module.exports = async (req, res) => {
   try {
 
@@ -88,7 +133,6 @@ module.exports = async (req, res) => {
       /*
       -----------------------------------------------------
       SEO SITEMAP
-      /sitemap.xml -> /api/products?sitemap=1
       -----------------------------------------------------
       */
 
@@ -164,7 +208,6 @@ ${urls.map((item) => `
       /*
       -----------------------------------------------------
       SEO PRODUCT PAGE
-      /product/123 -> /api/products?id=123
       -----------------------------------------------------
       */
 
@@ -192,9 +235,11 @@ ${urls.map((item) => `
           );
 
         if (!product) {
+
           return res.status(404).send(
             "<h1>Product not found</h1>"
           );
+
         }
 
         const baseUrl =
@@ -204,7 +249,10 @@ ${urls.map((item) => `
           `${baseUrl}/product/${encodeURIComponent(id)}`;
 
         const name =
-          String(product.name || "Product").trim();
+          String(
+            product.name ||
+            "Product"
+          ).trim();
 
         const description =
           String(
@@ -213,7 +261,9 @@ ${urls.map((item) => `
           ).trim();
 
         const price =
-          Number(product.price || 0);
+          Number(
+            product.price || 0
+          );
 
         const images =
           getProductImages(
@@ -224,30 +274,93 @@ ${urls.map((item) => `
         const sizes =
           Array.isArray(product.sizes)
             ? product.sizes.join(", ")
-            : String(product.sizes || "");
+            : String(
+                product.sizes || ""
+              );
+
+        const colour =
+          String(
+            product.colour ||
+            product.color ||
+            ""
+          ).trim();
+
+        const stockStatus =
+          normalizeStockStatus(
+            product.stockStatus ||
+            product.stock ||
+            (
+              product.inStock === false
+                ? "Out of Stock"
+                : "In Stock"
+            )
+          );
+
+        const outOfStock =
+          stockStatus === "Out of Stock";
+
+
+        /*
+        =====================================================
+        GOOGLE PRODUCT SCHEMA
+        =====================================================
+        */
 
         const productSchema = {
-          "@context": "https://schema.org",
-          "@type": "Product",
+          "@context":
+            "https://schema.org",
+
+          "@type":
+            "Product",
+
           name,
+
           description,
-          url: productUrl,
-          image: images,
+
+          url:
+            productUrl,
+
+          image:
+            images,
+
           category:
-            String(product.category || ""),
+            String(
+              product.category || ""
+            ),
+
           brand: {
-            "@type": "Brand",
-            name: "Sniper Premium Wear"
+            "@type":
+              "Brand",
+
+            name:
+              "Sniper Premium Wear"
           },
+
           offers: {
-            "@type": "Offer",
-            url: productUrl,
-            priceCurrency: "INR",
-            price: price.toFixed(2),
+
+            "@type":
+              "Offer",
+
+            url:
+              productUrl,
+
+            priceCurrency:
+              "INR",
+
+            price:
+              price.toFixed(2),
+
             availability:
-              "https://schema.org/InStock"
+              outOfStock
+                ?
+                  "https://schema.org/OutOfStock"
+                :
+                  "https://schema.org/InStock"
+
           }
+
         };
+
 
         const imageHtml =
           images.length
@@ -260,33 +373,64 @@ ${urls.map((item) => `
               </div>
             `;
 
+
+        /*
+        =====================================================
+        SEO PRODUCT HTML
+        =====================================================
+        */
+
         const html =
 `<!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
 
-<title>${escapeHtml(name)} | Sniper Premium Wear</title>
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
-<meta name="description"
-      content="${escapeHtml(description.slice(0, 160))}">
+<title>
+${escapeHtml(name)}
+| Sniper Premium Wear
+</title>
 
-<link rel="canonical"
-      href="${escapeHtml(productUrl)}">
+<meta
+  name="description"
+  content="${escapeHtml(
+    description.slice(0, 160)
+  )}"
+>
 
-<meta property="og:type"
-      content="product">
+<link
+  rel="canonical"
+  href="${escapeHtml(productUrl)}"
+>
 
-<meta property="og:title"
-      content="${escapeHtml(name)} | Sniper Premium Wear">
+<meta
+  property="og:type"
+  content="product"
+>
 
-<meta property="og:description"
-      content="${escapeHtml(description.slice(0, 160))}">
+<meta
+  property="og:title"
+  content="${escapeHtml(name)} | Sniper Premium Wear"
+>
 
-<meta property="og:url"
-      content="${escapeHtml(productUrl)}">
+<meta
+  property="og:description"
+  content="${escapeHtml(
+    description.slice(0, 160)
+  )}"
+>
+
+<meta
+  property="og:url"
+  content="${escapeHtml(productUrl)}"
+>
 
 ${
   images[0]
@@ -298,7 +442,9 @@ ${
 ${JSON.stringify(productSchema).replace(/</g, "\\u003c")}
 </script>
 
+
 <style>
+
 *{
   box-sizing:border-box;
 }
@@ -370,6 +516,35 @@ button{
   font-size:16px;
 }
 
+.stock{
+  display:inline-block;
+  padding:7px 10px;
+  border-radius:6px;
+  color:#fff;
+  font-weight:bold;
+  font-size:13px;
+  margin:5px 0;
+}
+
+.in-stock{
+  background:#3d7048;
+}
+
+.out-stock{
+  background:#8b3d35;
+}
+
+.colour{
+  display:inline-block;
+  background:#596442;
+  color:#fff;
+  padding:7px 10px;
+  border-radius:6px;
+  font-weight:bold;
+  font-size:13px;
+  margin:5px 0;
+}
+
 .no-image{
   padding:60px 20px;
   text-align:center;
@@ -392,8 +567,11 @@ button{
   }
 
 }
+
 </style>
+
 </head>
+
 
 <body>
 
@@ -401,61 +579,177 @@ button{
 
   <div class="card">
 
-    <a class="back" href="/">
+    <a
+      class="back"
+      href="/"
+    >
       ← Back to Shop
     </a>
 
+
     <div class="gallery">
+
       ${imageHtml}
+
     </div>
 
-    <h1>${escapeHtml(name)}</h1>
+
+    <h1>
+      ${escapeHtml(name)}
+    </h1>
+
 
     <div class="price">
+
       ₹${price.toLocaleString("en-IN")}
+
     </div>
+
+
+    ${
+      colour
+        ?
+          `
+          <div class="colour">
+
+            🎨 Colour:
+            ${escapeHtml(colour)}
+
+          </div>
+          `
+        :
+          ""
+    }
+
+
+    <br>
+
+
+    <div
+      class="
+        stock
+        ${
+          outOfStock
+            ?
+              "out-stock"
+            :
+              "in-stock"
+        }
+      "
+    >
+
+      ${
+        outOfStock
+          ?
+            "❌ OUT OF STOCK"
+          :
+            "✓ IN STOCK"
+      }
+
+    </div>
+
 
     <div class="info">
 
+
       ${
         product.category
-          ? `<p><strong>Category:</strong>
-             ${escapeHtml(product.category)}</p>`
-          : ""
+          ?
+            `
+            <p>
+
+              <strong>
+                Category:
+              </strong>
+
+              ${escapeHtml(
+                product.category
+              )}
+
+            </p>
+            `
+          :
+            ""
       }
+
 
       ${
         product.fabric
-          ? `<p><strong>Fabric:</strong>
-             ${escapeHtml(product.fabric)}</p>`
-          : ""
+          ?
+            `
+            <p>
+
+              <strong>
+                Fabric:
+              </strong>
+
+              ${escapeHtml(
+                product.fabric
+              )}
+
+            </p>
+            `
+          :
+            ""
       }
+
 
       ${
         sizes
-          ? `<p><strong>Available Sizes:</strong>
-             ${escapeHtml(sizes)}</p>`
-          : ""
+          ?
+            `
+            <p>
+
+              <strong>
+                Available Sizes:
+              </strong>
+
+              ${escapeHtml(
+                sizes
+              )}
+
+            </p>
+            `
+          :
+            ""
       }
 
+
       <p>
-        ${escapeHtml(description)}
+
+        ${escapeHtml(
+          description
+        )}
+
       </p>
+
 
     </div>
 
+
     <p>
+
       <a href="/">
-        <button>Shop Now</button>
+
+        <button>
+
+          Shop Now
+
+        </button>
+
       </a>
+
     </p>
+
 
   </div>
 
 </div>
 
 </body>
+
 </html>`;
+
 
         res.setHeader(
           "Content-Type",
@@ -468,6 +762,7 @@ button{
         );
 
         return res.status(200).send(html);
+
       }
 
 
@@ -477,9 +772,24 @@ button{
       -----------------------------------------------------
       */
 
+      const stored =
+        await getJSON(
+          "products",
+          []
+        );
+
+
       return res.status(200).json({
+
         products:
-          await getJSON("products", [])
+          Array.isArray(stored)
+            ? stored
+            : Array.isArray(
+                stored.products
+              )
+              ? stored.products
+              : []
+
       });
 
     }
@@ -494,7 +804,8 @@ button{
     if (!auth(req)) {
 
       return res.status(401).json({
-        error: "Unauthorized"
+        error:
+          "Unauthorized"
       });
 
     }
@@ -548,23 +859,52 @@ button{
 
 
       /*
-      =========================
+      =====================================================
+      FIND OLD PRODUCT
+      =====================================================
+      */
+
+      const productId =
+        Number(body.id);
+
+
+      const oldProduct =
+        req.method === "PUT"
+          ?
+            list.find(
+              item =>
+                Number(item.id)
+                ===
+                productId
+            )
+          :
+            null;
+
+
+      /*
+      =====================================================
       IMAGES
-      =========================
+      =====================================================
       */
 
       let images = [];
 
 
       if (
-        Array.isArray(body.images)
+        Array.isArray(
+          body.images
+        )
       ) {
 
         images =
           body.images
             .filter(Boolean)
             .map(function(image) {
-              return String(image).trim();
+
+              return String(
+                image
+              ).trim();
+
             })
             .filter(Boolean);
 
@@ -572,17 +912,25 @@ button{
 
 
       if (
-        Array.isArray(body.photos)
+        Array.isArray(
+          body.photos
+        )
       ) {
 
         images = [
           ...images,
+
           ...body.photos
             .filter(Boolean)
             .map(function(image) {
-              return String(image).trim();
+
+              return String(
+                image
+              ).trim();
+
             })
             .filter(Boolean)
+
         ];
 
       }
@@ -596,17 +944,96 @@ button{
 
       if (
         oldImg &&
-        !images.includes(oldImg)
+        !images.includes(
+          oldImg
+        )
       ) {
 
-        images.unshift(oldImg);
+        images.unshift(
+          oldImg
+        );
+
+      }
+
+
+      /*
+      -----------------------------------------------------
+      IMPORTANT:
+      If editing without new photos,
+      keep old photos.
+      -----------------------------------------------------
+      */
+
+      if (
+        req.method === "PUT" &&
+        !images.length &&
+        oldProduct
+      ) {
+
+        if (
+          Array.isArray(
+            oldProduct.images
+          )
+        ) {
+
+          images =
+            oldProduct.images
+              .filter(Boolean)
+              .map(
+                image =>
+                  String(
+                    image
+                  ).trim()
+              )
+              .filter(Boolean);
+
+        }
+
+
+        if (
+          !images.length &&
+          Array.isArray(
+            oldProduct.photos
+          )
+        ) {
+
+          images =
+            oldProduct.photos
+              .filter(Boolean)
+              .map(
+                image =>
+                  String(
+                    image
+                  ).trim()
+              )
+              .filter(Boolean);
+
+        }
+
+
+        if (
+          !images.length &&
+          oldProduct.img
+        ) {
+
+          images = [
+            String(
+              oldProduct.img
+            ).trim()
+          ];
+
+        }
 
       }
 
 
       images = [
-        ...new Set(images)
-      ].slice(0, 5);
+        ...new Set(
+          images
+        )
+      ]
+      .filter(Boolean)
+      .slice(0, 5);
 
 
       const mainImage =
@@ -616,15 +1043,112 @@ button{
 
 
       /*
-      =========================
+      =====================================================
+      COLOUR
+      =====================================================
+      */
+
+      const colour =
+        String(
+          body.colour ??
+          body.color ??
+          (
+            oldProduct
+              ? (
+                  oldProduct.colour ||
+                  oldProduct.color ||
+                  ""
+                )
+              : ""
+          )
+        ).trim();
+
+
+      /*
+      =====================================================
+      STOCK
+      =====================================================
+      */
+
+      let stockStatus;
+
+
+      if (
+        body.stockStatus !== undefined &&
+        body.stockStatus !== null &&
+        String(
+          body.stockStatus
+        ).trim() !== ""
+      ) {
+
+        stockStatus =
+          normalizeStockStatus(
+            body.stockStatus
+          );
+
+      } else if (
+        body.stock !== undefined &&
+        body.stock !== null &&
+        String(
+          body.stock
+        ).trim() !== ""
+      ) {
+
+        stockStatus =
+          normalizeStockStatus(
+            body.stock
+          );
+
+      } else if (
+        body.inStock !== undefined
+      ) {
+
+        stockStatus =
+          body.inStock === false
+            ?
+              "Out of Stock"
+            :
+              "In Stock";
+
+      } else if (
+        oldProduct
+      ) {
+
+        stockStatus =
+          normalizeStockStatus(
+            oldProduct.stockStatus ||
+            oldProduct.stock ||
+            (
+              oldProduct.inStock === false
+                ?
+                  "Out of Stock"
+                :
+                  "In Stock"
+            )
+          );
+
+      } else {
+
+        stockStatus =
+          "In Stock";
+
+      }
+
+
+      const inStock =
+        stockStatus === "In Stock";
+
+
+      /*
+      =====================================================
       PRODUCT OBJECT
-      =========================
+      =====================================================
       */
 
       const product = {
 
         id:
-          Number(body.id) ||
+          productId ||
           Date.now(),
 
         name:
@@ -643,7 +1167,9 @@ button{
 
         price:
           Math.round(
-            Number(body.price)
+            Number(
+              body.price
+            )
           ),
 
         sizes:
@@ -655,6 +1181,21 @@ button{
           String(
             body.fabric || ""
           ).trim(),
+
+        colour:
+          colour,
+
+        color:
+          colour,
+
+        stockStatus:
+          stockStatus,
+
+        stock:
+          stockStatus,
+
+        inStock:
+          inStock,
 
         img:
           mainImage,
@@ -672,9 +1213,9 @@ button{
 
 
       /*
-      =========================
+      =====================================================
       UPDATE / ADD
-      =========================
+      =====================================================
       */
 
       let updatedList;
@@ -685,41 +1226,27 @@ button{
       ) {
 
         updatedList =
-          list.map(function(item) {
+          list.map(
+            function(item) {
 
-            if (
-              item.id === product.id &&
-              images.length === 0
-            ) {
+              if (
+                Number(item.id)
+                ===
+                product.id
+              ) {
 
-              return {
-                ...item,
+                return {
+                  ...item,
+                  ...product
+                };
 
-                ...product,
+              }
 
-                img:
-                  item.img || "",
 
-                images:
-                  Array.isArray(item.images)
-                    ? item.images
-                    : (
-                        item.img
-                          ? [item.img]
-                          : []
-                      )
-              };
+              return item;
 
             }
-
-
-            return (
-              item.id === product.id
-                ? product
-                : item
-            );
-
-          });
+          );
 
       } else {
 
@@ -732,9 +1259,9 @@ button{
 
 
       /*
-      =========================
+      =====================================================
       SAVE
-      =========================
+      =====================================================
       */
 
       await putJSON(
@@ -744,8 +1271,13 @@ button{
 
 
       return res.status(200).json({
+
         products:
-          updatedList
+          updatedList,
+
+        product:
+          product
+
       });
 
     }
@@ -775,11 +1307,17 @@ button{
 
 
       const updatedList =
-        list.filter(function(item) {
+        list.filter(
+          function(item) {
 
-          return item.id !== id;
+            return (
+              Number(item.id)
+              !==
+              id
+            );
 
-        });
+          }
+        );
 
 
       await putJSON(
@@ -789,8 +1327,10 @@ button{
 
 
       return res.status(200).json({
+
         products:
           updatedList
+
       });
 
     }
@@ -803,8 +1343,10 @@ button{
     */
 
     return res.status(405).json({
+
       error:
         "Method not allowed"
+
     });
 
 
@@ -816,10 +1358,13 @@ button{
     );
 
     return res.status(500).json({
+
       error:
         error.message ||
         "Server error"
+
     });
 
   }
+
 };
