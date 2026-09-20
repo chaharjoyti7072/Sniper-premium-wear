@@ -331,7 +331,16 @@ button:disabled{
 }
 
 .order-item{
-  padding:6px 0;
+  padding:7px 0;
+}
+
+.order-selection{
+  margin-top:6px;
+  padding:8px 10px;
+  background:#f3f3ea;
+  border-radius:7px;
+  font-size:13px;
+  line-height:1.6;
 }
 
 .delete-order{
@@ -341,8 +350,6 @@ button:disabled{
 .delete-order:hover{
   background:#702e28;
 }
-
-/* FORM OPEN HIGHLIGHT */
 
 #productFormSection{
   scroll-margin-top:15px;
@@ -541,8 +548,6 @@ button:disabled{
 
   </div>
 
-
-  <!-- CATEGORY TABS -->
 
   <div class="category-tabs">
 
@@ -1170,7 +1175,6 @@ function showAdminSection(section){
 
 /* =========================
    PRODUCT FORM
-   AUTO SCROLL FIX
 ========================= */
 
 function showProductForm(){
@@ -1185,18 +1189,10 @@ function showProductForm(){
   }
 
 
-  /* Form open */
-
   form.classList.remove(
     "hide"
   );
 
-
-  /*
-    Browser ko thoda time dete hain
-    taaki form visible hone ke baad
-    uski exact position mil sake.
-  */
 
   setTimeout(
     function(){
@@ -1205,11 +1201,6 @@ function showProductForm(){
         form.getBoundingClientRect().top +
         window.pageYOffset;
 
-
-      /*
-        Form ko screen ke top ke
-        paas le aao.
-      */
 
       window.scrollTo({
         top:
@@ -1222,10 +1213,6 @@ function showProductForm(){
           "auto"
       });
 
-
-      /*
-        Product Name par cursor.
-      */
 
       setTimeout(
         function(){
@@ -3265,6 +3252,7 @@ async function deleteProduct(
 
 /* =========================
    LOAD ORDERS
+   SIZE FIXED
 ========================= */
 
 async function loadOrders(
@@ -3517,46 +3505,265 @@ async function loadOrders(
                         .map(
                           function(i){
 
+                            /*
+                              NEW FORMAT:
+                              i.colours = [
+                                {
+                                  colour:"Black",
+                                  size:"XL",
+                                  qty:2
+                                }
+                              ]
+
+                              OLD FORMAT:
+                              i.size
+                              i.colour
+                            */
+
+
+                            const selections =
+                              Array.isArray(
+                                i.colours
+                              )
+                              ?
+                                i.colours.filter(
+                                  function(s){
+
+                                    return s &&
+                                      (
+                                        String(
+                                          s.size ||
+                                          ""
+                                        ).trim() ||
+                                        String(
+                                          s.colour ||
+                                          s.color ||
+                                          ""
+                                        ).trim() ||
+                                        Number(
+                                          s.qty ||
+                                          0
+                                        ) > 0
+                                      );
+
+                                  }
+                                )
+                              :
+                                [];
+
+
+                            let selectionHTML =
+                              "";
+
+
+                            /*
+                              Agar colours[] mein
+                              size/colour available hai
+                            */
+
+                            if(
+                              selections.length
+                            ){
+
+                              selectionHTML =
+                                selections
+                                  .map(
+                                    function(s){
+
+                                      const size =
+                                        String(
+                                          s.size ||
+                                          ""
+                                        ).trim();
+
+
+                                      const colour =
+                                        String(
+                                          s.colour ||
+                                          s.color ||
+                                          ""
+                                        ).trim();
+
+
+                                      const qty =
+                                        Number(
+                                          s.qty ||
+                                          0
+                                        );
+
+
+                                      return `
+
+                                      <div
+                                        class="order-selection"
+                                      >
+
+                                        ${
+                                          colour
+                                          ?
+                                            `
+                                            🎨
+                                            <b>
+                                              Colour:
+                                            </b>
+                                            ${safe(
+                                              colour
+                                            )}
+                                            `
+                                          :
+                                            ""
+                                        }
+
+
+                                        ${
+                                          size
+                                          ?
+                                            `
+                                            ${
+                                              colour
+                                              ?
+                                                "&nbsp; • &nbsp;"
+                                              :
+                                                ""
+                                            }
+
+                                            📏
+                                            <b>
+                                              Size:
+                                            </b>
+                                            ${safe(
+                                              size
+                                            )}
+                                            `
+                                          :
+                                            ""
+                                        }
+
+
+                                        ${
+                                          qty > 0
+                                          ?
+                                            `
+                                            &nbsp; ×
+                                            <b>
+                                              ${qty}
+                                            </b>
+                                            `
+                                          :
+                                            ""
+                                        }
+
+                                      </div>
+
+                                      `;
+
+                                    }
+                                  )
+                                  .join("");
+
+                            }else{
+
+                              /*
+                                OLD / SINGLE
+                                SELECTION FORMAT
+                              */
+
+                              const size =
+                                String(
+                                  i.size ||
+                                  ""
+                                ).trim();
+
+
+                              const colour =
+                                String(
+                                  i.colour ||
+                                  i.color ||
+                                  ""
+                                ).trim();
+
+
+                              selectionHTML = `
+
+                                ${
+                                  size
+                                  ?
+                                    `
+                                    <div
+                                      class="order-selection"
+                                    >
+
+                                      📏
+                                      <b>
+                                        Size:
+                                      </b>
+
+                                      ${safe(
+                                        size
+                                      )}
+
+                                    </div>
+                                    `
+                                  :
+                                    ""
+                                }
+
+
+                                ${
+                                  colour
+                                  ?
+                                    `
+                                    <div
+                                      class="order-selection"
+                                    >
+
+                                      🎨
+                                      <b>
+                                        Colour:
+                                      </b>
+
+                                      ${safe(
+                                        colour
+                                      )}
+
+                                    </div>
+                                    `
+                                  :
+                                    ""
+                                }
+
+                              `;
+
+                            }
+
+
                             return `
+
                             <div
                               class="order-item"
                             >
 
-                              ${safe(
-                                i.name ||
-                                "Product"
-                              )}
+                              <div>
 
-                              ×
-                              ${Number(
-                                i.qty || 0
-                              )}
+                                <b>
+                                  ${safe(
+                                    i.name ||
+                                    "Product"
+                                  )}
+                                </b>
 
-                              ${
-                                i.size
-                                ?
-                                  " — Size: " +
-                                  safe(
-                                    i.size
-                                  )
-                                :
-                                  ""
-                              }
+                                ×
+                                ${Number(
+                                  i.qty || 0
+                                )}
 
-                              ${
-                                i.colour ||
-                                i.color
-                                ?
-                                  " — Colour: " +
-                                  safe(
-                                    i.colour ||
-                                    i.color
-                                  )
-                                :
-                                  ""
-                              }
+                              </div>
+
+
+                              ${selectionHTML}
 
                             </div>
+
                             `;
 
                           }
