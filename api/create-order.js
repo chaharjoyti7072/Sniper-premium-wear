@@ -39,13 +39,11 @@ module.exports = async (req, res) => {
       });
     }
 
-
     /* =========================
        CUSTOMER
     ========================= */
 
-    const customerInput =
-      body.customer || {};
+    const customerInput = body.customer || {};
 
     const customer = {
       name: String(
@@ -75,7 +73,6 @@ module.exports = async (req, res) => {
       ).trim()
     };
 
-
     if (!customer.name) {
       return res.status(400).json({
         error: "Name is required"
@@ -100,7 +97,6 @@ module.exports = async (req, res) => {
       });
     }
 
-
     /* =========================
        ITEMS
     ========================= */
@@ -112,42 +108,194 @@ module.exports = async (req, res) => {
         ? body.itemData
         : [];
 
-
     if (!rawItems.length) {
       return res.status(400).json({
         error: "Order items are missing"
       });
     }
 
+    /*
+      IMPORTANT
+
+      This function keeps BOTH formats:
+
+      1. Single selection:
+         size / colour
+
+      2. Multiple selections:
+         colours[]
+         {
+           colour,
+           color,
+           size,
+           qty
+         }
+    */
 
     const items = rawItems
-      .map(item => ({
-        id: Number(item.id || 0),
+      .map(item => {
 
-        name: String(
-          item.name || ""
-        ).trim(),
+        /* =========================
+           NESTED COLOUR/SIZE DATA
+        ========================= */
 
-        price: Number(
-          item.price || 0
-        ),
+        let selections = [];
 
-        qty: Math.min(
-          MAX_QTY,
-          Math.max(
-            1,
-            Number(item.qty || 1)
-          )
-        ),
+        if (Array.isArray(item.colours)) {
+          selections = item.colours
+            .map(selection => {
 
-        size: String(
+              const colour = String(
+                selection?.colour ||
+                selection?.color ||
+                ""
+              ).trim();
+
+              const size = String(
+                selection?.size ||
+                ""
+              ).trim();
+
+              const qty = Math.min(
+                MAX_QTY,
+                Math.max(
+                  1,
+                  Number(
+                    selection?.qty || 1
+                  )
+                )
+              );
+
+              return {
+                colour: colour,
+                color: colour,
+                size: size,
+                qty: qty
+              };
+            })
+            .filter(
+              selection =>
+                selection.colour ||
+                selection.size
+            );
+        }
+
+        /* =========================
+           NORMAL DIRECT DATA
+        ========================= */
+
+        const directSize = String(
           item.size || ""
-        ).trim(),
+        ).trim();
 
-        image: String(
-          item.image || ""
-        ).trim()
-      }))
+        const directColour = String(
+          item.colour ||
+          item.color ||
+          ""
+        ).trim();
+
+        /*
+          If there is no colours[] data,
+          create one selection from
+          the normal size/colour fields.
+        */
+
+        if (
+          !selections.length &&
+          (directSize || directColour)
+        ) {
+          selections = [
+            {
+              colour: directColour,
+              color: directColour,
+              size: directSize,
+              qty: Math.min(
+                MAX_QTY,
+                Math.max(
+                  1,
+                  Number(item.qty || 1)
+                )
+              )
+            }
+          ];
+        }
+
+        /*
+          If exactly one selection exists,
+          also keep size/colour directly
+          for compatibility with old orders.
+        */
+
+        const finalSize =
+          directSize ||
+          (
+            selections.length === 1
+              ? selections[0].size
+              : ""
+          );
+
+        const finalColour =
+          directColour ||
+          (
+            selections.length === 1
+              ? selections[0].colour
+              : ""
+          );
+
+        return {
+
+          id:
+            Number(item.id || 0),
+
+          name:
+            String(
+              item.name || ""
+            ).trim(),
+
+          price:
+            Number(
+              item.price || 0
+            ),
+
+          qty:
+            Math.min(
+              MAX_QTY,
+              Math.max(
+                1,
+                Number(item.qty || 1)
+              )
+            ),
+
+          /*
+            DIRECT SIZE
+          */
+          size:
+            finalSize,
+
+          /*
+            DIRECT COLOUR
+          */
+          colour:
+            finalColour,
+
+          /*
+            BOTH colour + size selections
+          */
+          colours:
+            selections,
+
+          /*
+            Compatibility field
+          */
+          colors:
+            selections,
+
+          image:
+            String(
+              item.image || ""
+            ).trim()
+        };
+      })
       .filter(
         item =>
           item.name &&
@@ -155,13 +303,11 @@ module.exports = async (req, res) => {
           item.price > 0
       );
 
-
     if (!items.length) {
       return res.status(400).json({
         error: "Invalid product information"
       });
     }
-
 
     /* =========================
        PRODUCT TOTAL
@@ -179,7 +325,6 @@ module.exports = async (req, res) => {
         0
       );
 
-
     if (
       !Number.isFinite(productTotal) ||
       productTotal <= 0
@@ -189,7 +334,6 @@ module.exports = async (req, res) => {
       });
     }
 
-
     /* =========================
        GRAND TOTAL
     ========================= */
@@ -198,7 +342,6 @@ module.exports = async (req, res) => {
       productTotal +
       SHIPPING_CHARGE;
 
-
     /* =========================
        CUSTOMER TOKEN
     ========================= */
@@ -206,10 +349,8 @@ module.exports = async (req, res) => {
     const customerAccessToken =
       crypto.randomBytes(32).toString("hex");
 
-
     const createdAt =
       new Date().toISOString();
-
 
     /* =========================
        LOAD ORDERS
@@ -221,11 +362,8 @@ module.exports = async (req, res) => {
         []
       );
 
-
     /* =====================================================
        COD ORDER
-       IMPORTANT:
-       COD DOES NOT CREATE A RAZORPAY ORDER
     ===================================================== */
 
     if (paymentMethod === "COD") {
@@ -235,11 +373,9 @@ module.exports = async (req, res) => {
         crypto.randomBytes(8)
           .toString("base64url");
 
-
       const receipt =
         body.receipt ||
         `COD-${Date.now()}`;
-
 
       const order = {
 
@@ -264,18 +400,14 @@ module.exports = async (req, res) => {
         currency:
           "INR",
 
-
         customer:
           customer,
-
 
         items:
           items,
 
-
         itemData:
           items,
-
 
         address:
           customer.address,
@@ -283,23 +415,17 @@ module.exports = async (req, res) => {
         pin:
           customer.pincode,
 
-
-        /* IMPORTANT */
         paymentMethod:
           "COD",
 
         payment_method:
           "COD",
 
-
-        /* IMPORTANT */
         status:
           "Order Confirmed",
 
-
         customerAccessToken:
           customerAccessToken,
-
 
         razorpayOrderId:
           "",
@@ -309,7 +435,6 @@ module.exports = async (req, res) => {
 
         razorpaySignature:
           "",
-
 
         shiprocketOrderId:
           "",
@@ -323,24 +448,19 @@ module.exports = async (req, res) => {
         courier:
           "",
 
-
         createdAt:
           createdAt,
 
         updatedAt:
           createdAt
-
       };
 
-
       orders.push(order);
-
 
       await putJSON(
         "orders",
         orders
       );
-
 
       return res.status(200).json({
 
@@ -382,24 +502,18 @@ module.exports = async (req, res) => {
 
         customerAccessToken:
           customerAccessToken
-
       });
-
     }
-
 
     /* =====================================================
        ONLINE PAYMENT
-       ONLY ONLINE COMES HERE
     ===================================================== */
-
 
     const key =
       process.env.RAZORPAY_KEY_ID;
 
     const secret =
       process.env.RAZORPAY_KEY_SECRET;
-
 
     if (!key || !secret) {
       return res.status(500).json({
@@ -408,12 +522,10 @@ module.exports = async (req, res) => {
       });
     }
 
-
     const razorpayAmount =
       Math.round(
         grandTotal * 100
       );
-
 
     if (
       !razorpayAmount ||
@@ -425,14 +537,12 @@ module.exports = async (req, res) => {
       });
     }
 
-
     const auth =
       Buffer
         .from(
           `${key}:${secret}`
         )
         .toString("base64");
-
 
     const razorpayResponse =
       await fetch(
@@ -463,15 +573,12 @@ module.exports = async (req, res) => {
 
               payment_capture:
                 1
-
             })
         }
       );
 
-
     const razorpayData =
       await razorpayResponse.json();
-
 
     if (!razorpayResponse.ok) {
       return res.status(
@@ -482,7 +589,6 @@ module.exports = async (req, res) => {
           "Razorpay order failed"
       });
     }
-
 
     /* =========================
        SAVE ONLINE ORDER
@@ -514,18 +620,14 @@ module.exports = async (req, res) => {
       currency:
         razorpayData.currency,
 
-
       customer:
         customer,
-
 
       items:
         items,
 
-
       itemData:
         items,
-
 
       address:
         customer.address,
@@ -533,30 +635,23 @@ module.exports = async (req, res) => {
       pin:
         customer.pincode,
 
-
-      /* IMPORTANT */
       paymentMethod:
         "ONLINE",
 
       payment_method:
         "ONLINE",
 
-
-      /* Payment not verified yet */
       status:
         "Payment Pending",
 
-
       customerAccessToken:
         customerAccessToken,
-
 
       razorpayPaymentId:
         "",
 
       razorpaySignature:
         "",
-
 
       shiprocketOrderId:
         "",
@@ -570,26 +665,21 @@ module.exports = async (req, res) => {
       courier:
         "",
 
-
       createdAt:
         createdAt,
 
       updatedAt:
         createdAt
-
     };
-
 
     orders.push(
       onlineOrder
     );
 
-
     await putJSON(
       "orders",
       orders
     );
-
 
     /* =========================
        ONLINE RESPONSE
@@ -619,10 +709,11 @@ module.exports = async (req, res) => {
         "Payment Pending",
 
       customerAccessToken:
-        customerAccessToken
+        customerAccessToken,
 
+      items:
+        onlineOrder.items
     });
-
 
   } catch (error) {
 
@@ -631,12 +722,10 @@ module.exports = async (req, res) => {
       error
     );
 
-
     return res.status(500).json({
       error:
         error.message ||
         "Server error"
     });
-
   }
 };
