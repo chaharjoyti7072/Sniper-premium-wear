@@ -1,307 +1,112 @@
+
 const crypto = require("crypto");
 const { putJSON, getJSON } = require("../_store");
 
-const SHIPPING_CHARGE = 49;
+const SHIPPING_CHARGE = 0;
 const MAX_QTY = 10;
 
 module.exports = async (req, res) => {
   try {
     if (req.method !== "POST") {
-      return res.status(405).json({
-        error: "Method not allowed"
-      });
+      return res.status(405).json({ error: "Method not allowed" });
     }
 
     const body = req.body || {};
 
-    /* =========================
-       PAYMENT METHOD
-    ========================= */
-
     let paymentMethod = String(
-      body.paymentMethod ||
-      body.payment_method ||
-      ""
-    )
-      .trim()
-      .toUpperCase();
+      body.paymentMethod || body.payment_method || ""
+    ).trim().toUpperCase();
 
     if (paymentMethod === "CASH ON DELIVERY") {
       paymentMethod = "COD";
     }
 
-    if (
-      paymentMethod !== "COD" &&
-      paymentMethod !== "ONLINE"
-    ) {
-      return res.status(400).json({
-        error: "Invalid payment method"
-      });
+    if (!["COD", "ONLINE"].includes(paymentMethod)) {
+      return res.status(400).json({ error: "Invalid payment method" });
     }
 
-    /* =========================
-       CUSTOMER
-    ========================= */
-
-    const customerInput = body.customer || {};
+    const input = body.customer || {};
 
     const customer = {
-      name: String(
-        customerInput.name ||
-        body.name ||
-        ""
-      ).trim(),
-
-      mobile: String(
-        customerInput.mobile ||
-        body.mobile ||
-        ""
-      ).trim(),
-
-      address: String(
-        customerInput.address ||
-        body.address ||
-        ""
-      ).trim(),
-
+      name: String(input.name || body.name || "").trim(),
+      mobile: String(input.mobile || body.mobile || "").trim(),
+      address: String(input.address || body.address || "").trim(),
       pincode: String(
-        customerInput.pincode ||
-        customerInput.pin ||
-        body.pincode ||
-        body.pin ||
-        ""
+        input.pincode || input.pin || body.pincode || body.pin || ""
       ).trim()
     };
 
-    if (!customer.name) {
-      return res.status(400).json({
-        error: "Name is required"
-      });
+    for (const field of ["name", "mobile", "address", "pincode"]) {
+      if (!customer[field]) {
+        return res.status(400).json({
+          error: `${field} is required`
+        });
+      }
     }
 
-    if (!customer.mobile) {
-      return res.status(400).json({
-        error: "Mobile number is required"
-      });
-    }
-
-    if (!customer.address) {
-      return res.status(400).json({
-        error: "Address is required"
-      });
-    }
-
-    if (!customer.pincode) {
-      return res.status(400).json({
-        error: "PIN code is required"
-      });
-    }
-
-    /* =========================
-       ITEMS
-    ========================= */
-
-    const rawItems =
-      Array.isArray(body.items)
-        ? body.items
-        : Array.isArray(body.itemData)
-        ? body.itemData
-        : [];
+    const rawItems = Array.isArray(body.items)
+      ? body.items
+      : Array.isArray(body.itemData)
+      ? body.itemData
+      : [];
 
     if (!rawItems.length) {
-      return res.status(400).json({
-        error: "Order items are missing"
-      });
+      return res.status(400).json({ error: "Order items are missing" });
     }
 
-    /*
-      IMPORTANT
+    const items = rawItems.map(item => {
+      let selections = [];
 
-      This function keeps BOTH formats:
+      if (Array.isArray(item.colours)) {
+        selections = item.colours.map(selection => {
+          const colour = String(
+            selection?.colour || selection?.color || ""
+          ).trim();
 
-      1. Single selection:
-         size / colour
-
-      2. Multiple selections:
-         colours[]
-         {
-           colour,
-           color,
-           size,
-           qty
-         }
-    */
-
-    const items = rawItems
-      .map(item => {
-
-        /* =========================
-           NESTED COLOUR/SIZE DATA
-        ========================= */
-
-        let selections = [];
-
-        if (Array.isArray(item.colours)) {
-          selections = item.colours
-            .map(selection => {
-
-              const colour = String(
-                selection?.colour ||
-                selection?.color ||
-                ""
-              ).trim();
-
-              const size = String(
-                selection?.size ||
-                ""
-              ).trim();
-
-              const qty = Math.min(
-                MAX_QTY,
-                Math.max(
-                  1,
-                  Number(
-                    selection?.qty || 1
-                  )
-                )
-              );
-
-              return {
-                colour: colour,
-                color: colour,
-                size: size,
-                qty: qty
-              };
-            })
-            .filter(
-              selection =>
-                selection.colour ||
-                selection.size
-            );
-        }
-
-        /* =========================
-           NORMAL DIRECT DATA
-        ========================= */
-
-        const directSize = String(
-          item.size || ""
-        ).trim();
-
-        const directColour = String(
-          item.colour ||
-          item.color ||
-          ""
-        ).trim();
-
-        /*
-          If there is no colours[] data,
-          create one selection from
-          the normal size/colour fields.
-        */
-
-        if (
-          !selections.length &&
-          (directSize || directColour)
-        ) {
-          selections = [
-            {
-              colour: directColour,
-              color: directColour,
-              size: directSize,
-              qty: Math.min(
-                MAX_QTY,
-                Math.max(
-                  1,
-                  Number(item.qty || 1)
-                )
-              )
-            }
-          ];
-        }
-
-        /*
-          If exactly one selection exists,
-          also keep size/colour directly
-          for compatibility with old orders.
-        */
-
-        const finalSize =
-          directSize ||
-          (
-            selections.length === 1
-              ? selections[0].size
-              : ""
-          );
-
-        const finalColour =
-          directColour ||
-          (
-            selections.length === 1
-              ? selections[0].colour
-              : ""
-          );
-
-        return {
-
-          id:
-            Number(item.id || 0),
-
-          name:
-            String(
-              item.name || ""
-            ).trim(),
-
-          price:
-            Number(
-              item.price || 0
-            ),
-
-          qty:
-            Math.min(
+          return {
+            colour,
+            color: colour,
+            size: String(selection?.size || "").trim(),
+            qty: Math.min(
               MAX_QTY,
-              Math.max(
-                1,
-                Number(item.qty || 1)
-              )
-            ),
+              Math.max(1, Math.floor(Number(selection?.qty) || 1))
+            )
+          };
+        }).filter(s => s.colour || s.size);
+      }
 
-          /*
-            DIRECT SIZE
-          */
-          size:
-            finalSize,
-
-          /*
-            DIRECT COLOUR
-          */
-          colour:
-            finalColour,
-
-          /*
-            BOTH colour + size selections
-          */
-          colours:
-            selections,
-
-          /*
-            Compatibility field
-          */
-          colors:
-            selections,
-
-          image:
-            String(
-              item.image || ""
-            ).trim()
-        };
-      })
-      .filter(
-        item =>
-          item.name &&
-          Number.isFinite(item.price) &&
-          item.price > 0
+      const directSize = String(item.size || "").trim();
+      const directColour = String(item.colour || item.color || "").trim();
+      const qty = Math.min(
+        MAX_QTY,
+        Math.max(1, Math.floor(Number(item.qty) || 1))
       );
+
+      if (!selections.length && (directSize || directColour)) {
+        selections = [{
+          colour: directColour,
+          color: directColour,
+          size: directSize,
+          qty
+        }];
+      }
+
+      return {
+        id: Number(item.id || 0),
+        name: String(item.name || "").trim(),
+        price: Number(item.price),
+        qty,
+        size: directSize || (selections.length === 1 ? selections[0].size : ""),
+        colour: directColour || (selections.length === 1 ? selections[0].colour : ""),
+        colours: selections,
+        colors: selections,
+        image: String(item.image || "").trim()
+      };
+    }).filter(item =>
+      item.name &&
+      Number.isFinite(item.price) &&
+      item.price > 0
+    );
 
     if (!items.length) {
       return res.status(400).json({
@@ -309,423 +114,160 @@ module.exports = async (req, res) => {
       });
     }
 
-    /* =========================
-       PRODUCT TOTAL
-    ========================= */
+    const productTotal = items.reduce(
+      (sum, item) => sum + item.price * item.qty,
+      0
+    );
 
-    const productTotal =
-      items.reduce(
-        (sum, item) => {
-          return (
-            sum +
-            Number(item.price) *
-            Number(item.qty)
-          );
-        },
-        0
-      );
-
-    if (
-      !Number.isFinite(productTotal) ||
-      productTotal <= 0
-    ) {
-      return res.status(400).json({
-        error: "Invalid product total"
-      });
+    if (!Number.isFinite(productTotal) || productTotal <= 0) {
+      return res.status(400).json({ error: "Invalid product total" });
     }
 
-    /* =========================
-       GRAND TOTAL
-    ========================= */
-
-    const grandTotal =
-      productTotal +
-      SHIPPING_CHARGE;
-
-    /* =========================
-       CUSTOMER TOKEN
-    ========================= */
-
-    const customerAccessToken =
-      crypto.randomBytes(32).toString("hex");
-
-    const createdAt =
-      new Date().toISOString();
-
-    /* =========================
-       LOAD ORDERS
-    ========================= */
-
-    const orders =
-      await getJSON(
-        "orders",
-        []
-      );
-
-    /* =====================================================
-       COD ORDER
-    ===================================================== */
+    const grandTotal = productTotal + SHIPPING_CHARGE;
+    const customerAccessToken = crypto.randomBytes(32).toString("hex");
+    const createdAt = new Date().toISOString();
+    const orders = await getJSON("orders", []);
 
     if (paymentMethod === "COD") {
-
-      const orderId =
-        "order_" +
-        crypto.randomBytes(8)
-          .toString("base64url");
-
-      const receipt =
-        body.receipt ||
-        `COD-${Date.now()}`;
+      const orderId = "order_" + crypto.randomBytes(8).toString("base64url");
 
       const order = {
-
-        id:
-          orderId,
-
-        receipt:
-          receipt,
-
-        amount:
-          grandTotal,
-
-        productTotal:
-          productTotal,
-
-        shippingCharge:
-          SHIPPING_CHARGE,
-
-        total:
-          grandTotal,
-
-        currency:
-          "INR",
-
-        customer:
-          customer,
-
-        items:
-          items,
-
-        itemData:
-          items,
-
-        address:
-          customer.address,
-
-        pin:
-          customer.pincode,
-
-        paymentMethod:
-          "COD",
-
-        payment_method:
-          "COD",
-
-        status:
-          "Order Confirmed",
-
-        customerAccessToken:
-          customerAccessToken,
-
-        razorpayOrderId:
-          "",
-
-        razorpayPaymentId:
-          "",
-
-        razorpaySignature:
-          "",
-
-        shiprocketOrderId:
-          "",
-
-        shiprocketShipmentId:
-          "",
-
-        awb:
-          "",
-
-        courier:
-          "",
-
-        createdAt:
-          createdAt,
-
-        updatedAt:
-          createdAt
+        id: orderId,
+        receipt: body.receipt || `COD-${Date.now()}`,
+        amount: grandTotal,
+        productTotal,
+        shippingCharge: SHIPPING_CHARGE,
+        total: grandTotal,
+        currency: "INR",
+        customer,
+        items,
+        itemData: items,
+        address: customer.address,
+        pin: customer.pincode,
+        paymentMethod: "COD",
+        payment_method: "COD",
+        status: "Order Confirmed",
+        customerAccessToken,
+        razorpayOrderId: "",
+        razorpayPaymentId: "",
+        razorpaySignature: "",
+        shiprocketOrderId: "",
+        shiprocketShipmentId: "",
+        awb: "",
+        courier: "",
+        createdAt,
+        updatedAt: createdAt
       };
 
       orders.push(order);
-
-      await putJSON(
-        "orders",
-        orders
-      );
+      await putJSON("orders", orders);
 
       return res.status(200).json({
-
-        ok:
-          true,
-
-        id:
-          order.id,
-
-        receipt:
-          order.receipt,
-
-        amount:
-          order.amount,
-
-        productTotal:
-          order.productTotal,
-
-        shippingCharge:
-          order.shippingCharge,
-
-        total:
-          order.total,
-
-        currency:
-          "INR",
-
-        paymentMethod:
-          "COD",
-
-        status:
-          "Order Confirmed",
-
-        items:
-          order.items,
-
-        customer:
-          order.customer,
-
-        customerAccessToken:
-          customerAccessToken
+        ok: true,
+        id: order.id,
+        receipt: order.receipt,
+        amount: order.amount,
+        productTotal,
+        shippingCharge: SHIPPING_CHARGE,
+        total: order.total,
+        currency: "INR",
+        paymentMethod: "COD",
+        status: order.status,
+        items,
+        customer,
+        customerAccessToken
       });
     }
 
-    /* =====================================================
-       ONLINE PAYMENT
-    ===================================================== */
-
-    const key =
-      process.env.RAZORPAY_KEY_ID;
-
-    const secret =
-      process.env.RAZORPAY_KEY_SECRET;
+    const key = process.env.RAZORPAY_KEY_ID;
+    const secret = process.env.RAZORPAY_KEY_SECRET;
 
     if (!key || !secret) {
       return res.status(500).json({
-        error:
-          "Razorpay keys are not configured in Vercel"
+        error: "Razorpay keys are not configured"
       });
     }
 
-    const razorpayAmount =
-      Math.round(
-        grandTotal * 100
-      );
+    const razorpayAmount = Math.round(grandTotal * 100);
 
-    if (
-      !razorpayAmount ||
-      razorpayAmount < 100
-    ) {
-      return res.status(400).json({
-        error:
-          "Invalid payment amount"
-      });
+    if (razorpayAmount < 100) {
+      return res.status(400).json({ error: "Invalid payment amount" });
     }
 
-    const auth =
-      Buffer
-        .from(
-          `${key}:${secret}`
-        )
-        .toString("base64");
+    const auth = Buffer.from(`${key}:${secret}`).toString("base64");
 
-    const razorpayResponse =
-      await fetch(
-        "https://api.razorpay.com/v1/orders",
-        {
-          method: "POST",
+    const razorpayResponse = await fetch(
+      "https://api.razorpay.com/v1/orders",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Basic ${auth}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          amount: razorpayAmount,
+          currency: "INR",
+          receipt: body.receipt || `SPW-${Date.now()}`,
+          payment_capture: 1
+        })
+      }
+    );
 
-          headers: {
-            Authorization:
-              `Basic ${auth}`,
-
-            "Content-Type":
-              "application/json"
-          },
-
-          body:
-            JSON.stringify({
-
-              amount:
-                razorpayAmount,
-
-              currency:
-                "INR",
-
-              receipt:
-                body.receipt ||
-                `SPW-${Date.now()}`,
-
-              payment_capture:
-                1
-            })
-        }
-      );
-
-    const razorpayData =
-      await razorpayResponse.json();
+    const razorpayData = await razorpayResponse.json();
 
     if (!razorpayResponse.ok) {
-      return res.status(
-        razorpayResponse.status
-      ).json({
-        error:
-          razorpayData.error?.description ||
-          "Razorpay order failed"
+      return res.status(razorpayResponse.status).json({
+        error: razorpayData.error?.description || "Razorpay order failed"
       });
     }
 
-    /* =========================
-       SAVE ONLINE ORDER
-    ========================= */
-
     const onlineOrder = {
-
-      id:
-        razorpayData.id,
-
-      razorpayOrderId:
-        razorpayData.id,
-
-      receipt:
-        razorpayData.receipt,
-
-      amount:
-        razorpayData.amount / 100,
-
-      productTotal:
-        productTotal,
-
-      shippingCharge:
-        SHIPPING_CHARGE,
-
-      total:
-        grandTotal,
-
-      currency:
-        razorpayData.currency,
-
-      customer:
-        customer,
-
-      items:
-        items,
-
-      itemData:
-        items,
-
-      address:
-        customer.address,
-
-      pin:
-        customer.pincode,
-
-      paymentMethod:
-        "ONLINE",
-
-      payment_method:
-        "ONLINE",
-
-      status:
-        "Payment Pending",
-
-      customerAccessToken:
-        customerAccessToken,
-
-      razorpayPaymentId:
-        "",
-
-      razorpaySignature:
-        "",
-
-      shiprocketOrderId:
-        "",
-
-      shiprocketShipmentId:
-        "",
-
-      awb:
-        "",
-
-      courier:
-        "",
-
-      createdAt:
-        createdAt,
-
-      updatedAt:
-        createdAt
+      id: razorpayData.id,
+      razorpayOrderId: razorpayData.id,
+      receipt: razorpayData.receipt,
+      amount: razorpayData.amount / 100,
+      productTotal,
+      shippingCharge: SHIPPING_CHARGE,
+      total: grandTotal,
+      currency: razorpayData.currency,
+      customer,
+      items,
+      itemData: items,
+      address: customer.address,
+      pin: customer.pincode,
+      paymentMethod: "ONLINE",
+      payment_method: "ONLINE",
+      status: "Payment Pending",
+      customerAccessToken,
+      razorpayPaymentId: "",
+      razorpaySignature: "",
+      shiprocketOrderId: "",
+      shiprocketShipmentId: "",
+      awb: "",
+      courier: "",
+      createdAt,
+      updatedAt: createdAt
     };
 
-    orders.push(
-      onlineOrder
-    );
-
-    await putJSON(
-      "orders",
-      orders
-    );
-
-    /* =========================
-       ONLINE RESPONSE
-    ========================= */
+    orders.push(onlineOrder);
+    await putJSON("orders", orders);
 
     return res.status(200).json({
-
-      ok:
-        true,
-
-      id:
-        razorpayData.id,
-
-      amount:
-        razorpayData.amount,
-
-      currency:
-        razorpayData.currency,
-
-      key_id:
-        key,
-
-      paymentMethod:
-        "ONLINE",
-
-      status:
-        "Payment Pending",
-
-      customerAccessToken:
-        customerAccessToken,
-
-      items:
-        onlineOrder.items
+      ok: true,
+      id: razorpayData.id,
+      amount: razorpayData.amount,
+      currency: razorpayData.currency,
+      key_id: key,
+      paymentMethod: "ONLINE",
+      status: "Payment Pending",
+      customerAccessToken,
+      items
     });
-
   } catch (error) {
-
-    console.error(
-      "Create order error:",
-      error
-    );
+    console.error("Create order error:", error);
 
     return res.status(500).json({
-      error:
-        error.message ||
-        "Server error"
+      error: error.message || "Server error"
     });
   }
 };
