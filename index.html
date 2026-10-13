@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -23,7 +24,7 @@ nav a{color:#fff;text-decoration:none;font-weight:700;font-size:14px}
 .hero h1{font-size:clamp(38px,7vw,76px);margin:0 0 15px;line-height:.95}
 .hero p{font-size:17px;color:#e4e1cf;max-width:650px}
 .btn{display:inline-block;border:0;background:var(--accent);color:#111;padding:13px 20px;font-weight:900;border-radius:6px;text-decoration:none;cursor:pointer}
-.btn:disabled{opacity:.55}
+.btn:disabled{opacity:.55;cursor:not-allowed}
 section{padding:45px 6%;max-width:1250px;margin:auto}
 .title{text-align:center;margin-bottom:28px}
 .title h2{margin:0;font-size:30px}
@@ -42,7 +43,7 @@ section{padding:45px 6%;max-width:1250px;margin:auto}
 .muted{color:#6b6d63;font-size:13px;line-height:1.45}
 .details{margin-top:10px;font-size:14px}
 .product button{width:100%;margin-top:8px}
-.size-select,input,textarea,select{width:100%;padding:12px;border:1px solid #bbb;border-radius:6px;background:#fff}
+.size-select,.colour-select,input,textarea,select{width:100%;padding:12px;border:1px solid #bbb;border-radius:6px;background:#fff}
 #checkout{display:none}
 .checkout{max-width:650px;background:#fff;padding:25px;border-radius:12px;border:1px solid #ddd;margin:auto}
 label{display:block;font-weight:700;margin:13px 0 6px}
@@ -53,7 +54,7 @@ textarea{min-height:90px;resize:vertical}
 .cart{background:#171a14;color:#fff;padding:18px;border-radius:10px;margin-bottom:20px}
 .cart h3{margin-top:0}
 .cart-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #3d4236}
-.qty{display:flex;align-items:center;gap:7px}
+.qty{display:flex;align-items:center;gap:7px;flex-shrink:0}
 .qty button{padding:4px 10px;border:0;border-radius:5px;cursor:pointer}
 .summary{margin-top:15px}
 .summary-row{display:flex;justify-content:space-between;padding:7px 0}
@@ -96,16 +97,18 @@ footer{background:#11140f;color:#d9dccb;padding:30px 6%;text-align:center;margin
 section{padding:35px 5%}
 }
 @media(max-width:520px){
-header{padding:12px 4%}
-nav{gap:6px}
-nav a{font-size:11px}
-.logo{font-size:14px}
+header{padding:12px 4%;gap:8px}
+nav{gap:6px;flex-wrap:wrap;justify-content:flex-end}
+nav a{font-size:10px}
+.logo{font-size:12px;letter-spacing:1px}
+.logo small{font-size:9px;letter-spacing:0}
 .categories{gap:9px}
 .cat{min-height:105px;padding:16px}
 .cat b{font-size:18px}
 .products{grid-template-columns:1fr}
 .product-main-image,.gallery-main{height:300px}
 .order-top{flex-direction:column}
+.checkout{padding:16px}
 }
 </style>
 </head>
@@ -114,7 +117,10 @@ nav a{font-size:11px}
 <header>
 <div class="logo">JOYTI • SNIPER PREMIUM WEAR<small>PREMIUM WEAR • BUILT FOR YOUR STYLE</small></div>
 <nav>
-<a href="#home">HOME</a><a href="#shop">SHOP</a><a href="#checkout">CHECKOUT</a><a href="#orders" class="orders-nav">MY ORDERS</a>
+<a href="#home">HOME</a>
+<a href="#shop">SHOP</a>
+<a href="#checkout">CHECKOUT</a>
+<a href="#orders" class="orders-nav">MY ORDERS</a>
 </nav>
 </header>
 
@@ -142,7 +148,7 @@ nav a{font-size:11px}
 <section id="shop">
 <div class="title">
 <h2 id="shopTitle">FEATURED PRODUCTS</h2>
-<p>Select a product, choose your size and buy online</p>
+<p>Select a product, choose your size and colour, then buy online</p>
 <button id="showAllBtn" class="btn" type="button" style="display:none;margin-top:8px">SHOW ALL PRODUCTS</button>
 </div>
 <div class="products" id="products"></div>
@@ -152,7 +158,7 @@ nav a{font-size:11px}
 <div class="title"><h2>MY ORDERS</h2><p>Check all your orders using your Mobile Number</p></div>
 <div class="orders-box">
 <div class="order-card">
-<label>Mobile Number</label>
+<label for="customerMobile">Mobile Number</label>
 <input id="customerMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number" autocomplete="tel">
 <button class="btn" type="button" onclick="findCustomerOrder()">VIEW MY ORDERS</button>
 <div id="ordersMessage" class="empty" style="margin-top:15px">Enter your mobile number to see your orders.</div>
@@ -175,10 +181,14 @@ nav a{font-size:11px}
 </div>
 
 <form id="orderForm">
-<label>Full Name</label><input required name="name" autocomplete="name">
-<label>Mobile Number</label><input required name="mobile" inputmode="tel" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" autocomplete="tel">
-<label>Full Address</label><textarea required name="address" autocomplete="street-address"></textarea>
-<label>PIN Code</label><input required name="pin" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="postal-code">
+<label for="customerName">Full Name</label>
+<input id="customerName" required name="name" autocomplete="name">
+<label for="orderMobile">Mobile Number</label>
+<input id="orderMobile" required name="mobile" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" autocomplete="tel">
+<label for="orderAddress">Full Address</label>
+<textarea id="orderAddress" required name="address" autocomplete="street-address"></textarea>
+<label for="orderPin">PIN Code</label>
+<input id="orderPin" required name="pin" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="postal-code">
 <label>Payment Method</label>
 <div class="pay"><label><input type="radio" name="payment" value="ONLINE" checked required> Online Payment (Razorpay)</label></div>
 <button class="btn" type="submit">BUY NOW & PAY</button>
@@ -202,33 +212,57 @@ nav a{font-size:11px}
 </div>
 </div>
 
-<!-- Razorpay checkout library must load before the store script -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
+"use strict";
+
 let products=[];
 const SHIPPING_CHARGE=0;
 let cart=JSON.parse(localStorage.getItem("sniperCart")||"[]");
 let selectedCategory="";
 
-function save(){localStorage.setItem("sniperCart",JSON.stringify(cart))}
-function saveCustomerToken(t){if(t)localStorage.setItem("sniperCustomerAccessToken",String(t))}
+function save(){
+localStorage.setItem("sniperCart",JSON.stringify(cart));
+}
 
-/* Add ₹50 to every product price */
-function getDisplayPrice(p){return Math.max(0,Number(p&&p.price||0))+50}
+function saveCustomerToken(t){
+if(t)localStorage.setItem("sniperCustomerAccessToken",String(t));
+}
+
+/* Display price includes an extra ₹50 per product unit. */
+function getDisplayPrice(p){
+return Math.max(0,Number(p&&p.price||0))+50;
+}
 
 function getProductImages(p){
 let a=[];
 if(Array.isArray(p.images))a=a.concat(p.images.filter(Boolean));
 if(Array.isArray(p.photos))a=a.concat(p.photos.filter(Boolean));
 if(p.img)a.unshift(p.img);
-return [...new Set(a.map(x=>String(x).trim()).filter(Boolean))].slice(0,5)
+return [...new Set(a.map(x=>String(x).trim()).filter(Boolean))].slice(0,5);
 }
 
-function getSizes(p){return String(p.sizes||"").trim().split(/\s+/).filter(Boolean)}
+function getSizes(p){
+const value=p.sizes??p.size??"";
+if(Array.isArray(value))return value.map(String).map(x=>x.trim()).filter(Boolean);
+return String(value).trim().split(/[\s,\/|]+/).filter(Boolean);
+}
+
+/* Reads Colour/Colours/Color/Colors from product data. */
+function getColours(p){
+let value=p.colours??p.colors??p.colour??p.color??"";
+if(Array.isArray(value))return [...new Set(value.map(String).map(x=>x.trim()).filter(Boolean))];
+return [...new Set(String(value).split(/[,\/|\n]+/).map(x=>x.trim()).filter(Boolean))];
+}
 
 function escapeHTML(v){
-return String(v||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")
+return String(v??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 }
 
 async function loadProducts(){
@@ -238,10 +272,10 @@ if(!r.ok)throw Error("Could not load products");
 const d=await r.json();
 products=Array.isArray(d.products)?d.products:[];
 renderProducts();
-renderCart()
+renderCart();
 }catch(e){
 console.error(e);
-document.getElementById("products").innerHTML='<div class="empty">Products are temporarily unavailable. Please check your products API.</div>'
+document.getElementById("products").innerHTML='<div class="empty">Products are temporarily unavailable. Please check your products API.</div>';
 }
 }
 
@@ -251,7 +285,7 @@ document.querySelectorAll(".cat").forEach(b=>b.classList.toggle("active",b.datas
 document.getElementById("shopTitle").textContent=c+" PRODUCTS";
 document.getElementById("showAllBtn").style.display="inline-block";
 renderProducts();
-window.scrollTo({top:document.getElementById("shop").offsetTop-60,behavior:"auto"})
+document.getElementById("shop").scrollIntoView({behavior:"auto"});
 }
 
 function showAllProducts(){
@@ -259,7 +293,7 @@ selectedCategory="";
 document.querySelectorAll(".cat").forEach(b=>b.classList.remove("active"));
 document.getElementById("shopTitle").textContent="FEATURED PRODUCTS";
 document.getElementById("showAllBtn").style.display="none";
-renderProducts()
+renderProducts();
 }
 
 function galleryHTML(p){
@@ -270,132 +304,218 @@ return `<div class="gallery">
 <img class="product-main-image" src="${escapeHTML(a[0])}" alt="${escapeHTML(p.name||"Product")}" loading="lazy" decoding="async">
 <span class="gallery-count">${a.length} photo${a.length>1?"s":""}</span>
 </div>
-${a.length>1?`<div class="gallery-thumbs">${a.map((s,i)=>`<img src="${escapeHTML(s)}" alt="" loading="lazy" class="${i?"":"active"}" data-gallery-thumb="${Number(p.id)}" data-index="${i}">`).join("")}</div>`:""}
-</div>`
+${a.length>1?`<div class="gallery-thumbs">${a.map((s,i)=>`<img src="${escapeHTML(s)}" alt="" loading="lazy" class="${i===0?"active":""}" data-gallery-thumb="${Number(p.id)}" data-index="${i}">`).join("")}</div>`:""}
+</div>`;
 }
 
 function renderProducts(){
 const el=document.getElementById("products");
 let list=selectedCategory
-?(selectedCategory.toLowerCase()==="featured"?products.filter(p=>p.featured===true):products.filter(p=>String(p.category||"").trim().toLowerCase()===selectedCategory.toLowerCase()))
+?(selectedCategory.toLowerCase()==="featured"
+?products.filter(p=>p.featured===true)
+:products.filter(p=>String(p.category||"").trim().toLowerCase()===selectedCategory.toLowerCase()))
 :products.filter(p=>p.featured===true);
 
 if(!list.length){
 el.innerHTML='<div class="empty">No products available yet.</div>';
-return
+return;
 }
 
 el.innerHTML=list.map(p=>{
-const id=Number(p.id),s=getSizes(p);
+const id=Number(p.id);
+const sizes=getSizes(p);
+const colours=getColours(p);
+
 return `<div class="product" data-product-id="${id}">
 ${galleryHTML(p)}
 <div class="info">
 <h3>${escapeHTML(p.name)}</h3>
 <div class="muted">${escapeHTML(p.description||"Premium quality")}</div>
 ${p.fabric?`<div class="details"><b>Fabric:</b> ${escapeHTML(p.fabric)}</div>`:""}
-${s.length?`<div class="details"><label style="margin:0 0 6px">Select Size</label><select class="size-select" id="size-${id}"><option value="">Choose Size</option>${s.map(x=>`<option value="${escapeHTML(x)}">${escapeHTML(x)}</option>`).join("")}</select></div>`:""}
+
+${sizes.length?`
+<div class="details">
+<label for="size-${id}" style="margin:0 0 6px">Select Size</label>
+<select class="size-select" id="size-${id}">
+<option value="">Choose Size</option>
+${sizes.map(x=>`<option value="${escapeHTML(x)}">${escapeHTML(x)}</option>`).join("")}
+</select>
+</div>`:""}
+
+${colours.length?`
+<div class="details">
+<label for="colour-${id}" style="margin:10px 0 6px">Select Colour</label>
+<select class="colour-select" id="colour-${id}">
+<option value="">Choose Colour</option>
+${colours.map(x=>`<option value="${escapeHTML(x)}">${escapeHTML(x)}</option>`).join("")}
+</select>
+</div>`:""}
+
 <div class="price">₹${getDisplayPrice(p).toLocaleString("en-IN")}</div>
 <button class="btn" type="button" onclick="buyNow(${id})">BUY NOW</button>
 </div>
-</div>`
+</div>`;
 }).join("");
 
-attachGalleryEvents()
+attachGalleryEvents();
 }
 
 function attachGalleryEvents(){
-document.querySelectorAll(".gallery-main").forEach(x=>x.onclick=()=>openProductGallery(Number(x.dataset.galleryId),Number(x.dataset.imageIndex||0)));
-document.querySelectorAll("[data-gallery-thumb]").forEach(x=>x.onclick=()=>changeCardImage(Number(x.dataset.galleryThumb),Number(x.dataset.index)))
+document.querySelectorAll(".gallery-main[data-gallery-id]").forEach(x=>{
+x.onclick=()=>openProductGallery(Number(x.dataset.galleryId),Number(x.dataset.imageIndex||0));
+});
+document.querySelectorAll("[data-gallery-thumb]").forEach(x=>{
+x.onclick=()=>changeCardImage(Number(x.dataset.galleryThumb),Number(x.dataset.index));
+});
 }
 
 function changeCardImage(id,i){
 const p=products.find(x=>Number(x.id)===id);
 if(!p)return;
-const a=getProductImages(p),card=document.querySelector(`[data-product-id="${id}"]`);
+const a=getProductImages(p);
+const card=document.querySelector(`[data-product-id="${id}"]`);
 if(!a[i]||!card)return;
 card.querySelector(".gallery-main img").src=a[i];
 card.querySelector(".gallery-main").dataset.imageIndex=i;
-card.querySelectorAll("[data-gallery-thumb]").forEach((x,n)=>x.classList.toggle("active",n===i))
+card.querySelectorAll("[data-gallery-thumb]").forEach((x,n)=>x.classList.toggle("active",n===i));
 }
 
 function buyNow(id){
-const p=products.find(x=>Number(x.id)===id);
+const p=products.find(x=>Number(x.id)===Number(id));
 if(!p)return;
-const s=getSizes(p);
+
+const sizes=getSizes(p);
+const colours=getColours(p);
 let size="";
-if(s.length){
+let colour="";
+
+if(sizes.length){
 size=document.getElementById("size-"+id)?.value||"";
-if(!size)return alert("Please select a size first.")
+if(!size)return alert("Please select a size first.");
 }
-cart=[{id,qty:1,size}];
+
+if(colours.length){
+colour=document.getElementById("colour-"+id)?.value||"";
+if(!colour)return alert("Please select a colour first.");
+}
+
+/* Keep one cart entry per product, size and colour combination. */
+const existing=cart.find(i=>
+Number(i.id)===Number(id)&&
+String(i.size||"")===size&&
+String(i.colour||"")===colour
+);
+
+if(existing){
+existing.qty=Number(existing.qty||0)+1;
+}else{
+cart.push({id:Number(id),qty:1,size,colour});
+}
+
 save();
 renderCart();
 document.getElementById("checkout").style.display="block";
-location.hash="checkout"
+location.hash="checkout";
 }
 
-function change(id,d,size=""){
-const x=cart.find(i=>Number(i.id)===Number(id)&&String(i.size||"")===String(size||""));
-if(!x)return;
-x.qty+=d;
-if(x.qty<=0)cart=cart.filter(i=>!(Number(i.id)===Number(id)&&String(i.size||"")===String(size||"")));
+function change(id,d,size="",colour=""){
+const item=cart.find(i=>
+Number(i.id)===Number(id)&&
+String(i.size||"")===String(size||"")&&
+String(i.colour||"")===String(colour||"")
+);
+if(!item)return;
+
+item.qty=Number(item.qty||0)+d;
+
+if(item.qty<=0){
+cart=cart.filter(i=>i!==item);
+}
+
 save();
-renderCart()
+renderCart();
 }
 
 function renderCart(){
 const el=document.getElementById("cartItems");
+let pt=0;
+const validItems=cart.filter(i=>products.some(p=>Number(p.id)===Number(i.id)));
+
+if(validItems.length!==cart.length){
+cart=validItems;
+save();
+}
+
 if(!cart.length){
 el.innerHTML="<p>Your cart is empty.</p>";
 document.getElementById("productTotal").textContent="₹0";
 document.getElementById("total").textContent="₹0";
-return
+return;
 }
-let pt=0;
+
 el.innerHTML=cart.map(i=>{
 const p=products.find(x=>Number(x.id)===Number(i.id));
 if(!p)return "";
+
 const price=getDisplayPrice(p);
-pt+=price*i.qty;
+const qty=Math.max(1,Number(i.qty||1));
+pt+=price*qty;
+
+const size=String(i.size||"");
+const colour=String(i.colour||"");
+
 return `<div class="cart-row">
-<span><b>${escapeHTML(p.name)}</b><br>₹${price.toLocaleString("en-IN")} × ${i.qty}${i.size?` • Size ${escapeHTML(i.size)}`:""}</span>
-<span class="qty">
-<button type="button" onclick="change(${Number(i.id)},-1,'${escapeHTML(i.size||"")}')">−</button>
-${i.qty}
-<button type="button" onclick="change(${Number(i.id)},1,'${escapeHTML(i.size||"")}')">+</button>
+<span>
+<b>${escapeHTML(p.name)}</b><br>
+₹${price.toLocaleString("en-IN")} × ${qty}
+${size?`<br>Size: ${escapeHTML(size)}`:""}
+${colour?`<br>Colour: ${escapeHTML(colour)}`:""}
 </span>
-</div>`
+<span class="qty">
+<button type="button" aria-label="Decrease quantity" onclick='change(${Number(i.id)},-1,${JSON.stringify(size)},${JSON.stringify(colour)})'>−</button>
+${qty}
+<button type="button" aria-label="Increase quantity" onclick='change(${Number(i.id)},1,${JSON.stringify(size)},${JSON.stringify(colour)})'>+</button>
+</span>
+</div>`;
 }).join("");
+
 document.getElementById("productTotal").textContent="₹"+pt.toLocaleString("en-IN");
-document.getElementById("total").textContent="₹"+(pt+SHIPPING_CHARGE).toLocaleString("en-IN")
+document.getElementById("total").textContent="₹"+(pt+SHIPPING_CHARGE).toLocaleString("en-IN");
 }
 
 /* MY ORDERS */
 async function findCustomerOrder(){
-const m=document.getElementById("customerMobile"),msg=document.getElementById("ordersMessage"),list=document.getElementById("ordersList");
+const m=document.getElementById("customerMobile");
+const msg=document.getElementById("ordersMessage");
+const list=document.getElementById("ordersList");
 const mobile=String(m.value||"").replace(/\D/g,"").slice(-10);
+
 if(mobile.length!==10){
 msg.style.display="block";
 msg.innerHTML="<b>Please enter a valid 10-digit mobile number.</b>";
 list.innerHTML="";
-return
+return;
 }
+
 msg.style.display="block";
 msg.textContent="Loading your orders...";
 list.innerHTML="";
+
 try{
 const r=await fetch("/api/customer-orders?mobile="+encodeURIComponent(mobile),{cache:"no-store"});
 const d=await r.json();
 if(!r.ok)throw Error(d.error||"Unable to find orders");
+
 const orders=Array.isArray(d.orders)?d.orders:[];
 if(!orders.length){
 msg.innerHTML="<b>No orders found.</b><br><br>Please check the same mobile number used while placing the order.";
-return
+return;
 }
+
 msg.style.display="none";
-list.innerHTML=orders.map(orderHTML).join("")
+list.innerHTML=orders.map(orderHTML).join("");
 }catch(e){
-msg.innerHTML="<b>Unable to find orders.</b><br><br>"+escapeHTML(e.message||"Please try again.")
+msg.innerHTML="<b>Unable to find orders.</b><br><br>"+escapeHTML(e.message||"Please try again.");
 }
 }
 
@@ -404,42 +524,80 @@ const id=String(o.id||"");
 const created=o.createdAt?new Date(o.createdAt).toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"}):"";
 const items=Array.isArray(o.items)?o.items:[];
 const has=!!(o.shiprocketShipmentId||o.awb);
+
 return `<div class="order-card">
-<div class="order-top"><div><div class="order-id">Order ID: ${escapeHTML(id)}</div><div class="order-meta">${escapeHTML(created)}</div></div><div class="order-status">${escapeHTML(o.status||"Order Confirmed")}</div></div>
-<div>${items.map(i=>`<div class="order-item"><b>${escapeHTML(i.name||"Product")}</b><br>Qty: ${Number(i.qty||0)}${i.size?` • Size ${escapeHTML(i.size)}`:""}</div>`).join("")||"No item details available."}</div>
-<div class="order-meta">Payment: <b>${escapeHTML(o.paymentMethod||"ONLINE")}</b>${o.awb?`<br>AWB: <b>${escapeHTML(o.awb)}</b>`:""}${o.courier?`<br>Courier: <b>${escapeHTML(o.courier)}</b>`:""}</div>
+<div class="order-top">
+<div>
+<div class="order-id">Order ID: ${escapeHTML(id)}</div>
+<div class="order-meta">${escapeHTML(created)}</div>
+</div>
+<div class="order-status">${escapeHTML(o.status||"Order Confirmed")}</div>
+</div>
+
+<div>${items.map(i=>`
+<div class="order-item">
+<b>${escapeHTML(i.name||"Product")}</b><br>
+Qty: ${Number(i.qty||0)}
+${i.size?` • Size ${escapeHTML(i.size)}`:""}
+${i.colour||i.color?` • Colour ${escapeHTML(i.colour||i.color)}`:""}
+</div>`).join("")||"No item details available."}</div>
+
+<div class="order-meta">
+Payment: <b>${escapeHTML(o.paymentMethod||"ONLINE")}</b>
+${o.awb?`<br>AWB: <b>${escapeHTML(o.awb)}</b>`:""}
+${o.courier?`<br>Courier: <b>${escapeHTML(o.courier)}</b>`:""}
+</div>
+
 <div class="order-total">Total: ₹${Number(o.total||o.amount||0).toLocaleString("en-IN")}</div>
-${has?`<button class="btn" type="button" onclick="trackCustomerOrder('${escapeHTML(id)}')">🚚 TRACK ORDER</button><div id="tracking-${escapeHTML(id)}" class="track-result" style="display:none"></div>`:`<div class="track-result">📦 Tracking will appear here after your order is shipped.</div>`}
-</div>`
+
+${has
+?`<button class="btn" type="button" onclick="trackCustomerOrder('${escapeHTML(id)}')">🚚 TRACK ORDER</button><div id="tracking-${escapeHTML(id)}" class="track-result" style="display:none"></div>`
+:`<div class="track-result">📦 Tracking will appear here after your order is shipped.</div>`}
+</div>`;
 }
 
 async function trackCustomerOrder(id){
 const box=document.getElementById("tracking-"+id);
 const mobile=String(document.getElementById("customerMobile").value||"").replace(/\D/g,"").slice(-10);
 if(!box)return;
+
 if(mobile.length!==10){
 box.style.display="block";
 box.textContent="Please enter the same mobile number used for the order.";
-return
+return;
 }
+
 box.style.display="block";
 box.innerHTML="Loading live tracking...";
+
 try{
 const r=await fetch("/api/customer-tracking?mobile="+encodeURIComponent(mobile)+"&orderId="+encodeURIComponent(id),{cache:"no-store"});
 const d=await r.json();
 if(!r.ok)throw Error(d.error||"Unable to load tracking");
+
 if(d.trackingAvailable===false){
 box.innerHTML="📦 "+escapeHTML(d.message||"Tracking is not available yet.");
-return
+return;
 }
-const t=d.tracking||{},td=t.tracking_data||{},tracks=Array.isArray(td.shipment_track)?td.shipment_track:[],x=tracks[0]||null;
+
+const t=d.tracking||{};
+const td=t.tracking_data||{};
+const tracks=Array.isArray(td.shipment_track)?td.shipment_track:[];
+const x=tracks[0]||null;
 const status=x?.current_status||td.shipment_status||d.order?.status||"Shipment in process";
 const courier=x?.courier_name||d.order?.courier||"Courier";
 const awb=x?.awb_code||d.order?.awb||"";
-const from=x?.origin||"",to=x?.destination||"";
-box.innerHTML=`<b>🚚 Current Status:</b> ${escapeHTML(status)}<br><b>Courier:</b> ${escapeHTML(courier)}${awb?`<br><b>AWB:</b> ${escapeHTML(awb)}`:""}${from?`<br><b>From:</b> ${escapeHTML(from)}`:""}${to?`<br><b>To:</b> ${escapeHTML(to)}`:""}${x?`<br><br><b>Latest shipment update:</b><br>${escapeHTML(x.current_status||status)}`:""}`
+const from=x?.origin||"";
+const to=x?.destination||"";
+
+box.innerHTML=`<b>🚚 Current Status:</b> ${escapeHTML(status)}
+<br><b>Courier:</b> ${escapeHTML(courier)}
+${awb?`<br><b>AWB:</b> ${escapeHTML(awb)}`:""}
+${from?`<br><b>From:</b> ${escapeHTML(from)}`:""}
+${to?`<br><b>To:</b> ${escapeHTML(to)}`:""}
+${x?`<br><br><b>Latest shipment update:</b><br>${escapeHTML(x.current_status||status)}`:""}`;
 }catch(e){
-box.innerHTML="❌ "+escapeHTML(e.message||"Unable to load tracking.")
+box.innerHTML="❌ "+escapeHTML(e.message||"Unable to load tracking.");
 }
 }
 
@@ -449,38 +607,60 @@ const modalImage=document.getElementById("modalImage");
 let modalIndex=0,modalImages=[],zoom=1;
 
 function openProductGallery(id,i=0){
-const p=products.find(x=>Number(x.id)===id);
+const p=products.find(x=>Number(x.id)===Number(id));
 if(!p)return;
+
 modalImages=getProductImages(p);
 if(!modalImages.length)return;
+
 modalIndex=Math.max(0,Math.min(i,modalImages.length-1));
 zoom=1;
 modal.classList.add("show");
 document.body.style.overflow="hidden";
-updateModalImage()
+updateModalImage();
 }
+
 function updateModalImage(){
 if(modalImages.length){
 modalImage.src=modalImages[modalIndex];
-modalImage.style.transform="scale("+zoom+")"
+modalImage.style.transform="scale("+zoom+")";
 }
 }
-function closeModal(){modal.classList.remove("show");document.body.style.overflow=""}
-function nextImage(){if(modalImages.length){modalIndex=(modalIndex+1)%modalImages.length;zoom=1;updateModalImage()}}
-function previousImage(){if(modalImages.length){modalIndex=(modalIndex-1+modalImages.length)%modalImages.length;zoom=1;updateModalImage()}}
+
+function closeModal(){
+modal.classList.remove("show");
+document.body.style.overflow="";
+}
+
+function nextImage(){
+if(modalImages.length){
+modalIndex=(modalIndex+1)%modalImages.length;
+zoom=1;
+updateModalImage();
+}
+}
+
+function previousImage(){
+if(modalImages.length){
+modalIndex=(modalIndex-1+modalImages.length)%modalImages.length;
+zoom=1;
+updateModalImage();
+}
+}
 
 document.getElementById("modalClose").onclick=closeModal;
 document.getElementById("modalLeft").onclick=previousImage;
 document.getElementById("modalRight").onclick=nextImage;
-document.getElementById("zoomIn").onclick=()=>{zoom=Math.min(2.5,zoom+.25);updateModalImage()};
-document.getElementById("zoomOut").onclick=()=>{zoom=Math.max(1,zoom-.25);updateModalImage()};
-document.getElementById("zoomReset").onclick=()=>{zoom=1;updateModalImage()};
-modal.onclick=e=>{if(e.target===modal)closeModal()};
+document.getElementById("zoomIn").onclick=()=>{zoom=Math.min(2.5,zoom+.25);updateModalImage();};
+document.getElementById("zoomOut").onclick=()=>{zoom=Math.max(1,zoom-.25);updateModalImage();};
+document.getElementById("zoomReset").onclick=()=>{zoom=1;updateModalImage();};
+modal.onclick=e=>{if(e.target===modal)closeModal();};
+
 document.onkeydown=e=>{
 if(!modal.classList.contains("show"))return;
 if(e.key==="Escape")closeModal();
 if(e.key==="ArrowRight")nextImage();
-if(e.key==="ArrowLeft")previousImage()
+if(e.key==="ArrowLeft")previousImage();
 };
 
 document.querySelectorAll(".cat").forEach(b=>b.onclick=()=>showCategory(b.dataset.category));
@@ -488,15 +668,17 @@ document.getElementById("showAllBtn").onclick=showAllProducts;
 
 window.addEventListener("hashchange",()=>{
 if(location.hash==="#checkout")document.getElementById("checkout").style.display="block";
-if(location.hash==="#orders")document.getElementById("orders").scrollIntoView({behavior:"auto"})
+if(location.hash==="#orders")document.getElementById("orders").scrollIntoView({behavior:"auto"});
 });
 
 /* ONLINE PAYMENT ONLY */
 document.getElementById("orderForm").addEventListener("submit",async e=>{
 e.preventDefault();
+
 if(!cart.length)return alert("Please select a product first.");
 
 const data=new FormData(e.target);
+
 const items=cart.map(i=>{
 const p=products.find(x=>Number(x.id)===Number(i.id));
 return {
@@ -504,18 +686,20 @@ id:p?p.id:i.id,
 name:p?p.name:"",
 price:p?getDisplayPrice(p):0,
 qty:Number(i.qty),
-size:i.size||""
-}
+size:i.size||"",
+colour:i.colour||""
+};
 });
 
-if(items.some(i=>!i.name||i.price<=0))return alert("Product information is unavailable. Please refresh and try again.");
+if(items.some(i=>!i.name||i.price<=0)){
+return alert("Product information is unavailable. Please refresh and try again.");
+}
 
 const btn=e.target.querySelector('button[type="submit"]');
 btn.disabled=true;
 btn.textContent="Please wait…";
 
 try{
-/* Backend must calculate and validate the final amount using trusted product prices. */
 const r=await fetch("/api/create-order",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
@@ -533,11 +717,11 @@ shippingCharge:SHIPPING_CHARGE
 const o=await r.json();
 if(!r.ok)throw Error(o.error||"Could not create order");
 if(!o.key_id||!o.id||!o.amount)throw Error("Payment order details are missing. Please check your Razorpay backend configuration.");
+
 if(o.customerAccessToken)saveCustomerToken(o.customerAccessToken);
 
-/* Check Razorpay is actually loaded before opening checkout. */
 if(typeof window.Razorpay==="undefined"){
-throw Error("Razorpay load nahi hua. Internet check karein, page refresh karein aur dobara try karein.")
+throw Error("Razorpay load nahi hua. Internet check karein, page refresh karein aur dobara try karein.");
 }
 
 const rzp=new window.Razorpay({
@@ -545,10 +729,16 @@ key:o.key_id,
 amount:o.amount,
 currency:o.currency||"INR",
 name:"JOYTI - SNIPER PREMIUM WEAR",
-description:items.map(i=>`${i.name} x ${i.qty}${i.size?" - Size "+i.size:""}`).join(", "),
+description:items.map(i=>
+`${i.name} x ${i.qty}${i.size?" - Size "+i.size:""}${i.colour?" - Colour "+i.colour:""}`
+).join(", "),
 order_id:o.id,
 prefill:{name:data.get("name"),contact:data.get("mobile")},
-notes:{address:data.get("address"),pin:data.get("pin"),shipping_charge:String(SHIPPING_CHARGE)},
+notes:{
+address:data.get("address"),
+pin:data.get("pin"),
+shipping_charge:String(SHIPPING_CHARGE)
+},
 theme:{color:"#596442"},
 
 handler:async res=>{
@@ -562,29 +752,32 @@ paymentId:res.razorpay_payment_id,
 signature:res.razorpay_signature
 })
 });
+
 const result=await v.json();
 if(!v.ok||result.verified!==true)throw Error(result.error||"Payment verification failed");
 
 alert("Payment successful!\n\nOrder ID: "+o.id+"\n\nYou can check your order in MY ORDERS using your mobile number.");
+
 cart=[];
 save();
 renderCart();
 e.target.reset();
 document.getElementById("customerMobile").value=String(data.get("mobile")||"");
 location.hash="orders";
-setTimeout(findCustomerOrder,150)
+setTimeout(findCustomerOrder,150);
+
 }catch(err){
-alert(err.message||"Payment verification failed. Please contact support if money was deducted.")
+alert(err.message||"Payment verification failed. Please contact support if money was deducted.");
 }finally{
 btn.disabled=false;
-btn.textContent="BUY NOW & PAY"
+btn.textContent="BUY NOW & PAY";
 }
 },
 
 modal:{
 ondismiss:()=>{
 btn.disabled=false;
-btn.textContent="BUY NOW & PAY"
+btn.textContent="BUY NOW & PAY";
 }
 }
 });
@@ -592,14 +785,15 @@ btn.textContent="BUY NOW & PAY"
 rzp.on("payment.failed",res=>{
 alert("Payment failed: "+(res.error?.description||"Please try again."));
 btn.disabled=false;
-btn.textContent="BUY NOW & PAY"
+btn.textContent="BUY NOW & PAY";
 });
 
-rzp.open()
+rzp.open();
+
 }catch(err){
 alert(err.message||"Unable to place order.");
 btn.disabled=false;
-btn.textContent="BUY NOW & PAY"
+btn.textContent="BUY NOW & PAY";
 }
 });
 
