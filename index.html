@@ -147,7 +147,7 @@ nav a{font-size:10px}
 
 <section id="shop">
 <div class="title">
-<h2 id="shopTitle">FEATURED PRODUCTS</h2>
+<h2 id="shopTitle">ALL PRODUCTS</h2>
 <p>Select a product, choose your size and colour, then buy online</p>
 <button id="showAllBtn" class="btn" type="button" style="display:none;margin-top:8px">SHOW ALL PRODUCTS</button>
 </div>
@@ -249,7 +249,6 @@ if(Array.isArray(value))return value.map(String).map(x=>x.trim()).filter(Boolean
 return String(value).trim().split(/[\s,\/|]+/).filter(Boolean);
 }
 
-/* Reads Colour/Colours/Color/Colors from product data. */
 function getColours(p){
 let value=p.colours??p.colors??p.colour??p.color??"";
 if(Array.isArray(value))return [...new Set(value.map(String).map(x=>x.trim()).filter(Boolean))];
@@ -291,7 +290,7 @@ document.getElementById("shop").scrollIntoView({behavior:"auto"});
 function showAllProducts(){
 selectedCategory="";
 document.querySelectorAll(".cat").forEach(b=>b.classList.remove("active"));
-document.getElementById("shopTitle").textContent="FEATURED PRODUCTS";
+document.getElementById("shopTitle").textContent="ALL PRODUCTS";
 document.getElementById("showAllBtn").style.display="none";
 renderProducts();
 }
@@ -310,11 +309,13 @@ ${a.length>1?`<div class="gallery-thumbs">${a.map((s,i)=>`<img src="${escapeHTML
 
 function renderProducts(){
 const el=document.getElementById("products");
+
+/* CHANGE: show all products when no category is selected. */
 let list=selectedCategory
 ?(selectedCategory.toLowerCase()==="featured"
 ?products.filter(p=>p.featured===true)
 :products.filter(p=>String(p.category||"").trim().toLowerCase()===selectedCategory.toLowerCase()))
-:products.filter(p=>p.featured===true);
+:products;
 
 if(!list.length){
 el.innerHTML='<div class="empty">No products available yet.</div>';
@@ -399,7 +400,6 @@ colour=document.getElementById("colour-"+id)?.value||"";
 if(!colour)return alert("Please select a colour first.");
 }
 
-/* Keep one cart entry per product, size and colour combination. */
 const existing=cart.find(i=>
 Number(i.id)===Number(id)&&
 String(i.size||"")===size&&
@@ -427,10 +427,7 @@ String(i.colour||"")===String(colour||"")
 if(!item)return;
 
 item.qty=Number(item.qty||0)+d;
-
-if(item.qty<=0){
-cart=cart.filter(i=>i!==item);
-}
+if(item.qty<=0)cart=cart.filter(i=>i!==item);
 
 save();
 renderCart();
