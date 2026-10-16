@@ -217,13 +217,7 @@ async function loadProducts(){try{const r=await fetch("/api/products",{cache:"no
 function normalizeCategory(value){const s=String(value||"").trim().toLowerCase().replace(/[-_]/g," ").replace(/\s+/g," ");const aliases={"t shirt":"t shirts","t-shirts":"t shirts","t shirts":"t shirts","sports t shirt":"sports t shirts","sports t-shirts":"sports t shirts","sports t shirts":"sports t shirts","trouser":"trousers","short":"shorts"};return aliases[s]||s;}
 function showCategory(c){selectedCategory=c;document.querySelectorAll(".cat").forEach(b=>b.classList.toggle("active",b.dataset.category===c));document.getElementById("shopTitle").textContent=c+" PRODUCTS";document.getElementById("showAllBtn").style.display="inline-block";renderProducts();document.getElementById("shop").scrollIntoView({behavior:"auto"});}
 function showAllProducts(){selectedCategory="";document.querySelectorAll(".cat").forEach(b=>b.classList.remove("active"));document.getElementById("shopTitle").textContent="ALL PRODUCTS";document.getElementById("showAllBtn").style.display="none";renderProducts();document.getElementById("shop").scrollIntoView({behavior:"auto"});}
-function galleryHTML(p){const a=getProductImages(p);if(!a.length)return '<div class="gallery-main">
-<span class="muted">No image</span>
-</div>';return `<div class="gallery">
-<div class="gallery-main" data-gallery-id="${Number(p.id)}" data-image-index="0">
-<img class="product-main-image" src="${escapeHTML(a[0])}" alt="${escapeHTML(p.name||"Product")}" loading="lazy" decoding="async">
-<span class="gallery-count">${a.length} photo${a.length>1?"s":""}</span>
-</div>${a.length>1?`<div class="gallery-thumbs">${a.map((s,i)=>`<img src="${escapeHTML(s)}" alt="" loading="lazy" class="${i===0?"active":""}" data-gallery-thumb="${Number(p.id)}" data-index="${i}">`).join("")}</div>`:""}</div>`;}
+function galleryHTML(p){const a=getProductImages(p);if(!a.length)return '<div class="gallery-main"><span class="muted">No image</span></div>';return `<div class="gallery"><div class="gallery-main" data-gallery-id="${Number(p.id)}" data-image-index="0"><img class="product-main-image" src="${escapeHTML(a[0])}" alt="${escapeHTML(p.name||"Product")}" loading="lazy" decoding="async"><span class="gallery-count">${a.length} photo${a.length>1?"s":""}</span></div>${a.length>1?`<div class="gallery-thumbs">${a.map((s,i)=>`<img src="${escapeHTML(s)}" alt="" loading="lazy" class="${i===0?"active":""}" data-gallery-thumb="${Number(p.id)}" data-index="${i}">`).join("")}</div>`:""}</div>`;}
 function renderProducts(){
 const el=document.getElementById("products");
 let list;
@@ -244,9 +238,7 @@ el.innerHTML=list.map(p=>{const id=Number(p.id);const sizes=getSizes(p);const co
 <label for="colour-${id}" style="margin:10px 0 6px">Select Colour</label>
 <select class="colour-select" id="colour-${id}">
 <option value="">Choose Colour</option>${colours.map(x=>`<option value="${escapeHTML(x)}">${escapeHTML(x)}</option>`).join("")}</select>
-</div>`:""}<div class="price">₹${getDisplayPrice(p).toLocaleString("en-IN")}</div>${soldOut?'<div class="muted">
-<b>OUT OF STOCK</b>
-</div>':""}<button class="btn" type="button" ${soldOut?"disabled":""} onclick="buyNow(${id})">${soldOut?"OUT OF STOCK":"BUY NOW"}</button>
+</div>`:""}<div class="price">₹${getDisplayPrice(p).toLocaleString("en-IN")}</div>${soldOut?'<div class="muted"><b>OUT OF STOCK</b></div>':""}<button class="btn" type="button" ${soldOut?"disabled":""} onclick="buyNow(${id})">${soldOut?"OUT OF STOCK":"BUY NOW"}</button>
 </div>
 </div>`;}).join("");
 attachGalleryEvents();}
@@ -262,11 +254,7 @@ function renderCart(){const el=document.getElementById("cartItems");let pt=0;con
 <button type="button" aria-label="Decrease quantity" onclick='change(${Number(i.id)},-1,${JSON.stringify(size)},${JSON.stringify(colour)})'>−</button>${qty}<button type="button" aria-label="Increase quantity" onclick='change(${Number(i.id)},1,${JSON.stringify(size)},${JSON.stringify(colour)})'>+</button>
 </span>
 </div>`;}).join("");document.getElementById("productTotal").textContent="₹"+pt.toLocaleString("en-IN");document.getElementById("total").textContent="₹"+(pt+SHIPPING_CHARGE).toLocaleString("en-IN");}
-async function findCustomerOrder(){const m=document.getElementById("customerMobile");const msg=document.getElementById("ordersMessage");const list=document.getElementById("ordersList");const mobile=String(m.value||"").replace(/\D/g,"").slice(-10);if(mobile.length!==10){msg.style.display="block";msg.innerHTML="<b>Please enter a valid 10-digit mobile number.</b>";list.innerHTML="";return;}msg.style.display="block";msg.textContent="Loading your orders...";list.innerHTML="";try{const r=await fetch("/api/customer-orders?mobile="+encodeURIComponent(mobile),{cache:"no-store"});const d=await r.json();if(!r.ok)throw Error(d.error||"Unable to find orders");const orders=Array.isArray(d.orders)?d.orders:[];if(!orders.length){msg.innerHTML="<b>No orders found.</b>
-<br>
-<br>Please check the same mobile number used while placing the order.";return;}msg.style.display="none";list.innerHTML=orders.map(orderHTML).join("");}catch(e){msg.innerHTML="<b>Unable to find orders.</b>
-<br>
-<br>"+escapeHTML(e.message||"Please try again.");}}
+async function findCustomerOrder(){const m=document.getElementById("customerMobile");const msg=document.getElementById("ordersMessage");const list=document.getElementById("ordersList");const mobile=String(m.value||"").replace(/\D/g,"").slice(-10);if(mobile.length!==10){msg.style.display="block";msg.innerHTML="<b>Please enter a valid 10-digit mobile number.</b>";list.innerHTML="";return;}msg.style.display="block";msg.textContent="Loading your orders...";list.innerHTML="";try{const r=await fetch("/api/customer-orders?mobile="+encodeURIComponent(mobile),{cache:"no-store"});const d=await r.json();if(!r.ok)throw Error(d.error||"Unable to find orders");const orders=Array.isArray(d.orders)?d.orders:[];if(!orders.length){msg.innerHTML="<b>No orders found.</b><br><br>Please check the same mobile number used while placing the order.";return;}msg.style.display="none";list.innerHTML=orders.map(orderHTML).join("");}catch(e){msg.innerHTML="<b>Unable to find orders.</b><br><br>"+escapeHTML(e.message||"Please try again.");}}
 function orderHTML(o){const id=String(o.id||"");const created=o.createdAt?new Date(o.createdAt).toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"}):"";const items=Array.isArray(o.items)?o.items:[];const has=!!(o.shiprocketShipmentId||o.awb);const safeId=escapeHTML(id);return `<div class="order-card">
 <div class="order-top">
 <div>
