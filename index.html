@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,116 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JOYTI | SNIPER PREMIUM WEAR</title>
 <meta name="description" content="JOYTI - SNIPER PREMIUM WEAR online store. Premium fashion and army-inspired wear.">
-
 <style>
 :root{--olive:#596442;--dark:#11140f;--light:#f5f3e9;--accent:#9aa66d;--border:#dedccc}
-*{box-sizing:border-box}
-html{scroll-behavior:auto}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--light);color:#171a14;overflow-x:hidden}
-img{max-width:100%}
-button,input,textarea,select{font:inherit}
-header{position:sticky;top:0;z-index:100;background:#11140f;color:#fff;padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.logo{font-weight:900;letter-spacing:2px}
-.logo small{display:block;color:#aeb98a;font-size:10px;margin-top:3px}
-nav{display:flex;gap:18px}
-nav a{color:#fff;text-decoration:none;font-weight:700;font-size:14px}
-.orders-nav{background:var(--accent);color:#111!important;padding:8px 10px;border-radius:6px}
-.hero{min-height:430px;padding:70px 7%;display:flex;align-items:center;background:linear-gradient(90deg,rgba(17,20,15,.96),rgba(17,20,15,.58)),url('https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1400&q=60') center/cover;color:#fff}
-.hero h1{font-size:clamp(38px,7vw,76px);margin:0 0 15px;line-height:.95}
-.hero p{font-size:17px;color:#e4e1cf;max-width:650px}
-.btn{display:inline-block;border:0;background:var(--accent);color:#111;padding:13px 20px;font-weight:900;border-radius:6px;text-decoration:none;cursor:pointer}
-.btn:disabled{opacity:.55;cursor:not-allowed}
-section{padding:45px 6%;max-width:1250px;margin:auto}
-.title{text-align:center;margin-bottom:28px}
-.title h2{margin:0;font-size:30px}
-.title p{color:#666}
-.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.cat{border:0;min-height:130px;padding:25px;border-radius:10px;background:linear-gradient(135deg,#24291e,#596442);color:#fff;display:flex;flex-direction:column;justify-content:end;text-align:left;cursor:pointer}
-.cat b{font-size:22px}
-.cat span{opacity:.8;margin-top:5px}
-.cat.active{outline:3px solid var(--accent)}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-.product{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.06)}
-.product-main-image{width:100%;height:280px;object-fit:contain;display:block;background:#f0f0eb}
-.product .info{padding:16px}
-.product h3{margin:0 0 7px;font-size:20px}
-.price{font-size:20px;font-weight:900;margin:10px 0}
-.muted{color:#6b6d63;font-size:13px;line-height:1.45}
-.details{margin-top:10px;font-size:14px}
-.product button{width:100%;margin-top:8px}
-.size-select,.colour-select,input,textarea,select{width:100%;padding:12px;border:1px solid #bbb;border-radius:6px;background:#fff}
-#checkout{display:none}
-.checkout{max-width:650px;background:#fff;padding:25px;border-radius:12px;border:1px solid #ddd;margin:auto}
-label{display:block;font-weight:700;margin:13px 0 6px}
-textarea{min-height:90px;resize:vertical}
-.pay{display:flex;gap:20px;margin:12px 0;flex-wrap:wrap}
-.pay label{font-weight:500;margin:0}
-.pay input{width:auto}
-.cart{background:#171a14;color:#fff;padding:18px;border-radius:10px;margin-bottom:20px}
-.cart h3{margin-top:0}
-.cart-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #3d4236}
-.qty{display:flex;align-items:center;gap:7px;flex-shrink:0}
-.qty button{padding:4px 10px;border:0;border-radius:5px;cursor:pointer}
-.summary{margin-top:15px}
-.summary-row{display:flex;justify-content:space-between;padding:7px 0}
-.summary-total{border-top:1px solid #555;margin-top:8px;padding-top:12px;font-size:19px}
-.empty{background:#fff;border:1px solid #ddd;padding:25px;text-align:center;border-radius:10px;color:#666}
-.gallery{background:#fff}
-.gallery-main{width:100%;height:280px;position:relative;overflow:hidden;background:#f0f0eb;display:flex;align-items:center;justify-content:center;cursor:zoom-in}
-.gallery-main img{width:100%;height:100%;object-fit:contain}
-.gallery-thumbs{display:flex;gap:6px;padding:7px;overflow-x:auto}
-.gallery-thumbs img{width:54px;height:54px;object-fit:cover;border-radius:5px;border:2px solid transparent;flex:0 0 auto;cursor:pointer}
-.gallery-thumbs img.active{border-color:var(--olive)}
-.gallery-count{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.65);color:#fff;padding:5px 9px;border-radius:20px;font-size:12px}
-.image-modal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.96);align-items:center;justify-content:center;touch-action:none}
-.image-modal.show{display:flex}
-.modal-image-wrap{width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.modal-image{max-width:92vw;max-height:84vh;object-fit:contain}
-.modal-close,.modal-left,.modal-right{position:absolute;z-index:5;border:0;border-radius:50%;background:#fff;color:#111;cursor:pointer}
-.modal-close{top:15px;right:15px;width:44px;height:44px;font-size:28px}
-.modal-left,.modal-right{top:50%;transform:translateY(-50%);width:48px;height:48px;font-size:30px}
-.modal-left{left:12px}
-.modal-right{right:12px}
-.zoom-controls{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
-.zoom-controls button{width:45px;height:45px;border:0;border-radius:8px;background:#fff;font-size:20px;font-weight:900}
-.orders-box{max-width:850px;margin:auto}
-.order-card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:18px;margin-bottom:15px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
-.order-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;border-bottom:1px solid #eee;padding-bottom:12px}
-.order-id{font-weight:900;word-break:break-all}
-.order-status{background:#e7ecd7;color:#303820;padding:6px 9px;border-radius:20px;font-size:12px;font-weight:900}
-.order-item{padding:8px 0;border-bottom:1px solid #eee}
-.order-meta{color:#666;font-size:13px;line-height:1.6}
-.order-total{font-size:20px;font-weight:900;margin:12px 0}
-.track-result{background:#f5f3e9;border:1px solid #ddd;border-radius:8px;padding:12px;margin-top:12px;font-size:13px;line-height:1.6}
-.track-result b{color:#303820}
-footer{background:#11140f;color:#d9dccb;padding:30px 6%;text-align:center;margin-top:30px}
-@media(max-width:800px){
-.categories{grid-template-columns:repeat(2,1fr)}
-.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.product-main-image,.gallery-main{height:230px}
-.hero{min-height:360px;padding:55px 6%}
-section{padding:35px 5%}
-}
-@media(max-width:520px){
-header{padding:12px 4%;gap:8px}
-nav{gap:6px;flex-wrap:wrap;justify-content:flex-end}
-nav a{font-size:10px}
-.logo{font-size:12px;letter-spacing:1px}
-.logo small{font-size:9px;letter-spacing:0}
-.categories{gap:9px}
-.cat{min-height:105px;padding:16px}
-.cat b{font-size:18px}
-.products{grid-template-columns:1fr}
-.product-main-image,.gallery-main{height:300px}
-.order-top{flex-direction:column}
-.checkout{padding:16px}
-}
+*{box-sizing:border-box}html{scroll-behavior:auto}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--light);color:#171a14;overflow-x:hidden}img{max-width:100%}button,input,textarea,select{font:inherit}
+header{position:sticky;top:0;z-index:100;background:#11140f;color:#fff;padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:20px}.logo{font-weight:900;letter-spacing:2px}.logo small{display:block;color:#aeb98a;font-size:10px;margin-top:3px}nav{display:flex;gap:18px}nav a{color:#fff;text-decoration:none;font-weight:700;font-size:14px}.orders-nav{background:var(--accent);color:#111!important;padding:8px 10px;border-radius:6px}
+.hero{min-height:430px;padding:70px 7%;display:flex;align-items:center;background:linear-gradient(90deg,rgba(17,20,15,.96),rgba(17,20,15,.58)),url('https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1400&q=60') center/cover;color:#fff}.hero h1{font-size:clamp(38px,7vw,76px);margin:0 0 15px;line-height:.95}.hero p{font-size:17px;color:#e4e1cf;max-width:650px}.btn{display:inline-block;border:0;background:var(--accent);color:#111;padding:13px 20px;font-weight:900;border-radius:6px;text-decoration:none;cursor:pointer}.btn:disabled{opacity:.55;cursor:not-allowed}
+section{padding:45px 6%;max-width:1250px;margin:auto}.title{text-align:center;margin-bottom:28px}.title h2{margin:0;font-size:30px}.title p{color:#666}.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.cat{border:0;min-height:130px;padding:25px;border-radius:10px;background:linear-gradient(135deg,#24291e,#596442);color:#fff;display:flex;flex-direction:column;justify-content:end;text-align:left;cursor:pointer}.cat b{font-size:22px}.cat span{opacity:.8;margin-top:5px}.cat.active{outline:3px solid var(--accent)}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}.product{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.06)}.product-main-image{width:100%;height:280px;object-fit:contain;display:block;background:#f0f0eb}.product .info{padding:16px}.product h3{margin:0 0 7px;font-size:20px}.price{font-size:20px;font-weight:900;margin:10px 0}.muted{color:#6b6d63;font-size:13px;line-height:1.45}.details{margin-top:10px;font-size:14px}.product button{width:100%;margin-top:8px}.size-select,.colour-select,input,textarea,select{width:100%;padding:12px;border:1px solid #bbb;border-radius:6px;background:#fff}
+#checkout{display:none}.checkout{max-width:650px;background:#fff;padding:25px;border-radius:12px;border:1px solid #ddd;margin:auto}label{display:block;font-weight:700;margin:13px 0 6px}textarea{min-height:90px;resize:vertical}.pay{display:flex;gap:20px;margin:12px 0;flex-wrap:wrap}.pay label{font-weight:500;margin:0}.pay input{width:auto}
+.cart{background:#171a14;color:#fff;padding:18px;border-radius:10px;margin-bottom:20px}.cart h3{margin-top:0}.cart-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #3d4236}.qty{display:flex;align-items:center;gap:7px;flex-shrink:0}.qty button{padding:4px 10px;border:0;border-radius:5px;cursor:pointer}.summary{margin-top:15px}.summary-row{display:flex;justify-content:space-between;padding:7px 0}.summary-total{border-top:1px solid #555;margin-top:8px;padding-top:12px;font-size:19px}.empty{background:#fff;border:1px solid #ddd;padding:25px;text-align:center;border-radius:10px;color:#666}
+.gallery{background:#fff}.gallery-main{width:100%;height:280px;position:relative;overflow:hidden;background:#f0f0eb;display:flex;align-items:center;justify-content:center;cursor:zoom-in}.gallery-main img{width:100%;height:100%;object-fit:contain}.gallery-thumbs{display:flex;gap:6px;padding:7px;overflow-x:auto}.gallery-thumbs img{width:54px;height:54px;object-fit:cover;border-radius:5px;border:2px solid transparent;flex:0 0 auto;cursor:pointer}.gallery-thumbs img.active{border-color:var(--olive)}.gallery-count{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.65);color:#fff;padding:5px 9px;border-radius:20px;font-size:12px}
+.image-modal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.96);align-items:center;justify-content:center;touch-action:none}.image-modal.show{display:flex}.modal-image-wrap{width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden}.modal-image{max-width:92vw;max-height:84vh;object-fit:contain}.modal-close,.modal-left,.modal-right{position:absolute;z-index:5;border:0;border-radius:50%;background:#fff;color:#111;cursor:pointer}.modal-close{top:15px;right:15px;width:44px;height:44px;font-size:28px}.modal-left,.modal-right{top:50%;transform:translateY(-50%);width:48px;height:48px;font-size:30px}.modal-left{left:12px}.modal-right{right:12px}.zoom-controls{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:8px}.zoom-controls button{width:45px;height:45px;border:0;border-radius:8px;background:#fff;font-size:20px;font-weight:900}
+.orders-box{max-width:850px;margin:auto}.order-card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:18px;margin-bottom:15px;box-shadow:0 4px 12px rgba(0,0,0,.05)}.order-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;border-bottom:1px solid #eee;padding-bottom:12px}.order-id{font-weight:900;word-break:break-all}.order-status{background:#e7ecd7;color:#303820;padding:6px 9px;border-radius:20px;font-size:12px;font-weight:900}.order-item{padding:8px 0;border-bottom:1px solid #eee}.order-meta{color:#666;font-size:13px;line-height:1.6}.order-total{font-size:20px;font-weight:900;margin:12px 0}.track-result{background:#f5f3e9;border:1px solid #ddd;border-radius:8px;padding:12px;margin-top:12px;font-size:13px;line-height:1.6}footer{background:#11140f;color:#d9dccb;padding:30px 6%;text-align:center;margin-top:30px}
+@media(max-width:800px){.categories{grid-template-columns:repeat(2,1fr)}.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.product-main-image,.gallery-main{height:230px}.hero{min-height:360px;padding:55px 6%}section{padding:35px 5%}}
+@media(max-width:520px){header{padding:12px 4%;gap:8px}nav{gap:6px;flex-wrap:wrap;justify-content:flex-end}nav a{font-size:10px}.logo{font-size:12px;letter-spacing:1px}.logo small{font-size:9px;letter-spacing:0}.categories{gap:9px}.cat{min-height:105px;padding:16px}.cat b{font-size:18px}.products{grid-template-columns:1fr}.product-main-image,.gallery-main{height:300px}.order-top{flex-direction:column}.checkout{padding:16px}}
 </style>
 </head>
-
 <body>
 <header>
-<div class="logo">JOYTI • SNIPER PREMIUM WEAR<small>PREMIUM WEAR • BUILT FOR YOUR STYLE</small></div>
+<div class="logo">JOYTI • SNIPER PREMIUM WEAR<small>PREMIUM WEAR • BUILT FOR YOUR STYLE</small>
+</div>
 <nav>
 <a href="#home">HOME</a>
 <a href="#shop">SHOP</a>
@@ -123,7 +32,6 @@ nav a{font-size:10px}
 <a href="#orders" class="orders-nav">MY ORDERS</a>
 </nav>
 </header>
-
 <main>
 <section class="hero" id="home">
 <div>
@@ -132,30 +40,92 @@ nav a{font-size:10px}
 <a class="btn" href="#shop">SHOP NOW</a>
 </div>
 </section>
-
 <section>
-<div class="title"><h2>SHOP BY CATEGORY</h2><p>Choose your style</p></div>
+<div class="title">
+<h2>SHOP BY CATEGORY</h2>
+<p>Choose your style</p>
+</div>
 <div class="categories">
-<button class="cat" data-category="T-Shirts"><b>T-Shirts</b><span>Premium everyday wear</span></button>
-<button class="cat" data-category="Sports T-Shirts"><b>Sports T-Shirts</b><span>Active and athletic style</span></button>
-<button class="cat" data-category="Featured"><b>Featured</b><span>Selected premium picks</span></button>
-<button class="cat" data-category="Trousers"><b>Trousers</b><span>Comfort & utility style</span></button>
-<button class="cat" data-category="Shorts"><b>Shorts</b><span>Easy casual fit</span></button>
-<button class="cat" data-category="Footwear"><b>Footwear</b><span>Complete the look</span></button>
+<button class="cat" data-category="T-Shirts">
+<b>T-Shirts</b>
+<span>Premium everyday wear</span>
+</button>
+<button class="cat" data-category="Sports T-Shirts">
+<b>Sports T-Shirts</b>
+<span>Active and athletic style</span>
+</button>
+<button class="cat" data-category="Featured">
+<b>Featured</b>
+<span>Selected premium picks</span>
+</button>
+<button class="cat" data-category="Trousers">
+<b>Trousers</b>
+<span>Comfort & utility style</span>
+</button>
+<button class="cat" data-category="Shorts">
+<b>Shorts</b>
+<span>Easy casual fit</span>
+</button>
+<button class="cat" data-category="Footwear">
+<b>Footwear</b>
+<span>Complete the look</span>
+</button>
+<button class="cat" data-category="Tactical Caps">
+<b>Tactical Caps</b>
+<span>Caps for every style</span>
+</button>
+<button class="cat" data-category="Outdoor Accessories">
+<b>Outdoor Accessories</b>
+<span>Utility and everyday gear</span>
+</button>
+<button class="cat" data-category="Army T-Shirts">
+<b>Army T-Shirts</b>
+<span>Army-inspired prints</span>
+</button>
+<button class="cat" data-category="Cargo & Tactical Pants">
+<b>Cargo &amp; Tactical Pants</b>
+<span>Utility and tactical fit</span>
+</button>
+<button class="cat" data-category="Tactical Shirts">
+<b>Tactical Shirts</b>
+<span>Rugged everyday style</span>
+</button>
+<button class="cat" data-category="Accessories">
+<b>Accessories</b>
+<span>Complete your look</span>
+</button>
+<button class="cat" data-category="Hoodies & Jackets">
+<b>Hoodies &amp; Jackets</b>
+<span>Layer up in style</span>
+</button>
+<button class="cat" data-category="Track Pants">
+<b>Track Pants</b>
+<span>Comfort and movement</span>
+</button>
+<button class="cat" data-category="New Arrivals">
+<b>New Arrivals</b>
+<span>Fresh additions</span>
+</button>
+<button class="cat" data-category="Best Sellers">
+<b>Best Sellers</b>
+<span>Popular picks</span>
+</button>
 </div>
 </section>
-
 <section id="shop">
 <div class="title">
 <h2 id="shopTitle">ALL PRODUCTS</h2>
 <p>Select a product, choose your size and colour, then buy online</p>
 <button id="showAllBtn" class="btn" type="button" style="display:none;margin-top:8px">SHOW ALL PRODUCTS</button>
 </div>
-<div class="products" id="products"></div>
+<div class="products" id="products">
+</div>
 </section>
-
 <section id="orders">
-<div class="title"><h2>MY ORDERS</h2><p>Check all your orders using your Mobile Number</p></div>
+<div class="title">
+<h2>MY ORDERS</h2>
+<p>Check all your orders using your Mobile Number</p>
+</div>
 <div class="orders-box">
 <div class="order-card">
 <label for="customerMobile">Mobile Number</label>
@@ -163,47 +133,63 @@ nav a{font-size:10px}
 <button class="btn" type="button" onclick="findCustomerOrder()">VIEW MY ORDERS</button>
 <div id="ordersMessage" class="empty" style="margin-top:15px">Enter your mobile number to see your orders.</div>
 </div>
-<div id="ordersList"></div>
+<div id="ordersList">
+</div>
 </div>
 </section>
-
 <section id="checkout">
-<div class="title"><h2>CHECKOUT</h2><p>Enter delivery details and place your order</p></div>
+<div class="title">
+<h2>CHECKOUT</h2>
+<p>Enter delivery details and place your order</p>
+</div>
 <div class="checkout">
 <div class="cart">
 <h3>Your Cart</h3>
-<div id="cartItems"></div>
+<div id="cartItems">
+</div>
 <div class="summary">
-<div class="summary-row"><span>Product Price</span><strong id="productTotal">₹0</strong></div>
-<div class="summary-row"><span>Shipping Charge</span><strong>₹0 (Free Shipping)</strong></div>
-<div class="summary-row summary-total"><span>Grand Total</span><strong id="total">₹0</strong></div>
+<div class="summary-row">
+<span>Product Price</span>
+<strong id="productTotal">₹0</strong>
+</div>
+<div class="summary-row">
+<span>Shipping Charge</span>
+<strong>₹0 (Free Shipping)</strong>
+</div>
+<div class="summary-row summary-total">
+<span>Grand Total</span>
+<strong id="total">₹0</strong>
 </div>
 </div>
-
+</div>
 <form id="orderForm">
 <label for="customerName">Full Name</label>
 <input id="customerName" required name="name" autocomplete="name">
 <label for="orderMobile">Mobile Number</label>
 <input id="orderMobile" required name="mobile" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" autocomplete="tel">
 <label for="orderAddress">Full Address</label>
-<textarea id="orderAddress" required name="address" autocomplete="street-address"></textarea>
+<textarea id="orderAddress" required name="address" autocomplete="street-address">
+</textarea>
 <label for="orderPin">PIN Code</label>
 <input id="orderPin" required name="pin" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="postal-code">
 <label>Payment Method</label>
-<div class="pay"><label><input type="radio" name="payment" value="ONLINE" checked required> Online Payment (Razorpay)</label></div>
-<button class="btn" type="submit">BUY NOW & PAY</button>
+<div class="pay">
+<label>
+<input type="radio" name="payment" value="ONLINE" checked required> Online Payment (Razorpay)</label>
+</div>
+<button class="btn" type="submit">BUY NOW &amp; PAY</button>
 </form>
 <p class="muted" style="margin-top:16px">Secure online payment powered by Razorpay.</p>
 </div>
 </section>
 </main>
-
 <footer>© 2026 JOYTI • SNIPER PREMIUM WEAR • PREMIUM FASHION STORE</footer>
-
 <div class="image-modal" id="imageModal">
 <button class="modal-close" id="modalClose" type="button">×</button>
 <button class="modal-left" id="modalLeft" type="button">‹</button>
-<div class="modal-image-wrap"><img id="modalImage" class="modal-image" alt="Product image"></div>
+<div class="modal-image-wrap">
+<img id="modalImage" class="modal-image" alt="Product image">
+</div>
 <button class="modal-right" id="modalRight" type="button">›</button>
 <div class="zoom-controls">
 <button id="zoomOut" type="button">−</button>
@@ -211,589 +197,109 @@ nav a{font-size:10px}
 <button id="zoomIn" type="button">+</button>
 </div>
 </div>
-
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
+<script src="https://checkout.razorpay.com/v1/checkout.js">
+</script>
 <script>
 "use strict";
-
 let products=[];
 const SHIPPING_CHARGE=0;
-let cart=JSON.parse(localStorage.getItem("sniperCart")||"[]");
+let cart=[];
+try{cart=JSON.parse(localStorage.getItem("sniperCart")||"[]");if(!Array.isArray(cart))cart=[];}catch(e){cart=[];}
 let selectedCategory="";
-
-function save(){
-localStorage.setItem("sniperCart",JSON.stringify(cart));
-}
-
-function saveCustomerToken(t){
-if(t)localStorage.setItem("sniperCustomerAccessToken",String(t));
-}
-
-/* Display price includes an extra ₹50 per product unit. */
-function getDisplayPrice(p){
-return Math.max(0,Number(p&&p.price||0))+50;
-}
-
-function getProductImages(p){
-let a=[];
-if(Array.isArray(p.images))a=a.concat(p.images.filter(Boolean));
-if(Array.isArray(p.photos))a=a.concat(p.photos.filter(Boolean));
-if(p.img)a.unshift(p.img);
-return [...new Set(a.map(x=>String(x).trim()).filter(Boolean))].slice(0,5);
-}
-
-function getSizes(p){
-const value=p.sizes??p.size??"";
-if(Array.isArray(value))return value.map(String).map(x=>x.trim()).filter(Boolean);
-return String(value).trim().split(/[\s,\/|]+/).filter(Boolean);
-}
-
-function getColours(p){
-let value=p.colours??p.colors??p.colour??p.color??"";
-if(Array.isArray(value))return [...new Set(value.map(String).map(x=>x.trim()).filter(Boolean))];
-return [...new Set(String(value).split(/[,\/|\n]+/).map(x=>x.trim()).filter(Boolean))];
-}
-
-function escapeHTML(v){
-return String(v??"")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-}
-
-async function loadProducts(){
-try{
-const r=await fetch("/api/products",{cache:"no-store"});
-if(!r.ok)throw Error("Could not load products");
-const d=await r.json();
-products=Array.isArray(d.products)?d.products:[];
-renderProducts();
-renderCart();
-}catch(e){
-console.error(e);
-document.getElementById("products").innerHTML='<div class="empty">Products are temporarily unavailable. Please check your products API.</div>';
-}
-}
-
-function showCategory(c){
-selectedCategory=c;
-document.querySelectorAll(".cat").forEach(b=>b.classList.toggle("active",b.dataset.category===c));
-document.getElementById("shopTitle").textContent=c+" PRODUCTS";
-document.getElementById("showAllBtn").style.display="inline-block";
-renderProducts();
-document.getElementById("shop").scrollIntoView({behavior:"auto"});
-}
-
-function showAllProducts(){
-selectedCategory="";
-document.querySelectorAll(".cat").forEach(b=>b.classList.remove("active"));
-document.getElementById("shopTitle").textContent="ALL PRODUCTS";
-document.getElementById("showAllBtn").style.display="none";
-renderProducts();
-}
-
-function galleryHTML(p){
-const a=getProductImages(p);
-if(!a.length)return '<div class="gallery-main"><span class="muted">No image</span></div>';
-return `<div class="gallery">
+function save(){localStorage.setItem("sniperCart",JSON.stringify(cart));}
+function saveCustomerToken(t){if(t)localStorage.setItem("sniperCustomerAccessToken",String(t));}
+function getDisplayPrice(p){return Math.max(0,Number(p&&p.price||0))+50;}
+function getProductImages(p){let a=[];if(Array.isArray(p.images))a=a.concat(p.images.filter(Boolean));if(Array.isArray(p.photos))a=a.concat(p.photos.filter(Boolean));if(p.img)a.unshift(p.img);return [...new Set(a.map(x=>String(x).trim()).filter(Boolean))].slice(0,5);}
+function getSizes(p){const value=p.sizes??p.size??"";if(Array.isArray(value))return value.map(String).map(x=>x.trim()).filter(Boolean);return String(value).trim().split(/[\s,\/|]+/).filter(Boolean);}
+function getColours(p){let value=p.colours??p.colors??p.colour??p.color??"";if(Array.isArray(value))return [...new Set(value.map(String).map(x=>x.trim()).filter(Boolean))];return [...new Set(String(value).split(/[,\/|\n]+/).map(x=>x.trim()).filter(Boolean))];}
+function escapeHTML(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
+async function loadProducts(){try{const r=await fetch("/api/products",{cache:"no-store"});if(!r.ok)throw Error("Could not load products");const d=await r.json();products=Array.isArray(d.products)?d.products:(Array.isArray(d)?d:[]);renderProducts();renderCart();}catch(e){console.error(e);document.getElementById("products").innerHTML='<div class="empty">Products are temporarily unavailable. Please check your products API.</div>';}}
+function normalizeCategory(value){const s=String(value||"").trim().toLowerCase().replace(/[-_]/g," ").replace(/\s+/g," ");const aliases={"t shirt":"t shirts","t-shirts":"t shirts","t shirts":"t shirts","sports t shirt":"sports t shirts","sports t-shirts":"sports t shirts","sports t shirts":"sports t shirts","trouser":"trousers","short":"shorts"};return aliases[s]||s;}
+function showCategory(c){selectedCategory=c;document.querySelectorAll(".cat").forEach(b=>b.classList.toggle("active",b.dataset.category===c));document.getElementById("shopTitle").textContent=c+" PRODUCTS";document.getElementById("showAllBtn").style.display="inline-block";renderProducts();document.getElementById("shop").scrollIntoView({behavior:"auto"});}
+function showAllProducts(){selectedCategory="";document.querySelectorAll(".cat").forEach(b=>b.classList.remove("active"));document.getElementById("shopTitle").textContent="ALL PRODUCTS";document.getElementById("showAllBtn").style.display="none";renderProducts();document.getElementById("shop").scrollIntoView({behavior:"auto"});}
+function galleryHTML(p){const a=getProductImages(p);if(!a.length)return '<div class="gallery-main">
+<span class="muted">No image</span>
+</div>';return `<div class="gallery">
 <div class="gallery-main" data-gallery-id="${Number(p.id)}" data-image-index="0">
 <img class="product-main-image" src="${escapeHTML(a[0])}" alt="${escapeHTML(p.name||"Product")}" loading="lazy" decoding="async">
 <span class="gallery-count">${a.length} photo${a.length>1?"s":""}</span>
-</div>
-${a.length>1?`<div class="gallery-thumbs">${a.map((s,i)=>`<img src="${escapeHTML(s)}" alt="" loading="lazy" class="${i===0?"active":""}" data-gallery-thumb="${Number(p.id)}" data-index="${i}">`).join("")}</div>`:""}
-</div>`;
-}
-
+</div>${a.length>1?`<div class="gallery-thumbs">${a.map((s,i)=>`<img src="${escapeHTML(s)}" alt="" loading="lazy" class="${i===0?"active":""}" data-gallery-thumb="${Number(p.id)}" data-index="${i}">`).join("")}</div>`:""}</div>`;}
 function renderProducts(){
 const el=document.getElementById("products");
-
-/* CHANGE: show all products when no category is selected. */
-let list=selectedCategory
-?(selectedCategory.toLowerCase()==="featured"
-?products.filter(p=>p.featured===true)
-:products.filter(p=>String(p.category||"").trim().toLowerCase()===selectedCategory.toLowerCase()))
-:products;
-
-if(!list.length){
-el.innerHTML='<div class="empty">No products available yet.</div>';
-return;
-}
-
-el.innerHTML=list.map(p=>{
-const id=Number(p.id);
-const sizes=getSizes(p);
-const colours=getColours(p);
-
-return `<div class="product" data-product-id="${id}">
-${galleryHTML(p)}
-<div class="info">
-<h3>${escapeHTML(p.name)}</h3>
-<div class="muted">${escapeHTML(p.description||"Premium quality")}</div>
-${p.fabric?`<div class="details"><b>Fabric:</b> ${escapeHTML(p.fabric)}</div>`:""}
-
-${sizes.length?`
-<div class="details">
+let list;
+if(!selectedCategory){list=products;}
+else if(selectedCategory.toLowerCase()==="featured"){list=products.filter(p=>p.featured===true||p.featured==="true"||p.featured===1);}
+else if(selectedCategory==="New Arrivals"){list=products.filter(p=>normalizeCategory(p.category)===normalizeCategory("New Arrivals")||p.newArrival===true||p.newArrival==="true"||p.isNew===true);}
+else if(selectedCategory==="Best Sellers"){list=products.filter(p=>normalizeCategory(p.category)===normalizeCategory("Best Sellers")||p.bestSeller===true||p.bestSeller==="true"||p.isBestSeller===true);}
+else{const wanted=normalizeCategory(selectedCategory);list=products.filter(p=>normalizeCategory(p.category)===wanted);}
+if(!list.length){el.innerHTML='<div class="empty">No products available in this category yet.</div>';return;}
+el.innerHTML=list.map(p=>{const id=Number(p.id);const sizes=getSizes(p);const colours=getColours(p);const soldOut=p.inStock===false||String(p.stockStatus||p.stock||"").toLowerCase().replace(/_/g," ")==="out of stock";return `<div class="product" data-product-id="${id}">${galleryHTML(p)}<div class="info">
+<h3>${escapeHTML(p.name||"Product")}</h3>
+<div class="muted">${escapeHTML(p.description||"Premium quality")}</div>${p.fabric?`<div class="details">
+<b>Fabric:</b> ${escapeHTML(p.fabric)}</div>`:""}${sizes.length?`<div class="details">
 <label for="size-${id}" style="margin:0 0 6px">Select Size</label>
 <select class="size-select" id="size-${id}">
-<option value="">Choose Size</option>
-${sizes.map(x=>`<option value="${escapeHTML(x)}">${escapeHTML(x)}</option>`).join("")}
-</select>
-</div>`:""}
-
-${colours.length?`
-<div class="details">
+<option value="">Choose Size</option>${sizes.map(x=>`<option value="${escapeHTML(x)}">${escapeHTML(x)}</option>`).join("")}</select>
+</div>`:""}${colours.length?`<div class="details">
 <label for="colour-${id}" style="margin:10px 0 6px">Select Colour</label>
 <select class="colour-select" id="colour-${id}">
-<option value="">Choose Colour</option>
-${colours.map(x=>`<option value="${escapeHTML(x)}">${escapeHTML(x)}</option>`).join("")}
-</select>
-</div>`:""}
-
-<div class="price">₹${getDisplayPrice(p).toLocaleString("en-IN")}</div>
-<button class="btn" type="button" onclick="buyNow(${id})">BUY NOW</button>
+<option value="">Choose Colour</option>${colours.map(x=>`<option value="${escapeHTML(x)}">${escapeHTML(x)}</option>`).join("")}</select>
+</div>`:""}<div class="price">₹${getDisplayPrice(p).toLocaleString("en-IN")}</div>${soldOut?'<div class="muted">
+<b>OUT OF STOCK</b>
+</div>':""}<button class="btn" type="button" ${soldOut?"disabled":""} onclick="buyNow(${id})">${soldOut?"OUT OF STOCK":"BUY NOW"}</button>
 </div>
-</div>`;
-}).join("");
-
-attachGalleryEvents();
-}
-
-function attachGalleryEvents(){
-document.querySelectorAll(".gallery-main[data-gallery-id]").forEach(x=>{
-x.onclick=()=>openProductGallery(Number(x.dataset.galleryId),Number(x.dataset.imageIndex||0));
-});
-document.querySelectorAll("[data-gallery-thumb]").forEach(x=>{
-x.onclick=()=>changeCardImage(Number(x.dataset.galleryThumb),Number(x.dataset.index));
-});
-}
-
-function changeCardImage(id,i){
-const p=products.find(x=>Number(x.id)===id);
-if(!p)return;
-const a=getProductImages(p);
-const card=document.querySelector(`[data-product-id="${id}"]`);
-if(!a[i]||!card)return;
-card.querySelector(".gallery-main img").src=a[i];
-card.querySelector(".gallery-main").dataset.imageIndex=i;
-card.querySelectorAll("[data-gallery-thumb]").forEach((x,n)=>x.classList.toggle("active",n===i));
-}
-
-function buyNow(id){
-const p=products.find(x=>Number(x.id)===Number(id));
-if(!p)return;
-
-const sizes=getSizes(p);
-const colours=getColours(p);
-let size="";
-let colour="";
-
-if(sizes.length){
-size=document.getElementById("size-"+id)?.value||"";
-if(!size)return alert("Please select a size first.");
-}
-
-if(colours.length){
-colour=document.getElementById("colour-"+id)?.value||"";
-if(!colour)return alert("Please select a colour first.");
-}
-
-const existing=cart.find(i=>
-Number(i.id)===Number(id)&&
-String(i.size||"")===size&&
-String(i.colour||"")===colour
-);
-
-if(existing){
-existing.qty=Number(existing.qty||0)+1;
-}else{
-cart.push({id:Number(id),qty:1,size,colour});
-}
-
-save();
-renderCart();
-document.getElementById("checkout").style.display="block";
-location.hash="checkout";
-}
-
-function change(id,d,size="",colour=""){
-const item=cart.find(i=>
-Number(i.id)===Number(id)&&
-String(i.size||"")===String(size||"")&&
-String(i.colour||"")===String(colour||"")
-);
-if(!item)return;
-
-item.qty=Number(item.qty||0)+d;
-if(item.qty<=0)cart=cart.filter(i=>i!==item);
-
-save();
-renderCart();
-}
-
-function renderCart(){
-const el=document.getElementById("cartItems");
-let pt=0;
-const validItems=cart.filter(i=>products.some(p=>Number(p.id)===Number(i.id)));
-
-if(validItems.length!==cart.length){
-cart=validItems;
-save();
-}
-
-if(!cart.length){
-el.innerHTML="<p>Your cart is empty.</p>";
-document.getElementById("productTotal").textContent="₹0";
-document.getElementById("total").textContent="₹0";
-return;
-}
-
-el.innerHTML=cart.map(i=>{
-const p=products.find(x=>Number(x.id)===Number(i.id));
-if(!p)return "";
-
-const price=getDisplayPrice(p);
-const qty=Math.max(1,Number(i.qty||1));
-pt+=price*qty;
-
-const size=String(i.size||"");
-const colour=String(i.colour||"");
-
-return `<div class="cart-row">
+</div>`;}).join("");
+attachGalleryEvents();}
+function attachGalleryEvents(){document.querySelectorAll(".gallery-main[data-gallery-id]").forEach(x=>{x.onclick=()=>openProductGallery(Number(x.dataset.galleryId),Number(x.dataset.imageIndex||0));});document.querySelectorAll("[data-gallery-thumb]").forEach(x=>{x.onclick=()=>changeCardImage(Number(x.dataset.galleryThumb),Number(x.dataset.index));});}
+function changeCardImage(id,i){const p=products.find(x=>Number(x.id)===id);if(!p)return;const a=getProductImages(p);const card=document.querySelector(`[data-product-id="${id}"]`);if(!a[i]||!card)return;card.querySelector(".gallery-main img").src=a[i];card.querySelector(".gallery-main").dataset.imageIndex=i;card.querySelectorAll("[data-gallery-thumb]").forEach((x,n)=>x.classList.toggle("active",n===i));}
+function buyNow(id){const p=products.find(x=>Number(x.id)===Number(id));if(!p)return;const sizes=getSizes(p);const colours=getColours(p);let size="",colour="";if(sizes.length){size=document.getElementById("size-"+id)?.value||"";if(!size)return alert("Please select a size first.");}if(colours.length){colour=document.getElementById("colour-"+id)?.value||"";if(!colour)return alert("Please select a colour first.");}const existing=cart.find(i=>Number(i.id)===Number(id)&&String(i.size||"")===size&&String(i.colour||"")===colour);if(existing)existing.qty=Number(existing.qty||0)+1;else cart.push({id:Number(id),qty:1,size,colour});save();renderCart();document.getElementById("checkout").style.display="block";location.hash="checkout";}
+function change(id,d,size="",colour=""){const item=cart.find(i=>Number(i.id)===Number(id)&&String(i.size||"")===String(size||"")&&String(i.colour||"")===String(colour||""));if(!item)return;item.qty=Number(item.qty||0)+d;if(item.qty<=0)cart=cart.filter(i=>i!==item);save();renderCart();}
+function renderCart(){const el=document.getElementById("cartItems");let pt=0;const validItems=cart.filter(i=>products.some(p=>Number(p.id)===Number(i.id)));if(validItems.length!==cart.length){cart=validItems;save();}if(!cart.length){el.innerHTML="<p>Your cart is empty.</p>";document.getElementById("productTotal").textContent="₹0";document.getElementById("total").textContent="₹0";return;}el.innerHTML=cart.map(i=>{const p=products.find(x=>Number(x.id)===Number(i.id));if(!p)return "";const price=getDisplayPrice(p);const qty=Math.max(1,Number(i.qty||1));pt+=price*qty;const size=String(i.size||"");const colour=String(i.colour||"");return `<div class="cart-row">
 <span>
-<b>${escapeHTML(p.name)}</b><br>
-₹${price.toLocaleString("en-IN")} × ${qty}
-${size?`<br>Size: ${escapeHTML(size)}`:""}
-${colour?`<br>Colour: ${escapeHTML(colour)}`:""}
-</span>
+<b>${escapeHTML(p.name)}</b>
+<br>₹${price.toLocaleString("en-IN")} × ${qty}${size?`<br>Size: ${escapeHTML(size)}`:""}${colour?`<br>Colour: ${escapeHTML(colour)}`:""}</span>
 <span class="qty">
-<button type="button" aria-label="Decrease quantity" onclick='change(${Number(i.id)},-1,${JSON.stringify(size)},${JSON.stringify(colour)})'>−</button>
-${qty}
-<button type="button" aria-label="Increase quantity" onclick='change(${Number(i.id)},1,${JSON.stringify(size)},${JSON.stringify(colour)})'>+</button>
+<button type="button" aria-label="Decrease quantity" onclick='change(${Number(i.id)},-1,${JSON.stringify(size)},${JSON.stringify(colour)})'>−</button>${qty}<button type="button" aria-label="Increase quantity" onclick='change(${Number(i.id)},1,${JSON.stringify(size)},${JSON.stringify(colour)})'>+</button>
 </span>
-</div>`;
-}).join("");
-
-document.getElementById("productTotal").textContent="₹"+pt.toLocaleString("en-IN");
-document.getElementById("total").textContent="₹"+(pt+SHIPPING_CHARGE).toLocaleString("en-IN");
-}
-
-/* MY ORDERS */
-async function findCustomerOrder(){
-const m=document.getElementById("customerMobile");
-const msg=document.getElementById("ordersMessage");
-const list=document.getElementById("ordersList");
-const mobile=String(m.value||"").replace(/\D/g,"").slice(-10);
-
-if(mobile.length!==10){
-msg.style.display="block";
-msg.innerHTML="<b>Please enter a valid 10-digit mobile number.</b>";
-list.innerHTML="";
-return;
-}
-
-msg.style.display="block";
-msg.textContent="Loading your orders...";
-list.innerHTML="";
-
-try{
-const r=await fetch("/api/customer-orders?mobile="+encodeURIComponent(mobile),{cache:"no-store"});
-const d=await r.json();
-if(!r.ok)throw Error(d.error||"Unable to find orders");
-
-const orders=Array.isArray(d.orders)?d.orders:[];
-if(!orders.length){
-msg.innerHTML="<b>No orders found.</b><br><br>Please check the same mobile number used while placing the order.";
-return;
-}
-
-msg.style.display="none";
-list.innerHTML=orders.map(orderHTML).join("");
-}catch(e){
-msg.innerHTML="<b>Unable to find orders.</b><br><br>"+escapeHTML(e.message||"Please try again.");
-}
-}
-
-function orderHTML(o){
-const id=String(o.id||"");
-const created=o.createdAt?new Date(o.createdAt).toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"}):"";
-const items=Array.isArray(o.items)?o.items:[];
-const has=!!(o.shiprocketShipmentId||o.awb);
-
-return `<div class="order-card">
+</div>`;}).join("");document.getElementById("productTotal").textContent="₹"+pt.toLocaleString("en-IN");document.getElementById("total").textContent="₹"+(pt+SHIPPING_CHARGE).toLocaleString("en-IN");}
+async function findCustomerOrder(){const m=document.getElementById("customerMobile");const msg=document.getElementById("ordersMessage");const list=document.getElementById("ordersList");const mobile=String(m.value||"").replace(/\D/g,"").slice(-10);if(mobile.length!==10){msg.style.display="block";msg.innerHTML="<b>Please enter a valid 10-digit mobile number.</b>";list.innerHTML="";return;}msg.style.display="block";msg.textContent="Loading your orders...";list.innerHTML="";try{const r=await fetch("/api/customer-orders?mobile="+encodeURIComponent(mobile),{cache:"no-store"});const d=await r.json();if(!r.ok)throw Error(d.error||"Unable to find orders");const orders=Array.isArray(d.orders)?d.orders:[];if(!orders.length){msg.innerHTML="<b>No orders found.</b>
+<br>
+<br>Please check the same mobile number used while placing the order.";return;}msg.style.display="none";list.innerHTML=orders.map(orderHTML).join("");}catch(e){msg.innerHTML="<b>Unable to find orders.</b>
+<br>
+<br>"+escapeHTML(e.message||"Please try again.");}}
+function orderHTML(o){const id=String(o.id||"");const created=o.createdAt?new Date(o.createdAt).toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"}):"";const items=Array.isArray(o.items)?o.items:[];const has=!!(o.shiprocketShipmentId||o.awb);const safeId=escapeHTML(id);return `<div class="order-card">
 <div class="order-top">
 <div>
-<div class="order-id">Order ID: ${escapeHTML(id)}</div>
+<div class="order-id">Order ID: ${safeId}</div>
 <div class="order-meta">${escapeHTML(created)}</div>
 </div>
 <div class="order-status">${escapeHTML(o.status||"Order Confirmed")}</div>
 </div>
-
-<div>${items.map(i=>`
-<div class="order-item">
-<b>${escapeHTML(i.name||"Product")}</b><br>
-Qty: ${Number(i.qty||0)}
-${i.size?` • Size ${escapeHTML(i.size)}`:""}
-${i.colour||i.color?` • Colour ${escapeHTML(i.colour||i.color)}`:""}
-</div>`).join("")||"No item details available."}</div>
-
-<div class="order-meta">
-Payment: <b>${escapeHTML(o.paymentMethod||"ONLINE")}</b>
-${o.awb?`<br>AWB: <b>${escapeHTML(o.awb)}</b>`:""}
-${o.courier?`<br>Courier: <b>${escapeHTML(o.courier)}</b>`:""}
-</div>
-
-<div class="order-total">Total: ₹${Number(o.total||o.amount||0).toLocaleString("en-IN")}</div>
-
-${has
-?`<button class="btn" type="button" onclick="trackCustomerOrder('${escapeHTML(id)}')">🚚 TRACK ORDER</button><div id="tracking-${escapeHTML(id)}" class="track-result" style="display:none"></div>`
-:`<div class="track-result">📦 Tracking will appear here after your order is shipped.</div>`}
-</div>`;
-}
-
-async function trackCustomerOrder(id){
-const box=document.getElementById("tracking-"+id);
-const mobile=String(document.getElementById("customerMobile").value||"").replace(/\D/g,"").slice(-10);
-if(!box)return;
-
-if(mobile.length!==10){
-box.style.display="block";
-box.textContent="Please enter the same mobile number used for the order.";
-return;
-}
-
-box.style.display="block";
-box.innerHTML="Loading live tracking...";
-
-try{
-const r=await fetch("/api/customer-tracking?mobile="+encodeURIComponent(mobile)+"&orderId="+encodeURIComponent(id),{cache:"no-store"});
-const d=await r.json();
-if(!r.ok)throw Error(d.error||"Unable to load tracking");
-
-if(d.trackingAvailable===false){
-box.innerHTML="📦 "+escapeHTML(d.message||"Tracking is not available yet.");
-return;
-}
-
-const t=d.tracking||{};
-const td=t.tracking_data||{};
-const tracks=Array.isArray(td.shipment_track)?td.shipment_track:[];
-const x=tracks[0]||null;
-const status=x?.current_status||td.shipment_status||d.order?.status||"Shipment in process";
-const courier=x?.courier_name||d.order?.courier||"Courier";
-const awb=x?.awb_code||d.order?.awb||"";
-const from=x?.origin||"";
-const to=x?.destination||"";
-
-box.innerHTML=`<b>🚚 Current Status:</b> ${escapeHTML(status)}
-<br><b>Courier:</b> ${escapeHTML(courier)}
-${awb?`<br><b>AWB:</b> ${escapeHTML(awb)}`:""}
-${from?`<br><b>From:</b> ${escapeHTML(from)}`:""}
-${to?`<br><b>To:</b> ${escapeHTML(to)}`:""}
-${x?`<br><br><b>Latest shipment update:</b><br>${escapeHTML(x.current_status||status)}`:""}`;
-}catch(e){
-box.innerHTML="❌ "+escapeHTML(e.message||"Unable to load tracking.");
-}
-}
-
-/* Product image viewer */
-const modal=document.getElementById("imageModal");
-const modalImage=document.getElementById("modalImage");
-let modalIndex=0,modalImages=[],zoom=1;
-
-function openProductGallery(id,i=0){
-const p=products.find(x=>Number(x.id)===Number(id));
-if(!p)return;
-
-modalImages=getProductImages(p);
-if(!modalImages.length)return;
-
-modalIndex=Math.max(0,Math.min(i,modalImages.length-1));
-zoom=1;
-modal.classList.add("show");
-document.body.style.overflow="hidden";
-updateModalImage();
-}
-
-function updateModalImage(){
-if(modalImages.length){
-modalImage.src=modalImages[modalIndex];
-modalImage.style.transform="scale("+zoom+")";
-}
-}
-
-function closeModal(){
-modal.classList.remove("show");
-document.body.style.overflow="";
-}
-
-function nextImage(){
-if(modalImages.length){
-modalIndex=(modalIndex+1)%modalImages.length;
-zoom=1;
-updateModalImage();
-}
-}
-
-function previousImage(){
-if(modalImages.length){
-modalIndex=(modalIndex-1+modalImages.length)%modalImages.length;
-zoom=1;
-updateModalImage();
-}
-}
-
-document.getElementById("modalClose").onclick=closeModal;
-document.getElementById("modalLeft").onclick=previousImage;
-document.getElementById("modalRight").onclick=nextImage;
-document.getElementById("zoomIn").onclick=()=>{zoom=Math.min(2.5,zoom+.25);updateModalImage();};
-document.getElementById("zoomOut").onclick=()=>{zoom=Math.max(1,zoom-.25);updateModalImage();};
-document.getElementById("zoomReset").onclick=()=>{zoom=1;updateModalImage();};
-modal.onclick=e=>{if(e.target===modal)closeModal();};
-
-document.onkeydown=e=>{
-if(!modal.classList.contains("show"))return;
-if(e.key==="Escape")closeModal();
-if(e.key==="ArrowRight")nextImage();
-if(e.key==="ArrowLeft")previousImage();
-};
-
-document.querySelectorAll(".cat").forEach(b=>b.onclick=()=>showCategory(b.dataset.category));
-document.getElementById("showAllBtn").onclick=showAllProducts;
-
-window.addEventListener("hashchange",()=>{
-if(location.hash==="#checkout")document.getElementById("checkout").style.display="block";
-if(location.hash==="#orders")document.getElementById("orders").scrollIntoView({behavior:"auto"});
-});
-
-/* ONLINE PAYMENT ONLY */
-document.getElementById("orderForm").addEventListener("submit",async e=>{
-e.preventDefault();
-
-if(!cart.length)return alert("Please select a product first.");
-
-const data=new FormData(e.target);
-
-const items=cart.map(i=>{
-const p=products.find(x=>Number(x.id)===Number(i.id));
-return {
-id:p?p.id:i.id,
-name:p?p.name:"",
-price:p?getDisplayPrice(p):0,
-qty:Number(i.qty),
-size:i.size||"",
-colour:i.colour||""
-};
-});
-
-if(items.some(i=>!i.name||i.price<=0)){
-return alert("Product information is unavailable. Please refresh and try again.");
-}
-
-const btn=e.target.querySelector('button[type="submit"]');
-btn.disabled=true;
-btn.textContent="Please wait…";
-
-try{
-const r=await fetch("/api/create-order",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-receipt:"SPW-"+Date.now(),
-customer:{name:data.get("name"),mobile:data.get("mobile")},
-items,
-address:data.get("address"),
-pin:data.get("pin"),
-paymentMethod:"ONLINE",
-shippingCharge:SHIPPING_CHARGE
-})
-});
-
-const o=await r.json();
-if(!r.ok)throw Error(o.error||"Could not create order");
-if(!o.key_id||!o.id||!o.amount)throw Error("Payment order details are missing. Please check your Razorpay backend configuration.");
-
-if(o.customerAccessToken)saveCustomerToken(o.customerAccessToken);
-
-if(typeof window.Razorpay==="undefined"){
-throw Error("Razorpay load nahi hua. Internet check karein, page refresh karein aur dobara try karein.");
-}
-
-const rzp=new window.Razorpay({
-key:o.key_id,
-amount:o.amount,
-currency:o.currency||"INR",
-name:"JOYTI - SNIPER PREMIUM WEAR",
-description:items.map(i=>
-`${i.name} x ${i.qty}${i.size?" - Size "+i.size:""}${i.colour?" - Colour "+i.colour:""}`
-).join(", "),
-order_id:o.id,
-prefill:{name:data.get("name"),contact:data.get("mobile")},
-notes:{
-address:data.get("address"),
-pin:data.get("pin"),
-shipping_charge:String(SHIPPING_CHARGE)
-},
-theme:{color:"#596442"},
-
-handler:async res=>{
-try{
-const v=await fetch("/api/payment-status",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-orderId:o.id,
-paymentId:res.razorpay_payment_id,
-signature:res.razorpay_signature
-})
-});
-
-const result=await v.json();
-if(!v.ok||result.verified!==true)throw Error(result.error||"Payment verification failed");
-
-alert("Payment successful!\n\nOrder ID: "+o.id+"\n\nYou can check your order in MY ORDERS using your mobile number.");
-
-cart=[];
-save();
-renderCart();
-e.target.reset();
-document.getElementById("customerMobile").value=String(data.get("mobile")||"");
-location.hash="orders";
-setTimeout(findCustomerOrder,150);
-
-}catch(err){
-alert(err.message||"Payment verification failed. Please contact support if money was deducted.");
-}finally{
-btn.disabled=false;
-btn.textContent="BUY NOW & PAY";
-}
-},
-
-modal:{
-ondismiss:()=>{
-btn.disabled=false;
-btn.textContent="BUY NOW & PAY";
-}
-}
-});
-
-rzp.on("payment.failed",res=>{
-alert("Payment failed: "+(res.error?.description||"Please try again."));
-btn.disabled=false;
-btn.textContent="BUY NOW & PAY";
-});
-
-rzp.open();
-
-}catch(err){
-alert(err.message||"Unable to place order.");
-btn.disabled=false;
-btn.textContent="BUY NOW & PAY";
-}
-});
-
+<div>${items.map(i=>`<div class="order-item">
+<b>${escapeHTML(i.name||"Product")}</b>
+<br>Qty: ${Number(i.qty||0)}${i.size?` • Size ${escapeHTML(i.size)}`:""}${i.colour||i.color?` • Colour ${escapeHTML(i.colour||i.color)}`:""}</div>`).join("")||"No item details available."}</div>
+<div class="order-meta">Payment: <b>${escapeHTML(o.paymentMethod||"ONLINE")}</b>${o.awb?`<br>AWB: <b>${escapeHTML(o.awb)}</b>`:""}${o.courier?`<br>Courier: <b>${escapeHTML(o.courier)}</b>`:""}</div>
+<div class="order-total">Total: ₹${Number(o.total||o.amount||0).toLocaleString("en-IN")}</div>${has?`<button class="btn" type="button" onclick="trackCustomerOrder(${JSON.stringify(id)})">🚚 TRACK ORDER</button>
+<div id="tracking-${safeId}" class="track-result" style="display:none">
+</div>`:`<div class="track-result">📦 Tracking will appear here after your order is shipped.</div>`}</div>`;}
+async function trackCustomerOrder(id){const box=document.getElementById("tracking-"+id);const mobile=String(document.getElementById("customerMobile").value||"").replace(/\D/g,"").slice(-10);if(!box)return;if(mobile.length!==10){box.style.display="block";box.textContent="Please enter the same mobile number used for the order.";return;}box.style.display="block";box.innerHTML="Loading live tracking...";try{const r=await fetch("/api/customer-tracking?mobile="+encodeURIComponent(mobile)+"&orderId="+encodeURIComponent(id),{cache:"no-store"});const d=await r.json();if(!r.ok)throw Error(d.error||"Unable to load tracking");if(d.trackingAvailable===false){box.innerHTML="📦 "+escapeHTML(d.message||"Tracking is not available yet.");return;}const t=d.tracking||{};const td=t.tracking_data||{};const tracks=Array.isArray(td.shipment_track)?td.shipment_track:[];const x=tracks[0]||null;const status=x?.current_status||td.shipment_status||d.order?.status||"Shipment in process";const courier=x?.courier_name||d.order?.courier||"Courier";const awb=x?.awb_code||d.order?.awb||"";const from=x?.origin||"";const to=x?.destination||"";box.innerHTML=`<b>🚚 Current Status:</b> ${escapeHTML(status)}<br>
+<b>Courier:</b> ${escapeHTML(courier)}${awb?`<br>
+<b>AWB:</b> ${escapeHTML(awb)}`:""}${from?`<br>
+<b>From:</b> ${escapeHTML(from)}`:""}${to?`<br>
+<b>To:</b> ${escapeHTML(to)}`:""}${x?`<br>
+<br>
+<b>Latest shipment update:</b>
+<br>${escapeHTML(x.current_status||status)}`:""}`;}catch(e){box.innerHTML="❌ "+escapeHTML(e.message||"Unable to load tracking.");}}
+const modal=document.getElementById("imageModal");const modalImage=document.getElementById("modalImage");let modalIndex=0,modalImages=[],zoom=1;
+function openProductGallery(id,i=0){const p=products.find(x=>Number(x.id)===Number(id));if(!p)return;modalImages=getProductImages(p);if(!modalImages.length)return;modalIndex=Math.max(0,Math.min(i,modalImages.length-1));zoom=1;modal.classList.add("show");document.body.style.overflow="hidden";updateModalImage();}
+function updateModalImage(){if(modalImages.length){modalImage.src=modalImages[modalIndex];modalImage.style.transform="scale("+zoom+")";}}
+function closeModal(){modal.classList.remove("show");document.body.style.overflow="";}
+function nextImage(){if(modalImages.length){modalIndex=(modalIndex+1)%modalImages.length;zoom=1;updateModalImage();}}
+function previousImage(){if(modalImages.length){modalIndex=(modalIndex-1+modalImages.length)%modalImages.length;zoom=1;updateModalImage();}}
+document.getElementById("modalClose").onclick=closeModal;document.getElementById("modalLeft").onclick=previousImage;document.getElementById("modalRight").onclick=nextImage;document.getElementById("zoomIn").onclick=()=>{zoom=Math.min(2.5,zoom+.25);updateModalImage();};document.getElementById("zoomOut").onclick=()=>{zoom=Math.max(1,zoom-.25);updateModalImage();};document.getElementById("zoomReset").onclick=()=>{zoom=1;updateModalImage();};modal.onclick=e=>{if(e.target===modal)closeModal();};document.onkeydown=e=>{if(!modal.classList.contains("show"))return;if(e.key==="Escape")closeModal();if(e.key==="ArrowRight")nextImage();if(e.key==="ArrowLeft")previousImage();};
+document.querySelectorAll(".cat").forEach(b=>b.onclick=()=>showCategory(b.dataset.category));document.getElementById("showAllBtn").onclick=showAllProducts;
+window.addEventListener("hashchange",()=>{if(location.hash==="#checkout")document.getElementById("checkout").style.display="block";if(location.hash==="#orders")document.getElementById("orders").scrollIntoView({behavior:"auto"});});
+document.getElementById("orderForm").addEventListener("submit",async e=>{e.preventDefault();if(!cart.length)return alert("Please select a product first.");const data=new FormData(e.target);const items=cart.map(i=>{const p=products.find(x=>Number(x.id)===Number(i.id));return{id:p?p.id:i.id,name:p?p.name:"",price:p?getDisplayPrice(p):0,qty:Number(i.qty),size:i.size||"",colour:i.colour||""};});if(items.some(i=>!i.name||i.price<=0))return alert("Product information is unavailable. Please refresh and try again.");const btn=e.target.querySelector('button[type="submit"]');btn.disabled=true;btn.textContent="Please wait…";try{const r=await fetch("/api/create-order",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({receipt:"SPW-"+Date.now(),customer:{name:data.get("name"),mobile:data.get("mobile")},items,address:data.get("address"),pin:data.get("pin"),paymentMethod:"ONLINE",shippingCharge:SHIPPING_CHARGE})});const o=await r.json();if(!r.ok)throw Error(o.error||"Could not create order");if(!o.key_id||!o.id||!o.amount)throw Error("Payment order details are missing. Please check your Razorpay backend configuration.");if(o.customerAccessToken)saveCustomerToken(o.customerAccessToken);if(typeof window.Razorpay==="undefined")throw Error("Razorpay load nahi hua. Internet check karein, page refresh karein aur dobara try karein.");const rzp=new window.Razorpay({key:o.key_id,amount:o.amount,currency:o.currency||"INR",name:"JOYTI - SNIPER PREMIUM WEAR",description:items.map(i=>`${i.name} x ${i.qty}${i.size?" - Size "+i.size:""}${i.colour?" - Colour "+i.colour:""}`).join(", "),order_id:o.id,prefill:{name:data.get("name"),contact:data.get("mobile")},notes:{address:data.get("address"),pin:data.get("pin"),shipping_charge:String(SHIPPING_CHARGE)},theme:{color:"#596442"},handler:async res=>{try{const v=await fetch("/api/payment-status",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({orderId:o.id,paymentId:res.razorpay_payment_id,signature:res.razorpay_signature})});const result=await v.json();if(!v.ok||result.verified!==true)throw Error(result.error||"Payment verification failed");alert("Payment successful!\n\nOrder ID: "+o.id+"\n\nYou can check your order in MY ORDERS using your mobile number.");cart=[];save();renderCart();e.target.reset();document.getElementById("customerMobile").value=String(data.get("mobile")||"");location.hash="orders";setTimeout(findCustomerOrder,150);}catch(err){alert(err.message||"Payment verification failed. Please contact support if money was deducted.");}finally{btn.disabled=false;btn.textContent="BUY NOW & PAY";}},modal:{ondismiss:()=>{btn.disabled=false;btn.textContent="BUY NOW & PAY";}}});rzp.on("payment.failed",res=>{alert("Payment failed: "+(res.error?.description||"Please try again."));btn.disabled=false;btn.textContent="BUY NOW & PAY";});rzp.open();}catch(err){alert(err.message||"Unable to place order.");btn.disabled=false;btn.textContent="BUY NOW & PAY";}});
 if(location.hash==="#checkout")document.getElementById("checkout").style.display="block";
 loadProducts();
 </script>
