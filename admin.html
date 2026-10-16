@@ -61,15 +61,10 @@ button:disabled{opacity:.6;cursor:not-allowed}
 #productFormSection:not(.hide){animation:formOpen .25s ease}
 @keyframes formOpen{from{opacity:.6;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:700px){
-.wrap{padding:12px}
-.top{flex-direction:column;align-items:flex-start}
-.top button{width:100%}
-.admin-nav{grid-template-columns:1fr 1fr}
-.admin-nav button{font-size:14px;min-height:65px}
-.category-tabs{grid-template-columns:repeat(2,1fr)}
-.category-tabs button:last-child{grid-column:auto}
-.row button{width:100%}
-.photo-list{grid-template-columns:repeat(2,1fr)}
+.wrap{padding:12px}.top{flex-direction:column;align-items:flex-start}.top button{width:100%}
+.admin-nav{grid-template-columns:1fr 1fr}.admin-nav button{font-size:14px;min-height:65px}
+.category-tabs{grid-template-columns:repeat(2,1fr)}.category-tabs button:last-child{grid-column:auto}
+.row button{width:100%}.photo-list{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
@@ -108,6 +103,14 @@ button:disabled{opacity:.6;cursor:not-allowed}
     <button id="tab-Footwear" onclick="filterProducts('Footwear')">👟 FOOTWEAR</button>
     <button id="tab-Tactical Caps" onclick="filterProducts('Tactical Caps')">🧢 TACTICAL CAPS</button>
     <button id="tab-Outdoor Accessories" onclick="filterProducts('Outdoor Accessories')">🎒 OUTDOOR ACCESSORIES</button>
+    <button id="tab-Army T-Shirts" onclick="filterProducts('Army T-Shirts')">🪖 ARMY T-SHIRTS</button>
+    <button id="tab-Cargo & Tactical Pants" onclick="filterProducts('Cargo & Tactical Pants')">👖 CARGO &amp; TACTICAL PANTS</button>
+    <button id="tab-Tactical Shirts" onclick="filterProducts('Tactical Shirts')">🎽 TACTICAL SHIRTS</button>
+    <button id="tab-Accessories" onclick="filterProducts('Accessories')">🎒 ACCESSORIES</button>
+    <button id="tab-Hoodies & Jackets" onclick="filterProducts('Hoodies & Jackets')">🧥 HOODIES &amp; JACKETS</button>
+    <button id="tab-Track Pants" onclick="filterProducts('Track Pants')">🏃 TRACK PANTS</button>
+    <button id="tab-New Arrivals" onclick="filterProducts('New Arrivals')">🆕 NEW ARRIVALS</button>
+    <button id="tab-Best Sellers" onclick="filterProducts('Best Sellers')">🔥 BEST SELLERS</button>
   </div>
   <div id="productCount" class="count-box">All Products</div>
   <div id="products" class="product-grid"></div>
@@ -128,6 +131,14 @@ button:disabled{opacity:.6;cursor:not-allowed}
         <option value="Footwear">Footwear</option>
         <option value="Tactical Caps">Tactical Caps</option>
         <option value="Outdoor Accessories">Outdoor Accessories</option>
+        <option value="Army T-Shirts">Army T-Shirts</option>
+        <option value="Cargo & Tactical Pants">Cargo &amp; Tactical Pants</option>
+        <option value="Tactical Shirts">Tactical Shirts</option>
+        <option value="Accessories">Accessories</option>
+        <option value="Hoodies & Jackets">Hoodies &amp; Jackets</option>
+        <option value="Track Pants">Track Pants</option>
+        <option value="New Arrivals">New Arrivals</option>
+        <option value="Best Sellers">Best Sellers</option>
       </select>
     </div>
     <div><label>Colour</label><input id="colour" placeholder="Black / Olive Green / Blue"></div>
@@ -277,7 +288,7 @@ function renderProducts() {
   const box = document.getElementById("products");
   let list = window.productList || [];
   if(selectedProductCategory !== "ALL") {
-    list = list.filter(p => String(p.category || "").trim().toLowerCase() === selectedProductCategory.trim().toLowerCase());
+    list = list.filter(p => String(p.category || "").trim().toLowerCase().replace(/\s+/g, " ") === selectedProductCategory.trim().toLowerCase().replace(/\s+/g, " "));
   }
   const categoryName = selectedProductCategory === "ALL" ? "All Products" : selectedProductCategory;
   document.getElementById("productCount").textContent = categoryName + " • " + list.length + " product" + (list.length === 1 ? "" : "s");
@@ -460,21 +471,17 @@ async function saveProduct() {
     const colour = document.getElementById("colour").value.trim();
     const stockStatus = document.getElementById("stockStatus").value;
     const price = Number(document.getElementById("price").value);
-
     if(!name) { alert("Product name is required."); return; }
     if(!category) { alert("Please select a category."); return; }
     if(!Number.isFinite(price) || price <= 0) { alert("Valid price is required."); return; }
-
     const selectedFiles = [];
     for(let i=1;i<=5;i++) {
       const file = document.getElementById("photoFile"+i).files[0];
       if(file) selectedFiles.push(file);
     }
-
     const progress = document.getElementById("uploadProgress");
     const msg = document.getElementById("uploadMsg");
     let uploadedImages = [];
-
     if(selectedFiles.length) {
       progress.style.display = "block";
       for(let i=0;i<selectedFiles.length;i++) {
@@ -488,53 +495,28 @@ async function saveProduct() {
     } else {
       progress.style.display = "none";
     }
-
     const id = document.getElementById("pid").value.trim();
     const oldImg = document.getElementById("img").value.trim();
-    const existingProduct = id ? (window.productList || []).find(function(item) {
-      return String(item.id) === String(id);
-    }) : null;
-
-    const existingImages = existingProduct
-      ? getProductImages(existingProduct)
-      : (oldImg ? [oldImg] : []);
-
-    // Existing photos are kept; new photos are added up to a maximum of 5.
-    const finalImages = [...new Set(
-      [...existingImages, ...uploadedImages]
-        .map(function(src) { return String(src || "").trim(); })
-        .filter(Boolean)
-    )].slice(0,5);
-
+    const existingProduct = id ? (window.productList || []).find(function(item) { return String(item.id) === String(id); }) : null;
+    const existingImages = existingProduct ? getProductImages(existingProduct) : (oldImg ? [oldImg] : []);
+    // Keep the current photos when editing, then add newly uploaded photos (maximum 5).
+    const finalImages = [...new Set([...existingImages, ...uploadedImages].map(function(src) { return String(src || "").trim(); }).filter(Boolean))].slice(0,5);
     const body = {
-      name,
-      category,
-      colour,
-      stockStatus,
-      inStock: stockStatus === "In Stock",
-      featured: document.getElementById("featured").value === "true",
+      name,category,colour,stockStatus,
+      inStock:stockStatus === "In Stock",
+      featured:document.getElementById("featured").value === "true",
       price,
-      sizes: document.getElementById("sizes").value.trim(),
-      fabric: document.getElementById("fabric").value.trim(),
-      img: finalImages.length ? finalImages[0] : oldImg,
-      images: finalImages,
-      description: document.getElementById("desc").value.trim()
+      sizes:document.getElementById("sizes").value.trim(),
+      fabric:document.getElementById("fabric").value.trim(),
+      img:finalImages.length ? finalImages[0] : oldImg,
+      images:finalImages,
+      description:document.getElementById("desc").value.trim()
     };
-
     let method = "POST";
-    if(id) {
-      body.id = Number(id);
-      method = "PUT";
-    }
-
-    const r = await api("/api/products", {
-      method,
-      body: JSON.stringify(body)
-    });
-
+    if(id) { body.id = Number(id); method = "PUT"; }
+    const r = await api("/api/products",{method,body:JSON.stringify(body)});
     const d = await r.json();
     if(!r.ok) { alert(d.error || "Save failed."); return; }
-
     alert("✅ Product saved successfully.");
     clearForm();
     hideProductForm();
@@ -553,15 +535,12 @@ async function deleteProduct(id) {
     if(!r.ok) { alert(d.error || "Delete failed."); return; }
     alert("Product deleted.");
     await loadProducts();
-  } catch(error) {
-    alert(error.message || "Delete failed.");
-  }
+  } catch(error) { alert(error.message || "Delete failed."); }
 }
 
 async function loadOrders(showMessage) {
   const btn = document.getElementById("refreshBtn");
   const message = document.getElementById("orderMessage");
-
   try {
     if(showMessage) {
       btn.disabled = true;
@@ -569,22 +548,13 @@ async function loadOrders(showMessage) {
       message.style.display = "block";
       message.textContent = "Loading orders...";
     }
-
     const r = await api("/api/orders");
     const text = await r.text();
     let d = {};
-
-    try {
-      d = JSON.parse(text);
-    } catch(error) {
-      throw new Error("Server response is not valid JSON.");
-    }
-
+    try { d = JSON.parse(text); } catch(error) { throw new Error("Server response is not valid JSON."); }
     if(!r.ok) throw new Error(d.error || "Unable to load orders.");
-
     const list = Array.isArray(d.orders) ? d.orders : [];
     const box = document.getElementById("orders");
-
     if(!list.length) {
       box.innerHTML = `<div class="muted">No orders yet.</div>`;
     } else {
@@ -593,49 +563,34 @@ async function loadOrders(showMessage) {
         const customer = o.customer || {};
         const items = Array.isArray(o.items) ? o.items : [];
         const paymentMethod = String(o.paymentMethod || o.payment_method || "ONLINE");
-
         return `<div class="order">
           <div style="font-size:19px;font-weight:bold;">${safe(customer.name || o.name || "Customer")}</div>
           <div style="margin-top:5px;font-weight:bold;">₹${Number(o.amount || o.total || 0).toLocaleString("en-IN")} &nbsp; • &nbsp; <span class="status">${safe(o.status || "Payment Pending")}</span></div>
           <div class="muted">Order ID: <b>${safe(id)}</b></div>
           <div>📱 ${safe(customer.mobile || o.mobile || "")}</div>
           <div>📍 ${safe(customer.address || o.address || "")} ${((customer.pincode || customer.pin || o.pin) ? ", " + safe(customer.pincode || customer.pin || o.pin) : "")}</div>
-
           <div class="order-items"><b>Products:</b>
           ${items.length ? items.map(function(i) {
-            const selections = Array.isArray(i.colours)
-              ? i.colours.filter(s => s && (
-                  String(s.size || "").trim() ||
-                  String(s.colour || s.color || "").trim() ||
-                  Number(s.qty || 0) > 0
-                ))
-              : [];
-
+            const selections = Array.isArray(i.colours) ? i.colours.filter(s => s && (String(s.size || "").trim() || String(s.colour || s.color || "").trim() || Number(s.qty || 0) > 0)) : [];
             let selectionHTML = "";
-
             if(selections.length) {
               selectionHTML = selections.map(function(s) {
                 const size = String(s.size || "").trim();
                 const colour = String(s.colour || s.color || "").trim();
                 const qty = Number(s.qty || 0);
-
                 return `<div class="order-selection">${colour ? `🎨 <b>Colour:</b> ${safe(colour)}` : ""}${size ? `${colour ? "&nbsp; • &nbsp;" : ""} 📏 <b>Size:</b> ${safe(size)}` : ""}${qty > 0 ? ` &nbsp; × <b>${qty}</b>` : ""}</div>`;
               }).join("");
             } else {
               const size = String(i.size || "").trim();
               const colour = String(i.colour || i.color || "").trim();
-
               selectionHTML = `${size ? `<div class="order-selection">📏 <b>Size:</b> ${safe(size)}</div>` : ""}${colour ? `<div class="order-selection">🎨 <b>Colour:</b> ${safe(colour)}</div>` : ""}`;
             }
-
             return `<div class="order-item"><div><b>${safe(i.name || "Product")}</b> × ${Number(i.qty || 0)}</div>${selectionHTML}</div>`;
           }).join("") : `<div class="muted">No item details available.</div>`}
           </div>
-
           <div class="muted">💳 Payment: <b>${safe(paymentMethod)}</b> &nbsp; | &nbsp; Razorpay: <b>${safe(o.razorpayPaymentId || o.paymentId || "Pending")}</b> &nbsp; | &nbsp; Shiprocket: <b>${safe(o.shiprocketOrderId || "Not created")}</b></div>
           ${o.awb ? `<div class="muted">📦 AWB: <b>${safe(o.awb)}</b></div>` : ""}
           ${o.courier ? `<div class="muted">🚚 Courier: <b>${safe(o.courier)}</b></div>` : ""}
-
           <div class="row">
             <select id="status-${safe(id)}">
               <option value="Payment Pending">Payment Pending</option>
@@ -654,19 +609,15 @@ async function loadOrders(showMessage) {
           </div>
         </div>`;
       }).join("");
-
       list.forEach(function(o) {
         const select = document.getElementById("status-"+String(o.id));
         if(select) select.value = o.status || (o.paymentMethod === "COD" ? "Order Confirmed" : "Payment Pending");
       });
     }
-
     if(showMessage) {
       message.style.display = "block";
       message.textContent = "✅ Orders refreshed successfully.";
-      setTimeout(function() {
-        message.style.display = "none";
-      },2500);
+      setTimeout(function(){ message.style.display = "none"; },2500);
     }
   } catch(error) {
     console.error("Orders error:",error);
@@ -681,97 +632,44 @@ async function loadOrders(showMessage) {
 async function verifyPayment(id) {
   try {
     alert("🔍 Payment checking...");
-
-    const r = await fetch("/api/payment-status", {
+    const r = await fetch("/api/payment-status",{
       method:"POST",
-      headers:{
-        "Content-Type":"application/json",
-        "Authorization":"Bearer "+token
-      },
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+token},
       body:JSON.stringify({orderId:id})
     });
-
     const text = await r.text();
     let d;
-
-    try {
-      d = JSON.parse(text);
-    } catch(error) {
-      alert("❌ Server response error:\n\n"+text.substring(0,500));
-      return;
+    try { d = JSON.parse(text); } catch(error) {
+      alert("❌ Server response error:\n\n"+text.substring(0,500)); return;
     }
-
-    if(!r.ok) {
-      alert("❌ Payment check failed:\n\n"+(d.error || "Unknown error"));
-      return;
-    }
-
-    if(d.paid) {
-      alert("✅ PAYMENT VERIFIED\n\nPayment ID: "+(d.paymentId || "")+"\n\nOrder status is now PAID.");
-    } else {
-      alert("❌ NO CAPTURED PAYMENT FOUND\n\nThis order is still Payment Pending.");
-    }
-
+    if(!r.ok) { alert("❌ Payment check failed:\n\n"+(d.error || "Unknown error")); return; }
+    if(d.paid) alert("✅ PAYMENT VERIFIED\n\nPayment ID: "+(d.paymentId || "")+"\n\nOrder status is now PAID.");
+    else alert("❌ NO CAPTURED PAYMENT FOUND\n\nThis order is still Payment Pending.");
     await loadOrders(false);
-  } catch(error) {
-    alert("❌ Connection / Error:\n\n"+(error.message || "Payment check failed."));
-  }
+  } catch(error) { alert("❌ Connection / Error:\n\n"+(error.message || "Payment check failed.")); }
 }
 
 async function statusUpdate(id) {
   const select = document.getElementById("status-"+id);
-  if(!select) {
-    alert("Status selector not found.");
-    return;
-  }
-
+  if(!select) { alert("Status selector not found."); return; }
   try {
-    const r = await api("/api/orders", {
-      method:"PATCH",
-      body:JSON.stringify({id,status:select.value})
-    });
-
+    const r = await api("/api/orders",{method:"PATCH",body:JSON.stringify({id,status:select.value})});
     const d = await r.json();
-    if(!r.ok) {
-      alert(d.error || "Status update failed.");
-      return;
-    }
-
+    if(!r.ok) { alert(d.error || "Status update failed."); return; }
     alert("✅ Order status updated.");
     await loadOrders(false);
-  } catch(error) {
-    alert(error.message || "Status update failed.");
-  }
+  } catch(error) { alert(error.message || "Status update failed."); }
 }
 
 async function deleteOrder(id) {
-  const confirmed = confirm(
-    "⚠️ DELETE ORDER?\n\nOrder ID: "+id+
-    "\n\nThis order will be permanently removed.\nThis action cannot be undone."
-  );
-
+  const confirmed = confirm("⚠️ DELETE ORDER?\n\nOrder ID: "+id+"\n\nThis order will be permanently removed.\nThis action cannot be undone.");
   if(!confirmed) return;
-
   try {
-    const r = await api("/api/orders", {
-      method:"DELETE",
-      body:JSON.stringify({id:id})
-    });
-
+    const r = await api("/api/orders",{method:"DELETE",body:JSON.stringify({id:id})});
     const text = await r.text();
     let d = {};
-
-    try {
-      d = JSON.parse(text);
-    } catch(error) {
-      throw new Error("Server response is not valid JSON.");
-    }
-
-    if(!r.ok) {
-      alert("❌ Delete failed:\n\n"+(d.error || "Unable to delete order."));
-      return;
-    }
-
+    try { d = JSON.parse(text); } catch(error) { throw new Error("Server response is not valid JSON."); }
+    if(!r.ok) { alert("❌ Delete failed:\n\n"+(d.error || "Unable to delete order.")); return; }
     alert("✅ Order deleted successfully.");
     await loadOrders(false);
   } catch(error) {
@@ -782,30 +680,15 @@ async function deleteOrder(id) {
 
 async function ship(id) {
   if(!confirm("Create this order in Shiprocket?")) return;
-
   try {
-    const r = await api("/api/shiprocket-order", {
-      method:"POST",
-      body:JSON.stringify({order_id:id})
-    });
-
+    const r = await api("/api/shiprocket-order",{method:"POST",body:JSON.stringify({order_id:id})});
     const text = await r.text();
     let d = {};
-
-    try {
-      d = JSON.parse(text);
-    } catch(error) {}
-
-    if(!r.ok) {
-      alert("❌ Shiprocket error:\n\n"+(d.message || d.error || text.substring(0,500)));
-      return;
-    }
-
+    try { d = JSON.parse(text); } catch(error) {}
+    if(!r.ok) { alert("❌ Shiprocket error:\n\n"+(d.message || d.error || text.substring(0,500))); return; }
     alert("✅ Order sent to Shiprocket.");
     await loadOrders(false);
-  } catch(error) {
-    alert("❌ Shiprocket error:\n\n"+(error.message || "Shiprocket order failed."));
-  }
+  } catch(error) { alert("❌ Shiprocket error:\n\n"+(error.message || "Shiprocket order failed.")); }
 }
 
 function logout() {
@@ -815,22 +698,14 @@ function logout() {
 }
 
 function safe(value) {
-  return String(value || "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  return String(value || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }
 
 function jsSafe(value) {
-  return String(value || "")
-    .replace(/\\/g,"\\\\")
-    .replace(/'/g,"\\'");
+  return String(value || "").replace(/\\/g,"\\\\").replace(/'/g,"\\'");
 }
 
 const savedToken = localStorage.getItem("adminToken");
-
 if(savedToken) {
   token = savedToken;
   autoLogin();
@@ -839,18 +714,12 @@ if(savedToken) {
 async function autoLogin() {
   try {
     const r = await api("/api/orders");
-    if(!r.ok) {
-      logout();
-      return;
-    }
-
+    if(!r.ok) { logout(); return; }
     document.getElementById("login").classList.add("hide");
     document.getElementById("app").classList.remove("hide");
     await loadProducts();
     await loadOrders(false);
-  } catch(error) {
-    logout();
-  }
+  } catch(error) { logout(); }
 }
 </script>
 </body>
